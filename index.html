@@ -21,6 +21,10 @@
       color: #111;
     }
 
+    a {
+      color: inherit;
+    }
+
     .hero {
       width: 1200px;
       max-width: calc(100% - 32px);
@@ -81,6 +85,19 @@
       color: #111;
     }
 
+    .post-link {
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+    .post-link:hover .title,
+    .post-link:hover .desc {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-thickness: 1px;
+    }
+
     .text {
       display: flex;
       flex-direction: column;
@@ -130,19 +147,6 @@
 
     .tag:hover {
       opacity: 0.7;
-    }
-
-    .post-link {
-      text-decoration: none;
-      color: inherit;
-      display: block;
-    }
-
-    .post-link:hover .title,
-    .post-link:hover .desc {
-      text-decoration: underline;
-      text-underline-offset: 3px;
-      text-decoration-thickness: 1px;
     }
 
     /* 상단 고정 카드 4개 */
@@ -229,23 +233,28 @@
       transform: translateY(1px);
     }
 
-    /* 하단 핀터레스트형 카드 영역 */
+    /* 하단 masonry 카드 영역 */
     .filtered-container {
       width: 1200px;
       max-width: calc(100% - 32px);
       margin: 0 auto 40px;
-      column-count: 4;
-      column-gap: 24px;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 24px;
+      grid-auto-rows: 8px;
+      align-items: start;
     }
 
     .filtered-card {
       width: 100%;
-      display: inline-block;
-      vertical-align: top;
-      margin: 0 0 40px;
-      break-inside: avoid;
-      -webkit-column-break-inside: avoid;
-      page-break-inside: avoid;
+      display: block;
+      margin: 0;
+    }
+
+    .filtered-card-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
     }
 
     .filtered-card .image-wrap {
@@ -269,7 +278,7 @@
     }
 
     .filtered-card.is-hidden {
-      display: none;
+      display: none !important;
     }
 
     .load-more-trigger {
@@ -292,7 +301,7 @@
 
     @media (max-width: 1024px) {
       .filtered-container {
-        column-count: 3;
+        grid-template-columns: repeat(3, minmax(0, 1fr));
       }
     }
 
@@ -349,12 +358,8 @@
         max-width: 100%;
         padding: 0 16px;
         margin-bottom: 32px;
-        column-count: 2;
-        column-gap: 16px;
-      }
-
-      .filtered-card {
-        margin-bottom: 32px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
       }
 
       .load-more-trigger {
@@ -380,7 +385,7 @@
 
     @media (max-width: 480px) {
       .filtered-container {
-        column-count: 1;
+        grid-template-columns: 1fr;
       }
     }
   </style>
@@ -411,7 +416,6 @@
     </div>
   </div>
 
-  <!-- 상단 고정 카드 4개 -->
   <div class="featured-container">
     <div class="featured-card">
       <a href="https://example.com/post-1" class="post-link">
@@ -474,7 +478,6 @@
     </div>
   </div>
 
-  <!-- 카테고리 메뉴 -->
   <div class="category-nav" id="categoryNav">
     <button class="category-btn active" data-filter="all">
       <span>전체</span>
@@ -512,125 +515,140 @@
     </button>
   </div>
 
-  <!-- 하단 필터 카드 -->
   <div class="filtered-container" id="filteredCards">
     <div class="filtered-card" data-category="경영기법">
-      <a href="https://example.com/post-101" class="post-link">
-        <div class="image-wrap">
-          <img src="https://picsum.photos/300/410?random=11" alt="">
+      <div class="filtered-card-inner">
+        <a href="https://example.com/post-101" class="post-link">
+          <div class="image-wrap">
+            <img src="https://picsum.photos/300/410?random=11" alt="">
+          </div>
+          <div class="text">
+            <div class="title">경영기법 관련 게시물 제목 1</div>
+            <div class="desc">이 카드는 경영기법 카테고리에 속하는 예시 카드입니다.</div>
+          </div>
+        </a>
+        <div class="tags">
+          <a href="#" class="tag">#경영기법</a>
         </div>
-        <div class="text">
-          <div class="title">경영기법 관련 게시물 제목 1</div>
-          <div class="desc">이 카드는 경영기법 카테고리에 속하는 예시 카드입니다.</div>
-        </div>
-      </a>
-      <div class="tags">
-        <a href="#" class="tag">#경영기법</a>
       </div>
     </div>
 
     <div class="filtered-card" data-category="기술비평">
-      <a href="https://example.com/post-102" class="post-link">
-        <div class="image-wrap">
-          <img src="https://picsum.photos/300/430?random=12" alt="">
+      <div class="filtered-card-inner">
+        <a href="https://example.com/post-102" class="post-link">
+          <div class="image-wrap">
+            <img src="https://picsum.photos/300/430?random=12" alt="">
+          </div>
+          <div class="text">
+            <div class="title">기술비평 관련 게시물 제목 1</div>
+            <div class="desc">이 카드는 기술비평 카테고리에 속하는 예시 카드입니다.</div>
+          </div>
+        </a>
+        <div class="tags">
+          <a href="#" class="tag">#기술비평</a>
         </div>
-        <div class="text">
-          <div class="title">기술비평 관련 게시물 제목 1</div>
-          <div class="desc">이 카드는 기술비평 카테고리에 속하는 예시 카드입니다.</div>
-        </div>
-      </a>
-      <div class="tags">
-        <a href="#" class="tag">#기술비평</a>
       </div>
     </div>
 
     <div class="filtered-card" data-category="테크리뷰">
-      <a href="https://example.com/post-103" class="post-link">
-        <div class="image-wrap">
-          <img src="https://picsum.photos/300/390?random=13" alt="">
+      <div class="filtered-card-inner">
+        <a href="https://example.com/post-103" class="post-link">
+          <div class="image-wrap">
+            <img src="https://picsum.photos/300/390?random=13" alt="">
+          </div>
+          <div class="text">
+            <div class="title">테크리뷰 관련 게시물 제목 1</div>
+            <div class="desc">이 카드는 테크리뷰 카테고리에 속하는 예시 카드입니다.</div>
+          </div>
+        </a>
+        <div class="tags">
+          <a href="#" class="tag">#테크리뷰</a>
         </div>
-        <div class="text">
-          <div class="title">테크리뷰 관련 게시물 제목 1</div>
-          <div class="desc">이 카드는 테크리뷰 카테고리에 속하는 예시 카드입니다.</div>
-        </div>
-      </a>
-      <div class="tags">
-        <a href="#" class="tag">#테크리뷰</a>
       </div>
     </div>
 
     <div class="filtered-card" data-category="EU AI Act">
-      <a href="https://example.com/post-104" class="post-link">
-        <div class="image-wrap">
-          <img src="https://picsum.photos/300/440?random=14" alt="">
+      <div class="filtered-card-inner">
+        <a href="https://example.com/post-104" class="post-link">
+          <div class="image-wrap">
+            <img src="https://picsum.photos/300/440?random=14" alt="">
+          </div>
+          <div class="text">
+            <div class="title">EU AI Act 관련 게시물 제목 1</div>
+            <div class="desc">이 카드는 EU AI Act 카테고리에 속하는 예시 카드입니다.</div>
+          </div>
+        </a>
+        <div class="tags">
+          <a href="#" class="tag">#EUAIACT</a>
         </div>
-        <div class="text">
-          <div class="title">EU AI Act 관련 게시물 제목 1</div>
-          <div class="desc">이 카드는 EU AI Act 카테고리에 속하는 예시 카드입니다.</div>
-        </div>
-      </a>
-      <div class="tags">
-        <a href="#" class="tag">#EUAIACT</a>
       </div>
     </div>
 
     <div class="filtered-card" data-category="공공정보화의 불편한 진실">
-      <a href="https://example.com/post-105" class="post-link">
-        <div class="image-wrap">
-          <img src="https://picsum.photos/300/400?random=15" alt="">
+      <div class="filtered-card-inner">
+        <a href="https://example.com/post-105" class="post-link">
+          <div class="image-wrap">
+            <img src="https://picsum.photos/300/400?random=15" alt="">
+          </div>
+          <div class="text">
+            <div class="title">공공정보화의 불편한 진실 관련 게시물 제목 1</div>
+            <div class="desc">이 카드는 공공정보화의 불편한 진실 카테고리에 속하는 예시 카드입니다.</div>
+          </div>
+        </a>
+        <div class="tags">
+          <a href="#" class="tag">#공공정보화</a>
         </div>
-        <div class="text">
-          <div class="title">공공정보화의 불편한 진실 관련 게시물 제목 1</div>
-          <div class="desc">이 카드는 공공정보화의 불편한 진실 카테고리에 속하는 예시 카드입니다.</div>
-        </div>
-      </a>
-      <div class="tags">
-        <a href="#" class="tag">#공공정보화</a>
       </div>
     </div>
 
     <div class="filtered-card" data-category="비주얼 브리프">
-      <a href="https://example.com/post-106" class="post-link">
-        <div class="image-wrap">
-          <img src="https://picsum.photos/300/420?random=16" alt="">
+      <div class="filtered-card-inner">
+        <a href="https://example.com/post-106" class="post-link">
+          <div class="image-wrap">
+            <img src="https://picsum.photos/300/420?random=16" alt="">
+          </div>
+          <div class="text">
+            <div class="title">비주얼 브리프 관련 게시물 제목 1</div>
+            <div class="desc">이 카드는 비주얼 브리프 카테고리에 속하는 예시 카드입니다.</div>
+          </div>
+        </a>
+        <div class="tags">
+          <a href="#" class="tag">#비주얼브리프</a>
         </div>
-        <div class="text">
-          <div class="title">비주얼 브리프 관련 게시물 제목 1</div>
-          <div class="desc">이 카드는 비주얼 브리프 카테고리에 속하는 예시 카드입니다.</div>
-        </div>
-      </a>
-      <div class="tags">
-        <a href="#" class="tag">#비주얼브리프</a>
       </div>
     </div>
 
     <div class="filtered-card" data-category="경영기법">
-      <a href="https://example.com/post-107" class="post-link">
-        <div class="image-wrap">
-          <img src="https://picsum.photos/300/435?random=17" alt="">
+      <div class="filtered-card-inner">
+        <a href="https://example.com/post-107" class="post-link">
+          <div class="image-wrap">
+            <img src="https://picsum.photos/300/435?random=17" alt="">
+          </div>
+          <div class="text">
+            <div class="title">경영기법 관련 게시물 제목 2</div>
+            <div class="desc">카테고리 카운트와 필터 동작을 보기 위한 추가 카드입니다.</div>
+          </div>
+        </a>
+        <div class="tags">
+          <a href="#" class="tag">#경영기법</a>
         </div>
-        <div class="text">
-          <div class="title">경영기법 관련 게시물 제목 2</div>
-          <div class="desc">카테고리 카운트와 필터 동작을 보기 위한 추가 카드입니다.</div>
-        </div>
-      </a>
-      <div class="tags">
-        <a href="#" class="tag">#경영기법</a>
       </div>
     </div>
 
     <div class="filtered-card" data-category="비주얼 브리프">
-      <a href="https://example.com/post-108" class="post-link">
-        <div class="image-wrap">
-          <img src="https://picsum.photos/300/405?random=18" alt="">
+      <div class="filtered-card-inner">
+        <a href="https://example.com/post-108" class="post-link">
+          <div class="image-wrap">
+            <img src="https://picsum.photos/300/405?random=18" alt="">
+          </div>
+          <div class="text">
+            <div class="title">비주얼 브리프 관련 게시물 제목 2</div>
+            <div class="desc">하단 목록이 계속 늘어나는 상황을 가정한 추가 카드입니다.</div>
+          </div>
+        </a>
+        <div class="tags">
+          <a href="#" class="tag">#비주얼브리프</a>
         </div>
-        <div class="text">
-          <div class="title">비주얼 브리프 관련 게시물 제목 2</div>
-          <div class="desc">하단 목록이 계속 늘어나는 상황을 가정한 추가 카드입니다.</div>
-        </div>
-      </a>
-      <div class="tags">
-        <a href="#" class="tag">#비주얼브리프</a>
       </div>
     </div>
   </div>
@@ -644,6 +662,7 @@
   <script>
     const categoryButtons = document.querySelectorAll(".category-btn");
     const cards = Array.from(document.querySelectorAll("#filteredCards .filtered-card"));
+    const filteredContainer = document.getElementById("filteredCards");
     const loadMoreTrigger = document.getElementById("loadMoreTrigger");
 
     let visibleCount = 8;
@@ -668,6 +687,26 @@
       });
     }
 
+    function resizeMasonry() {
+      const styles = window.getComputedStyle(filteredContainer);
+      const rowSize = parseInt(styles.getPropertyValue("grid-auto-rows"), 10);
+      const rowGap = parseInt(styles.getPropertyValue("gap"), 10);
+
+      cards.forEach((card) => {
+        if (card.classList.contains("is-hidden")) {
+          card.style.gridRowEnd = "";
+          return;
+        }
+
+        const inner = card.querySelector(".filtered-card-inner");
+        if (!inner) return;
+
+        const height = inner.getBoundingClientRect().height;
+        const span = Math.ceil((height + rowGap) / (rowSize + rowGap));
+        card.style.gridRowEnd = `span ${span}`;
+      });
+    }
+
     function applyFilter(category = "all") {
       const filtered = cards.filter((card) => {
         return category === "all" || card.dataset.category === category;
@@ -688,6 +727,10 @@
       } else {
         loadMoreTrigger.style.display = "block";
       }
+
+      requestAnimationFrame(() => {
+        resizeMasonry();
+      });
     }
 
     function loadMore() {
@@ -723,8 +766,18 @@
 
     observer.observe(loadMoreTrigger);
 
-    updateCounts();
-    applyFilter("all");
+    window.addEventListener("load", () => {
+      updateCounts();
+      applyFilter("all");
+    });
+
+    window.addEventListener("resize", () => {
+      resizeMasonry();
+    });
+
+    document.querySelectorAll("#filteredCards img").forEach((img) => {
+      img.addEventListener("load", resizeMasonry);
+    });
   </script>
 
 </body>
