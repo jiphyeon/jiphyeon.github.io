@@ -3,6 +3,7 @@
 <head>
   <meta charset="utf-8">
   <title>My Blog</title>
+
   <style>
     body {
       margin: 0;
@@ -12,29 +13,35 @@
 
     .container {
       width: 1200px;
-      margin: 60px auto;
+      margin: 40px auto;
       display: flex;
       gap: 24px;
-      align-items: flex-end;
+      align-items: flex-end; /* 카드 하단 정렬 */
     }
 
     .card {
-      width: 280px;
+      width: 260px;
       display: flex;
       flex-direction: column;
-      gap: 12px;
+    }
+
+    .image-wrap {
+      display: flex;
+      align-items: flex-end; /* 이미지 하단 정렬 */
     }
 
     .card img {
       width: 100%;
       height: auto;
       border-radius: 8px;
+      display: block;
     }
 
     .text {
       display: flex;
       flex-direction: column;
       gap: 6px;
+      margin-top: 12px;
     }
 
     .title {
@@ -64,6 +71,11 @@
       color: #888;
     }
 
+    a {
+      text-decoration: none;
+      color: inherit;
+    }
+
     .card:hover img {
       transform: scale(1.03);
       transition: 0.3s;
@@ -75,41 +87,49 @@
 
 <div class="container">
 
-  <div class="card">
-    <img src="https://picsum.photos/300/400">
+  <a href="#" class="card">
+    <div class="image-wrap">
+      <img src="https://picsum.photos/300/400">
+    </div>
     <div class="text">
       <div class="title">긴 제목 테스트입니다 두 줄까지 들어갑니다 확인용</div>
       <div class="desc">이건 설명입니다 세 줄까지만 보여야 합니다 자연스럽게 잘리는지 확인합니다.</div>
       <div class="tag">AI / 데이터</div>
     </div>
-  </div>
+  </a>
 
-  <div class="card">
-    <img src="https://picsum.photos/300/350">
+  <a href="#" class="card">
+    <div class="image-wrap">
+      <img src="https://picsum.photos/300/350">
+    </div>
     <div class="text">
       <div class="title">짧은 제목</div>
       <div class="desc">짧은 설명</div>
       <div class="tag">UX</div>
     </div>
-  </div>
+  </a>
 
-  <div class="card">
-    <img src="https://picsum.photos/300/450">
+  <a href="#" class="card">
+    <div class="image-wrap">
+      <img src="https://picsum.photos/300/450">
+    </div>
     <div class="text">
       <div class="title">또 다른 카드 제목입니다 테스트 중입니다</div>
       <div class="desc">조금 더 긴 설명을 넣어서 높이 차이를 만들어 봅니다. 레이아웃이 어떻게 보이는지 확인합니다.</div>
       <div class="tag">콘텐츠</div>
     </div>
-  </div>
+  </a>
 
-  <div class="card">
-    <img src="https://picsum.photos/300/380">
+  <a href="#" class="card">
+    <div class="image-wrap">
+      <img src="https://picsum.photos/300/380">
+    </div>
     <div class="text">
       <div class="title">네 번째 카드</div>
       <div class="desc">설명입니다</div>
       <div class="tag">전략</div>
     </div>
-  </div>
+  </a>
 
 </div>
 
