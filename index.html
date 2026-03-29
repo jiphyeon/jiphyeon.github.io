@@ -232,26 +232,31 @@
     }
 
     .filtered-container {
-     margin-top: 0;
-  margin-bottom: 56px;
-  flex-wrap: wrap;
-  row-gap: 48px;
-  align-items: flex-start;
+  width: 1200px;
+  max-width: calc(100% - 32px);
+  margin: 0 auto 56px;
+
+  column-count: 4;
+  column-gap: 24px;
     }
 
-    /* 하단 카드 영역은 일반적인 UI처럼 상단 정렬 */
+ .filtered-container .card {
+  width: 100%;
+  display: inline-block;
+  margin-bottom: 40px;
+  break-inside: avoid;
+}
     .filtered-container .image-wrap {
-  align-items: flex-start;
-  height: auto;
   display: block;
+  height: auto;
   overflow: visible;
 }
 
 .filtered-container .card img {
   width: 100%;
   height: auto;
-  object-fit: initial;
   display: block;
+  object-fit: initial;
     }
 
     .filtered-container .card img {
