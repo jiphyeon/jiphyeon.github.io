@@ -1,0 +1,66 @@
+[
+  {
+    "id": 1,
+    "type": "post",
+    "title": "경영기법 관련 첫 글",
+    "excerpt": "경영 기법 카테고리에서 보여줄 첫 번째 글이다.",
+    "category": "경영기법",
+    "tags": ["전략", "경영"],
+    "thumbnail": "/images/post-1.jpg",
+    "date": "2026-03-30",
+    "slug": "management-post-1",
+    "featured": true
+  },
+  {
+    "id": 2,
+    "type": "post",
+    "title": "기술비평 관련 첫 글",
+    "excerpt": "기술비평 카테고리의 예시 글이다.",
+    "category": "기술비평",
+    "tags": ["비평", "기술"],
+    "thumbnail": "/images/post-2.jpg",
+    "date": "2026-03-29",
+    "slug": "tech-critique-post-1",
+    "featured": true
+  },
+  {
+    "id": 3,
+    "type": "doc",
+    "title": "Article 5. Prohibited AI Practices",
+    "excerpt": "EU AI Act 문서 시리즈 중 금지된 AI 관행 조항이다.",
+    "category": "EU AI Act",
+    "tags": ["EU AI Act", "Article 5"],
+    "thumbnail": "/images/eu-ai-act-5.jpg",
+    "date": "2026-03-28",
+    "slug": "article-5-prohibited-ai-practices",
+    "featured": true,
+    "series": "eu-ai-act",
+    "order": 5
+  },
+  {
+    "id": 4,
+    "type": "doc",
+    "title": "Annex III. High-Risk Areas",
+    "excerpt": "EU AI Act 문서 시리즈 중 고위험 영역 목록이다.",
+    "category": "EU AI Act",
+    "tags": ["EU AI Act", "Annex III"],
+    "thumbnail": "/images/eu-ai-act-annex-3.jpg",
+    "date": "2026-03-27",
+    "slug": "annex-3-high-risk-areas",
+    "featured": false,
+    "series": "eu-ai-act",
+    "order": 103
+  },
+  {
+    "id": 5,
+    "type": "post",
+    "title": "비주얼 브리프 예시 글",
+    "excerpt": "비주얼 브리프 카테고리 예시 포스트다.",
+    "category": "비주얼 브리프",
+    "tags": ["비주얼", "브리프"],
+    "thumbnail": "/images/visual-brief-1.jpg",
+    "date": "2026-03-26",
+    "slug": "visual-brief-1",
+    "featured": false
+  }
+]
