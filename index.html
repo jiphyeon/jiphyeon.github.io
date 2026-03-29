@@ -5,10 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>My Blog</title>
 
+  <!-- Noto Sans KR -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+
   <style>
     body {
       margin: 0;
-      font-family: "Pretendard", "Noto Sans KR", -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: "Noto Sans KR", -apple-system, BlinkMacSystemFont, sans-serif;
       background: #f7f7f7;
       color: #111;
     }
@@ -45,29 +50,29 @@
       display: flex;
       align-items: flex-end;
       overflow: hidden;
-      border-radius: 8px;
+      border-radius: 12px; /* 라운딩 조금 더 */
     }
 
     .card img {
       width: 100%;
       height: auto;
       display: block;
-      border-radius: 8px;
-      transition: transform 0.3s;
+      border-radius: 12px;
+      transition: transform 0.3s ease;
     }
 
     .text {
       display: flex;
       flex-direction: column;
       align-items: flex-start;
-      margin-top: 12px;
+      margin-top: 18px; /* 이미지와 제목 간격 조금 더 */
     }
 
     .title {
       font-size: 18px;
-      font-weight: 600;
-      line-height: 1.4;
-      letter-spacing: -0.02em;
+      font-weight: 500;
+      line-height: 1.34;        /* 밀도감 */
+      letter-spacing: -0.03em;  /* 자간 한 단계 축소 */
       display: -webkit-box;
       -webkit-line-clamp: 2;
       -webkit-box-orient: vertical;
@@ -76,11 +81,12 @@
     }
 
     .desc {
-      margin-top: 10px;
+      margin-top: 12px;         /* 제목과 설명 간격 확대 */
       font-size: 14px;
-      color: #555;
-      line-height: 1.6;
-      letter-spacing: -0.02em;
+      font-weight: 300;         /* 라이트 */
+      color: #666;
+      line-height: 1.58;        /* 그룹감은 살리고 답답하지 않게 */
+      letter-spacing: -0.025em; /* 자간 소폭 축소 */
       display: -webkit-box;
       -webkit-line-clamp: 3;
       -webkit-box-orient: vertical;
@@ -92,23 +98,24 @@
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
-      margin-top: 12px;
+      margin-top: 14px;         /* 설명과 태그 간격 조금 더 */
     }
 
     .tag {
       display: inline-block;
       font-size: 12px;
-      color: #2563eb;
-      background: #eff6ff;
+      font-weight: 500;
+      color: #3b5ccc;
+      background: #eef2ff;
       padding: 5px 10px;
       border-radius: 999px;
       text-decoration: none;
-      transition: background 0.2s, color 0.2s;
+      transition: background 0.2s ease, color 0.2s ease;
     }
 
     .tag:hover {
-      background: #dbeafe;
-      color: #1d4ed8;
+      background: #e0e7ff;
+      color: #2847b8;
     }
 
     .card:hover img {
@@ -159,7 +166,7 @@
   <div class="card">
     <a href="https://example.com/post-1" class="post-link">
       <div class="image-wrap">
-        <img src="https://picsum.photos/300/400">
+        <img src="https://picsum.photos/300/400" alt="">
       </div>
     </a>
     <div class="text">
@@ -179,7 +186,7 @@
   <div class="card">
     <a href="https://example.com/post-2" class="post-link">
       <div class="image-wrap">
-        <img src="https://picsum.photos/300/350">
+        <img src="https://picsum.photos/300/350" alt="">
       </div>
     </a>
     <div class="text">
@@ -198,7 +205,7 @@
   <div class="card">
     <a href="https://example.com/post-3" class="post-link">
       <div class="image-wrap">
-        <img src="https://picsum.photos/300/450">
+        <img src="https://picsum.photos/300/450" alt="">
       </div>
     </a>
     <div class="text">
@@ -217,7 +224,7 @@
   <div class="card">
     <a href="https://example.com/post-4" class="post-link">
       <div class="image-wrap">
-        <img src="https://picsum.photos/300/380">
+        <img src="https://picsum.photos/300/380" alt="">
       </div>
     </a>
     <div class="text">
