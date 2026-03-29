@@ -151,17 +151,56 @@
       }
     }
 .hero {
-  width: 1200px;
+width: 1200px;
   max-width: calc(100% - 32px);
-  margin: 64px auto 24px;
+  margin: 64px auto 72px;
   display: flex;
-  justify-content: flex-start;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
 .hero-logo {
   width: 100px;
   height: auto;
   display: block;
+}
+ .hero-copy {
+  margin-top: 44px;
+  max-width: 760px;
+}
+
+.hero-kicker {
+  font-size: 18px;
+  font-weight: 600;
+  line-height: 1.45;
+  letter-spacing: -0.02em;
+  color: #111;
+}
+
+.hero-title {
+  margin: 10px 0 20px;
+  font-size: 28px;
+  font-weight: 500;
+  line-height: 1.42;
+  letter-spacing: -0.03em;
+  color: #47B5A8;
+}
+
+.hero-body {
+  max-width: 720px;
+}
+
+.hero-body p {
+  margin: 0 0 14px;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 1.75;
+  letter-spacing: -0.02em;
+  color: #222;
+}
+
+.hero-body strong {
+  font-weight: 600;
 }
   </style>
 </head>
@@ -170,7 +209,20 @@
   <div class="hero">
   <img src="./logo.png" alt="집편 로고" class="hero-logo">
 </div>
-
+<div class="hero-copy">
+    <div class="hero-kicker">기술인문 이니셔티브 집현</div>
+    <h1 class="hero-title">더 깊게 바라보고, 더 새로운 관점으로, 더 나은 변화를 설계한다.</h1>
+    <div class="hero-body">
+      <p>
+        우리는 기존의 질서와 방식이 무너지고, 새로운 패러다임으로 전환되는 문명 전환의 시대를 맞이하고 있다.
+        기술의 급격한 발전과 데이터의 폭증, 경계의 붕괴로 인해 일과 산업, 인간의 역할과 관계의 방식까지 근본적으로 바뀌고 있다.
+      </p>
+      <p>
+        이러한 흐름 속에서는 서로 다른 분야를 아우르는 통섭의 과정이 필요하다.
+        집현은 새로운 의제와 주제를 제시하고, 문제를 정의하며, 해결 방향을 설계한다.
+      </p>
+    </div>
+  </div>
 <div class="container">
 
   <div class="card">
