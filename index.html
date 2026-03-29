@@ -135,6 +135,7 @@
       display: flex;
       gap: 10px;
       margin-top: 14px;
+      flex-wrap: wrap;
     }
 
     .tag {
@@ -146,11 +147,10 @@
     }
 
     .tag:hover {
-     opacity: 0.7;
-  text-decoration: underline;
+      opacity: 0.7;
+      text-decoration: underline;
     }
 
-    /* 상단 고정 카드 4개 */
     .featured-container {
       width: 1200px;
       max-width: calc(100% - 32px);
@@ -174,6 +174,7 @@
       align-items: flex-end;
       overflow: hidden;
       border-radius: 16px;
+      background: #f3f3f3;
     }
 
     .featured-card img {
@@ -188,7 +189,6 @@
       transform: scale(1.03);
     }
 
-    /* 카테고리 메뉴 */
     .category-nav {
       width: 1200px;
       max-width: calc(100% - 32px);
@@ -234,23 +234,22 @@
       transform: translateY(1px);
     }
 
-    /* 하단 masonry 카드 영역 */
     .filtered-container {
-     width: 1200px;
-  max-width: calc(100% - 32px);
-  margin: 0 auto 40px;
-  display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: 24px;
-  grid-auto-rows: 8px;
-  align-items: start;
+      width: 1200px;
+      max-width: calc(100% - 32px);
+      margin: 0 auto 40px;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 24px;
+      grid-auto-rows: 8px;
+      align-items: start;
     }
 
     .filtered-card {
-     width: 100%;
-  display: block;
-  margin: 0;
-  align-self: start;
+      width: 100%;
+      display: block;
+      margin: 0;
+      align-self: start;
     }
 
     .filtered-card-inner {
@@ -265,6 +264,7 @@
       display: block;
       overflow: visible;
       border-radius: 16px;
+      background: #f3f3f3;
     }
 
     .filtered-card img {
@@ -298,6 +298,17 @@
       padding: 40px 0 60px;
       font-size: 14px;
       color: #888;
+      letter-spacing: -0.03em;
+    }
+
+    .loading,
+    .error-message,
+    .empty-message {
+      width: 1200px;
+      max-width: calc(100% - 32px);
+      margin: 0 auto 32px;
+      font-size: 16px;
+      color: #666;
       letter-spacing: -0.03em;
     }
 
@@ -376,6 +387,14 @@
         text-align: left;
       }
 
+      .loading,
+      .error-message,
+      .empty-message {
+        width: 100%;
+        max-width: 100%;
+        padding: 0 16px;
+      }
+
       .title {
         font-size: 20px;
       }
@@ -417,67 +436,7 @@
     </div>
   </div>
 
-  <div class="featured-container">
-    <div class="featured-card">
-      <a href="https://example.com/post-1" class="post-link">
-        <div class="image-wrap">
-          <img src="https://picsum.photos/300/400" alt="">
-        </div>
-        <div class="text">
-          <div class="title">긴 제목 테스트입니다 두 줄까지 들어갑니다 확인용</div>
-          <div class="desc">이건 설명입니다 세 줄까지만 보여야 합니다 자연스럽게 잘리는지 확인합니다.</div>
-        </div>
-      </a>
-      <div class="tags">
-        <a href="#" class="tag">#AI</a>
-      </div>
-    </div>
-
-    <div class="featured-card">
-      <a href="https://example.com/post-2" class="post-link">
-        <div class="image-wrap">
-          <img src="https://picsum.photos/300/350" alt="">
-        </div>
-        <div class="text">
-          <div class="title">짧은 제목</div>
-          <div class="desc">짧은 설명</div>
-        </div>
-      </a>
-      <div class="tags">
-        <a href="#" class="tag">#UX</a>
-      </div>
-    </div>
-
-    <div class="featured-card">
-      <a href="https://example.com/post-3" class="post-link">
-        <div class="image-wrap">
-          <img src="https://picsum.photos/300/450" alt="">
-        </div>
-        <div class="text">
-          <div class="title">또 다른 카드 제목입니다 테스트 중입니다</div>
-          <div class="desc">조금 더 긴 설명을 넣어서 높이 차이를 만들어 봅니다. 레이아웃이 어떻게 보이는지 확인합니다.</div>
-        </div>
-      </a>
-      <div class="tags">
-        <a href="#" class="tag">#콘텐츠</a>
-      </div>
-    </div>
-
-    <div class="featured-card">
-      <a href="https://example.com/post-4" class="post-link">
-        <div class="image-wrap">
-          <img src="https://picsum.photos/300/380" alt="">
-        </div>
-        <div class="text">
-          <div class="title">네 번째 카드</div>
-          <div class="desc">설명입니다</div>
-        </div>
-      </a>
-      <div class="tags">
-        <a href="#" class="tag">#전략</a>
-      </div>
-    </div>
-  </div>
+  <div class="featured-container" id="featuredContainer"></div>
 
   <div class="category-nav" id="categoryNav">
     <button class="category-btn active" data-filter="all">
@@ -516,143 +475,11 @@
     </button>
   </div>
 
-  <div class="filtered-container" id="filteredCards">
-    <div class="filtered-card" data-category="경영기법">
-      <div class="filtered-card-inner">
-        <a href="https://example.com/post-101" class="post-link">
-          <div class="image-wrap">
-            <img src="https://picsum.photos/300/410?random=11" alt="">
-          </div>
-          <div class="text">
-            <div class="title">경영기법 관련 게시물 제목 1</div>
-            <div class="desc">이 카드는 경영기법 카테고리에 속하는 예시 카드입니다.</div>
-          </div>
-        </a>
-        <div class="tags">
-          <a href="#" class="tag">#경영기법</a>
-        </div>
-      </div>
-    </div>
+  <div class="loading" id="loadingMessage">콘텐츠를 불러오는 중입니다.</div>
+  <div class="error-message" id="errorMessage" style="display:none;">콘텐츠를 불러오지 못했습니다.</div>
+  <div class="empty-message" id="emptyMessage" style="display:none;">표시할 게시물이 없습니다.</div>
 
-    <div class="filtered-card" data-category="기술비평">
-      <div class="filtered-card-inner">
-        <a href="https://example.com/post-102" class="post-link">
-          <div class="image-wrap">
-            <img src="https://picsum.photos/300/430?random=12" alt="">
-          </div>
-          <div class="text">
-            <div class="title">기술비평 관련 게시물 제목 1</div>
-            <div class="desc">이 카드는 기술비평 카테고리에 속하는 예시 카드입니다.</div>
-          </div>
-        </a>
-        <div class="tags">
-          <a href="#" class="tag">#기술비평</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="filtered-card" data-category="테크리뷰">
-      <div class="filtered-card-inner">
-        <a href="https://example.com/post-103" class="post-link">
-          <div class="image-wrap">
-            <img src="https://picsum.photos/300/390?random=13" alt="">
-          </div>
-          <div class="text">
-            <div class="title">테크리뷰 관련 게시물 제목 1</div>
-            <div class="desc">이 카드는 테크리뷰 카테고리에 속하는 예시 카드입니다.</div>
-          </div>
-        </a>
-        <div class="tags">
-          <a href="#" class="tag">#테크리뷰</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="filtered-card" data-category="EU AI Act">
-      <div class="filtered-card-inner">
-        <a href="https://example.com/post-104" class="post-link">
-          <div class="image-wrap">
-            <img src="https://picsum.photos/300/440?random=14" alt="">
-          </div>
-          <div class="text">
-            <div class="title">EU AI Act 관련 게시물 제목 1</div>
-            <div class="desc">이 카드는 EU AI Act 카테고리에 속하는 예시 카드입니다.</div>
-          </div>
-        </a>
-        <div class="tags">
-          <a href="#" class="tag">#EUAIACT</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="filtered-card" data-category="공공정보화의 불편한 진실">
-      <div class="filtered-card-inner">
-        <a href="https://example.com/post-105" class="post-link">
-          <div class="image-wrap">
-            <img src="https://picsum.photos/300/400?random=15" alt="">
-          </div>
-          <div class="text">
-            <div class="title">공공정보화의 불편한 진실 관련 게시물 제목 1</div>
-            <div class="desc">이 카드는 공공정보화의 불편한 진실 카테고리에 속하는 예시 카드입니다.</div>
-          </div>
-        </a>
-        <div class="tags">
-          <a href="#" class="tag">#공공정보화</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="filtered-card" data-category="비주얼 브리프">
-      <div class="filtered-card-inner">
-        <a href="https://example.com/post-106" class="post-link">
-          <div class="image-wrap">
-            <img src="https://picsum.photos/300/420?random=16" alt="">
-          </div>
-          <div class="text">
-            <div class="title">비주얼 브리프 관련 게시물 제목 1</div>
-            <div class="desc">이 카드는 비주얼 브리프 카테고리에 속하는 예시 카드입니다.</div>
-          </div>
-        </a>
-        <div class="tags">
-          <a href="#" class="tag">#비주얼브리프</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="filtered-card" data-category="경영기법">
-      <div class="filtered-card-inner">
-        <a href="https://example.com/post-107" class="post-link">
-          <div class="image-wrap">
-            <img src="https://picsum.photos/300/435?random=17" alt="">
-          </div>
-          <div class="text">
-            <div class="title">경영기법 관련 게시물 제목 2</div>
-            <div class="desc">카테고리 카운트와 필터 동작을 보기 위한 추가 카드입니다.</div>
-          </div>
-        </a>
-        <div class="tags">
-          <a href="#" class="tag">#경영기법</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="filtered-card" data-category="비주얼 브리프">
-      <div class="filtered-card-inner">
-        <a href="https://example.com/post-108" class="post-link">
-          <div class="image-wrap">
-            <img src="https://picsum.photos/300/405?random=18" alt="">
-          </div>
-          <div class="text">
-            <div class="title">비주얼 브리프 관련 게시물 제목 2</div>
-            <div class="desc">하단 목록이 계속 늘어나는 상황을 가정한 추가 카드입니다.</div>
-          </div>
-        </a>
-        <div class="tags">
-          <a href="#" class="tag">#비주얼브리프</a>
-        </div>
-      </div>
-    </div>
-  </div>
+  <div class="filtered-container" id="filteredCards"></div>
 
   <div class="load-more-trigger" id="loadMoreTrigger"></div>
 
@@ -661,13 +488,133 @@
   </footer>
 
   <script>
-    const categoryButtons = document.querySelectorAll(".category-btn");
-    const cards = Array.from(document.querySelectorAll("#filteredCards .filtered-card"));
+    const featuredContainer = document.getElementById("featuredContainer");
     const filteredContainer = document.getElementById("filteredCards");
     const loadMoreTrigger = document.getElementById("loadMoreTrigger");
+    const loadingMessage = document.getElementById("loadingMessage");
+    const errorMessage = document.getElementById("errorMessage");
+    const emptyMessage = document.getElementById("emptyMessage");
+    const categoryButtons = document.querySelectorAll(".category-btn");
 
+    let allPosts = [];
+    let cards = [];
     let visibleCount = 8;
     const step = 4;
+
+    function escapeHtml(value = "") {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function normalizePost(post, index) {
+      return {
+        id: post.id ?? index + 1,
+        type: post.type || "post",
+        title: post.title || "제목 없음",
+        excerpt: post.excerpt || "",
+        category: post.category || "미분류",
+        tags: Array.isArray(post.tags) ? post.tags : [],
+        thumbnail: post.thumbnail || "",
+        date: post.date || "",
+        slug: post.slug || `post-${index + 1}`,
+        featured: Boolean(post.featured),
+        series: post.series || "",
+        order: Number.isFinite(post.order) ? post.order : 0
+      };
+    }
+
+    function sortPosts(posts) {
+      return [...posts].sort((a, b) => {
+        const dateA = a.date ? new Date(a.date).getTime() : 0;
+        const dateB = b.date ? new Date(b.date).getTime() : 0;
+
+        if (dateB !== dateA) {
+          return dateB - dateA;
+        }
+
+        return (a.order || 0) - (b.order || 0);
+      });
+    }
+
+    function getPostUrl(post) {
+      if (post.type === "doc") {
+        const params = new URLSearchParams();
+        if (post.series) params.set("series", post.series);
+        params.set("slug", post.slug);
+        return `/docs.html?${params.toString()}`;
+      }
+
+      return `/post.html?slug=${encodeURIComponent(post.slug)}`;
+    }
+
+    function renderTags(tags) {
+      if (!tags.length) return "";
+
+      return `
+        <div class="tags">
+          ${tags.map(tag => `<a href="#" class="tag" data-tag="${escapeHtml(tag)}">#${escapeHtml(tag)}</a>`).join("")}
+        </div>
+      `;
+    }
+
+    function createFeaturedCard(post) {
+      const thumbnail = post.thumbnail
+        ? `<img src="${escapeHtml(post.thumbnail)}" alt="${escapeHtml(post.title)}" loading="lazy">`
+        : "";
+
+      return `
+        <div class="featured-card">
+          <a href="${getPostUrl(post)}" class="post-link">
+            <div class="image-wrap">
+              ${thumbnail}
+            </div>
+            <div class="text">
+              <div class="title">${escapeHtml(post.title)}</div>
+              <div class="desc">${escapeHtml(post.excerpt)}</div>
+            </div>
+          </a>
+          ${renderTags(post.tags)}
+        </div>
+      `;
+    }
+
+    function createFilteredCard(post) {
+      const thumbnail = post.thumbnail
+        ? `<img src="${escapeHtml(post.thumbnail)}" alt="${escapeHtml(post.title)}" loading="lazy">`
+        : "";
+
+      return `
+        <div class="filtered-card" data-category="${escapeHtml(post.category)}">
+          <div class="filtered-card-inner">
+            <a href="${getPostUrl(post)}" class="post-link">
+              <div class="image-wrap">
+                ${thumbnail}
+              </div>
+              <div class="text">
+                <div class="title">${escapeHtml(post.title)}</div>
+                <div class="desc">${escapeHtml(post.excerpt)}</div>
+              </div>
+            </a>
+            ${renderTags(post.tags)}
+          </div>
+        </div>
+      `;
+    }
+
+    function renderFeatured(posts) {
+      const featuredPosts = posts.filter(post => post.featured).slice(0, 4);
+      featuredContainer.innerHTML = featuredPosts.map(createFeaturedCard).join("");
+    }
+
+    function renderFiltered(posts) {
+      filteredContainer.innerHTML = posts.map(createFilteredCard).join("");
+      cards = Array.from(document.querySelectorAll("#filteredCards .filtered-card"));
+      bindImageLoadEvents();
+    }
 
     function getActiveFilter() {
       const active = document.querySelector(".category-btn.active");
@@ -675,11 +622,10 @@
     }
 
     function updateCounts() {
-      const counts = { all: cards.length };
+      const counts = { all: allPosts.length };
 
-      cards.forEach((card) => {
-        const category = card.dataset.category;
-        counts[category] = (counts[category] || 0) + 1;
+      allPosts.forEach((post) => {
+        counts[post.category] = (counts[post.category] || 0) + 1;
       });
 
       document.querySelectorAll(".category-count").forEach((countEl) => {
@@ -689,6 +635,8 @@
     }
 
     function resizeMasonry() {
+      if (!cards.length) return;
+
       const styles = window.getComputedStyle(filteredContainer);
       const rowSize = parseInt(styles.getPropertyValue("grid-auto-rows"), 10);
       const rowGap = parseInt(styles.getPropertyValue("row-gap"), 10);
@@ -723,11 +671,8 @@
         }
       });
 
-      if (filtered.length <= visibleCount) {
-        loadMoreTrigger.style.display = "none";
-      } else {
-        loadMoreTrigger.style.display = "block";
-      }
+      emptyMessage.style.display = filtered.length === 0 ? "block" : "none";
+      loadMoreTrigger.style.display = filtered.length <= visibleCount ? "none" : "block";
 
       requestAnimationFrame(() => {
         resizeMasonry();
@@ -744,6 +689,26 @@
         visibleCount += step;
         applyFilter(currentFilter);
       }
+    }
+
+    function bindImageLoadEvents() {
+      document.querySelectorAll("#filteredCards img, #featuredContainer img").forEach((img) => {
+        if (img.complete) {
+          resizeMasonry();
+        } else {
+          img.addEventListener("load", () => {
+            resizeMasonry();
+          });
+        }
+      });
+    }
+
+    function bindTagEvents() {
+      document.querySelectorAll(".tag").forEach((tag) => {
+        tag.addEventListener("click", (event) => {
+          event.preventDefault();
+        });
+      });
     }
 
     categoryButtons.forEach((button) => {
@@ -767,28 +732,46 @@
 
     observer.observe(loadMoreTrigger);
 
-   window.addEventListener("load", () => {
-  updateCounts();
-  applyFilter("all");
+    async function initializePage() {
+      try {
+        loadingMessage.style.display = "block";
+        errorMessage.style.display = "none";
+        emptyMessage.style.display = "none";
 
-  setTimeout(() => {
-    resizeMasonry();
-  }, 100);
-});
+        const response = await fetch("/data/posts.json", { cache: "no-store" });
+
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
+
+        const rawPosts = await response.json();
+        allPosts = sortPosts(rawPosts.map(normalizePost));
+
+        renderFeatured(allPosts);
+        renderFiltered(allPosts);
+        updateCounts();
+        bindTagEvents();
+
+        loadingMessage.style.display = "none";
+        applyFilter("all");
+
+        setTimeout(() => {
+          resizeMasonry();
+        }, 100);
+      } catch (error) {
+        console.error("posts.json 로드 실패:", error);
+        loadingMessage.style.display = "none";
+        errorMessage.style.display = "block";
+      }
+    }
+
+    window.addEventListener("load", () => {
+      initializePage();
+    });
 
     window.addEventListener("resize", () => {
       resizeMasonry();
     });
-
-    document.querySelectorAll("#filteredCards img").forEach((img) => {
-  if (img.complete) {
-    resizeMasonry();
-  } else {
-    img.addEventListener("load", () => {
-      resizeMasonry();
-    });
-  }
-});
   </script>
 
 </body>
