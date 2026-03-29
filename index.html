@@ -1,25 +1,24 @@
 <!DOCTYPE html>
-<html>
+<html lang="ko">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>My Blog</title>
 
-  <!-- Noto Sans KR -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
 
   <style>
-    body {
-      margin: 0;
-  font-family: "Noto Sans KR", -apple-system, BlinkMacSystemFont, sans-serif;
-  background: #fff;
-  color: #111;
-    }
-
     * {
       box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Noto Sans KR", -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #fff;
+      color: #111;
     }
 
     .hero {
@@ -38,54 +37,54 @@
     }
 
     .hero-copy {
-       margin-top: 56px;
-  max-width: 920px;
+      margin-top: 56px;
+      max-width: 920px;
     }
 
-.hero-kicker {
-  font-size: 28px;
-  font-weight: 250;
-  line-height: 1.0;
-  letter-spacing: -0.06em;
-  color: #111;
-  margin-bottom: 8px;
-}
+    .hero-kicker {
+      font-size: 28px;
+      font-weight: 250;
+      line-height: 1;
+      letter-spacing: -0.06em;
+      color: #111;
+      margin-bottom: 8px;
+    }
 
-.hero-kicker strong {
-  font-weight: 500;
-}
+    .hero-kicker strong {
+      font-weight: 500;
+    }
 
     .hero-title {
-    margin: 12px 0 28px;
-  font-size: 20px;
-  font-weight: 300;
-  line-height: 1.0;
-  letter-spacing: -0.06em;
-  color: #df0f57;
+      margin: 12px 0 28px;
+      font-size: 20px;
+      font-weight: 300;
+      line-height: 1;
+      letter-spacing: -0.06em;
+      color: #df0f57;
     }
 
     .hero-body {
-     max-width: 920px;
+      max-width: 920px;
     }
 
     .hero-body p {
-    margin: 0 0 18px;
-  font-size: 17px;
-  font-weight: 300;
-  line-height: 1.5;
-  letter-spacing: -0.055em;
-  color: #222;
+      margin: 0 0 18px;
+      font-size: 17px;
+      font-weight: 300;
+      line-height: 1.5;
+      letter-spacing: -0.055em;
+      color: #222;
     }
 
     .hero-body strong {
-     font-weight: 450;
-  color: #111;
+      font-weight: 450;
+      color: #111;
     }
 
     .container {
       width: 1200px;
       max-width: calc(100% - 32px);
-      margin: 40px auto;
+      margin: 40px auto 24px;
       display: flex;
       gap: 24px;
       align-items: flex-start;
@@ -183,6 +182,55 @@
       text-decoration-thickness: 1px;
     }
 
+    .category-nav {
+      width: 1200px;
+      max-width: calc(100% - 32px);
+      margin: 0 auto 48px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .category-btn {
+      appearance: none;
+      border: 1.5px solid #7e7e7e;
+      background: #fff;
+      color: #111;
+      border-radius: 18px;
+      padding: 14px 24px;
+      font-family: "Noto Sans KR", -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 18px;
+      font-weight: 500;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      transition: all 0.2s ease;
+    }
+
+    .category-btn:hover {
+      background: #f6f6f6;
+    }
+
+    .category-btn.active {
+      background: #e9e9e9;
+    }
+
+    .category-count {
+      font-size: 15px;
+      font-weight: 400;
+      color: #6f6f6f;
+      line-height: 1;
+      transform: translateY(1px);
+    }
+
+    .card.is-hidden {
+      display: none;
+    }
+
     @media (max-width: 768px) {
       .hero {
         width: 100%;
@@ -196,14 +244,14 @@
       }
 
       .hero-copy {
-         margin-top: 56px;
-  max-width: 920px;
+        margin-top: 56px;
+        max-width: 920px;
       }
 
       .container {
         width: 100%;
         max-width: 100%;
-        margin: 24px auto;
+        margin: 24px auto 20px;
         padding: 0 16px;
         flex-direction: column;
         gap: 32px;
@@ -225,144 +273,55 @@
       .desc {
         font-size: 16px;
       }
+
+      .category-nav {
+        width: 100%;
+        max-width: 100%;
+        margin: 0 auto 32px;
+        padding: 0 16px;
+        gap: 10px;
+      }
+
+      .category-btn {
+        padding: 12px 18px;
+        font-size: 16px;
+        border-radius: 16px;
+      }
+
+      .category-count {
+        font-size: 13px;
+      }
     }
-.category-btn {
-  appearance: none;
-  border: 1.5px solid #7e7e7e;
-  background: #fff;
-  color: #111;
-  border-radius: 18px;
-  padding: 14px 24px;
-  font-family: "Noto Sans KR", -apple-system, BlinkMacSystemFont, sans-serif;
-  font-size: 18px;
-  font-weight: 500;
-  line-height: 1;
-  letter-spacing: -0.03em;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  transition: all 0.2s ease;
-}
-
-.category-btn:hover {
-  background: #f6f6f6;
-}
-
-.category-btn.active {
-  background: #e9e9e9;
-}
-
-.category-count {
-  font-size: 15px;
-  font-weight: 400;
-  color: #6f6f6f;
-  line-height: 1;
-  transform: translateY(1px);
-}
-
-.card.is-hidden {
-  display: none;
-}
-
-@media (max-width: 768px) {
-  .category-nav {
-    width: 100%;
-    max-width: 100%;
-    margin: 0 auto 20px;
-    padding: 0 16px;
-    gap: 10px;
-  }
-
-  .category-btn {
-    padding: 12px 18px;
-    font-size: 16px;
-    border-radius: 16px;
-  }
-
-  .category-count {
-    font-size: 13px;
-  }
-}
   </style>
 </head>
-<script>
-  const categoryButtons = document.querySelectorAll(".category-btn");
-  const cards = document.querySelectorAll(".card");
-
-  function updateCounts() {
-    const counts = {
-      all: cards.length
-    };
-
-    cards.forEach((card) => {
-      const category = card.dataset.category;
-      counts[category] = (counts[category] || 0) + 1;
-    });
-
-    document.querySelectorAll(".category-count").forEach((countEl) => {
-      const key = countEl.dataset.count;
-      countEl.textContent = counts[key] || 0;
-    });
-  }
-
-  function filterCards(category) {
-    cards.forEach((card) => {
-      const cardCategory = card.dataset.category;
-
-      if (category === "all" || cardCategory === category) {
-        card.classList.remove("is-hidden");
-      } else {
-        card.classList.add("is-hidden");
-      }
-    });
-  }
-
-  categoryButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      categoryButtons.forEach((btn) => btn.classList.remove("active"));
-      button.classList.add("active");
-
-      const filter = button.dataset.filter;
-      filterCards(filter);
-    });
-  });
-
-  updateCounts();
-  filterCards("all");
-</script>
 <body>
 
   <div class="hero">
-    <img src="./logo.png" alt="집편 로고" class="hero-logo">
+    <img src="./logo.png" alt="집현 로고" class="hero-logo">
 
     <div class="hero-copy">
       <div class="hero-kicker">
-  기술인문 이니셔티브 <strong>집현</strong>
-</div>
+        기술인문 이니셔티브 <strong>집현</strong>
+      </div>
+
       <h1 class="hero-title">더 깊게 바라보고, 더 새로운 관점으로, 더 나은 변화를 설계한다.</h1>
+
       <div class="hero-body">
         <p>
-    우리는 기존의 질서와 법칙이 무너지고, 새로운 패러다임으로 전환되는 <strong>문명 전환(Civilizational Shift)</strong>의 시대를 맞이하고 있다.<br>
-    기술의 급격한 발전과 데이터의 폭증, 경계의 붕괴로 인해 일과 생활, 인간의 역할과 관계, 더 나아가 사회의 방식까지 근본적으로 바뀌고 있다.
-  </p>
+          우리는 기존의 질서와 법칙이 무너지고, 새로운 패러다임으로 전환되는 <strong>문명 전환(Civilizational Shift)</strong>의 시대를 맞이하고 있다.<br>
+          기술의 급격한 발전과 데이터의 폭증, 경계의 붕괴로 인해 일과 생활, 인간의 역할과 관계, 더 나아가 사회의 방식까지 근본적으로 바뀌고 있다.
+        </p>
 
-  <p>
-    이러한 흐름 속에서는 서로 다른 분야를 아우르는 통섭의 과정을 통해 축적된 지식과 경험이 공유되어 실질적인 변화를 이끌어내야 한다.<br>
-    집현(集賢)은 <strong>새로운 의제와 주제를 제시</strong>하고, <strong>문제를 정의하며 해결 방향을 설계</strong>한다.
-  </p>
+        <p>
+          이러한 흐름 속에서는 서로 다른 분야를 아우르는 통섭의 과정을 통해 축적된 지식과 경험이 공유되어 실질적인 변화를 이끌어내야 한다.<br>
+          집현(集賢)은 <strong>새로운 의제와 주제를 제시</strong>하고, <strong>문제를 정의하며 해결 방향을 설계</strong>한다.
+        </p>
       </div>
     </div>
   </div>
- 
-  <div class="container">
 
+  <div class="container">
     <div class="card" data-category="경영기법">
-<div class="card" data-category="기술비평">
-<div class="card" data-category="테크리뷰">
-<div class="card" data-category="EU AI Act">
-<div class="card" data-category="공공정보화의 불편한 진실">
-<div class="card" data-category="비주얼 브리프">
       <a href="https://example.com/post-1" class="post-link">
         <div class="image-wrap">
           <img src="https://picsum.photos/300/400" alt="">
@@ -377,7 +336,7 @@
       </div>
     </div>
 
-    <div class="card">
+    <div class="card" data-category="기술비평">
       <a href="https://example.com/post-2" class="post-link">
         <div class="image-wrap">
           <img src="https://picsum.photos/300/350" alt="">
@@ -392,7 +351,7 @@
       </div>
     </div>
 
-    <div class="card">
+    <div class="card" data-category="테크리뷰">
       <a href="https://example.com/post-3" class="post-link">
         <div class="image-wrap">
           <img src="https://picsum.photos/300/450" alt="">
@@ -407,7 +366,7 @@
       </div>
     </div>
 
-    <div class="card">
+    <div class="card" data-category="EU AI Act">
       <a href="https://example.com/post-4" class="post-link">
         <div class="image-wrap">
           <img src="https://picsum.photos/300/380" alt="">
@@ -421,38 +380,86 @@
         <a href="https://example.com/tag/strategy" class="tag">#전략</a>
       </div>
     </div>
- <div>
-<button class="category-btn" data-filter="경영기법">
-    <span>경영기법</span>
-    <span class="category-count" data-count="경영기법">0</span>
-  </button>
-
-  <button class="category-btn" data-filter="기술비평">
-    <span>기술비평</span>
-    <span class="category-count" data-count="기술비평">0</span>
-  </button>
-
-  <button class="category-btn" data-filter="테크리뷰">
-    <span>테크리뷰</span>
-    <span class="category-count" data-count="테크리뷰">0</span>
-  </button>
-
-  <button class="category-btn" data-filter="EU AI Act">
-    <span>EU AI Act</span>
-    <span class="category-count" data-count="EU AI Act">0</span>
-  </button>
-
-  <button class="category-btn" data-filter="공공정보화의 불편한 진실">
-    <span>공공정보화의 불편한 진실</span>
-    <span class="category-count" data-count="공공정보화의 불편한 진실">0</span>
-  </button>
-
-  <button class="category-btn" data-filter="비주얼 브리프">
-    <span>비주얼 브리프</span>
-    <span class="category-count" data-count="비주얼 브리프">0</span>
-  </button>
-</div>
   </div>
+
+  <div class="category-nav" id="categoryNav">
+    <button class="category-btn active" data-filter="all">
+      <span>전체</span>
+      <span class="category-count" data-count="all">0</span>
+    </button>
+
+    <button class="category-btn" data-filter="경영기법">
+      <span>경영기법</span>
+      <span class="category-count" data-count="경영기법">0</span>
+    </button>
+
+    <button class="category-btn" data-filter="기술비평">
+      <span>기술비평</span>
+      <span class="category-count" data-count="기술비평">0</span>
+    </button>
+
+    <button class="category-btn" data-filter="테크리뷰">
+      <span>테크리뷰</span>
+      <span class="category-count" data-count="테크리뷰">0</span>
+    </button>
+
+    <button class="category-btn" data-filter="EU AI Act">
+      <span>EU AI Act</span>
+      <span class="category-count" data-count="EU AI Act">0</span>
+    </button>
+
+    <button class="category-btn" data-filter="공공정보화의 불편한 진실">
+      <span>공공정보화의 불편한 진실</span>
+      <span class="category-count" data-count="공공정보화의 불편한 진실">0</span>
+    </button>
+
+    <button class="category-btn" data-filter="비주얼 브리프">
+      <span>비주얼 브리프</span>
+      <span class="category-count" data-count="비주얼 브리프">0</span>
+    </button>
+  </div>
+
+  <script>
+    const categoryButtons = document.querySelectorAll(".category-btn");
+    const cards = document.querySelectorAll(".card[data-category]");
+
+    function updateCounts() {
+      const counts = { all: cards.length };
+
+      cards.forEach((card) => {
+        const category = card.dataset.category;
+        counts[category] = (counts[category] || 0) + 1;
+      });
+
+      document.querySelectorAll(".category-count").forEach((countEl) => {
+        const key = countEl.dataset.count;
+        countEl.textContent = counts[key] || 0;
+      });
+    }
+
+    function filterCards(category) {
+      cards.forEach((card) => {
+        const cardCategory = card.dataset.category;
+
+        if (category === "all" || cardCategory === category) {
+          card.classList.remove("is-hidden");
+        } else {
+          card.classList.add("is-hidden");
+        }
+      });
+    }
+
+    categoryButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        categoryButtons.forEach((btn) => btn.classList.remove("active"));
+        button.classList.add("active");
+        filterCards(button.dataset.filter);
+      });
+    });
+
+    updateCounts();
+    filterCards("all");
+  </script>
 
 </body>
 </html>
