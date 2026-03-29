@@ -5,84 +5,316 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Docs</title>
 
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+
   <style>
+    * {
+      box-sizing: border-box;
+    }
+
     body {
       margin: 0;
-      display: flex;
-      font-family: "Noto Sans KR", sans-serif;
+      font-family: "Noto Sans KR", -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #fff;
+      color: #111;
+    }
+
+    a {
+      color: inherit;
+    }
+
+    .layout {
+      display: grid;
+      grid-template-columns: 280px minmax(0, 1fr);
+      min-height: 100vh;
     }
 
     .sidebar {
-      width: 260px;
-      padding: 20px;
       border-right: 1px solid #eee;
+      padding: 28px 20px 40px;
+      position: sticky;
+      top: 0;
       height: 100vh;
       overflow-y: auto;
+      background: #fff;
     }
 
-    .sidebar a {
-      display: block;
-      margin-bottom: 12px;
+    .sidebar-home {
+      display: inline-block;
+      margin-bottom: 24px;
       font-size: 14px;
-      color: #333;
+      color: #666;
       text-decoration: none;
     }
 
-    .sidebar a.active {
-      font-weight: 600;
+    .sidebar-home:hover {
+      text-decoration: underline;
+    }
+
+    .series-title {
+      margin: 0 0 18px;
+      font-size: 22px;
+      font-weight: 500;
+      letter-spacing: -0.04em;
+    }
+
+    .toc {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .toc a {
+      display: block;
+      padding: 10px 12px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-size: 14px;
+      line-height: 1.45;
+      color: #333;
+    }
+
+    .toc a:hover {
+      background: #f7f7f7;
+    }
+
+    .toc a.active {
+      background: #f4edf0;
+      color: #df0f57;
+      font-weight: 500;
+    }
+
+    .main {
+      padding: 56px 48px 96px;
+    }
+
+    .doc-wrap {
+      width: 860px;
+      max-width: 100%;
+    }
+
+    .doc-category {
+      margin-bottom: 14px;
+      font-size: 15px;
       color: #df0f57;
     }
 
-    .content {
-      flex: 1;
-      padding: 40px;
-      max-width: 800px;
+    .doc-title {
+      margin: 0 0 18px;
+      font-size: 40px;
+      font-weight: 500;
+      line-height: 1.28;
+      letter-spacing: -0.04em;
     }
 
-    h1 {
-      font-size: 28px;
-      margin-bottom: 20px;
+    .doc-meta {
+      margin-bottom: 36px;
+      font-size: 15px;
+      color: #777;
+    }
+
+    .doc-content {
+      font-size: 18px;
+      font-weight: 300;
+      line-height: 1.9;
+      letter-spacing: -0.03em;
+      color: #222;
+    }
+
+    .doc-content h1,
+    .doc-content h2,
+    .doc-content h3 {
+      margin-top: 52px;
+      margin-bottom: 18px;
+      line-height: 1.4;
+      letter-spacing: -0.04em;
+      color: #111;
+    }
+
+    .doc-content h1 { font-size: 34px; font-weight: 500; }
+    .doc-content h2 { font-size: 28px; font-weight: 500; }
+    .doc-content h3 { font-size: 23px; font-weight: 500; }
+
+    .doc-content p {
+      margin: 0 0 22px;
+    }
+
+    .doc-content ul,
+    .doc-content ol {
+      margin: 0 0 24px 22px;
+      padding: 0;
+    }
+
+    .doc-content li {
+      margin-bottom: 10px;
+    }
+
+    .doc-content blockquote {
+      margin: 28px 0;
+      padding: 2px 0 2px 18px;
+      border-left: 3px solid #df0f57;
+      color: #444;
+    }
+
+    .doc-content img {
+      max-width: 100%;
+      height: auto;
+      border-radius: 14px;
+      display: block;
+      margin: 28px auto;
+    }
+
+    .doc-content pre {
+      background: #f7f7f7;
+      padding: 18px;
+      border-radius: 14px;
+      overflow-x: auto;
+      margin: 28px 0;
+    }
+
+    .doc-content code {
+      background: #f5f5f5;
+      padding: 2px 6px;
+      border-radius: 6px;
+      font-size: 0.92em;
+    }
+
+    .doc-content pre code {
+      background: transparent;
+      padding: 0;
+    }
+
+    .error {
+      color: #b00020;
+      font-size: 16px;
+    }
+
+    @media (max-width: 1024px) {
+      .layout {
+        grid-template-columns: 1fr;
+      }
+
+      .sidebar {
+        position: relative;
+        height: auto;
+        border-right: 0;
+        border-bottom: 1px solid #eee;
+      }
+
+      .main {
+        padding: 36px 16px 64px;
+      }
+
+      .doc-title {
+        font-size: 30px;
+      }
+
+      .doc-content {
+        font-size: 17px;
+        line-height: 1.8;
+      }
     }
   </style>
 </head>
-
 <body>
+  <div class="layout">
+    <aside class="sidebar">
+      <a href="/" class="sidebar-home">← 메인으로</a>
+      <h1 class="series-title" id="seriesTitle">문서</h1>
+      <nav class="toc" id="toc"></nav>
+    </aside>
 
-<div class="sidebar" id="sidebar"></div>
-<div class="content">
-  <h1 id="title"></h1>
-  <div id="content"></div>
-</div>
+    <main class="main">
+      <div class="doc-wrap">
+        <div class="doc-category" id="category"></div>
+        <h1 class="doc-title" id="title">불러오는 중</h1>
+        <div class="doc-meta" id="meta"></div>
+        <article class="doc-content" id="content"></article>
+      </div>
+    </main>
+  </div>
 
-<script>
-const params = new URLSearchParams(window.location.search);
-const series = params.get("series");
-const slug = params.get("slug");
+  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const series = params.get("series");
+    const slug = params.get("slug");
 
-fetch("/data/posts.json")
-  .then(res => res.json())
-  .then(posts => {
+    function escapeHtml(value = "") {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
 
-    const docs = posts
-      .filter(p => p.series === series)
-      .sort((a,b) => a.order - b.order);
+    function prettifySeries(seriesName = "") {
+      if (!seriesName) return "문서";
+      if (seriesName === "eu-ai-act") return "EU AI Act";
+      return seriesName;
+    }
 
-    const current = docs.find(p => p.slug === slug) || docs[0];
+    async function initializeDocsPage() {
+      const titleEl = document.getElementById("title");
+      const metaEl = document.getElementById("meta");
+      const contentEl = document.getElementById("content");
+      const categoryEl = document.getElementById("category");
+      const tocEl = document.getElementById("toc");
+      const seriesTitleEl = document.getElementById("seriesTitle");
 
-    document.getElementById("sidebar").innerHTML = docs.map(d => `
-      <a href="/docs.html?series=${series}&slug=${d.slug}" 
-         class="${d.slug === current.slug ? 'active' : ''}">
-        ${d.title}
-      </a>
-    `).join("");
+      if (!series) {
+        titleEl.textContent = "잘못된 접근";
+        contentEl.innerHTML = '<p class="error">series 값이 없습니다.</p>';
+        return;
+      }
 
-    document.getElementById("title").innerText = current.title;
-    document.getElementById("content").innerHTML = `
-      <p>${current.excerpt}</p>
-      <p>여기에 조항 내용이 들어간다.</p>
-    `;
-  });
-</script>
+      try {
+        const response = await fetch("/data/posts.json", { cache: "no-store" });
+        if (!response.ok) throw new Error("posts.json 로드 실패");
 
+        const posts = await response.json();
+        const docs = posts
+          .filter(item => item.type === "doc" && item.series === series)
+          .sort((a, b) => (a.order || 0) - (b.order || 0));
+
+        if (!docs.length) {
+          titleEl.textContent = "문서를 찾을 수 없음";
+          contentEl.innerHTML = '<p class="error">해당 시리즈 문서를 찾을 수 없습니다.</p>';
+          return;
+        }
+
+        const current = docs.find(item => item.slug === slug) || docs[0];
+
+        seriesTitleEl.textContent = prettifySeries(series);
+
+        tocEl.innerHTML = docs.map(item => `
+          <a href="/docs.html?series=${encodeURIComponent(series)}&slug=${encodeURIComponent(item.slug)}"
+             class="${item.slug === current.slug ? "active" : ""}">
+            ${escapeHtml(item.title)}
+          </a>
+        `).join("");
+
+        document.title = current.title;
+        titleEl.textContent = current.title;
+        categoryEl.textContent = current.category || "";
+        metaEl.textContent = current.date || "";
+
+        const markdownResponse = await fetch(`/content/${encodeURIComponent(current.slug)}.md`, { cache: "no-store" });
+        if (!markdownResponse.ok) throw new Error("Markdown 로드 실패");
+
+        const markdown = await markdownResponse.text();
+        contentEl.innerHTML = marked.parse(markdown);
+      } catch (error) {
+        console.error(error);
+        titleEl.textContent = "불러오기 실패";
+        contentEl.innerHTML = '<p class="error">문서를 불러오지 못했습니다.</p>';
+      }
+    }
+
+    initializeDocsPage();
+  </script>
 </body>
 </html>
