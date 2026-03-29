@@ -23,16 +23,22 @@
     }
 
     .container {
-   width: 1200px;
+    width: 1200px;
   max-width: calc(100% - 32px);
   margin: 40px auto;
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-wrap: nowrap;
     }
 
     .card {
-      width: 260px;
-      display: flex;
-      flex-direction: column;
-      flex: 0 0 260px;
+   width: 260px;
+  display: flex;
+  flex-direction: column;
+  flex: 0 0 260px;
     }
 
     .post-link {
@@ -120,15 +126,16 @@
       text-decoration-thickness: 1px;
     }
 
-    @media (max-width: 768px) {
-      .container {
-        width: 100%;
-        max-width: 100%;
-        margin: 24px auto;
-        padding: 0 16px;
-        flex-direction: column;
-        gap: 32px;
-      }
+  @media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .card {
+    width: 100%;
+    flex: none;
+  }
+}
 
       .card {
         width: 100%;
