@@ -50,7 +50,7 @@
       display: flex;
       align-items: flex-end;
       overflow: hidden;
-      border-radius: 16px; /* 라운딩 더 확대 */
+      border-radius: 16px;
     }
 
     .card img {
@@ -81,45 +81,47 @@
     }
 
     .desc {
- margin-top: 12px;
-  font-size: 16px;
-  font-weight: 300;   /* 핵심: 400 → 500 */
-  color: #333;        /* 핵심: 더 진하게 */
-  line-height: 1.4;
-  letter-spacing: -0.02em;
-  display: -webkit-box;
-  -webkit-line-clamp: 3;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
+      margin-top: 12px;
+      font-size: 16px;
+      font-weight: 500;
+      color: #333;
+      line-height: 1.4;
+      letter-spacing: -0.02em;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-decoration: none;
     }
 
-  .tags {
-  display: flex;
-  gap: 10px;
-  margin-top: 14px;
-}
+    .tags {
+      display: flex;
+      gap: 10px;
+      margin-top: 14px;
+    }
 
-.tag {
-  font-size: 15px;
-  font-weight: 400;
-  line-height: 1.4;
-  color: #ff43ae !important;
-  text-decoration: none;
-}
+    .tag {
+      font-size: 15px;
+      font-weight: 400;
+      line-height: 1.4;
+      color: #47B5A8 !important;
+      text-decoration: none;
+    }
 
-.tag:hover {
-  opacity: 0.7;
-}
+    .tag:hover {
+      opacity: 0.7;
+    }
+
     .card:hover img {
       transform: scale(1.03);
     }
 
-  .post-link:hover .title,
-.post-link:hover .desc {
-  text-decoration: underline;
-  text-underline-offset: 3px;
-  text-decoration-thickness: 1px;
-}
+    .post-link:hover .title,
+    .post-link:hover .desc {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-thickness: 1px;
+    }
 
     @media (max-width: 768px) {
       .container {
@@ -160,17 +162,13 @@
       <div class="image-wrap">
         <img src="https://picsum.photos/300/400" alt="">
       </div>
-    </a>
-    <div class="text">
-      <a href="https://example.com/post-1" class="post-link">
+      <div class="text">
         <div class="title">긴 제목 테스트입니다 두 줄까지 들어갑니다 확인용</div>
-      </a>
-      <a href="https://example.com/post-1" class="post-link">
         <div class="desc">이건 설명입니다 세 줄까지만 보여야 합니다 자연스럽게 잘리는지 확인합니다.</div>
-      </a>
-      <div class="tags">
-        <a href="https://example.com/tag/ai" class="tag">#AI</a>
       </div>
+    </a>
+    <div class="tags">
+      <a href="https://example.com/tag/ai" class="tag">#AI</a>
     </div>
   </div>
 
@@ -179,17 +177,13 @@
       <div class="image-wrap">
         <img src="https://picsum.photos/300/350" alt="">
       </div>
-    </a>
-    <div class="text">
-      <a href="https://example.com/post-2" class="post-link">
+      <div class="text">
         <div class="title">짧은 제목</div>
-      </a>
-      <a href="https://example.com/post-2" class="post-link">
         <div class="desc">짧은 설명</div>
-      </a>
-      <div class="tags">
-        <a href="https://example.com/tag/ux" class="tag">#UX</a>
       </div>
+    </a>
+    <div class="tags">
+      <a href="https://example.com/tag/ux" class="tag">#UX</a>
     </div>
   </div>
 
@@ -198,17 +192,13 @@
       <div class="image-wrap">
         <img src="https://picsum.photos/300/450" alt="">
       </div>
-    </a>
-    <div class="text">
-      <a href="https://example.com/post-3" class="post-link">
+      <div class="text">
         <div class="title">또 다른 카드 제목입니다 테스트 중입니다</div>
-      </a>
-      <a href="https://example.com/post-3" class="post-link">
         <div class="desc">조금 더 긴 설명을 넣어서 높이 차이를 만들어 봅니다. 레이아웃이 어떻게 보이는지 확인합니다.</div>
-      </a>
-      <div class="tags">
-        <a href="https://example.com/tag/content" class="tag">#콘텐츠</a>
       </div>
+    </a>
+    <div class="tags">
+      <a href="https://example.com/tag/content" class="tag">#콘텐츠</a>
     </div>
   </div>
 
@@ -217,17 +207,13 @@
       <div class="image-wrap">
         <img src="https://picsum.photos/300/380" alt="">
       </div>
-    </a>
-    <div class="text">
-      <a href="https://example.com/post-4" class="post-link">
+      <div class="text">
         <div class="title">네 번째 카드</div>
-      </a>
-      <a href="https://example.com/post-4" class="post-link">
         <div class="desc">설명입니다</div>
-      </a>
-      <div class="tags">
-        <a href="https://example.com/tag/strategy" class="tag">#전략</a>
       </div>
+    </a>
+    <div class="tags">
+      <a href="https://example.com/tag/strategy" class="tag">#전략</a>
     </div>
   </div>
 
