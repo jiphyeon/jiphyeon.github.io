@@ -62,5 +62,15 @@
     "date": "2026-03-26",
     "slug": "visual-brief-1",
     "featured": false
-  }
+  },
+  {
+  "type": "post",
+  "title": "AI 전환 전략",
+  "excerpt": "AI 전환은 기술이 아니라 구조의 문제다.",
+  "category": "경영기법",
+  "thumbnail": "/images/ai-1.jpg",
+  "date": "2026-03-30",
+  "slug": "ai-strategy",
+  "featured": true
+}
 ]
