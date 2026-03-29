@@ -64,6 +64,7 @@
     "featured": false
   },
   {
+     "id": 6,
   "type": "post",
   "title": "AI 전환 전략",
   "excerpt": "AI 전환은 기술이 아니라 구조의 문제다.",
