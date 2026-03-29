@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>My Blog</title>
+  <title>Jiphyeon</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -238,8 +238,33 @@
       row-gap: 48px;
     }
 
+    /* 하단 카드 영역은 일반적인 UI처럼 상단 정렬 */
+    .filtered-container .image-wrap {
+      align-items: flex-start;
+      height: auto;
+    }
+
+    .filtered-container .card img {
+      height: 260px;
+      object-fit: cover;
+    }
+
     .card.is-hidden {
       display: none;
+    }
+
+    .load-more-trigger {
+      width: 100%;
+      height: 1px;
+    }
+
+    .footer {
+      width: 100%;
+      text-align: center;
+      padding: 40px 0 60px;
+      font-size: 14px;
+      color: #888;
+      letter-spacing: -0.01em;
     }
 
     @media (max-width: 768px) {
@@ -277,6 +302,12 @@
         height: auto;
       }
 
+      .filtered-container .card img {
+        width: 100%;
+        height: 220px;
+        object-fit: cover;
+      }
+
       .title {
         font-size: 20px;
       }
@@ -306,6 +337,10 @@
       .filtered-container {
         margin-bottom: 40px;
       }
+
+      .footer {
+        padding: 32px 16px 44px;
+      }
     }
   </style>
 </head>
@@ -323,13 +358,13 @@
 
       <div class="hero-body">
         <p>
-          우리는 기존의 질서와 법칙이 무너지고, 새로운 패러다임으로 전환되는 <strong>문명 전환(Civilizational Shift)</strong>의 시대를 맞이하고 있다.<br>
+          우리는 기존의 질서와 법칙이 무너지고, 새로운 패러다임으로 전환되는 <strong>Civilizational Shift</strong>의 시대를 맞이하고 있다.<br>
           기술의 급격한 발전과 데이터의 폭증, 경계의 붕괴로 인해 일과 생활, 인간의 역할과 관계, 더 나아가 사회의 방식까지 근본적으로 바뀌고 있다.
         </p>
 
         <p>
           이러한 흐름 속에서는 서로 다른 분야를 아우르는 통섭의 과정을 통해 축적된 지식과 경험이 공유되어 실질적인 변화를 이끌어내야 한다.<br>
-          집현(集賢)은 <strong>새로운 의제와 주제를 제시</strong>하고, <strong>문제를 정의하며 해결 방향을 설계</strong>한다.
+          집현은 <strong>새로운 의제와 주제를 제시</strong>하고, <strong>문제를 정의하며 해결 방향을 설계</strong>한다.
         </p>
       </div>
     </div>
@@ -348,7 +383,7 @@
         </div>
       </a>
       <div class="tags">
-        <a href="https://example.com/tag/ai" class="tag">#AI</a>
+        <a href="#" class="tag">#AI</a>
       </div>
     </div>
 
@@ -363,7 +398,7 @@
         </div>
       </a>
       <div class="tags">
-        <a href="https://example.com/tag/ux" class="tag">#UX</a>
+        <a href="#" class="tag">#UX</a>
       </div>
     </div>
 
@@ -378,7 +413,7 @@
         </div>
       </a>
       <div class="tags">
-        <a href="https://example.com/tag/content" class="tag">#콘텐츠</a>
+        <a href="#" class="tag">#콘텐츠</a>
       </div>
     </div>
 
@@ -393,7 +428,7 @@
         </div>
       </a>
       <div class="tags">
-        <a href="https://example.com/tag/strategy" class="tag">#전략</a>
+        <a href="#" class="tag">#전략</a>
       </div>
     </div>
   </div>
@@ -557,11 +592,26 @@
         <a href="#" class="tag">#비주얼브리프</a>
       </div>
     </div>
+
+    <div class="load-more-trigger" id="loadMoreTrigger"></div>
   </div>
+
+  <footer class="footer">
+    (c) Jiphyeon.com. All Rights Reserved.
+  </footer>
 
   <script>
     const categoryButtons = document.querySelectorAll(".category-btn");
-    const cards = document.querySelectorAll("#filteredCards .card[data-category]");
+    const cards = Array.from(document.querySelectorAll("#filteredCards .card[data-category]"));
+    const loadMoreTrigger = document.getElementById("loadMoreTrigger");
+
+    let visibleCount = 6;
+    const step = 4;
+
+    function getActiveFilter() {
+      const active = document.querySelector(".category-btn.active");
+      return active ? active.dataset.filter : "all";
+    }
 
     function updateCounts() {
       const counts = { all: cards.length };
@@ -577,28 +627,63 @@
       });
     }
 
-    function filterCards(category) {
-      cards.forEach((card) => {
-        const cardCategory = card.dataset.category;
+    function renderVisible(category = "all") {
+      const filtered = cards.filter((card) => {
+        return category === "all" || card.dataset.category === category;
+      });
 
-        if (category === "all" || cardCategory === category) {
+      cards.forEach((card) => {
+        card.classList.add("is-hidden");
+      });
+
+      filtered.forEach((card, index) => {
+        if (index < visibleCount) {
           card.classList.remove("is-hidden");
-        } else {
-          card.classList.add("is-hidden");
         }
       });
+
+      if (filtered.length <= visibleCount) {
+        loadMoreTrigger.style.display = "none";
+      } else {
+        loadMoreTrigger.style.display = "block";
+      }
+    }
+
+    function loadMore() {
+      const currentFilter = getActiveFilter();
+      const filtered = cards.filter((card) => {
+        return currentFilter === "all" || card.dataset.category === currentFilter;
+      });
+
+      if (visibleCount < filtered.length) {
+        visibleCount += step;
+        renderVisible(currentFilter);
+      }
     }
 
     categoryButtons.forEach((button) => {
       button.addEventListener("click", () => {
         categoryButtons.forEach((btn) => btn.classList.remove("active"));
         button.classList.add("active");
-        filterCards(button.dataset.filter);
+        visibleCount = 6;
+        renderVisible(button.dataset.filter);
       });
     });
 
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        loadMore();
+      }
+    }, {
+      root: null,
+      rootMargin: "200px 0px",
+      threshold: 0
+    });
+
+    observer.observe(loadMoreTrigger);
+
     updateCounts();
-    filterCards("all");
+    renderVisible("all");
   </script>
 
 </body>
