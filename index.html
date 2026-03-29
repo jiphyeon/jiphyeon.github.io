@@ -692,7 +692,7 @@
     function resizeMasonry() {
       const styles = window.getComputedStyle(filteredContainer);
       const rowSize = parseInt(styles.getPropertyValue("grid-auto-rows"), 10);
-      const rowGap = parseInt(styles.getPropertyValue("gap"), 10);
+      const rowGap = parseInt(styles.getPropertyValue("row-gap"), 10);
 
       cards.forEach((card) => {
         if (card.classList.contains("is-hidden")) {
@@ -768,18 +768,28 @@
 
     observer.observe(loadMoreTrigger);
 
-    window.addEventListener("load", () => {
-      updateCounts();
-      applyFilter("all");
-    });
+   window.addEventListener("load", () => {
+  updateCounts();
+  applyFilter("all");
+
+  setTimeout(() => {
+    resizeMasonry();
+  }, 100);
+});
 
     window.addEventListener("resize", () => {
       resizeMasonry();
     });
 
     document.querySelectorAll("#filteredCards img").forEach((img) => {
-      img.addEventListener("load", resizeMasonry);
+  if (img.complete) {
+    resizeMasonry();
+  } else {
+    img.addEventListener("load", () => {
+      resizeMasonry();
     });
+  }
+});
   </script>
 
 </body>
