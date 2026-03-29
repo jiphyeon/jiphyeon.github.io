@@ -235,20 +235,22 @@
 
     /* 하단 masonry 카드 영역 */
     .filtered-container {
-      width: 1200px;
-      max-width: calc(100% - 32px);
-      margin: 0 auto 40px;
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 24px;
-      grid-auto-rows: 8px;
-      align-items: start;
+     width: 1200px;
+  max-width: calc(100% - 32px);
+  margin: 0 auto 40px;
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
+  grid-auto-rows: 8px;
+  grid-auto-flow: dense;
+  align-items: start;
     }
 
     .filtered-card {
-      width: 100%;
-      display: block;
-      margin: 0;
+     width: 100%;
+  display: block;
+  margin: 0;
+  align-self: start;
     }
 
     .filtered-card-inner {
