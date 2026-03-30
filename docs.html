@@ -215,6 +215,15 @@
         font-size: 17px;
         line-height: 1.8;
       }
+      .toc-item {
+  color: #888;
+  cursor: pointer;
+}
+
+.toc-item.active {
+  font-weight: 700;
+  color: #000;
+}
     }
   </style>
 </head>
@@ -237,7 +246,7 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  <script>
+<script>
 async function init() {
   const params = new URLSearchParams(location.search);
   const bookId = params.get("book") || "eu-ai-act";
@@ -249,8 +258,18 @@ async function init() {
   document.getElementById("book-title").innerText = meta.title;
 
   const toc = document.getElementById("toc");
+  toc.innerHTML = "";
 
   let flat = [];
+
+  meta.structure.forEach(part => {
+    part.items.forEach(item => {
+      flat.push(item);
+    });
+  });
+
+  let current = flat.find(i => i.slug === chapterSlug);
+  if (!current) current = flat[0];
 
   meta.structure.forEach(part => {
     const partEl = document.createElement("div");
@@ -259,11 +278,13 @@ async function init() {
     toc.appendChild(partEl);
 
     part.items.forEach(item => {
-      flat.push(item);
-
       const itemEl = document.createElement("div");
       itemEl.className = "toc-item";
       itemEl.innerText = item.title;
+
+      if (item.slug === current.slug) {
+        itemEl.classList.add("active");
+      }
 
       itemEl.onclick = () => {
         location.href = `?book=${bookId}&chapter=${item.slug}`;
@@ -273,22 +294,16 @@ async function init() {
     });
   });
 
-  let current = flat.find(i => i.slug === chapterSlug);
-  if (!current) current = flat[0];
-
   document.getElementById("doc-title").innerText = current.title;
 
-  loadContent(bookId, current.file);
-
+  await loadContent(bookId, current.file);
   setupNav(flat, current, bookId);
 }
 
 async function loadContent(bookId, file) {
   const res = await fetch(`/content/books/${bookId}/${file}`);
   const md = await res.text();
-
-  document.getElementById("doc-body").innerHTML =
-    marked.parse(md);
+  document.getElementById("doc-body").innerHTML = marked.parse(md);
 }
 
 function setupNav(list, current, bookId) {
@@ -298,11 +313,15 @@ function setupNav(list, current, bookId) {
   const next = list[idx + 1];
 
   document.getElementById("prev").onclick = () => {
-    if (prev) location.href = `?book=${bookId}&chapter=${prev.slug}`;
+    if (prev) {
+      location.href = `?book=${bookId}&chapter=${prev.slug}`;
+    }
   };
 
   document.getElementById("next").onclick = () => {
-    if (next) location.href = `?book=${bookId}&chapter=${next.slug}`;
+    if (next) {
+      location.href = `?book=${bookId}&chapter=${next.slug}`;
+    }
   };
 }
 
