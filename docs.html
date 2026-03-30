@@ -260,8 +260,7 @@
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-<script>
+ <script>
   const params = new URLSearchParams(window.location.search);
   const book = params.get("book");
   const chapter = params.get("chapter");
@@ -276,32 +275,32 @@
   }
 
   function setupNavigation(list, current, book) {
-    const index = list.findIndex(item => item.slug === current.slug);
+  const index = list.findIndex(item => item.slug === current.slug);
 
-    const prev = list[index - 1];
-    const next = list[index + 1];
+  const prev = list[index - 1];
+  const next = list[index + 1];
 
-    const prevEl = document.getElementById("prevLink");
-    const nextEl = document.getElementById("nextLink");
+  const prevEl = document.getElementById("prevLink");
+  const nextEl = document.getElementById("nextLink");
 
-    if (!prevEl || !nextEl) return;
+  if (!prevEl || !nextEl) return;
 
-    if (prev) {
-      prevEl.href = `/docs.html?book=${encodeURIComponent(book)}&chapter=${encodeURIComponent(prev.slug)}`;
-      prevEl.textContent = `← ${prev.title}`;
-    } else {
-      prevEl.removeAttribute("href");
-      prevEl.textContent = "";
-    }
-
-    if (next) {
-      nextEl.href = `/docs.html?book=${encodeURIComponent(book)}&chapter=${encodeURIComponent(next.slug)}`;
-      nextEl.textContent = `${next.title} →`;
-    } else {
-      nextEl.removeAttribute("href");
-      nextEl.textContent = "";
-    }
+  if (prev) {
+    prevEl.href = `/docs.html?book=${encodeURIComponent(book)}&chapter=${encodeURIComponent(prev.slug)}`;
+    prevEl.textContent = `← ${prev.title}`;
+  } else {
+    prevEl.removeAttribute("href");
+    prevEl.textContent = "";
   }
+
+  if (next) {
+    nextEl.href = `/docs.html?book=${encodeURIComponent(book)}&chapter=${encodeURIComponent(next.slug)}`;
+    nextEl.textContent = `${next.title} →`;
+  } else {
+    nextEl.removeAttribute("href");
+    nextEl.textContent = "";
+  }
+}
 
   async function initializeDocsPage() {
     const titleEl = document.getElementById("title");
