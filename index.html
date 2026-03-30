@@ -1,89 +1,763 @@
-<script>
-const params = new URLSearchParams(window.location.search);
-const category = params.get("category");
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Jiphyeon</title>
 
-/* =========================
-   기본 유틸
-========================= */
-function escapeHtml(value = "") {
-  return String(value)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
-}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
 
-function getPostUrl(post) {
-  return `/post.html?slug=${encodeURIComponent(post.slug)}`;
-}
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-/* =========================
-   🔥 핵심: 이미지 자동 fallback
-========================= */
-const categoryImageMap = {
-  "경영기법": "business",
-  "기술비평": "technology",
-  "비주얼 브리프": "minimal design",
-  "EU AI Act": "europe law",
-  "공공정보화의 불편한 진실": "city architecture"
-};
+    body {
+      margin: 0;
+      font-family: "Noto Sans KR", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
+      background: #ffffff;
+      color: #111;
+      word-break: keep-all;
+      overflow-wrap: break-word;
+    }
 
-function getFallbackKeyword(post) {
-  return categoryImageMap[post.category] || "landscape";
-}
+    a {
+      color: inherit;
+    }
 
-function getThumbnailUrl(post) {
-  if (post.thumbnail && post.thumbnail.trim() !== "") {
-    return post.thumbnail;
-  }
+    .hero {
+      width: 1200px;
+      max-width: calc(100% - 32px);
+      margin: 72px auto 0;
+    }
 
-  const keyword = encodeURIComponent(getFallbackKeyword(post));
-  return `https://source.unsplash.com/800x600/?${keyword}`;
-}
+    .hero-copy {
+      margin-top: 72px;
+    }
 
-/* =========================
-   카드 생성
-========================= */
-function createCard(post) {
-  return `
-    <a href="${getPostUrl(post)}" class="card">
-      <div class="card-image">
-        <img src="${escapeHtml(getThumbnailUrl(post))}" 
-             alt="${escapeHtml(post.title)}" 
-             loading="lazy">
+    .hero-copy h1 {
+      margin: 0 0 18px;
+      font-size: 52px;
+      font-weight: 400;
+      line-height: 1.18;
+      letter-spacing: -0.06em;
+      color: #111;
+    }
+
+    .hero-copy .sub {
+      margin: 0 0 20px;
+      font-size: 22px;
+      font-weight: 300;
+      line-height: 1.3;
+      letter-spacing: -0.05em;
+      color: #df0f57;
+    }
+
+    .hero-body {
+      max-width: 920px;
+    }
+
+    .hero-body p {
+      margin: 0 0 18px;
+      font-size: 18px;
+      font-weight: 300;
+      line-height: 1.6;
+      letter-spacing: -0.05em;
+      color: #222;
+    }
+
+    .hero-body strong {
+      font-weight: 450;
+      color: #111;
+    }
+
+    .post-link {
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+    .post-link:hover .title,
+    .post-link:hover .desc {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-thickness: 1px;
+    }
+
+    .text {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      margin-top: 18px;
+    }
+
+    .title {
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 1.34;
+      letter-spacing: -0.05em;
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-decoration: none;
+    }
+
+    .desc {
+      margin-top: 12px;
+      font-size: 16px;
+      font-weight: 300;
+      color: #333;
+      line-height: 1.45;
+      letter-spacing: -0.04em;
+      display: -webkit-box;
+      -webkit-line-clamp: 3;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+      text-decoration: none;
+    }
+
+    .tags {
+      display: flex;
+      gap: 10px;
+      margin-top: 14px;
+      flex-wrap: wrap;
+    }
+
+    .tag {
+      font-size: 15px;
+      font-weight: 350;
+      line-height: 1.4;
+      color: #df0f57 !important;
+      text-decoration: none;
+    }
+
+    .tag:hover {
+      opacity: 0.7;
+      text-decoration: underline;
+    }
+
+    .featured-container {
+      width: 1200px;
+      max-width: calc(100% - 32px);
+      margin: 40px auto 0;
+      display: flex;
+      gap: 24px;
+      align-items: flex-start;
+    }
+
+    .featured-card {
+      width: 260px;
+      flex: 0 0 260px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .featured-card .image-wrap,
+    .filtered-card .image-wrap {
+      position: relative;
+      overflow: hidden;
+      border-radius: 16px;
+      background: #f3f3f3;
+    }
+
+    .featured-card .image-wrap {
+      width: 100%;
+      height: 420px;
+      display: flex;
+      align-items: flex-end;
+    }
+
+    .filtered-card .image-wrap {
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      display: block;
+    }
+
+    .featured-card .image-wrap::after,
+    .filtered-card .image-wrap::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(
+        to bottom,
+        rgba(0, 0, 0, 0.05),
+        rgba(0, 0, 0, 0.28)
+      );
+      pointer-events: none;
+    }
+
+    .featured-card img,
+    .filtered-card img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+      border-radius: 16px;
+      filter: brightness(0.82);
+      transition: transform 0.3s ease;
+    }
+
+    .featured-card:hover img {
+      transform: scale(1.03);
+    }
+
+    .filtered-card:hover img {
+      transform: scale(1.02);
+    }
+
+    .category-nav {
+      width: 1200px;
+      max-width: calc(100% - 32px);
+      margin: 56px auto 36px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+    }
+
+    .category-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 12px 18px;
+      border: 1px solid #ebebeb;
+      border-radius: 999px;
+      background: #fff;
+      color: #111;
+      font-size: 16px;
+      font-weight: 400;
+      letter-spacing: -0.04em;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .category-btn:hover,
+    .category-btn.is-active {
+      border-color: #111;
+    }
+
+    .category-count {
+      font-size: 13px;
+      color: #777;
+    }
+
+    .filtered-container {
+      width: 1200px;
+      max-width: calc(100% - 32px);
+      margin: 0 auto 40px;
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 32px 24px;
+      grid-auto-rows: 8px;
+      align-items: start;
+    }
+
+    .filtered-card {
+      width: 100%;
+      display: block;
+      margin: 0;
+      align-self: start;
+    }
+
+    .filtered-card-inner {
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .filtered-card.is-hidden {
+      display: none !important;
+    }
+
+    .load-more-trigger {
+      width: 1200px;
+      max-width: calc(100% - 32px);
+      height: 1px;
+      margin: 0 auto;
+    }
+
+    .footer {
+      width: 1200px;
+      max-width: calc(100% - 32px);
+      margin: 0 auto;
+      text-align: left;
+      padding: 40px 0 60px;
+      font-size: 14px;
+      color: #888;
+      letter-spacing: -0.03em;
+    }
+
+    .loading,
+    .error-message,
+    .empty-message {
+      width: 1200px;
+      max-width: calc(100% - 32px);
+      margin: 0 auto 32px;
+      font-size: 16px;
+      color: #666;
+      letter-spacing: -0.03em;
+    }
+
+    @media (max-width: 1024px) {
+      .filtered-container {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+      }
+    }
+
+    @media (max-width: 768px) {
+      .hero {
+        width: 100%;
+        max-width: 100%;
+        margin: 40px auto 24px;
+        padding: 0 16px;
+      }
+
+      .hero-copy {
+        margin-top: 56px;
+      }
+
+      .hero-copy h1 {
+        font-size: 40px;
+      }
+
+      .hero-copy .sub {
+        font-size: 18px;
+      }
+
+      .hero-body p {
+        font-size: 16px;
+      }
+
+      .featured-container {
+        width: 100%;
+        max-width: 100%;
+        margin: 24px auto 0;
+        padding: 0 16px;
+        flex-direction: column;
+        gap: 32px;
+      }
+
+      .featured-card {
+        width: 100%;
+        flex: none;
+      }
+
+      .featured-card .image-wrap {
+        height: auto;
+        aspect-ratio: 4 / 3;
+      }
+
+      .category-nav {
+        width: 100%;
+        max-width: 100%;
+        margin: 36px auto 32px;
+        padding: 0 16px;
+        gap: 10px;
+      }
+
+      .category-btn {
+        padding: 12px 18px;
+        font-size: 16px;
+        border-radius: 16px;
+      }
+
+      .category-count {
+        font-size: 13px;
+      }
+
+      .filtered-container {
+        width: 100%;
+        max-width: 100%;
+        padding: 0 16px;
+        margin-bottom: 32px;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .load-more-trigger,
+      .footer,
+      .loading,
+      .error-message,
+      .empty-message {
+        width: 100%;
+        max-width: 100%;
+        padding: 0 16px;
+      }
+
+      .footer {
+        padding-top: 32px;
+        padding-bottom: 48px;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .filtered-container {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <section class="hero">
+    <div class="hero-copy">
+      <h1>Jiphyeon</h1>
+      <div class="sub">기술 인문 이니셔티브 집현</div>
+      <div class="hero-body">
+        <p>기술과 사회를 더 깊게 바라보고, 구조적으로 읽고, 분명하게 정리한다.</p>
       </div>
-      <div class="card-content">
-        <div class="category">${escapeHtml(post.category)}</div>
-        <h3>${escapeHtml(post.title)}</h3>
-        <p>${escapeHtml(post.excerpt || "")}</p>
-      </div>
-    </a>
-  `;
-}
+    </div>
+  </section>
 
-/* =========================
-   데이터 로딩
-========================= */
-async function loadPosts() {
-  const res = await fetch("/posts.json");
-  const posts = await res.json();
+  <div class="featured-container" id="featuredContainer"></div>
 
-  let filtered = posts;
+  <div class="category-nav">
+    <button class="category-btn is-active" data-filter="all">
+      <span>전체</span>
+      <span class="category-count" data-count="all">0</span>
+    </button>
 
-  if (category) {
-    filtered = posts.filter(p => p.category === category);
-  }
+    <button class="category-btn" data-filter="경영기법">
+      <span>경영기법</span>
+      <span class="category-count" data-count="경영기법">0</span>
+    </button>
 
-  const container = document.getElementById("posts");
+    <button class="category-btn" data-filter="기술비평">
+      <span>기술비평</span>
+      <span class="category-count" data-count="기술비평">0</span>
+    </button>
 
-  if (!filtered.length) {
-    container.innerHTML = "<p>포스트가 없습니다.</p>";
-    return;
-  }
+    <button class="category-btn" data-filter="테크리뷰">
+      <span>테크리뷰</span>
+      <span class="category-count" data-count="테크리뷰">0</span>
+    </button>
 
-  container.innerHTML = filtered.map(createCard).join("");
-}
+    <button class="category-btn" data-filter="EU AI Act">
+      <span>EU AI Act</span>
+      <span class="category-count" data-count="EU AI Act">0</span>
+    </button>
 
-loadPosts();
-</script>
+    <button class="category-btn" data-filter="공공정보화의 불편한 진실">
+      <span>공공정보화의 불편한 진실</span>
+      <span class="category-count" data-count="공공정보화의 불편한 진실">0</span>
+    </button>
+
+    <button class="category-btn" data-filter="비주얼 브리프">
+      <span>비주얼 브리프</span>
+      <span class="category-count" data-count="비주얼 브리프">0</span>
+    </button>
+  </div>
+
+  <div class="loading" id="loadingMessage">콘텐츠를 불러오는 중입니다.</div>
+  <div class="error-message" id="errorMessage" style="display:none;">콘텐츠를 불러오지 못했습니다.</div>
+  <div class="empty-message" id="emptyMessage" style="display:none;">표시할 게시물이 없습니다.</div>
+
+  <div class="filtered-container" id="filteredCards"></div>
+  <div class="load-more-trigger" id="loadMoreTrigger"></div>
+
+  <footer class="footer">
+    © Jiphyeon. Powered by GitHub Pages.
+  </footer>
+
+  <script>
+    const featuredContainer = document.getElementById("featuredContainer");
+    const filteredContainer = document.getElementById("filteredCards");
+    const loadMoreTrigger = document.getElementById("loadMoreTrigger");
+    const loadingMessage = document.getElementById("loadingMessage");
+    const errorMessage = document.getElementById("errorMessage");
+    const emptyMessage = document.getElementById("emptyMessage");
+    const categoryButtons = document.querySelectorAll(".category-btn");
+
+    let allPosts = [];
+    let cards = [];
+    let visibleCount = 8;
+    const step = 4;
+    let activeFilter = "all";
+    let observer;
+
+    function escapeHtml(value = "") {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
+
+    function normalizePost(post, index) {
+      return {
+        id: post.id ?? index + 1,
+        type: post.type || "post",
+        title: post.title || "제목 없음",
+        excerpt: post.excerpt || "",
+        category: post.category || "미분류",
+        tags: Array.isArray(post.tags) ? post.tags : [],
+        thumbnail: post.thumbnail || "",
+        date: post.date || "",
+        slug: post.slug || `post-${index + 1}`,
+        featured: Boolean(post.featured),
+        series: post.series || "",
+        order: Number.isFinite(post.order) ? post.order : 0
+      };
+    }
+
+    function sortPosts(posts) {
+      return [...posts].sort((a, b) => {
+        const dateA = a.date ? new Date(a.date).getTime() : 0;
+        const dateB = b.date ? new Date(b.date).getTime() : 0;
+
+        if (dateB !== dateA) {
+          return dateB - dateA;
+        }
+
+        return (a.order || 0) - (b.order || 0);
+      });
+    }
+
+    function getPostUrl(post) {
+      if (post.type === "doc") {
+        const params = new URLSearchParams();
+        if (post.series) params.set("series", post.series);
+        params.set("slug", post.slug);
+        return `/docs.html?${params.toString()}`;
+      }
+
+      return `/post.html?slug=${encodeURIComponent(post.slug)}`;
+    }
+
+    function getThumbnailUrl(post, width = 800, height = 600) {
+      if (post.thumbnail && post.thumbnail.trim() !== "") {
+        return post.thumbnail;
+      }
+
+      const seed = encodeURIComponent(post.slug || post.title || "jiphyeon");
+      return `https://picsum.photos/seed/${seed}/${width}/${height}`;
+    }
+
+    function renderTags(tags) {
+      if (!tags.length) return "";
+
+      return `
+        <div class="tags">
+          ${tags.map(tag => `<a href="#" class="tag" data-tag="${escapeHtml(tag)}">#${escapeHtml(tag)}</a>`).join("")}
+        </div>
+      `;
+    }
+
+    function createFeaturedCard(post) {
+      const thumbnail = `<img src="${escapeHtml(getThumbnailUrl(post, 800, 1200))}" alt="${escapeHtml(post.title)}" loading="lazy">`;
+
+      return `
+        <div class="featured-card">
+          <a href="${getPostUrl(post)}" class="post-link">
+            <div class="image-wrap">
+              ${thumbnail}
+            </div>
+            <div class="text">
+              <div class="title">${escapeHtml(post.title)}</div>
+              <div class="desc">${escapeHtml(post.excerpt)}</div>
+            </div>
+          </a>
+          ${renderTags(post.tags)}
+        </div>
+      `;
+    }
+
+    function createFilteredCard(post) {
+      const thumbnail = `<img src="${escapeHtml(getThumbnailUrl(post, 800, 600))}" alt="${escapeHtml(post.title)}" loading="lazy">`;
+
+      return `
+        <div class="filtered-card" data-category="${escapeHtml(post.category)}">
+          <div class="filtered-card-inner">
+            <a href="${getPostUrl(post)}" class="post-link">
+              <div class="image-wrap">
+                ${thumbnail}
+              </div>
+              <div class="text">
+                <div class="title">${escapeHtml(post.title)}</div>
+                <div class="desc">${escapeHtml(post.excerpt)}</div>
+              </div>
+            </a>
+            ${renderTags(post.tags)}
+          </div>
+        </div>
+      `;
+    }
+
+    function renderFeatured(posts) {
+      const featuredPosts = posts.filter(post => post.featured).slice(0, 4);
+      featuredContainer.innerHTML = featuredPosts.map(createFeaturedCard).join("");
+    }
+
+    function renderFiltered(posts) {
+      filteredContainer.innerHTML = posts.map(createFilteredCard).join("");
+      cards = Array.from(filteredContainer.querySelectorAll(".filtered-card"));
+      updateVisibleCards(true);
+      bindTagEvents();
+      applyMasonry();
+    }
+
+    function updateCategoryCounts(posts) {
+      const counts = posts.reduce((acc, post) => {
+        acc[post.category] = (acc[post.category] || 0) + 1;
+        return acc;
+      }, {});
+
+      document.querySelectorAll(".category-count").forEach(countEl => {
+        const key = countEl.dataset.count;
+        if (key === "all") {
+          countEl.textContent = posts.length;
+        } else {
+          countEl.textContent = counts[key] || 0;
+        }
+      });
+    }
+
+    function applyFilter(filter) {
+      activeFilter = filter;
+      visibleCount = 8;
+
+      categoryButtons.forEach(button => {
+        button.classList.toggle("is-active", button.dataset.filter === filter);
+      });
+
+      cards.forEach(card => {
+        const matches = filter === "all" || card.dataset.category === filter;
+        card.classList.toggle("is-hidden", !matches);
+      });
+
+      updateVisibleCards(true);
+      applyMasonry();
+      toggleEmptyState();
+    }
+
+    function getFilteredCards() {
+      return cards.filter(card => !card.classList.contains("is-hidden"));
+    }
+
+    function updateVisibleCards(reset = false) {
+      const activeCards = getFilteredCards();
+
+      activeCards.forEach((card, index) => {
+        card.style.display = index < visibleCount ? "block" : "none";
+      });
+
+      if (reset) {
+        const hiddenCards = activeCards.filter((_, index) => index >= visibleCount);
+        hiddenCards.forEach(card => {
+          card.style.display = "none";
+        });
+      }
+
+      const hasMore = activeCards.length > visibleCount;
+      loadMoreTrigger.style.display = hasMore ? "block" : "none";
+    }
+
+    function loadMoreCards() {
+      const activeCards = getFilteredCards();
+      if (visibleCount >= activeCards.length) return;
+
+      visibleCount += step;
+      updateVisibleCards();
+      applyMasonry();
+    }
+
+    function toggleEmptyState() {
+      const activeCards = getFilteredCards();
+      emptyMessage.style.display = activeCards.length ? "none" : "block";
+    }
+
+    function applyMasonry() {
+      const grid = filteredContainer;
+      if (!grid) return;
+
+      const rowHeight = parseInt(getComputedStyle(grid).getPropertyValue("grid-auto-rows"), 10);
+      const rowGap = parseInt(getComputedStyle(grid).getPropertyValue("gap"), 10) || 32;
+
+      Array.from(grid.children).forEach(item => {
+        if (item.classList.contains("is-hidden") || item.style.display === "none") {
+          item.style.gridRowEnd = "";
+          return;
+        }
+
+        const inner = item.querySelector(".filtered-card-inner");
+        if (!inner) return;
+
+        const height = inner.getBoundingClientRect().height;
+        const span = Math.ceil((height + rowGap) / (rowHeight + rowGap));
+        item.style.gridRowEnd = `span ${span}`;
+      });
+    }
+
+    function bindTagEvents() {
+      document.querySelectorAll(".tag").forEach(tag => {
+        tag.addEventListener("click", event => {
+          event.preventDefault();
+          const tagName = tag.dataset.tag;
+          const matchedPosts = allPosts.filter(post => post.tags.includes(tagName));
+          renderFiltered(matchedPosts);
+          featuredContainer.innerHTML = "";
+          updateCategoryCounts(matchedPosts);
+          emptyMessage.style.display = matchedPosts.length ? "none" : "block";
+        });
+      });
+    }
+
+    async function loadPosts() {
+      loadingMessage.style.display = "block";
+      errorMessage.style.display = "none";
+      emptyMessage.style.display = "none";
+
+      try {
+        const response = await fetch("/data/posts.json", { cache: "no-store" });
+        if (!response.ok) throw new Error("posts.json 로드 실패");
+
+        const rawPosts = await response.json();
+        allPosts = sortPosts(rawPosts.map(normalizePost));
+
+        renderFeatured(allPosts);
+        renderFiltered(allPosts);
+        updateCategoryCounts(allPosts);
+        applyFilter("all");
+
+        loadingMessage.style.display = "none";
+      } catch (error) {
+        console.error(error);
+        loadingMessage.style.display = "none";
+        errorMessage.style.display = "block";
+      }
+    }
+
+    categoryButtons.forEach(button => {
+      button.addEventListener("click", () => {
+        renderFiltered(allPosts);
+        renderFeatured(allPosts);
+        updateCategoryCounts(allPosts);
+        applyFilter(button.dataset.filter);
+      });
+    });
+
+    window.addEventListener("resize", () => {
+      applyMasonry();
+    });
+
+    window.addEventListener("load", () => {
+      applyMasonry();
+    });
+
+    observer = new IntersectionObserver(entries => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          loadMoreCards();
+        }
+      });
+    }, {
+      rootMargin: "200px"
+    });
+
+    observer.observe(loadMoreTrigger);
+
+    loadPosts();
+  </script>
+</body>
+</html>
