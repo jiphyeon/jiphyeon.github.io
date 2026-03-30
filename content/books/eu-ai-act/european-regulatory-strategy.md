@@ -41,6 +41,7 @@ EU는 세계 3대 소비시장 중 하나다. 2024년 기준 EU의 명목 GDP는
 
 이것이 **유럽의 규제 전략**이다. 법을 통해 시장을 재설계하고 표준을 통해 영향력을 행사한다. 그리고 이 전략이 본격화된 사례가 바로 **EU AI Act**다. 이것은 단순한 법률이 아니라 유럽이 새로운 디지털 질서에서 어떤 위상을 확보하려는지 보여주는 의지와 선택의 결과다. **유럽은 법을 통해 시장을 재설계하고, 표준을 통해 영향력을 투사하려 한다.**
 
+
 참고자료
 * https://digital-strategy.ec.europa.eu/en/library/ethics-guidelines-trustworthy-ai
 * https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:52021PC0206
