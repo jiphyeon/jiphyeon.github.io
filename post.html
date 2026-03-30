@@ -235,12 +235,7 @@
         const markdownResponse = await fetch(`/content/${encodeURIComponent(slug)}.md`, { cache: "no-store" });
         if (!markdownResponse.ok) throw new Error("Markdown 로드 실패");
 
-        const markdown = await markdownResponse.text();
-
-// front matter 제거
-const cleaned = markdown.replace(/^---[\s\S]*?---/, "").trim();
-
-contentEl.innerHTML = marked.parse(cleaned);
+        
       } catch (error) {
         console.error(error);
         titleEl.textContent = "불러오기 실패";
