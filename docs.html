@@ -238,83 +238,75 @@
 
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script>
-    const params = new URLSearchParams(window.location.search);
-    const series = params.get("series");
-    const slug = params.get("slug");
+async function init() {
+  const params = new URLSearchParams(location.search);
+  const bookId = params.get("book") || "eu-ai-act";
+  const chapterSlug = params.get("chapter");
 
-    function escapeHtml(value = "") {
-      return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-    }
+  const metaRes = await fetch(`/content/books/${bookId}/meta.json`);
+  const meta = await metaRes.json();
 
-    function prettifySeries(seriesName = "") {
-      if (!seriesName) return "문서";
-      if (seriesName === "eu-ai-act") return "EU AI Act";
-      return seriesName;
-    }
+  document.getElementById("book-title").innerText = meta.title;
 
-    async function initializeDocsPage() {
-      const titleEl = document.getElementById("title");
-      const metaEl = document.getElementById("meta");
-      const contentEl = document.getElementById("content");
-      const categoryEl = document.getElementById("category");
-      const tocEl = document.getElementById("toc");
-      const seriesTitleEl = document.getElementById("seriesTitle");
+  const toc = document.getElementById("toc");
 
-      if (!series) {
-        titleEl.textContent = "잘못된 접근";
-        contentEl.innerHTML = '<p class="error">series 값이 없습니다.</p>';
-        return;
-      }
+  let flat = [];
 
-      try {
-        const response = await fetch("/data/posts.json", { cache: "no-store" });
-        if (!response.ok) throw new Error("posts.json 로드 실패");
+  meta.structure.forEach(part => {
+    const partEl = document.createElement("div");
+    partEl.className = "toc-part";
+    partEl.innerText = part.title;
+    toc.appendChild(partEl);
 
-        const posts = await response.json();
-        const docs = posts
-          .filter(item => item.type === "doc" && item.series === series)
-          .sort((a, b) => (a.order || 0) - (b.order || 0));
+    part.items.forEach(item => {
+      flat.push(item);
 
-        if (!docs.length) {
-          titleEl.textContent = "문서를 찾을 수 없음";
-          contentEl.innerHTML = '<p class="error">해당 시리즈 문서를 찾을 수 없습니다.</p>';
-          return;
-        }
+      const itemEl = document.createElement("div");
+      itemEl.className = "toc-item";
+      itemEl.innerText = item.title;
 
-        const current = docs.find(item => item.slug === slug) || docs[0];
+      itemEl.onclick = () => {
+        location.href = `?book=${bookId}&chapter=${item.slug}`;
+      };
 
-        seriesTitleEl.textContent = prettifySeries(series);
+      toc.appendChild(itemEl);
+    });
+  });
 
-        tocEl.innerHTML = docs.map(item => `
-          <a href="/docs.html?series=${encodeURIComponent(series)}&slug=${encodeURIComponent(item.slug)}"
-             class="${item.slug === current.slug ? "active" : ""}">
-            ${escapeHtml(item.title)}
-          </a>
-        `).join("");
+  let current = flat.find(i => i.slug === chapterSlug);
+  if (!current) current = flat[0];
 
-        document.title = current.title;
-        titleEl.textContent = current.title;
-        categoryEl.textContent = current.category || "";
-        metaEl.textContent = current.date || "";
+  document.getElementById("doc-title").innerText = current.title;
 
-        const markdownResponse = await fetch(`/content/${encodeURIComponent(current.slug)}.md`, { cache: "no-store" });
-        if (!markdownResponse.ok) throw new Error("Markdown 로드 실패");
+  loadContent(bookId, current.file);
 
-        const markdown = await markdownResponse.text();
-        contentEl.innerHTML = marked.parse(markdown);
-      } catch (error) {
-        console.error(error);
-        titleEl.textContent = "불러오기 실패";
-        contentEl.innerHTML = '<p class="error">문서를 불러오지 못했습니다.</p>';
-      }
-    }
+  setupNav(flat, current, bookId);
+}
 
-    initializeDocsPage();
-  </script>
+async function loadContent(bookId, file) {
+  const res = await fetch(`/content/books/${bookId}/${file}`);
+  const md = await res.text();
+
+  document.getElementById("doc-body").innerHTML =
+    marked.parse(md);
+}
+
+function setupNav(list, current, bookId) {
+  const idx = list.findIndex(i => i.slug === current.slug);
+
+  const prev = list[idx - 1];
+  const next = list[idx + 1];
+
+  document.getElementById("prev").onclick = () => {
+    if (prev) location.href = `?book=${bookId}&chapter=${prev.slug}`;
+  };
+
+  document.getElementById("next").onclick = () => {
+    if (next) location.href = `?book=${bookId}&chapter=${next.slug}`;
+  };
+}
+
+init();
+</script>
 </body>
 </html>
