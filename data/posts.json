@@ -75,14 +75,15 @@
     "featured": true
   },
   {
-    "id": 7,
-    "type": "post",
-    "title": "공공정보화의 불편한 진실",
-    "excerpt": "공공 디지털 시스템의 구조적 문제를 다룬 글이다.",
-    "category": "public-critique",
-    "thumbnail": "/images/public-critique-1.jpg",
-    "date": "2026-03-30",
-    "slug": "public-critique-001",
-    "featured": true
+"id": 7,
+  "type": "post",
+  "title": "공공정보화의 불편한 진실",
+  "excerpt": "공공 디지털 시스템의 구조적 문제를 다룬 글이다.",
+  "category": "public-critique",
+  "categoryLabel": "공공정보화의 불편한 진실",
+  "thumbnail": "/images/public-critique-1.jpg",
+  "date": "2026-03-30",
+  "slug": "public-critique-001",
+  "featured": true
   }
 ]

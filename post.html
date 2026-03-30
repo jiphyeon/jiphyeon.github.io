@@ -74,7 +74,7 @@
       padding: 0 12px;
       margin-bottom: 18px;
       border-radius: 999px;
-      background: #f4f4f4;
+      background: #f8eef2;
       color: var(--accent);
       font-size: 13px;
       font-weight: 500;
@@ -116,9 +116,10 @@
     .content {
       font-size: 18px;
       font-weight: 400;
-      line-height: 1.95;
+      line-height: 1.82;
       letter-spacing: -0.018em;
       color: var(--text-body);
+      text-align: justify;
     }
 
     .content > *:first-child {
@@ -135,6 +136,7 @@
       color: var(--text-main);
       font-weight: 700;
       letter-spacing: -0.035em;
+      text-align: left;
     }
 
     .content h1 {
@@ -144,19 +146,20 @@
     }
 
     .content h2 {
-      margin: 56px 0 18px;
-      font-size: 28px;
-      line-height: 1.4;
+      margin: 64px 0 22px;
+      font-size: 32px;
+      line-height: 1.38;
+      letter-spacing: -0.04em;
     }
 
     .content h3 {
-      margin: 44px 0 16px;
-      font-size: 22px;
+      margin: 46px 0 18px;
+      font-size: 24px;
       line-height: 1.45;
     }
 
     .content p {
-      margin: 0 0 24px;
+      margin: 0 0 22px;
     }
 
     .content strong {
@@ -184,6 +187,7 @@
     .content ol {
       margin: 0 0 28px;
       padding-left: 1.4em;
+      text-align: left;
     }
 
     .content li {
@@ -202,6 +206,7 @@
       padding: 6px 0 6px 18px;
       border-left: 3px solid #d9d9d9;
       color: #555;
+      text-align: left;
     }
 
     .content hr {
@@ -291,7 +296,8 @@
 
       .content {
         font-size: 17px;
-        line-height: 1.88;
+        line-height: 1.76;
+        text-align: left;
       }
 
       .content h1 {
@@ -300,17 +306,19 @@
       }
 
       .content h2 {
-        margin-top: 42px;
-        font-size: 24px;
+        margin: 52px 0 18px;
+        font-size: 28px;
+        line-height: 1.36;
       }
 
       .content h3 {
-        margin-top: 34px;
-        font-size: 20px;
+        margin: 40px 0 16px;
+        font-size: 22px;
+        line-height: 1.42;
       }
 
       .content p {
-        margin-bottom: 20px;
+        margin: 0 0 20px;
       }
 
       .content ul,
@@ -399,9 +407,9 @@
         titleEl.textContent = post.title || "";
         metaEl.textContent = post.date || "";
 
-        if (post.category) {
+        if (post.category || post.categoryLabel) {
           categoryEl.style.display = "inline-flex";
-          categoryEl.textContent = post.category;
+          categoryEl.textContent = post.categoryLabel || post.category;
         }
 
         if (post.thumbnail) {
@@ -409,10 +417,11 @@
           thumbEl.innerHTML = `<img src="${escapeHtml(post.thumbnail)}" alt="${escapeHtml(post.title || "썸네일")}">`;
         }
 
-       const markdownResponse = await fetch(
-  `/content/blog/${encodeURIComponent(post.category)}/${encodeURIComponent(slug)}.md`,
-  { cache: "no-store" }
-);
+        const markdownResponse = await fetch(
+          `/content/blog/${encodeURIComponent(post.category)}/${encodeURIComponent(slug)}.md`,
+          { cache: "no-store" }
+        );
+
         if (!markdownResponse.ok) throw new Error("Markdown 로드 실패");
 
         const markdown = await markdownResponse.text();
