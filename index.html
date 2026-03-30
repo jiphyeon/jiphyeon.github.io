@@ -16,11 +16,9 @@
 
     body {
       margin: 0;
-      font-family: "Noto Sans KR", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
-      background: #ffffff;
+      font-family: "Noto Sans KR", -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #fff;
       color: #111;
-      word-break: keep-all;
-      overflow-wrap: break-word;
     }
 
     a {
@@ -30,24 +28,38 @@
     .hero {
       width: 1200px;
       max-width: calc(100% - 32px);
-      margin: 72px auto 0;
+      margin: 64px auto 32px;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+    }
+
+    .hero-logo {
+      width: 100px;
+      height: auto;
+      display: block;
     }
 
     .hero-copy {
-      margin-top: 72px;
+      margin-top: 56px;
+      max-width: 920px;
     }
 
-    .hero-copy h1 {
-      margin: 0 0 18px;
-      font-size: 52px;
-      font-weight: 400;
-      line-height: 1.18;
-      letter-spacing: -0.06em;
+    .hero-kicker {
+      font-size: 28px;
+      font-weight: 300;
+      line-height: 1;
+      letter-spacing: -0.05em;
       color: #111;
+      margin-bottom: 8px;
     }
 
-    .hero-copy .sub {
-      margin: 0 0 20px;
+    .hero-kicker strong {
+      font-weight: 500;
+    }
+
+    .hero-title {
+      margin: 12px 0 28px;
       font-size: 22px;
       font-weight: 300;
       line-height: 1.3;
@@ -155,48 +167,21 @@
       flex-direction: column;
     }
 
-    .featured-card .image-wrap,
-    .filtered-card .image-wrap {
-      position: relative;
-      overflow: hidden;
-      border-radius: 16px;
-      background: #f3f3f3;
-    }
-
     .featured-card .image-wrap {
       width: 100%;
       height: 420px;
       display: flex;
       align-items: flex-end;
+      overflow: hidden;
+      border-radius: 16px;
+      background: #f3f3f3;
     }
 
-    .filtered-card .image-wrap {
+    .featured-card img {
       width: 100%;
-      aspect-ratio: 4 / 3;
-      display: block;
-    }
-
-    .featured-card .image-wrap::after,
-    .filtered-card .image-wrap::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(
-        to bottom,
-        rgba(0, 0, 0, 0.05),
-        rgba(0, 0, 0, 0.28)
-      );
-      pointer-events: none;
-    }
-
-    .featured-card img,
-    .filtered-card img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
+      height: auto;
       display: block;
       border-radius: 16px;
-      filter: brightness(0.82);
       transition: transform 0.3s ease;
     }
 
@@ -204,43 +189,49 @@
       transform: scale(1.03);
     }
 
-    .filtered-card:hover img {
-      transform: scale(1.02);
-    }
-
     .category-nav {
       width: 1200px;
       max-width: calc(100% - 32px);
-      margin: 56px auto 36px;
+      margin: 60px auto 40px;
       display: flex;
       flex-wrap: wrap;
       gap: 12px;
+      align-items: center;
     }
 
     .category-btn {
+      appearance: none;
+      border: 1.5px solid #7e7e7e;
+      background: #fff;
+      color: #111;
+      border-radius: 18px;
+      padding: 14px 24px;
+      font-family: "Noto Sans KR", -apple-system, BlinkMacSystemFont, sans-serif;
+      font-size: 18px;
+      font-weight: 400;
+      line-height: 1;
+      letter-spacing: -0.05em;
+      cursor: pointer;
       display: inline-flex;
       align-items: center;
       gap: 8px;
-      padding: 12px 18px;
-      border: 1px solid #ebebeb;
-      border-radius: 999px;
-      background: #fff;
-      color: #111;
-      font-size: 16px;
-      font-weight: 400;
-      letter-spacing: -0.04em;
-      cursor: pointer;
       transition: all 0.2s ease;
     }
 
-    .category-btn:hover,
-    .category-btn.is-active {
-      border-color: #111;
+    .category-btn:hover {
+      background: #f6f6f6;
+    }
+
+    .category-btn.active {
+      background: #e9e9e9;
     }
 
     .category-count {
-      font-size: 13px;
-      color: #777;
+      font-size: 15px;
+      font-weight: 400;
+      color: #6f6f6f;
+      line-height: 1;
+      transform: translateY(1px);
     }
 
     .filtered-container {
@@ -249,7 +240,7 @@
       margin: 0 auto 40px;
       display: grid;
       grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 32px 24px;
+      gap: 24px;
       grid-auto-rows: 8px;
       align-items: start;
     }
@@ -265,6 +256,27 @@
       display: flex;
       flex-direction: column;
       align-items: flex-start;
+    }
+
+    .filtered-card .image-wrap {
+      width: 100%;
+      height: auto;
+      display: block;
+      overflow: visible;
+      border-radius: 16px;
+      background: #f3f3f3;
+    }
+
+    .filtered-card img {
+      width: 100%;
+      height: auto;
+      display: block;
+      border-radius: 16px;
+      transition: transform 0.3s ease;
+    }
+
+    .filtered-card:hover img {
+      transform: scale(1.02);
     }
 
     .filtered-card.is-hidden {
@@ -318,18 +330,6 @@
         margin-top: 56px;
       }
 
-      .hero-copy h1 {
-        font-size: 40px;
-      }
-
-      .hero-copy .sub {
-        font-size: 18px;
-      }
-
-      .hero-body p {
-        font-size: 16px;
-      }
-
       .featured-container {
         width: 100%;
         max-width: 100%;
@@ -346,7 +346,6 @@
 
       .featured-card .image-wrap {
         height: auto;
-        aspect-ratio: 4 / 3;
       }
 
       .category-nav {
@@ -373,10 +372,21 @@
         padding: 0 16px;
         margin-bottom: 32px;
         grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 16px;
       }
 
-      .load-more-trigger,
-      .footer,
+      .load-more-trigger {
+        width: 100%;
+        max-width: 100%;
+      }
+
+      .footer {
+        width: 100%;
+        max-width: 100%;
+        padding: 32px 16px 44px;
+        text-align: left;
+      }
+
       .loading,
       .error-message,
       .empty-message {
@@ -385,13 +395,16 @@
         padding: 0 16px;
       }
 
-      .footer {
-        padding-top: 32px;
-        padding-bottom: 48px;
+      .title {
+        font-size: 20px;
+      }
+
+      .desc {
+        font-size: 16px;
       }
     }
 
-    @media (max-width: 520px) {
+    @media (max-width: 480px) {
       .filtered-container {
         grid-template-columns: 1fr;
       }
@@ -399,20 +412,34 @@
   </style>
 </head>
 <body>
-  <section class="hero">
+
+  <div class="hero">
+    <img src="./logo.png" alt="집현 로고" class="hero-logo">
+
     <div class="hero-copy">
-      <h1>Jiphyeon</h1>
-      <div class="sub">기술 인문 이니셔티브 집현</div>
+      <div class="hero-kicker">
+        기술인문 이니셔티브 <strong>집현</strong>
+      </div>
+
+      <h1 class="hero-title">더 깊게 바라보고, 더 새로운 관점으로, 더 나은 변화를 설계한다.</h1>
+
       <div class="hero-body">
-        <p>기술과 사회를 더 깊게 바라보고, 구조적으로 읽고, 분명하게 정리한다.</p>
+        <p>
+          우리는 기존의 질서와 법칙이 무너지고, 새로운 패러다임으로 전환되는 <strong>문명 전환(Civilizational Shift)</strong>의 시대를 맞이하고 있다.<br>
+          기술의 급격한 발전과 데이터의 폭증, 경계의 붕괴로 인해 일과 생활, 인간의 역할과 관계, 더 나아가 사회의 방식까지 근본적으로 바뀌고 있다.
+        </p>
+
+        <p>
+          이러한 흐름 속에서는 서로 다른 분야를 아우르는 통섭의 과정을 통해 축적된 지식과 경험이 공유되어 실질적인 변화를 이끌어내야 한다. 집현(集賢)은 <strong>새로운 의제와 주제를 제시</strong>하고, <strong>문제를 정의하며 해결 방향을 설계</strong>한다.
+        </p>
       </div>
     </div>
-  </section>
+  </div>
 
   <div class="featured-container" id="featuredContainer"></div>
 
-  <div class="category-nav">
-    <button class="category-btn is-active" data-filter="all">
+  <div class="category-nav" id="categoryNav">
+    <button class="category-btn active" data-filter="all">
       <span>전체</span>
       <span class="category-count" data-count="all">0</span>
     </button>
@@ -453,10 +480,11 @@
   <div class="empty-message" id="emptyMessage" style="display:none;">표시할 게시물이 없습니다.</div>
 
   <div class="filtered-container" id="filteredCards"></div>
+
   <div class="load-more-trigger" id="loadMoreTrigger"></div>
 
   <footer class="footer">
-    © Jiphyeon. Powered by GitHub Pages.
+    © Jiphyeon.com. All Rights Reserved.
   </footer>
 
   <script>
@@ -472,8 +500,6 @@
     let cards = [];
     let visibleCount = 8;
     const step = 4;
-    let activeFilter = "all";
-    let observer;
 
     function escapeHtml(value = "") {
       return String(value)
@@ -525,15 +551,6 @@
       return `/post.html?slug=${encodeURIComponent(post.slug)}`;
     }
 
-    function getThumbnailUrl(post, width = 800, height = 600) {
-      if (post.thumbnail && post.thumbnail.trim() !== "") {
-        return post.thumbnail;
-      }
-
-      const seed = encodeURIComponent(post.slug || post.title || "jiphyeon");
-      return `https://picsum.photos/seed/${seed}/${width}/${height}`;
-    }
-
     function renderTags(tags) {
       if (!tags.length) return "";
 
@@ -545,7 +562,9 @@
     }
 
     function createFeaturedCard(post) {
-      const thumbnail = `<img src="${escapeHtml(getThumbnailUrl(post, 800, 1200))}" alt="${escapeHtml(post.title)}" loading="lazy">`;
+      const thumbnail = post.thumbnail
+        ? `<img src="${escapeHtml(post.thumbnail)}" alt="${escapeHtml(post.title)}" loading="lazy">`
+        : "";
 
       return `
         <div class="featured-card">
@@ -564,7 +583,9 @@
     }
 
     function createFilteredCard(post) {
-      const thumbnail = `<img src="${escapeHtml(getThumbnailUrl(post, 800, 600))}" alt="${escapeHtml(post.title)}" loading="lazy">`;
+      const thumbnail = post.thumbnail
+        ? `<img src="${escapeHtml(post.thumbnail)}" alt="${escapeHtml(post.title)}" loading="lazy">`
+        : "";
 
       return `
         <div class="filtered-card" data-category="${escapeHtml(post.category)}">
@@ -591,173 +612,167 @@
 
     function renderFiltered(posts) {
       filteredContainer.innerHTML = posts.map(createFilteredCard).join("");
-      cards = Array.from(filteredContainer.querySelectorAll(".filtered-card"));
-      updateVisibleCards(true);
-      bindTagEvents();
-      applyMasonry();
+      cards = Array.from(document.querySelectorAll("#filteredCards .filtered-card"));
+      bindImageLoadEvents();
     }
 
-    function updateCategoryCounts(posts) {
-      const counts = posts.reduce((acc, post) => {
-        acc[post.category] = (acc[post.category] || 0) + 1;
-        return acc;
-      }, {});
+    function getActiveFilter() {
+      const active = document.querySelector(".category-btn.active");
+      return active ? active.dataset.filter : "all";
+    }
 
-      document.querySelectorAll(".category-count").forEach(countEl => {
+    function updateCounts() {
+      const counts = { all: allPosts.length };
+
+      allPosts.forEach((post) => {
+        counts[post.category] = (counts[post.category] || 0) + 1;
+      });
+
+      document.querySelectorAll(".category-count").forEach((countEl) => {
         const key = countEl.dataset.count;
-        if (key === "all") {
-          countEl.textContent = posts.length;
-        } else {
-          countEl.textContent = counts[key] || 0;
-        }
+        countEl.textContent = counts[key] || 0;
       });
     }
 
-    function applyFilter(filter) {
-      activeFilter = filter;
-      visibleCount = 8;
+    function resizeMasonry() {
+      if (!cards.length) return;
 
-      categoryButtons.forEach(button => {
-        button.classList.toggle("is-active", button.dataset.filter === filter);
-      });
+      const styles = window.getComputedStyle(filteredContainer);
+      const rowSize = parseInt(styles.getPropertyValue("grid-auto-rows"), 10);
+      const rowGap = parseInt(styles.getPropertyValue("row-gap"), 10);
 
-      cards.forEach(card => {
-        const matches = filter === "all" || card.dataset.category === filter;
-        card.classList.toggle("is-hidden", !matches);
-      });
-
-      updateVisibleCards(true);
-      applyMasonry();
-      toggleEmptyState();
-    }
-
-    function getFilteredCards() {
-      return cards.filter(card => !card.classList.contains("is-hidden"));
-    }
-
-    function updateVisibleCards(reset = false) {
-      const activeCards = getFilteredCards();
-
-      activeCards.forEach((card, index) => {
-        card.style.display = index < visibleCount ? "block" : "none";
-      });
-
-      if (reset) {
-        const hiddenCards = activeCards.filter((_, index) => index >= visibleCount);
-        hiddenCards.forEach(card => {
-          card.style.display = "none";
-        });
-      }
-
-      const hasMore = activeCards.length > visibleCount;
-      loadMoreTrigger.style.display = hasMore ? "block" : "none";
-    }
-
-    function loadMoreCards() {
-      const activeCards = getFilteredCards();
-      if (visibleCount >= activeCards.length) return;
-
-      visibleCount += step;
-      updateVisibleCards();
-      applyMasonry();
-    }
-
-    function toggleEmptyState() {
-      const activeCards = getFilteredCards();
-      emptyMessage.style.display = activeCards.length ? "none" : "block";
-    }
-
-    function applyMasonry() {
-      const grid = filteredContainer;
-      if (!grid) return;
-
-      const rowHeight = parseInt(getComputedStyle(grid).getPropertyValue("grid-auto-rows"), 10);
-      const rowGap = parseInt(getComputedStyle(grid).getPropertyValue("gap"), 10) || 32;
-
-      Array.from(grid.children).forEach(item => {
-        if (item.classList.contains("is-hidden") || item.style.display === "none") {
-          item.style.gridRowEnd = "";
+      cards.forEach((card) => {
+        if (card.classList.contains("is-hidden")) {
+          card.style.gridRowEnd = "";
           return;
         }
 
-        const inner = item.querySelector(".filtered-card-inner");
+        const inner = card.querySelector(".filtered-card-inner");
         if (!inner) return;
 
         const height = inner.getBoundingClientRect().height;
-        const span = Math.ceil((height + rowGap) / (rowHeight + rowGap));
-        item.style.gridRowEnd = `span ${span}`;
+        const span = Math.ceil((height + rowGap) / (rowSize + rowGap));
+        card.style.gridRowEnd = `span ${span}`;
+      });
+    }
+
+    function applyFilter(category = "all") {
+      const filtered = cards.filter((card) => {
+        return category === "all" || card.dataset.category === category;
+      });
+
+      cards.forEach((card) => {
+        card.classList.add("is-hidden");
+      });
+
+      filtered.forEach((card, index) => {
+        if (index < visibleCount) {
+          card.classList.remove("is-hidden");
+        }
+      });
+
+      emptyMessage.style.display = filtered.length === 0 ? "block" : "none";
+      loadMoreTrigger.style.display = filtered.length <= visibleCount ? "none" : "block";
+
+      requestAnimationFrame(() => {
+        resizeMasonry();
+      });
+    }
+
+    function loadMore() {
+      const currentFilter = getActiveFilter();
+      const filtered = cards.filter((card) => {
+        return currentFilter === "all" || card.dataset.category === currentFilter;
+      });
+
+      if (visibleCount < filtered.length) {
+        visibleCount += step;
+        applyFilter(currentFilter);
+      }
+    }
+
+    function bindImageLoadEvents() {
+      document.querySelectorAll("#filteredCards img, #featuredContainer img").forEach((img) => {
+        if (img.complete) {
+          resizeMasonry();
+        } else {
+          img.addEventListener("load", () => {
+            resizeMasonry();
+          });
+        }
       });
     }
 
     function bindTagEvents() {
-      document.querySelectorAll(".tag").forEach(tag => {
-        tag.addEventListener("click", event => {
+      document.querySelectorAll(".tag").forEach((tag) => {
+        tag.addEventListener("click", (event) => {
           event.preventDefault();
-          const tagName = tag.dataset.tag;
-          const matchedPosts = allPosts.filter(post => post.tags.includes(tagName));
-          renderFiltered(matchedPosts);
-          featuredContainer.innerHTML = "";
-          updateCategoryCounts(matchedPosts);
-          emptyMessage.style.display = matchedPosts.length ? "none" : "block";
         });
       });
     }
 
-    async function loadPosts() {
-      loadingMessage.style.display = "block";
-      errorMessage.style.display = "none";
-      emptyMessage.style.display = "none";
+    categoryButtons.forEach((button) => {
+      button.addEventListener("click", () => {
+        categoryButtons.forEach((btn) => btn.classList.remove("active"));
+        button.classList.add("active");
+        visibleCount = 8;
+        applyFilter(button.dataset.filter);
+      });
+    });
 
+    const observer = new IntersectionObserver((entries) => {
+      if (entries[0].isIntersecting) {
+        loadMore();
+      }
+    }, {
+      root: null,
+      rootMargin: "200px 0px",
+      threshold: 0
+    });
+
+    observer.observe(loadMoreTrigger);
+
+    async function initializePage() {
       try {
+        loadingMessage.style.display = "block";
+        errorMessage.style.display = "none";
+        emptyMessage.style.display = "none";
+
         const response = await fetch("/data/posts.json", { cache: "no-store" });
-        if (!response.ok) throw new Error("posts.json 로드 실패");
+
+        if (!response.ok) {
+          throw new Error(`HTTP ${response.status}`);
+        }
 
         const rawPosts = await response.json();
         allPosts = sortPosts(rawPosts.map(normalizePost));
 
         renderFeatured(allPosts);
         renderFiltered(allPosts);
-        updateCategoryCounts(allPosts);
-        applyFilter("all");
+        updateCounts();
+        bindTagEvents();
 
         loadingMessage.style.display = "none";
+        applyFilter("all");
+
+        setTimeout(() => {
+          resizeMasonry();
+        }, 100);
       } catch (error) {
-        console.error(error);
+        console.error("posts.json 로드 실패:", error);
         loadingMessage.style.display = "none";
         errorMessage.style.display = "block";
       }
     }
 
-    categoryButtons.forEach(button => {
-      button.addEventListener("click", () => {
-        renderFiltered(allPosts);
-        renderFeatured(allPosts);
-        updateCategoryCounts(allPosts);
-        applyFilter(button.dataset.filter);
-      });
+    window.addEventListener("load", () => {
+      initializePage();
     });
 
     window.addEventListener("resize", () => {
-      applyMasonry();
+      resizeMasonry();
     });
-
-    window.addEventListener("load", () => {
-      applyMasonry();
-    });
-
-    observer = new IntersectionObserver(entries => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          loadMoreCards();
-        }
-      });
-    }, {
-      rootMargin: "200px"
-    });
-
-    observer.observe(loadMoreTrigger);
-
-    loadPosts();
   </script>
+
 </body>
 </html>
