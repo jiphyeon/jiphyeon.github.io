@@ -292,25 +292,18 @@
     if (!prevEl || !nextEl) return;
 
     if (prev) {
-      prevEl.href = `/docs.html?book=${encodeURIComponent(book)}&chapter=${encodeURIComponent(prev.slug)}`;
-      prevEl.textContent = `← ${prev.title}`;
-      prevEl.style.visibility = "visible";
-    } else {
-      prevEl.removeAttribute("href");
-      prevEl.textContent = "";
-      prevEl.style.visibility = "hidden";
-    }
+  prevEl.href = `/docs.html?book=${book}&chapter=${prev.slug}`;
+  prevEl.textContent = `← ${prev.title}`;
+} else {
+  prevEl.textContent = "";
+}
 
-    if (next) {
-      nextEl.href = `/docs.html?book=${encodeURIComponent(book)}&chapter=${encodeURIComponent(next.slug)}`;
-      nextEl.textContent = `${next.title} →`;
-      nextEl.style.visibility = "visible";
-    } else {
-      nextEl.removeAttribute("href");
-      nextEl.textContent = "";
-      nextEl.style.visibility = "hidden";
-    }
-  }
+if (next) {
+  nextEl.href = `/docs.html?book=${book}&chapter=${next.slug}`;
+  nextEl.textContent = `${next.title} →`;
+} else {
+  nextEl.textContent = "";
+}
 
   async function initializeDocsPage() {
     const titleEl = document.getElementById("title");
