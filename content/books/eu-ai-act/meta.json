@@ -8,6 +8,11 @@
       "title": "Part 1",
       "items": [
         {
+          "title": "Overview",
+          "slug": "overview",
+          "file": "000-overview.md"
+        },
+        {
           "title": "Intro",
           "slug": "intro",
           "file": "001-intro.md"
