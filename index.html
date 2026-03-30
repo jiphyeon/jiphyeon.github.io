@@ -1,778 +1,89 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Jiphyeon</title>
+<script>
+const params = new URLSearchParams(window.location.search);
+const category = params.get("category");
 
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+/* =========================
+   기본 유틸
+========================= */
+function escapeHtml(value = "") {
+  return String(value)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
+}
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+function getPostUrl(post) {
+  return `/post.html?slug=${encodeURIComponent(post.slug)}`;
+}
 
-    body {
-      margin: 0;
-      font-family: "Noto Sans KR", -apple-system, BlinkMacSystemFont, sans-serif;
-      background: #fff;
-      color: #111;
-    }
+/* =========================
+   🔥 핵심: 이미지 자동 fallback
+========================= */
+const categoryImageMap = {
+  "경영기법": "business",
+  "기술비평": "technology",
+  "비주얼 브리프": "minimal design",
+  "EU AI Act": "europe law",
+  "공공정보화의 불편한 진실": "city architecture"
+};
 
-    a {
-      color: inherit;
-    }
+function getFallbackKeyword(post) {
+  return categoryImageMap[post.category] || "landscape";
+}
 
-    .hero {
-      width: 1200px;
-      max-width: calc(100% - 32px);
-      margin: 64px auto 32px;
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-    }
+function getThumbnailUrl(post) {
+  if (post.thumbnail && post.thumbnail.trim() !== "") {
+    return post.thumbnail;
+  }
 
-    .hero-logo {
-      width: 100px;
-      height: auto;
-      display: block;
-    }
+  const keyword = encodeURIComponent(getFallbackKeyword(post));
+  return `https://source.unsplash.com/800x600/?${keyword}`;
+}
 
-    .hero-copy {
-      margin-top: 56px;
-      max-width: 920px;
-    }
-
-    .hero-kicker {
-      font-size: 28px;
-      font-weight: 300;
-      line-height: 1;
-      letter-spacing: -0.05em;
-      color: #111;
-      margin-bottom: 8px;
-    }
-
-    .hero-kicker strong {
-      font-weight: 500;
-    }
-
-    .hero-title {
-      margin: 12px 0 28px;
-      font-size: 22px;
-      font-weight: 300;
-      line-height: 1.3;
-      letter-spacing: -0.05em;
-      color: #df0f57;
-    }
-
-    .hero-body {
-      max-width: 920px;
-    }
-
-    .hero-body p {
-      margin: 0 0 18px;
-      font-size: 18px;
-      font-weight: 300;
-      line-height: 1.6;
-      letter-spacing: -0.05em;
-      color: #222;
-    }
-
-    .hero-body strong {
-      font-weight: 450;
-      color: #111;
-    }
-
-    .post-link {
-      text-decoration: none;
-      color: inherit;
-      display: block;
-    }
-
-    .post-link:hover .title,
-    .post-link:hover .desc {
-      text-decoration: underline;
-      text-underline-offset: 3px;
-      text-decoration-thickness: 1px;
-    }
-
-    .text {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      margin-top: 18px;
-    }
-
-    .title {
-      font-size: 18px;
-      font-weight: 400;
-      line-height: 1.34;
-      letter-spacing: -0.05em;
-      display: -webkit-box;
-      -webkit-line-clamp: 2;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-      text-decoration: none;
-    }
-
-    .desc {
-      margin-top: 12px;
-      font-size: 16px;
-      font-weight: 300;
-      color: #333;
-      line-height: 1.45;
-      letter-spacing: -0.04em;
-      display: -webkit-box;
-      -webkit-line-clamp: 3;
-      -webkit-box-orient: vertical;
-      overflow: hidden;
-      text-decoration: none;
-    }
-
-    .tags {
-      display: flex;
-      gap: 10px;
-      margin-top: 14px;
-      flex-wrap: wrap;
-    }
-
-    .tag {
-      font-size: 15px;
-      font-weight: 350;
-      line-height: 1.4;
-      color: #df0f57 !important;
-      text-decoration: none;
-    }
-
-    .tag:hover {
-      opacity: 0.7;
-      text-decoration: underline;
-    }
-
-    .featured-container {
-      width: 1200px;
-      max-width: calc(100% - 32px);
-      margin: 40px auto 0;
-      display: flex;
-      gap: 24px;
-      align-items: flex-start;
-    }
-
-    .featured-card {
-      width: 260px;
-      flex: 0 0 260px;
-      display: flex;
-      flex-direction: column;
-    }
-
-    .featured-card .image-wrap {
-      width: 100%;
-      height: 420px;
-      display: flex;
-      align-items: flex-end;
-      overflow: hidden;
-      border-radius: 16px;
-      background: #f3f3f3;
-    }
-
-    .featured-card img {
-      width: 100%;
-      height: auto;
-      display: block;
-      border-radius: 16px;
-      transition: transform 0.3s ease;
-    }
-
-    .featured-card:hover img {
-      transform: scale(1.03);
-    }
-
-    .category-nav {
-      width: 1200px;
-      max-width: calc(100% - 32px);
-      margin: 60px auto 40px;
-      display: flex;
-      flex-wrap: wrap;
-      gap: 12px;
-      align-items: center;
-    }
-
-    .category-btn {
-      appearance: none;
-      border: 1.5px solid #7e7e7e;
-      background: #fff;
-      color: #111;
-      border-radius: 18px;
-      padding: 14px 24px;
-      font-family: "Noto Sans KR", -apple-system, BlinkMacSystemFont, sans-serif;
-      font-size: 18px;
-      font-weight: 400;
-      line-height: 1;
-      letter-spacing: -0.05em;
-      cursor: pointer;
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      transition: all 0.2s ease;
-    }
-
-    .category-btn:hover {
-      background: #f6f6f6;
-    }
-
-    .category-btn.active {
-      background: #e9e9e9;
-    }
-
-    .category-count {
-      font-size: 15px;
-      font-weight: 400;
-      color: #6f6f6f;
-      line-height: 1;
-      transform: translateY(1px);
-    }
-
-    .filtered-container {
-      width: 1200px;
-      max-width: calc(100% - 32px);
-      margin: 0 auto 40px;
-      display: grid;
-      grid-template-columns: repeat(4, minmax(0, 1fr));
-      gap: 24px;
-      grid-auto-rows: 8px;
-      align-items: start;
-    }
-
-    .filtered-card {
-      width: 100%;
-      display: block;
-      margin: 0;
-      align-self: start;
-    }
-
-    .filtered-card-inner {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-    }
-
-    .filtered-card .image-wrap {
-      width: 100%;
-      height: auto;
-      display: block;
-      overflow: visible;
-      border-radius: 16px;
-      background: #f3f3f3;
-    }
-
-    .filtered-card img {
-      width: 100%;
-      height: auto;
-      display: block;
-      border-radius: 16px;
-      transition: transform 0.3s ease;
-    }
-
-    .filtered-card:hover img {
-      transform: scale(1.02);
-    }
-
-    .filtered-card.is-hidden {
-      display: none !important;
-    }
-
-    .load-more-trigger {
-      width: 1200px;
-      max-width: calc(100% - 32px);
-      height: 1px;
-      margin: 0 auto;
-    }
-
-    .footer {
-      width: 1200px;
-      max-width: calc(100% - 32px);
-      margin: 0 auto;
-      text-align: left;
-      padding: 40px 0 60px;
-      font-size: 14px;
-      color: #888;
-      letter-spacing: -0.03em;
-    }
-
-    .loading,
-    .error-message,
-    .empty-message {
-      width: 1200px;
-      max-width: calc(100% - 32px);
-      margin: 0 auto 32px;
-      font-size: 16px;
-      color: #666;
-      letter-spacing: -0.03em;
-    }
-
-    @media (max-width: 1024px) {
-      .filtered-container {
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-      }
-    }
-
-    @media (max-width: 768px) {
-      .hero {
-        width: 100%;
-        max-width: 100%;
-        margin: 40px auto 24px;
-        padding: 0 16px;
-      }
-
-      .hero-copy {
-        margin-top: 56px;
-      }
-
-      .featured-container {
-        width: 100%;
-        max-width: 100%;
-        margin: 24px auto 0;
-        padding: 0 16px;
-        flex-direction: column;
-        gap: 32px;
-      }
-
-      .featured-card {
-        width: 100%;
-        flex: none;
-      }
-
-      .featured-card .image-wrap {
-        height: auto;
-      }
-
-      .category-nav {
-        width: 100%;
-        max-width: 100%;
-        margin: 36px auto 32px;
-        padding: 0 16px;
-        gap: 10px;
-      }
-
-      .category-btn {
-        padding: 12px 18px;
-        font-size: 16px;
-        border-radius: 16px;
-      }
-
-      .category-count {
-        font-size: 13px;
-      }
-
-      .filtered-container {
-        width: 100%;
-        max-width: 100%;
-        padding: 0 16px;
-        margin-bottom: 32px;
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-        gap: 16px;
-      }
-
-      .load-more-trigger {
-        width: 100%;
-        max-width: 100%;
-      }
-
-      .footer {
-        width: 100%;
-        max-width: 100%;
-        padding: 32px 16px 44px;
-        text-align: left;
-      }
-
-      .loading,
-      .error-message,
-      .empty-message {
-        width: 100%;
-        max-width: 100%;
-        padding: 0 16px;
-      }
-
-      .title {
-        font-size: 20px;
-      }
-
-      .desc {
-        font-size: 16px;
-      }
-    }
-
-    @media (max-width: 480px) {
-      .filtered-container {
-        grid-template-columns: 1fr;
-      }
-    }
-  </style>
-</head>
-<body>
-
-  <div class="hero">
-    <img src="./logo.png" alt="집현 로고" class="hero-logo">
-
-    <div class="hero-copy">
-      <div class="hero-kicker">
-        기술인문 이니셔티브 <strong>집현</strong>
+/* =========================
+   카드 생성
+========================= */
+function createCard(post) {
+  return `
+    <a href="${getPostUrl(post)}" class="card">
+      <div class="card-image">
+        <img src="${escapeHtml(getThumbnailUrl(post))}" 
+             alt="${escapeHtml(post.title)}" 
+             loading="lazy">
       </div>
-
-      <h1 class="hero-title">더 깊게 바라보고, 더 새로운 관점으로, 더 나은 변화를 설계한다.</h1>
-
-      <div class="hero-body">
-        <p>
-          우리는 기존의 질서와 법칙이 무너지고, 새로운 패러다임으로 전환되는 <strong>문명 전환(Civilizational Shift)</strong>의 시대를 맞이하고 있다.<br>
-          기술의 급격한 발전과 데이터의 폭증, 경계의 붕괴로 인해 일과 생활, 인간의 역할과 관계, 더 나아가 사회의 방식까지 근본적으로 바뀌고 있다.
-        </p>
-
-        <p>
-          이러한 흐름 속에서는 서로 다른 분야를 아우르는 통섭의 과정을 통해 축적된 지식과 경험이 공유되어 실질적인 변화를 이끌어내야 한다. 집현(集賢)은 <strong>새로운 의제와 주제를 제시</strong>하고, <strong>문제를 정의하며 해결 방향을 설계</strong>한다.
-        </p>
+      <div class="card-content">
+        <div class="category">${escapeHtml(post.category)}</div>
+        <h3>${escapeHtml(post.title)}</h3>
+        <p>${escapeHtml(post.excerpt || "")}</p>
       </div>
-    </div>
-  </div>
+    </a>
+  `;
+}
 
-  <div class="featured-container" id="featuredContainer"></div>
+/* =========================
+   데이터 로딩
+========================= */
+async function loadPosts() {
+  const res = await fetch("/posts.json");
+  const posts = await res.json();
 
-  <div class="category-nav" id="categoryNav">
-    <button class="category-btn active" data-filter="all">
-      <span>전체</span>
-      <span class="category-count" data-count="all">0</span>
-    </button>
+  let filtered = posts;
 
-    <button class="category-btn" data-filter="경영기법">
-      <span>경영기법</span>
-      <span class="category-count" data-count="경영기법">0</span>
-    </button>
+  if (category) {
+    filtered = posts.filter(p => p.category === category);
+  }
 
-    <button class="category-btn" data-filter="기술비평">
-      <span>기술비평</span>
-      <span class="category-count" data-count="기술비평">0</span>
-    </button>
+  const container = document.getElementById("posts");
 
-    <button class="category-btn" data-filter="테크리뷰">
-      <span>테크리뷰</span>
-      <span class="category-count" data-count="테크리뷰">0</span>
-    </button>
+  if (!filtered.length) {
+    container.innerHTML = "<p>포스트가 없습니다.</p>";
+    return;
+  }
 
-    <button class="category-btn" data-filter="EU AI Act">
-      <span>EU AI Act</span>
-      <span class="category-count" data-count="EU AI Act">0</span>
-    </button>
+  container.innerHTML = filtered.map(createCard).join("");
+}
 
-    <button class="category-btn" data-filter="공공정보화의 불편한 진실">
-      <span>공공정보화의 불편한 진실</span>
-      <span class="category-count" data-count="공공정보화의 불편한 진실">0</span>
-    </button>
-
-    <button class="category-btn" data-filter="비주얼 브리프">
-      <span>비주얼 브리프</span>
-      <span class="category-count" data-count="비주얼 브리프">0</span>
-    </button>
-  </div>
-
-  <div class="loading" id="loadingMessage">콘텐츠를 불러오는 중입니다.</div>
-  <div class="error-message" id="errorMessage" style="display:none;">콘텐츠를 불러오지 못했습니다.</div>
-  <div class="empty-message" id="emptyMessage" style="display:none;">표시할 게시물이 없습니다.</div>
-
-  <div class="filtered-container" id="filteredCards"></div>
-
-  <div class="load-more-trigger" id="loadMoreTrigger"></div>
-
-  <footer class="footer">
-    © Jiphyeon.com. All Rights Reserved.
-  </footer>
-
-  <script>
-    const featuredContainer = document.getElementById("featuredContainer");
-    const filteredContainer = document.getElementById("filteredCards");
-    const loadMoreTrigger = document.getElementById("loadMoreTrigger");
-    const loadingMessage = document.getElementById("loadingMessage");
-    const errorMessage = document.getElementById("errorMessage");
-    const emptyMessage = document.getElementById("emptyMessage");
-    const categoryButtons = document.querySelectorAll(".category-btn");
-
-    let allPosts = [];
-    let cards = [];
-    let visibleCount = 8;
-    const step = 4;
-
-    function escapeHtml(value = "") {
-      return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-    }
-
-    function normalizePost(post, index) {
-      return {
-        id: post.id ?? index + 1,
-        type: post.type || "post",
-        title: post.title || "제목 없음",
-        excerpt: post.excerpt || "",
-        category: post.category || "미분류",
-        tags: Array.isArray(post.tags) ? post.tags : [],
-        thumbnail: post.thumbnail || "",
-        date: post.date || "",
-        slug: post.slug || `post-${index + 1}`,
-        featured: Boolean(post.featured),
-        series: post.series || "",
-        order: Number.isFinite(post.order) ? post.order : 0
-      };
-    }
-
-    function sortPosts(posts) {
-      return [...posts].sort((a, b) => {
-        const dateA = a.date ? new Date(a.date).getTime() : 0;
-        const dateB = b.date ? new Date(b.date).getTime() : 0;
-
-        if (dateB !== dateA) {
-          return dateB - dateA;
-        }
-
-        return (a.order || 0) - (b.order || 0);
-      });
-    }
-
-    function getPostUrl(post) {
-      if (post.type === "doc") {
-        const params = new URLSearchParams();
-        if (post.series) params.set("series", post.series);
-        params.set("slug", post.slug);
-        return `/docs.html?${params.toString()}`;
-      }
-
-      return `/post.html?slug=${encodeURIComponent(post.slug)}`;
-    }
-
-    function renderTags(tags) {
-      if (!tags.length) return "";
-
-      return `
-        <div class="tags">
-          ${tags.map(tag => `<a href="#" class="tag" data-tag="${escapeHtml(tag)}">#${escapeHtml(tag)}</a>`).join("")}
-        </div>
-      `;
-    }
-
-    function createFeaturedCard(post) {
-      const thumbnail = post.thumbnail
-        ? `<img src="${escapeHtml(post.thumbnail)}" alt="${escapeHtml(post.title)}" loading="lazy">`
-        : "";
-
-      return `
-        <div class="featured-card">
-          <a href="${getPostUrl(post)}" class="post-link">
-            <div class="image-wrap">
-              ${thumbnail}
-            </div>
-            <div class="text">
-              <div class="title">${escapeHtml(post.title)}</div>
-              <div class="desc">${escapeHtml(post.excerpt)}</div>
-            </div>
-          </a>
-          ${renderTags(post.tags)}
-        </div>
-      `;
-    }
-
-    function createFilteredCard(post) {
-      const thumbnail = post.thumbnail
-        ? `<img src="${escapeHtml(post.thumbnail)}" alt="${escapeHtml(post.title)}" loading="lazy">`
-        : "";
-
-      return `
-        <div class="filtered-card" data-category="${escapeHtml(post.category)}">
-          <div class="filtered-card-inner">
-            <a href="${getPostUrl(post)}" class="post-link">
-              <div class="image-wrap">
-                ${thumbnail}
-              </div>
-              <div class="text">
-                <div class="title">${escapeHtml(post.title)}</div>
-                <div class="desc">${escapeHtml(post.excerpt)}</div>
-              </div>
-            </a>
-            ${renderTags(post.tags)}
-          </div>
-        </div>
-      `;
-    }
-
-    function renderFeatured(posts) {
-      const featuredPosts = posts.filter(post => post.featured).slice(0, 4);
-      featuredContainer.innerHTML = featuredPosts.map(createFeaturedCard).join("");
-    }
-
-    function renderFiltered(posts) {
-      filteredContainer.innerHTML = posts.map(createFilteredCard).join("");
-      cards = Array.from(document.querySelectorAll("#filteredCards .filtered-card"));
-      bindImageLoadEvents();
-    }
-
-    function getActiveFilter() {
-      const active = document.querySelector(".category-btn.active");
-      return active ? active.dataset.filter : "all";
-    }
-
-    function updateCounts() {
-      const counts = { all: allPosts.length };
-
-      allPosts.forEach((post) => {
-        counts[post.category] = (counts[post.category] || 0) + 1;
-      });
-
-      document.querySelectorAll(".category-count").forEach((countEl) => {
-        const key = countEl.dataset.count;
-        countEl.textContent = counts[key] || 0;
-      });
-    }
-
-    function resizeMasonry() {
-      if (!cards.length) return;
-
-      const styles = window.getComputedStyle(filteredContainer);
-      const rowSize = parseInt(styles.getPropertyValue("grid-auto-rows"), 10);
-      const rowGap = parseInt(styles.getPropertyValue("row-gap"), 10);
-
-      cards.forEach((card) => {
-        if (card.classList.contains("is-hidden")) {
-          card.style.gridRowEnd = "";
-          return;
-        }
-
-        const inner = card.querySelector(".filtered-card-inner");
-        if (!inner) return;
-
-        const height = inner.getBoundingClientRect().height;
-        const span = Math.ceil((height + rowGap) / (rowSize + rowGap));
-        card.style.gridRowEnd = `span ${span}`;
-      });
-    }
-
-    function applyFilter(category = "all") {
-      const filtered = cards.filter((card) => {
-        return category === "all" || card.dataset.category === category;
-      });
-
-      cards.forEach((card) => {
-        card.classList.add("is-hidden");
-      });
-
-      filtered.forEach((card, index) => {
-        if (index < visibleCount) {
-          card.classList.remove("is-hidden");
-        }
-      });
-
-      emptyMessage.style.display = filtered.length === 0 ? "block" : "none";
-      loadMoreTrigger.style.display = filtered.length <= visibleCount ? "none" : "block";
-
-      requestAnimationFrame(() => {
-        resizeMasonry();
-      });
-    }
-
-    function loadMore() {
-      const currentFilter = getActiveFilter();
-      const filtered = cards.filter((card) => {
-        return currentFilter === "all" || card.dataset.category === currentFilter;
-      });
-
-      if (visibleCount < filtered.length) {
-        visibleCount += step;
-        applyFilter(currentFilter);
-      }
-    }
-
-    function bindImageLoadEvents() {
-      document.querySelectorAll("#filteredCards img, #featuredContainer img").forEach((img) => {
-        if (img.complete) {
-          resizeMasonry();
-        } else {
-          img.addEventListener("load", () => {
-            resizeMasonry();
-          });
-        }
-      });
-    }
-
-    function bindTagEvents() {
-      document.querySelectorAll(".tag").forEach((tag) => {
-        tag.addEventListener("click", (event) => {
-          event.preventDefault();
-        });
-      });
-    }
-
-    categoryButtons.forEach((button) => {
-      button.addEventListener("click", () => {
-        categoryButtons.forEach((btn) => btn.classList.remove("active"));
-        button.classList.add("active");
-        visibleCount = 8;
-        applyFilter(button.dataset.filter);
-      });
-    });
-
-    const observer = new IntersectionObserver((entries) => {
-      if (entries[0].isIntersecting) {
-        loadMore();
-      }
-    }, {
-      root: null,
-      rootMargin: "200px 0px",
-      threshold: 0
-    });
-
-    observer.observe(loadMoreTrigger);
-
-    async function initializePage() {
-      try {
-        loadingMessage.style.display = "block";
-        errorMessage.style.display = "none";
-        emptyMessage.style.display = "none";
-
-        const response = await fetch("/data/posts.json", { cache: "no-store" });
-
-        if (!response.ok) {
-          throw new Error(`HTTP ${response.status}`);
-        }
-
-        const rawPosts = await response.json();
-        allPosts = sortPosts(rawPosts.map(normalizePost));
-
-        renderFeatured(allPosts);
-        renderFiltered(allPosts);
-        updateCounts();
-        bindTagEvents();
-
-        loadingMessage.style.display = "none";
-        applyFilter("all");
-
-        setTimeout(() => {
-          resizeMasonry();
-        }, 100);
-      } catch (error) {
-        console.error("posts.json 로드 실패:", error);
-        loadingMessage.style.display = "none";
-        errorMessage.style.display = "block";
-      }
-    }
-
-    window.addEventListener("load", () => {
-      initializePage();
-    });
-
-    window.addEventListener("resize", () => {
-      resizeMasonry();
-    });
-  </script>
-
-</body>
-</html>
+loadPosts();
+</script>
