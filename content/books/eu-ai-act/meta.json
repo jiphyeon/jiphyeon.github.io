@@ -1,0 +1,28 @@
+{
+  "id": "eu-ai-act",
+  "title": "EU AI Act",
+  "description": "EU AI Act 테스트 문서",
+  "structure": [
+    {
+      "type": "part",
+      "title": "Part 1",
+      "items": [
+        {
+          "title": "Intro",
+          "slug": "intro",
+          "file": "001-intro.md"
+        },
+        {
+          "title": "Scope",
+          "slug": "scope",
+          "file": "002-scope.md"
+        },
+        {
+          "title": "Definitions",
+          "slug": "definitions",
+          "file": "003-definitions.md"
+        }
+      ]
+    }
+  ]
+}
