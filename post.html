@@ -409,7 +409,10 @@
           thumbEl.innerHTML = `<img src="${escapeHtml(post.thumbnail)}" alt="${escapeHtml(post.title || "썸네일")}">`;
         }
 
-        const markdownResponse = await fetch(`/content/${encodeURIComponent(slug)}.md`, { cache: "no-store" });
+       const markdownResponse = await fetch(
+  `/content/blog/${encodeURIComponent(post.category)}/${encodeURIComponent(slug)}.md`,
+  { cache: "no-store" }
+);
         if (!markdownResponse.ok) throw new Error("Markdown 로드 실패");
 
         const markdown = await markdownResponse.text();
