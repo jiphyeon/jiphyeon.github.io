@@ -42,9 +42,9 @@
 
     .back-link-wrap {
       position: absolute;
-      top: 32px;
-      left: 32px;
-      z-index: 5;
+  top: 32px;
+  left: 50%;
+  transform: translateX(-380px); /* 760 / 2 */
     }
 
     .back-link {
@@ -95,11 +95,11 @@
 
     .post-hero-inner {
       position: relative;
-      z-index: 3;
-      width: 100%;
-      max-width: 960px;
-      margin: 0 auto;
-      padding: 120px 20px 48px;
+  z-index: 3;
+  width: 100%;
+  max-width: 760px;   /* ← 여기만 변경 */
+  margin: 0 auto;
+  padding: 120px 20px 48px;
     }
 
     .post-header {
