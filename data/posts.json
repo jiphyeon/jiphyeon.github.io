@@ -64,21 +64,25 @@
     "featured": false
   },
   {
-     "id": 6,
-  "type": "post",
-  "title": "AI 전환 전략",
-  "excerpt": "AI 전환은 기술이 아니라 구조의 문제다.",
-  "category": "경영기법",
-  "thumbnail": "/images/ai-1.jpg",
-  "date": "2026-03-30",
-  "slug": "ai-strategy",
-  "featured": true
-}
-{
-  "title": "공공정보화의 불편한 진실",
-  "slug": "public-critique-001",
-  "category": "public-critique",
-  "date": "2026-03-30",
-  "type": "post"
-}
+    "id": 6,
+    "type": "post",
+    "title": "AI 전환 전략",
+    "excerpt": "AI 전환은 기술이 아니라 구조의 문제다.",
+    "category": "경영기법",
+    "thumbnail": "/images/ai-1.jpg",
+    "date": "2026-03-30",
+    "slug": "ai-strategy",
+    "featured": true
+  },
+  {
+    "id": 7,
+    "type": "post",
+    "title": "공공정보화의 불편한 진실",
+    "excerpt": "공공 디지털 시스템의 구조적 문제를 다룬 글이다.",
+    "category": "public-critique",
+    "thumbnail": "/images/public-critique-1.jpg",
+    "date": "2026-03-30",
+    "slug": "public-critique-001",
+    "featured": true
+  }
 ]
