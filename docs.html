@@ -48,7 +48,7 @@
       color: #666;
       text-decoration: none;
     }
- 
+
     .sidebar-home:hover {
       text-decoration: underline;
     }
@@ -191,21 +191,23 @@
       font-size: 16px;
     }
 
-.doc-nav {
-  margin-top: 40px;
-  display: flex;
-  justify-content: space-between;
-}
+    .doc-nav {
+      margin-top: 40px;
+      display: flex;
+      justify-content: space-between;
+      gap: 20px;
+    }
 
-.doc-nav a {
-  display: inline-block;
-  color: #333;
-  font-weight: 500;
-}
+    .doc-nav a {
+      display: inline-block;
+      color: #333;
+      text-decoration: none;
+      font-weight: 500;
+    }
 
-.doc-nav a:hover {
-  text-decoration: underline;
-}
+    .doc-nav a:hover {
+      text-decoration: underline;
+    }
 
     @media (max-width: 1024px) {
       .layout {
@@ -231,15 +233,6 @@
         font-size: 17px;
         line-height: 1.8;
       }
-      .toc-item {
-  color: #888;
-  cursor: pointer;
-}
-
-.toc-item.active {
-  font-weight: 700;
-  color: #000;
-}
     }
   </style>
 </head>
@@ -258,117 +251,121 @@
         <div class="doc-meta" id="meta"></div>
         <article class="doc-content" id="content"></article>
 
-<div class="doc-nav">
-  <a id="prevLink"></a>
-  <a id="nextLink"></a>
-</div>
+        <div class="doc-nav">
+          <a id="prevLink"></a>
+          <a id="nextLink"></a>
+        </div>
       </div>
     </main>
+  </div>
 
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-<script>
-  const params = new URLSearchParams(window.location.search);
-  const book = params.get("book");
-  const chapter = params.get("chapter");
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const book = params.get("book");
+    const chapter = params.get("chapter");
 
-  function escapeHtml(value = "") {
-    return String(value)
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#039;");
-  }
-
-  function setupNavigation(list, current, book) {
-    const index = list.findIndex(item => item.slug === current.slug);
-
-    const prev = list[index - 1];
-    const next = list[index + 1];
-
-    const prevEl = document.getElementById("prevLink");
-    const nextEl = document.getElementById("nextLink");
-
-    if (!prevEl || !nextEl) return;
-
-    if (prev) {
-  prevEl.href = `/docs.html?book=${book}&chapter=${prev.slug}`;
-  prevEl.textContent = `← ${prev.title}`;
-} else {
-  prevEl.textContent = "";
-}
-
-if (next) {
-  nextEl.href = `/docs.html?book=${book}&chapter=${next.slug}`;
-  nextEl.textContent = `${next.title} →`;
-} else {
-  nextEl.textContent = "";
-}
-
-  async function initializeDocsPage() {
-    const titleEl = document.getElementById("title");
-    const metaEl = document.getElementById("meta");
-    const contentEl = document.getElementById("content");
-    const categoryEl = document.getElementById("category");
-    const tocEl = document.getElementById("toc");
-    const seriesTitleEl = document.getElementById("seriesTitle");
-
-    if (!book) {
-      titleEl.textContent = "잘못된 접근";
-      contentEl.innerHTML = '<p class="error">book 값이 없습니다.</p>';
-      return;
+    function escapeHtml(value = "") {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
     }
 
-    try {
-      const response = await fetch(`/content/books/${book}/meta.json`, { cache: "no-store" });
-      if (!response.ok) throw new Error("meta.json 로드 실패");
+    function setupNavigation(list, current, book) {
+      const index = list.findIndex(item => item.slug === current.slug);
 
-      const meta = await response.json();
+      const prev = list[index - 1];
+      const next = list[index + 1];
 
-      seriesTitleEl.textContent = meta.title || "문서";
+      const prevEl = document.getElementById("prevLink");
+      const nextEl = document.getElementById("nextLink");
 
-      const docs = [];
-      (meta.structure || []).forEach(part => {
-        (part.items || []).forEach(item => {
-          docs.push(item);
-        });
-      });
+      if (!prevEl || !nextEl) return;
 
-      if (!docs.length) {
-        titleEl.textContent = "문서를 찾을 수 없음";
-        contentEl.innerHTML = '<p class="error">챕터가 없습니다.</p>';
+      if (prev) {
+        prevEl.href = `/docs.html?book=${encodeURIComponent(book)}&chapter=${encodeURIComponent(prev.slug)}`;
+        prevEl.textContent = `← ${prev.title}`;
+      } else {
+        prevEl.removeAttribute("href");
+        prevEl.textContent = "";
+      }
+
+      if (next) {
+        nextEl.href = `/docs.html?book=${encodeURIComponent(book)}&chapter=${encodeURIComponent(next.slug)}`;
+        nextEl.textContent = `${next.title} →`;
+      } else {
+        nextEl.removeAttribute("href");
+        nextEl.textContent = "";
+      }
+    }
+
+    async function initializeDocsPage() {
+      const titleEl = document.getElementById("title");
+      const metaEl = document.getElementById("meta");
+      const contentEl = document.getElementById("content");
+      const categoryEl = document.getElementById("category");
+      const tocEl = document.getElementById("toc");
+      const seriesTitleEl = document.getElementById("seriesTitle");
+
+      if (!book) {
+        titleEl.textContent = "잘못된 접근";
+        contentEl.innerHTML = '<p class="error">book 값이 없습니다.</p>';
         return;
       }
 
-      const current = docs.find(item => item.slug === chapter) || docs[0];
+      try {
+        const response = await fetch(`/content/books/${book}/meta.json`, { cache: "no-store" });
+        if (!response.ok) throw new Error("meta.json 로드 실패");
 
-      tocEl.innerHTML = docs.map(item => `
-        <a href="/docs.html?book=${encodeURIComponent(book)}&chapter=${encodeURIComponent(item.slug)}"
-           class="${item.slug === current.slug ? "active" : ""}">
-          ${escapeHtml(item.title)}
-        </a>
-      `).join("");
+        const meta = await response.json();
 
-      document.title = current.title;
-      titleEl.textContent = current.title;
-      categoryEl.textContent = "";
-      metaEl.textContent = meta.description || "";
+        seriesTitleEl.textContent = meta.title || "문서";
 
-      const markdownResponse = await fetch(`/content/books/${book}/${encodeURIComponent(current.file)}`, { cache: "no-store" });
-      if (!markdownResponse.ok) throw new Error("Markdown 로드 실패");
+        const docs = [];
+        (meta.structure || []).forEach(part => {
+          (part.items || []).forEach(item => {
+            docs.push(item);
+          });
+        });
 
-      const markdown = await markdownResponse.text();
-      contentEl.innerHTML = marked.parse(markdown);
+        if (!docs.length) {
+          titleEl.textContent = "문서를 찾을 수 없음";
+          contentEl.innerHTML = '<p class="error">챕터가 없습니다.</p>';
+          return;
+        }
 
-      setupNavigation(docs, current, book);
-    } catch (error) {
-      console.error(error);
-      titleEl.textContent = "불러오기 실패";
-      contentEl.innerHTML = `<p class="error">${error.message}</p>`;
+        const current = docs.find(item => item.slug === chapter) || docs[0];
+
+        tocEl.innerHTML = docs.map(item => `
+          <a href="/docs.html?book=${encodeURIComponent(book)}&chapter=${encodeURIComponent(item.slug)}"
+             class="${item.slug === current.slug ? "active" : ""}">
+            ${escapeHtml(item.title)}
+          </a>
+        `).join("");
+
+        document.title = current.title;
+        titleEl.textContent = current.title;
+        categoryEl.textContent = "";
+        metaEl.textContent = meta.description || "";
+
+        const markdownResponse = await fetch(`/content/books/${book}/${encodeURIComponent(current.file)}`, { cache: "no-store" });
+        if (!markdownResponse.ok) throw new Error("Markdown 로드 실패");
+
+        const markdown = await markdownResponse.text();
+        contentEl.innerHTML = marked.parse(markdown);
+
+        setupNavigation(docs, current, book);
+      } catch (error) {
+        console.error(error);
+        titleEl.textContent = "불러오기 실패";
+        contentEl.innerHTML = `<p class="error">${error.message}</p>`;
+      }
     }
-  }
 
-  initializeDocsPage();
-</script>
+    initializeDocsPage();
+  </script>
 </body>
 </html>
