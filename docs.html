@@ -191,6 +191,22 @@
       font-size: 16px;
     }
 
+.doc-nav {
+  margin-top: 40px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.doc-nav a {
+  color: #333;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.doc-nav a:hover {
+  text-decoration: underline;
+}
+
     @media (max-width: 1024px) {
       .layout {
         grid-template-columns: 1fr;
@@ -244,9 +260,12 @@
       </div>
     </main>
   </div>
+  <div class="doc-nav">
+  <a id="prevLink"></a>
+  <a id="nextLink"></a>
+</div>
 
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 <script>
   const params = new URLSearchParams(window.location.search);
   const book = params.get("book");
@@ -259,6 +278,38 @@
       .replaceAll(">", "&gt;")
       .replaceAll('"', "&quot;")
       .replaceAll("'", "&#039;");
+  }
+
+  function setupNavigation(list, current, book) {
+    const index = list.findIndex(item => item.slug === current.slug);
+
+    const prev = list[index - 1];
+    const next = list[index + 1];
+
+    const prevEl = document.getElementById("prevLink");
+    const nextEl = document.getElementById("nextLink");
+
+    if (!prevEl || !nextEl) return;
+
+    if (prev) {
+      prevEl.href = `/docs.html?book=${encodeURIComponent(book)}&chapter=${encodeURIComponent(prev.slug)}`;
+      prevEl.textContent = `← ${prev.title}`;
+      prevEl.style.visibility = "visible";
+    } else {
+      prevEl.removeAttribute("href");
+      prevEl.textContent = "";
+      prevEl.style.visibility = "hidden";
+    }
+
+    if (next) {
+      nextEl.href = `/docs.html?book=${encodeURIComponent(book)}&chapter=${encodeURIComponent(next.slug)}`;
+      nextEl.textContent = `${next.title} →`;
+      nextEl.style.visibility = "visible";
+    } else {
+      nextEl.removeAttribute("href");
+      nextEl.textContent = "";
+      nextEl.style.visibility = "hidden";
+    }
   }
 
   async function initializeDocsPage() {
@@ -315,6 +366,8 @@
 
       const markdown = await markdownResponse.text();
       contentEl.innerHTML = marked.parse(markdown);
+
+      setupNavigation(docs, current, book);
     } catch (error) {
       console.error(error);
       titleEl.textContent = "불러오기 실패";
