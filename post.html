@@ -502,7 +502,7 @@
 
         const heroImageUrl = getThumbnailUrl(post, 1600, 900);
         heroBgEl.style.display = "block";
-        heroBgEl.innerHTML = `<img src="${escapeHtml(heroImageUrl)}" alt="" loading="lazy">`;
+        heroBgEl.innerHTML = `<img src="https://picsum.photos/1600/900" alt="">`;
 
         const markdownResponse = await fetch(
           `/content/blog/${encodeURIComponent(post.category)}/${encodeURIComponent(slug)}.md`,
