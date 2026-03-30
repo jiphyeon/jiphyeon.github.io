@@ -14,11 +14,28 @@
       box-sizing: border-box;
     }
 
+    :root {
+      --text-main: #191919;
+      --text-body: #2f2f2f;
+      --text-muted: #7b7b7b;
+      --line-soft: #ececec;
+      --surface-soft: #fafafa;
+      --surface-code: #f6f6f3;
+      --accent: #df0f57;
+      --accent-soft: #f4edf0;
+    }
+
+    html {
+      -webkit-text-size-adjust: 100%;
+    }
+
     body {
       margin: 0;
-      font-family: "Noto Sans KR", -apple-system, BlinkMacSystemFont, sans-serif;
+      font-family: "Noto Sans KR", -apple-system, BlinkMacSystemFont, "Apple SD Gothic Neo", sans-serif;
       background: #fff;
-      color: #111;
+      color: var(--text-main);
+      word-break: keep-all;
+      overflow-wrap: break-word;
     }
 
     a {
@@ -27,37 +44,53 @@
 
     .layout {
       display: grid;
-      grid-template-columns: 280px minmax(0, 1fr);
+      grid-template-columns: 300px minmax(0, 1fr);
       min-height: 100vh;
     }
 
     .sidebar {
-      border-right: 1px solid #eee;
-      padding: 28px 20px 40px;
       position: sticky;
       top: 0;
       height: 100vh;
       overflow-y: auto;
+      padding: 28px 20px 36px;
+      border-right: 1px solid var(--line-soft);
       background: #fff;
     }
 
-    .sidebar-home {
+    .sidebar-home,
+    .sidebar-home:visited,
+    .sidebar-home:hover,
+    .sidebar-home:active {
       display: inline-block;
-      margin-bottom: 24px;
+      margin-bottom: 28px;
       font-size: 14px;
+      font-weight: 500;
       color: #666;
       text-decoration: none;
+      text-underline-offset: 3px;
     }
 
     .sidebar-home:hover {
       text-decoration: underline;
     }
 
-    .series-title {
-      margin: 0 0 18px;
-      font-size: 22px;
+    .series-label {
+      margin: 0 0 8px;
+      font-size: 12px;
       font-weight: 500;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--accent);
+    }
+
+    .series-title {
+      margin: 0 0 22px;
+      font-size: 26px;
+      font-weight: 500;
+      line-height: 1.35;
       letter-spacing: -0.04em;
+      color: var(--text-main);
     }
 
     .toc {
@@ -66,14 +99,28 @@
       gap: 6px;
     }
 
+    .toc-group {
+      margin-bottom: 18px;
+    }
+
+    .toc-group-title {
+      margin: 0 0 8px;
+      padding: 0 12px;
+      font-size: 12px;
+      font-weight: 500;
+      color: #8a8a8a;
+      letter-spacing: 0.02em;
+    }
+
     .toc a {
       display: block;
       padding: 10px 12px;
       border-radius: 12px;
       text-decoration: none;
       font-size: 14px;
-      line-height: 1.45;
+      line-height: 1.5;
       color: #333;
+      transition: background 0.18s ease, color 0.18s ease;
     }
 
     .toc a:hover {
@@ -81,157 +128,365 @@
     }
 
     .toc a.active {
-      background: #f4edf0;
-      color: #df0f57;
+      background: var(--accent-soft);
+      color: var(--accent);
       font-weight: 500;
     }
 
     .main {
-      padding: 56px 48px 96px;
+      min-width: 0;
+      padding: 0 0 96px;
+      background: #fff;
     }
 
-    .doc-wrap {
-      width: 860px;
-      max-width: 100%;
+    .doc-hero {
+      border-bottom: 1px solid var(--line-soft);
+      background: linear-gradient(to bottom, #ffffff, #fcfcfc);
+    }
+
+    .doc-hero-inner {
+      width: 100%;
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 48px 20px 40px;
+    }
+
+    .breadcrumb {
+      margin-bottom: 18px;
+      font-size: 14px;
+      line-height: 1.6;
+      color: #777;
+    }
+
+    .breadcrumb a {
+      text-decoration: none;
+    }
+
+    .breadcrumb a:hover {
+      text-decoration: underline;
     }
 
     .doc-category {
       margin-bottom: 14px;
-      font-size: 15px;
-      color: #df0f57;
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--accent);
     }
 
     .doc-title {
-      margin: 0 0 18px;
-      font-size: 40px;
+      margin: 0;
+      font-size: 42px;
       font-weight: 500;
       line-height: 1.28;
       letter-spacing: -0.04em;
+      color: var(--text-main);
     }
 
     .doc-meta {
-      margin-bottom: 36px;
+      margin-top: 14px;
       font-size: 15px;
-      color: #777;
+      line-height: 1.7;
+      color: var(--text-muted);
     }
 
-    .doc-content {
+    .content-wrap {
+      width: 100%;
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 40px 20px 0;
+    }
+
+    .content {
       font-size: 18px;
       font-weight: 300;
       line-height: 1.9;
       letter-spacing: -0.03em;
-      color: #222;
+      color: var(--text-body);
+      text-align: left;
     }
 
-    .doc-content h1,
-    .doc-content h2,
-    .doc-content h3 {
+    .content > *:first-child {
+      margin-top: 0 !important;
+    }
+
+    .content h1,
+    .content h2,
+    .content h3,
+    .content h4,
+    .content h5,
+    .content h6 {
       margin-top: 52px;
       margin-bottom: 18px;
+      font-weight: 500;
       line-height: 1.4;
       letter-spacing: -0.04em;
-      color: #111;
+      color: var(--text-main);
     }
 
-    .doc-content h1 { font-size: 34px; font-weight: 500; }
-    .doc-content h2 { font-size: 28px; font-weight: 500; }
-    .doc-content h3 { font-size: 23px; font-weight: 500; }
+    .content h1 { font-size: 34px; }
+    .content h2 { font-size: 28px; }
+    .content h3 { font-size: 23px; }
+    .content h4 { font-size: 19px; }
+    .content h5 { font-size: 17px; }
+    .content h6 { font-size: 15px; }
 
-    .doc-content p {
+    .content p {
       margin: 0 0 22px;
     }
 
-    .doc-content ul,
-    .doc-content ol {
-      margin: 0 0 24px 22px;
-      padding: 0;
+    .content a {
+      text-decoration: underline;
+      text-decoration-color: rgba(25, 25, 25, 0.28);
+      text-underline-offset: 3px;
+      transition: text-decoration-color 0.2s ease, opacity 0.2s ease;
     }
 
-    .doc-content li {
+    .content a:hover {
+      text-decoration-color: rgba(25, 25, 25, 0.8);
+    }
+
+    .content ul,
+    .content ol {
+      margin: 0 0 24px;
+      padding-left: 1.4em;
+      text-align: left;
+    }
+
+    .content li {
+      margin-bottom: 10px;
+      padding-left: 0.1em;
+    }
+
+    .content li > ul,
+    .content li > ol {
+      margin-top: 10px;
       margin-bottom: 10px;
     }
 
-    .doc-content blockquote {
+    .content blockquote {
       margin: 28px 0;
-      padding: 2px 0 2px 18px;
-      border-left: 3px solid #df0f57;
-      color: #444;
+      padding: 6px 0 6px 18px;
+      border-left: 3px solid #d9d9d9;
+      color: #555;
+      text-align: left;
     }
 
-    .doc-content img {
+    .content hr {
+      margin: 40px 0;
+      border: 0;
+      border-top: 1px solid var(--line-soft);
+    }
+
+    .content img {
+      display: block;
       max-width: 100%;
       height: auto;
+      margin: 32px auto;
       border-radius: 14px;
-      display: block;
-      margin: 28px auto;
     }
 
-    .doc-content pre {
-      background: #f7f7f7;
-      padding: 18px;
-      border-radius: 14px;
-      overflow-x: auto;
-      margin: 28px 0;
-    }
-
-    .doc-content code {
-      background: #f5f5f5;
-      padding: 2px 6px;
+    .content code {
+      display: inline-block;
+      padding: 0.16em 0.45em;
       border-radius: 6px;
-      font-size: 0.92em;
+      background: var(--surface-code);
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 0.9em;
+      line-height: 1.6;
+      color: #3b3b3b;
+      vertical-align: baseline;
     }
 
-    .doc-content pre code {
-      background: transparent;
+    .content pre {
+      margin: 28px 0;
+      padding: 18px 20px;
+      border-radius: 14px;
+      background: var(--surface-code);
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+
+    .content pre code {
+      display: block;
       padding: 0;
+      background: transparent;
+      border-radius: 0;
+      font-size: 0.92em;
+      line-height: 1.75;
+      white-space: pre;
+    }
+
+    .doc-nav {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+      margin-top: 56px;
+      padding-top: 28px;
+      border-top: 1px solid var(--line-soft);
+    }
+
+    .doc-nav a,
+    .doc-nav .nav-placeholder {
+      display: block;
+      min-height: 92px;
+      padding: 18px 18px 16px;
+      border: 1px solid var(--line-soft);
+      border-radius: 16px;
+      text-decoration: none;
+      background: #fff;
+    }
+
+    .doc-nav a:hover {
+      border-color: #d9d9d9;
+      background: #fcfcfc;
+    }
+
+    .doc-nav-next {
+      text-align: right;
+    }
+
+    .nav-label {
+      display: block;
+      margin-bottom: 8px;
+      font-size: 12px;
+      font-weight: 500;
+      color: #8a8a8a;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .nav-title {
+      display: block;
+      font-size: 16px;
+      font-weight: 500;
+      line-height: 1.55;
+      color: var(--text-main);
+    }
+
+    .nav-placeholder {
+      border-style: dashed;
+      background: #fafafa;
+    }
+
+    .post-footer {
+      margin-top: 60px;
+      padding-top: 0;
+      font-size: 15px;
+      line-height: 1.6;
+      color: #8a8a8a;
+      text-align: left;
     }
 
     .error {
       color: #b00020;
-      font-size: 16px;
+      font-size: 15px;
+      line-height: 1.7;
     }
 
-    .doc-nav {
-      margin-top: 40px;
-      display: flex;
-      justify-content: space-between;
-      gap: 20px;
-    }
-
-    .doc-nav a {
-      display: inline-block;
-      color: #333;
-      text-decoration: none;
-      font-weight: 500;
-    }
-
-    .doc-nav a:hover {
-      text-decoration: underline;
-    }
-
-    @media (max-width: 1024px) {
+    @media (max-width: 1100px) {
       .layout {
         grid-template-columns: 1fr;
       }
 
       .sidebar {
         position: relative;
+        top: auto;
         height: auto;
         border-right: 0;
-        border-bottom: 1px solid #eee;
+        border-bottom: 1px solid var(--line-soft);
+        padding: 24px 16px 20px;
+      }
+
+      .series-title {
+        font-size: 22px;
+        margin-bottom: 18px;
+      }
+
+      .toc {
+        gap: 4px;
       }
 
       .main {
-        padding: 36px 16px 64px;
+        padding-bottom: 72px;
       }
 
+      .doc-hero-inner {
+        padding: 36px 18px 32px;
+      }
+
+      .content-wrap {
+        padding: 32px 18px 0;
+      }
+    }
+
+    @media (max-width: 768px) {
       .doc-title {
-        font-size: 30px;
+        font-size: 31px;
+        line-height: 1.3;
       }
 
-      .doc-content {
+      .doc-meta {
+        margin-top: 10px;
+        font-size: 14px;
+      }
+
+      .content {
         font-size: 17px;
-        line-height: 1.8;
+        line-height: 1.76;
+      }
+
+      .content h1 {
+        margin: 44px 0 16px;
+        font-size: 24px;
+      }
+
+      .content h2 {
+        margin: 40px 0 16px;
+        font-size: 22px;
+      }
+
+      .content h3 {
+        margin: 34px 0 14px;
+        font-size: 20px;
+      }
+
+      .content h4 {
+        margin: 28px 0 12px;
+        font-size: 17px;
+      }
+
+      .content h5 {
+        margin: 24px 0 10px;
+        font-size: 15px;
+      }
+
+      .content h6 {
+        margin: 22px 0 8px;
+        font-size: 13px;
+      }
+
+      .content img {
+        margin: 24px auto;
+        border-radius: 12px;
+      }
+
+      .content pre {
+        margin: 24px 0;
+        padding: 16px;
+        border-radius: 12px;
+      }
+
+      .doc-nav {
+        grid-template-columns: 1fr;
+      }
+
+      .doc-nav-next {
+        text-align: left;
+      }
+
+      .post-footer {
+        margin-top: 48px;
+        font-size: 12px;
       }
     }
   </style>
@@ -240,132 +495,216 @@
   <div class="layout">
     <aside class="sidebar">
       <a href="/" class="sidebar-home">← 메인으로</a>
+
+      <div class="series-label">Docs</div>
       <h1 class="series-title" id="seriesTitle">문서</h1>
+
       <nav class="toc" id="toc"></nav>
     </aside>
 
     <main class="main">
-      <div class="doc-wrap">
-        <div class="doc-category" id="category"></div>
-        <h1 class="doc-title" id="title">불러오는 중</h1>
-        <div class="doc-meta" id="meta"></div>
-        <article class="doc-content" id="content"></article>
+      <header class="doc-hero">
+        <div class="doc-hero-inner">
+          <div class="breadcrumb" id="breadcrumb">
+            <a href="/">Home</a>
+            <span> / </span>
+            <span>Docs</span>
+          </div>
 
-        <div class="doc-nav">
-          <a id="prevLink"></a>
-          <a id="nextLink"></a>
+          <div class="doc-category" id="category"></div>
+          <h1 class="doc-title" id="title">불러오는 중</h1>
+          <div class="doc-meta" id="meta"></div>
         </div>
+      </header>
+
+      <div class="content-wrap">
+        <article class="content" id="content"></article>
+
+        <nav class="doc-nav">
+          <div id="prevWrap" class="nav-placeholder" style="display:none;"></div>
+          <div id="nextWrap" class="nav-placeholder" style="display:none;"></div>
+        </nav>
+
+        <footer class="post-footer">
+          ©Jiphyeon. Powered by GitHub.
+        </footer>
       </div>
     </main>
   </div>
 
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
- <script>
-  const params = new URLSearchParams(window.location.search);
-  const book = params.get("book");
-  const chapter = params.get("chapter");
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const book = params.get("book");
+    const chapter = params.get("chapter");
 
-  function escapeHtml(value = "") {
-    return String(value)
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#039;");
-  }
-
-  function setupNavigation(list, current, book) {
-  const index = list.findIndex(item => item.slug === current.slug);
-
-  const prev = list[index - 1];
-  const next = list[index + 1];
-
-  const prevEl = document.getElementById("prevLink");
-  const nextEl = document.getElementById("nextLink");
-
-  if (!prevEl || !nextEl) return;
-
-  if (prev) {
-    prevEl.href = `/docs.html?book=${encodeURIComponent(book)}&chapter=${encodeURIComponent(prev.slug)}`;
-    prevEl.textContent = `← ${prev.title}`;
-  } else {
-    prevEl.removeAttribute("href");
-    prevEl.textContent = "";
-  }
-
-  if (next) {
-    nextEl.href = `/docs.html?book=${encodeURIComponent(book)}&chapter=${encodeURIComponent(next.slug)}`;
-    nextEl.textContent = `${next.title} →`;
-  } else {
-    nextEl.removeAttribute("href");
-    nextEl.textContent = "";
-  }
-}
-
-  async function initializeDocsPage() {
-    const titleEl = document.getElementById("title");
-    const metaEl = document.getElementById("meta");
-    const contentEl = document.getElementById("content");
-    const categoryEl = document.getElementById("category");
-    const tocEl = document.getElementById("toc");
-    const seriesTitleEl = document.getElementById("seriesTitle");
-
-    if (!book) {
-      titleEl.textContent = "잘못된 접근";
-      contentEl.innerHTML = '<p class="error">book 값이 없습니다.</p>';
-      return;
+    function escapeHtml(value = "") {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
     }
 
-    try {
-      const response = await fetch(`/content/books/${book}/meta.json`, { cache: "no-store" });
-      if (!response.ok) throw new Error("meta.json 로드 실패");
-
-      const meta = await response.json();
-
-      seriesTitleEl.textContent = meta.title || "문서";
-
+    function flattenDocs(structure = []) {
       const docs = [];
-      (meta.structure || []).forEach(part => {
-        (part.items || []).forEach(item => {
-          docs.push(item);
+
+      structure.forEach((part, partIndex) => {
+        const items = Array.isArray(part.items) ? part.items : [];
+
+        items.forEach((item, itemIndex) => {
+          docs.push({
+            ...item,
+            _partTitle: part.title || "",
+            _partIndex: partIndex,
+            _itemIndex: itemIndex
+          });
         });
       });
 
-      if (!docs.length) {
-        titleEl.textContent = "문서를 찾을 수 없음";
-        contentEl.innerHTML = '<p class="error">챕터가 없습니다.</p>';
+      return docs;
+    }
+
+    function renderToc(structure = [], currentSlug = "", book = "") {
+      const tocEl = document.getElementById("toc");
+      if (!tocEl) return;
+
+      tocEl.innerHTML = (structure || []).map(part => {
+        const items = Array.isArray(part.items) ? part.items : [];
+        const partTitle = part.title ? `<div class="toc-group-title">${escapeHtml(part.title)}</div>` : "";
+
+        const links = items.map(item => `
+          <a href="/docs.html?book=${encodeURIComponent(book)}&chapter=${encodeURIComponent(item.slug)}"
+             class="${item.slug === currentSlug ? "active" : ""}">
+            ${escapeHtml(item.title || "")}
+          </a>
+        `).join("");
+
+        return `
+          <div class="toc-group">
+            ${partTitle}
+            ${links}
+          </div>
+        `;
+      }).join("");
+    }
+
+    function setupNavigation(list, current, book) {
+      const index = list.findIndex(item => item.slug === current.slug);
+
+      const prev = list[index - 1];
+      const next = list[index + 1];
+
+      const prevWrap = document.getElementById("prevWrap");
+      const nextWrap = document.getElementById("nextWrap");
+
+      if (prevWrap) {
+        if (prev) {
+          prevWrap.style.display = "block";
+          prevWrap.className = "";
+          prevWrap.innerHTML = `
+            <a href="/docs.html?book=${encodeURIComponent(book)}&chapter=${encodeURIComponent(prev.slug)}">
+              <span class="nav-label">Previous</span>
+              <span class="nav-title">← ${escapeHtml(prev.title)}</span>
+            </a>
+          `;
+        } else {
+          prevWrap.style.display = "block";
+          prevWrap.className = "nav-placeholder";
+          prevWrap.innerHTML = "";
+        }
+      }
+
+      if (nextWrap) {
+        if (next) {
+          nextWrap.style.display = "block";
+          nextWrap.className = "doc-nav-next";
+          nextWrap.innerHTML = `
+            <a href="/docs.html?book=${encodeURIComponent(book)}&chapter=${encodeURIComponent(next.slug)}" class="doc-nav-next">
+              <span class="nav-label">Next</span>
+              <span class="nav-title">${escapeHtml(next.title)} →</span>
+            </a>
+          `;
+        } else {
+          nextWrap.style.display = "block";
+          nextWrap.className = "nav-placeholder";
+          nextWrap.innerHTML = "";
+        }
+      }
+    }
+
+    marked.setOptions({
+      breaks: false,
+      gfm: true
+    });
+
+    async function initializeDocsPage() {
+      const titleEl = document.getElementById("title");
+      const metaEl = document.getElementById("meta");
+      const contentEl = document.getElementById("content");
+      const categoryEl = document.getElementById("category");
+      const seriesTitleEl = document.getElementById("seriesTitle");
+      const breadcrumbEl = document.getElementById("breadcrumb");
+
+      if (!book) {
+        titleEl.textContent = "잘못된 접근";
+        contentEl.innerHTML = '<p class="error">book 값이 없습니다.</p>';
         return;
       }
 
-      const current = docs.find(item => item.slug === chapter) || docs[0];
+      try {
+        const response = await fetch(`/content/books/${encodeURIComponent(book)}/meta.json`, { cache: "no-store" });
+        if (!response.ok) throw new Error("meta.json 로드 실패");
 
-      tocEl.innerHTML = docs.map(item => `
-        <a href="/docs.html?book=${encodeURIComponent(book)}&chapter=${encodeURIComponent(item.slug)}"
-           class="${item.slug === current.slug ? "active" : ""}">
-          ${escapeHtml(item.title)}
-        </a>
-      `).join("");
+        const meta = await response.json();
+        const structure = Array.isArray(meta.structure) ? meta.structure : [];
+        const docs = flattenDocs(structure);
 
-      document.title = current.title;
-      titleEl.textContent = current.title;
-      categoryEl.textContent = "";
-      metaEl.textContent = meta.description || "";
+        seriesTitleEl.textContent = meta.title || "문서";
 
-      const markdownResponse = await fetch(`/content/books/${book}/${encodeURIComponent(current.file)}`, { cache: "no-store" });
-      if (!markdownResponse.ok) throw new Error("Markdown 로드 실패");
+        if (!docs.length) {
+          titleEl.textContent = "문서를 찾을 수 없음";
+          contentEl.innerHTML = '<p class="error">챕터가 없습니다.</p>';
+          return;
+        }
 
-      const markdown = await markdownResponse.text();
-      contentEl.innerHTML = marked.parse(markdown);
+        const current = docs.find(item => item.slug === chapter) || docs[0];
 
-      setupNavigation(docs, current, book);
-    } catch (error) {
-      console.error(error);
-      titleEl.textContent = "불러오기 실패";
-      contentEl.innerHTML = `<p class="error">${error.message}</p>`;
+        renderToc(structure, current.slug, book);
+
+        document.title = `${current.title || "Docs"} | ${meta.title || "Jiphyeon"}`;
+        titleEl.textContent = current.title || "";
+        categoryEl.textContent = current._partTitle || meta.category || "문서";
+        metaEl.textContent = meta.description || "";
+
+        breadcrumbEl.innerHTML = `
+          <a href="/">Home</a>
+          <span> / </span>
+          <span>Docs</span>
+          <span> / </span>
+          <span>${escapeHtml(meta.title || "문서")}</span>
+        `;
+
+        const markdownResponse = await fetch(
+          `/content/books/${encodeURIComponent(book)}/${encodeURIComponent(current.file)}`,
+          { cache: "no-store" }
+        );
+
+        if (!markdownResponse.ok) throw new Error("Markdown 로드 실패");
+
+        const markdown = await markdownResponse.text();
+        contentEl.innerHTML = marked.parse(markdown);
+
+        setupNavigation(docs, current, book);
+      } catch (error) {
+        console.error(error);
+        titleEl.textContent = "불러오기 실패";
+        contentEl.innerHTML = `<p class="error">${escapeHtml(error.message || "본문을 불러오지 못했습니다.")}</p>`;
+      }
     }
-  }
 
-  initializeDocsPage();
-</script>
+    initializeDocsPage();
+  </script>
 </body>
 </html>
