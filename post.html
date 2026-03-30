@@ -68,14 +68,14 @@
     }
 
 .category {
-   display: inline-flex;
+  display: inline-flex;
   align-items: center;
   min-height: 30px;
   padding: 0 12px;
   margin-bottom: 18px;
-  border: 1px solid #e4e4e4;
+  border: none;                 /* ❌ 테두리 제거 */
   border-radius: 10px;
-  background: #f8eef2;
+  background: #f2f2f2;          /* ✅ 회색 배경 */
   color: var(--accent);
   font-size: 13px;
   font-weight: 500;
@@ -351,9 +351,13 @@
         border-radius: 12px;
       }
         .post-footer {
-    margin-top: 64px;
-    padding-top: 20px;
-    font-size: 12px;
+margin-top: 120px;      /* 🔥 충분히 띄운다 */
+  padding-top: 32px;
+  border-top: 1px solid #efefef;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--text-muted);
+  text-align: left;
     }
   </style>
 </head>
