@@ -23,17 +23,11 @@
           "slug": "european-regulatory-strategy",
           "file": "european-regulatory-strategy.md"
         },
-{
-  "type": "part",
-  "title": "규제 패권",
-  "items": [
-    {
-      "title": "빠른 입법",
-      "slug": "fast-legislation",
-      "file": "fast-legislation.md"
-    }
-  ]
-}
+        {
+          "title": "빠른 입법",
+          "slug": "fast-legislation",
+          "file": "fast-legislation.md"
+        }
       ]
     }
   ]
