@@ -9,7 +9,7 @@ excerpt: "유럽 규제 전략의 방향을 설명하는 문서"
 thumbnail: "/images/eu-regulation.jpg"
 ---
 
-![유럽의 규제 전략](/images/eu-regulation.jpg)
+![유럽의 규제 전략](/images/eu-regulation.png)
 
 1950년대부터 유럽은 통합의 길을 모색해왔다. 하나의 국가로는 기술도, 자원도, 시장도 한계가 명확했기 때문이다. 그래서 유럽은 국가가 아닌 연합으로 경쟁하기로 했다.
 
