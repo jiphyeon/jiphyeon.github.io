@@ -7,6 +7,7 @@ thumbnail: "/images/ai-pact.jpg"
 date: 2026-03-01
 ---
 
+![AI Pact](/images/ai-pact.jpg)
 
 EU AI Act는 6월 공식 발효되었지만, 실제 의무사항은 2025년부터 2027년까지 단계적으로 시행된다. EU는 이 공백기를 전략적으로 활용했다. 법적 규제
 이전에 기업들이 자발적으로 EU 기준을 따르도록 하는 새로운 실험, AI Pact를 시작했다.
