@@ -507,6 +507,11 @@ a {
     margin-top: 48px;
     font-size: 12px;
   }
+  
+  .reference-heading {
+  margin-top: 32px;
+  font-weight: 600;
+}
 }
   </style>
 </head>
@@ -546,7 +551,22 @@ a {
       </div>
     </main>
   </div>
+  
+<script>
+  // markdown 렌더링 코드
+  contentEl.innerHTML = marked.parse(markdown);
+</script>
 
+<!-- ✅ 여기에 추가 -->
+<script>
+  document.querySelectorAll("#content p, #content li").forEach((el) => {
+    const text = el.textContent.trim().replace(/\s+/g, "");
+
+    if (text === "참고자료") {
+      el.classList.add("reference-heading");
+    }
+  });
+</script>
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script>
     const params = new URLSearchParams(window.location.search);
