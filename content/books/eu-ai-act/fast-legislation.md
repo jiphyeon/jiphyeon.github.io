@@ -6,6 +6,7 @@ part: "규제 패권"
 order: 2
 slug: "fast-legislation"
 thumbnail: "/images/fast-legislation.jpg"
+date: 2026-02-26
 ---
 
 ![빠른 입법](/images/fast-legislation.jpg)

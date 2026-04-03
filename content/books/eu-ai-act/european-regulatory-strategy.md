@@ -7,6 +7,7 @@ order: 1
 slug: "european-regulatory-strategy"
 excerpt: "유럽 규제 전략의 방향을 설명하는 문서"
 thumbnail: "/images/eu-regulation.jpg"
+date: 2026-02-25
 ---
 
 ![유럽의 규제 전략](/images/eu-regulation.png)

@@ -226,7 +226,7 @@
 
     .content strong {
       font-weight: 700;
-  background-color: rgba(255, 249, 196, 0.6);
+  background-color: rgba(255, 249, 196, 0.7);
   padding: 0 1px;
   border-radius: 1px;
       }
@@ -447,6 +447,28 @@
 
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script>
+    function parseFrontMatter(markdown = "") {
+  const match = markdown.match(/^---\s*\n([\s\S]*?)\n---\s*\n?/);
+
+  if (!match) {
+    return { data: {}, content: markdown };
+  }
+
+  const raw = match[1];
+  const content = markdown.replace(/^---\s*\n[\s\S]*?\n---\s*\n?/, "");
+  const data = {};
+
+  raw.split("\n").forEach(line => {
+    const index = line.indexOf(":");
+    if (index === -1) return;
+
+    const key = line.slice(0, index).trim();
+    const value = line.slice(index + 1).trim();
+    data[key] = value;
+  });
+
+  return { data, content };
+}
     const params = new URLSearchParams(window.location.search);
     const slug = params.get("slug");
 
@@ -501,7 +523,7 @@
 
         document.title = post.title || "Post";
         titleEl.textContent = post.title || "";
-        metaEl.textContent = post.date || "";
+        metaEl.textContent = "";
 
         if (post.category || post.categoryLabel) {
           categoryEl.style.display = "inline-flex";
@@ -520,7 +542,10 @@
         if (!markdownResponse.ok) throw new Error("Markdown 로드 실패");
 
         const markdown = await markdownResponse.text();
-        contentEl.innerHTML = marked.parse(markdown);
+const { data: frontMatter, content: cleanedMarkdown } = parseFrontMatter(markdown);
+
+metaEl.textContent = frontMatter.date || post.date || "";
+contentEl.innerHTML = marked.parse(cleanedMarkdown);
       } catch (error) {
         console.error(error);
         titleEl.textContent = "불러오기 실패";

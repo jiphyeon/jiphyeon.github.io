@@ -191,7 +191,10 @@
     }
 
     .doc-meta {
-      display: none;
+      display: block;
+  margin-top: 10px;
+  font-size: 14px;
+  color: var(--text-muted);
     }
 
     .content {
@@ -205,7 +208,7 @@
 
     .content strong {
       font-weight: 700;
-      background-color: rgba(255, 249, 196, 0.6);
+      background-color: rgba(255, 249, 196, 0.7);
       padding: 0 1px;
       border-radius: 1px;
     }
@@ -553,6 +556,28 @@
 
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script>
+    function parseFrontMatter(markdown = "") {
+  const match = markdown.match(/^---\s*\n([\s\S]*?)\n---\s*\n?/);
+
+  if (!match) {
+    return { data: {}, content: markdown };
+  }
+
+  const raw = match[1];
+  const content = markdown.replace(/^---\s*\n[\s\S]*?\n---\s*\n?/, "");
+  const data = {};
+
+  raw.split("\n").forEach(line => {
+    const index = line.indexOf(":");
+    if (index === -1) return;
+
+    const key = line.slice(0, index).trim();
+    const value = line.slice(index + 1).trim();
+    data[key] = value;
+  });
+
+  return { data, content };
+}
     const params = new URLSearchParams(window.location.search);
     const book = params.get("book");
     const chapter = params.get("chapter");
@@ -715,8 +740,10 @@
         if (!markdownResponse.ok) throw new Error("Markdown 로드 실패");
 
         const markdown = await markdownResponse.text();
-        const cleanedMarkdown = markdown.replace(/^---[\s\S]*?---\s*/, "");
-        contentEl.innerHTML = marked.parse(cleanedMarkdown);
+const { data: frontMatter, content: cleanedMarkdown } = parseFrontMatter(markdown);
+
+metaEl.textContent = frontMatter.date || post.date || "";
+contentEl.innerHTML = marked.parse(cleanedMarkdown);
 
         applyReferenceHeadingStyle(contentEl);
         setupNavigation(docs, current, book);

@@ -3,6 +3,7 @@ title: "AI Pact"
 part: "규제 패권"
 order: 3
 slug: "ai-pact"
+date: 2026-03-01
 ---
 
 
