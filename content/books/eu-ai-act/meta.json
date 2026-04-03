@@ -1,19 +1,8 @@
 {
   "id": "eu-ai-act",
-  "title": "EU AI Act",
-  "description": "EU AI Act를 구조적으로 이해하기 위한 문서",
+  "title": "eu-ai-act",
+  "description": "",
   "structure": [
-    {
-      "type": "overview",
-      "title": "Overview",
-      "items": [
-        {
-          "title": "EU AI Act 개요",
-          "slug": "overview",
-          "file": "overview.md"
-        }
-      ]
-    },
     {
       "type": "part",
       "title": "규제 패권",
@@ -27,6 +16,11 @@
           "title": "빠른 입법",
           "slug": "fast-legislation",
           "file": "fast-legislation.md"
+        },
+        {
+          "title": "AI Pact",
+          "slug": "ai-pact",
+          "file": "ai-pact.md"
         }
       ]
     }
