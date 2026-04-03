@@ -323,10 +323,9 @@
     }
 
     .reference-heading {
-      margin-top: 32px !important;
-      margin-bottom: 10px !important;
-      font-weight: 600;
-      color: var(--text-main);
+      margin-top: 16px;
+  padding-top: 24px;
+  font-weight: 600;
     }
 
     .doc-nav {
@@ -659,7 +658,7 @@
     function applyReferenceHeadingStyle(contentEl) {
       contentEl.querySelectorAll("p, li").forEach((el) => {
         const text = el.textContent.trim().replace(/\s+/g, "");
-        if (text === "참고자료") {
+       if (text.includes("참고자료")) {
           el.classList.add("reference-heading");
         }
       });
