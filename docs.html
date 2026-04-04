@@ -17,15 +17,16 @@
     :root {
       --text-main: #191919;
       --text-body: #2f2f2f;
-      --text-muted: #7b7b7b;
+      --text-muted: #6f6f6f;
       --line-soft: #ececec;
       --surface-code: #f6f6f3;
       --accent: #df0f57;
-
       --content-width: 760px;
       --topbar-height: 44px;
       --sidebar-width: 280px;
       --layout-width: 1100px;
+      --link-color: #0b6bcb;
+      --focus-ring: #1a73e8;
     }
 
     html {
@@ -45,6 +46,18 @@
       color: inherit;
     }
 
+    .sr-only {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      padding: 0 !important;
+      margin: -1px !important;
+      overflow: hidden !important;
+      clip: rect(0, 0, 0, 0) !important;
+      white-space: nowrap !important;
+      border: 0 !important;
+    }
+
     .topbar {
       position: sticky;
       top: 0;
@@ -52,7 +65,6 @@
       height: var(--topbar-height);
       border-bottom: 1px solid rgba(0, 0, 0, 0.05);
       background: rgba(255, 255, 255, 0.98);
-      backdrop-filter: none;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -77,7 +89,7 @@
       height: 100%;
       font-size: 14px;
       font-weight: 500;
-      color: #666;
+      color: #555;
       text-decoration: none;
       text-underline-offset: 3px;
     }
@@ -131,7 +143,7 @@
       font-size: 13px;
       font-weight: 500;
       letter-spacing: 0.06em;
-      color: #9a9a9a;
+      color: #7f7f7f;
       text-transform: uppercase;
     }
 
@@ -192,9 +204,12 @@
 
     .doc-meta {
       display: block;
-  margin-top: 10px;
-  font-size: 14px;
-  color: var(--text-muted);
+      margin-top: 10px;
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.6;
+      color: var(--text-muted);
+      letter-spacing: -0.01em;
     }
 
     .content {
@@ -202,16 +217,16 @@
       font-weight: 400;
       line-height: 1.6;
       letter-spacing: -0.03em;
-      color: #2f2f2f;
+      color: var(--text-body);
       text-align: left;
     }
 
     .content strong {
-font-weight: 700;
-  color: #0f172a; /* 가독성용 진한 색 */
-  background-color: rgba(189, 242, 239, 0.4); /* bdf2ef 기반 */
-  padding: 0 1px;
-  border-radius: 1px;
+      font-weight: 700;
+      color: #0f172a;
+      background-color: rgba(189, 242, 239, 0.4);
+      padding: 0 1px;
+      border-radius: 1px;
     }
 
     .content > *:first-child {
@@ -244,14 +259,15 @@ font-weight: 700;
     }
 
     .content a {
+      color: var(--link-color);
       text-decoration: underline;
-      text-decoration-color: rgba(25, 25, 25, 0.28);
+      text-decoration-color: rgba(11, 107, 203, 0.45);
       text-underline-offset: 3px;
-      transition: text-decoration-color 0.2s ease, opacity 0.2s ease;
+      transition: text-decoration-color 0.2s ease;
     }
 
     .content a:hover {
-      text-decoration-color: rgba(25, 25, 25, 0.8);
+      text-decoration-color: rgba(11, 107, 203, 0.9);
     }
 
     .content ul,
@@ -328,8 +344,8 @@ font-weight: 700;
 
     .reference-heading {
       margin-top: 16px;
-  padding-top: 24px;
-  font-weight: 600;
+      padding-top: 24px;
+      font-weight: 600;
     }
 
     .doc-nav {
@@ -364,7 +380,7 @@ font-weight: 700;
       margin-right: 6px;
       font-size: 13px;
       font-weight: 400;
-      color: #8a8a8a;
+      color: #6f6f6f;
       text-decoration: none !important;
     }
 
@@ -395,7 +411,7 @@ font-weight: 700;
       padding-top: 0;
       font-size: 15px;
       line-height: 1.6;
-      color: #8a8a8a;
+      color: #6f6f6f;
       text-align: left;
     }
 
@@ -403,6 +419,15 @@ font-weight: 700;
       color: #b00020;
       font-size: 15px;
       line-height: 1.7;
+    }
+
+    .topbar-home:focus-visible,
+    .toc a:focus-visible,
+    .doc-nav a:focus-visible,
+    .content a:focus-visible {
+      outline: 3px solid var(--focus-ring);
+      outline-offset: 3px;
+      border-radius: 4px;
     }
 
     @media (max-width: 1100px) {
@@ -519,6 +544,8 @@ font-weight: 700;
   </style>
 </head>
 <body>
+  <a href="#content" class="sr-only">본문 바로가기</a>
+
   <header class="topbar">
     <div class="topbar-inner">
       <a href="/" class="topbar-home">← 메인으로</a>
@@ -529,7 +556,7 @@ font-weight: 700;
     <aside class="sidebar">
       <div class="sidebar-inner">
         <h1 class="series-title" id="seriesTitle">문서</h1>
-        <nav class="toc" id="toc"></nav>
+        <nav class="toc" id="toc" aria-label="문서 목차"></nav>
       </div>
     </aside>
 
@@ -543,7 +570,7 @@ font-weight: 700;
 
         <article class="content" id="content"></article>
 
-        <nav class="doc-nav">
+        <nav class="doc-nav" aria-label="문서 이전 다음 탐색">
           <div id="prevWrap" class="nav-placeholder" style="display:none;"></div>
           <div id="nextWrap" class="nav-placeholder" style="display:none;"></div>
         </nav>
@@ -558,27 +585,28 @@ font-weight: 700;
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script>
     function parseFrontMatter(markdown = "") {
-  const match = markdown.match(/^---\s*\n([\s\S]*?)\n---\s*\n?/);
+      const match = markdown.match(/^---\s*\n([\s\S]*?)\n---\s*\n?/);
 
-  if (!match) {
-    return { data: {}, content: markdown };
-  }
+      if (!match) {
+        return { data: {}, content: markdown };
+      }
 
-  const raw = match[1];
-  const content = markdown.replace(/^---\s*\n[\s\S]*?\n---\s*\n?/, "");
-  const data = {};
+      const raw = match[1];
+      const content = markdown.replace(/^---\s*\n[\s\S]*?\n---\s*\n?/, "");
+      const data = {};
 
-  raw.split("\n").forEach(line => {
-    const index = line.indexOf(":");
-    if (index === -1) return;
+      raw.split("\n").forEach(line => {
+        const index = line.indexOf(":");
+        if (index === -1) return;
 
-    const key = line.slice(0, index).trim();
-    const value = line.slice(index + 1).trim();
-    data[key] = value;
-  });
+        const key = line.slice(0, index).trim();
+        const value = line.slice(index + 1).trim();
+        data[key] = value;
+      });
 
-  return { data, content };
-}
+      return { data, content };
+    }
+
     const params = new URLSearchParams(window.location.search);
     const book = params.get("book");
     const chapter = params.get("chapter");
@@ -623,7 +651,8 @@ font-weight: 700;
 
         const links = items.map(item => `
           <a href="/docs.html?book=${encodeURIComponent(currentBook)}&chapter=${encodeURIComponent(item.slug)}"
-             class="${item.slug === currentSlug ? "active" : ""}">
+             class="${item.slug === currentSlug ? "active" : ""}"
+             ${item.slug === currentSlug ? 'aria-current="page"' : ""}>
             ${escapeHtml(item.title || "")}
           </a>
         `).join("");
@@ -684,7 +713,7 @@ font-weight: 700;
     function applyReferenceHeadingStyle(contentEl) {
       contentEl.querySelectorAll("p, li").forEach((el) => {
         const text = el.textContent.trim().replace(/\s+/g, "");
-       if (text.includes("참고자료")) {
+        if (text.includes("참고자료")) {
           el.classList.add("reference-heading");
         }
       });
@@ -741,10 +770,10 @@ font-weight: 700;
         if (!markdownResponse.ok) throw new Error("Markdown 로드 실패");
 
         const markdown = await markdownResponse.text();
-const { data: frontMatter, content: cleanedMarkdown } = parseFrontMatter(markdown);
+        const { data: frontMatter, content: cleanedMarkdown } = parseFrontMatter(markdown);
 
-metaEl.textContent = frontMatter.date || post.date || "";
-contentEl.innerHTML = marked.parse(cleanedMarkdown);
+        metaEl.textContent = frontMatter.date || "";
+        contentEl.innerHTML = marked.parse(cleanedMarkdown);
 
         applyReferenceHeadingStyle(contentEl);
         setupNavigation(docs, current, book);

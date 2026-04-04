@@ -17,10 +17,12 @@
     :root {
       --text-main: #191919;
       --text-body: #2f2f2f;
-      --text-muted: rgba(255, 255, 255, 0.78);
+      --text-muted: rgba(255, 255, 255, 0.82);
       --line-soft: #ececec;
       --surface-code: #f6f6f3;
       --accent: #df0f57;
+      --link-color: #0b6bcb;
+      --focus-ring: #1a73e8;
     }
 
     html {
@@ -40,28 +42,39 @@
       color: inherit;
     }
 
-    .back-link-wrap {
-    position: absolute;
-  top: 32px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: calc(100% - 40px);
-  max-width: 760px;
-  z-index: 5;
-}
-    
+    .sr-only {
+      position: absolute !important;
+      width: 1px !important;
+      height: 1px !important;
+      padding: 0 !important;
+      margin: -1px !important;
+      overflow: hidden !important;
+      clip: rect(0, 0, 0, 0) !important;
+      white-space: nowrap !important;
+      border: 0 !important;
+    }
 
-.back-link,
-.back-link:visited,
-.back-link:hover,
-.back-link:active {
-  display: inline-block;
-  font-size: 15px;
-  font-weight: 500;
-  color: #ffffff !important;
-  text-decoration: none;
-  text-underline-offset: 3px;
-}
+    .back-link-wrap {
+      position: absolute;
+      top: 32px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: calc(100% - 40px);
+      max-width: 760px;
+      z-index: 5;
+    }
+
+    .back-link,
+    .back-link:visited,
+    .back-link:hover,
+    .back-link:active {
+      display: inline-block;
+      font-size: 15px;
+      font-weight: 500;
+      color: #ffffff !important;
+      text-decoration: none;
+      text-underline-offset: 3px;
+    }
 
     .back-link:hover {
       text-decoration: underline;
@@ -82,12 +95,12 @@
       inset: 0;
       z-index: 1;
     }
-    
+
     .post-hero-bg img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
     }
 
     .post-hero-overlay {
@@ -95,17 +108,17 @@
       inset: 0;
       z-index: 2;
       background:
-        linear-gradient(to top, rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.15)),
-        linear-gradient(to bottom, rgba(0, 0, 0, 0.12), rgba(0, 0, 0, 0.08));
+        linear-gradient(to top, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.18)),
+        linear-gradient(to bottom, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.08));
     }
 
     .post-hero-inner {
       position: relative;
-  z-index: 3;
-  width: 100%;
-  max-width: 760px;   /* ← 여기만 변경 */
-  margin: 0 auto;
-  padding: 120px 20px 48px;
+      z-index: 3;
+      width: 100%;
+      max-width: 760px;
+      margin: 0 auto;
+      padding: 120px 20px 48px;
     }
 
     .post-header {
@@ -159,7 +172,7 @@
       font-weight: 400;
       line-height: 1.6;
       letter-spacing: -0.03em;
-      color: #2f2f2f;
+      color: var(--text-body);
       text-align: left;
     }
 
@@ -225,27 +238,27 @@
     }
 
     .content strong {
-font-weight: 700;
-  color: #0f172a; /* 가독성용 진한 색 */
-  background-color: rgba(189, 242, 239, 0.4); /* bdf2ef 기반 */
-  padding: 0 1px;
-  border-radius: 1px;
-      }
+      font-weight: 700;
+      color: #0f172a;
+      background-color: rgba(189, 242, 239, 0.4);
+      padding: 0 1px;
+      border-radius: 1px;
+    }
 
     .content em {
       font-style: italic;
     }
 
     .content a {
-      color: inherit;
+      color: var(--link-color);
       text-decoration: underline;
-      text-decoration-color: rgba(25, 25, 25, 0.28);
+      text-decoration-color: rgba(11, 107, 203, 0.45);
       text-underline-offset: 3px;
-      transition: text-decoration-color 0.2s ease, opacity 0.2s ease;
+      transition: text-decoration-color 0.2s ease;
     }
 
     .content a:hover {
-      text-decoration-color: rgba(25, 25, 25, 0.8);
+      text-decoration-color: rgba(11, 107, 203, 0.9);
     }
 
     .content ul,
@@ -324,7 +337,7 @@ font-weight: 700;
       padding-top: 0;
       font-size: 15px;
       line-height: 1.6;
-      color: #8a8a8a;
+      color: #6f6f6f;
       text-align: left;
     }
 
@@ -334,10 +347,19 @@ font-weight: 700;
       line-height: 1.7;
     }
 
+    .back-link:focus-visible,
+    .content a:focus-visible {
+      outline: 3px solid var(--focus-ring);
+      outline-offset: 3px;
+      border-radius: 4px;
+    }
+
     @media (max-width: 768px) {
       .back-link-wrap {
         top: 24px;
-        left: 18px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: calc(100% - 36px);
       }
 
       .post-hero {
@@ -421,55 +443,58 @@ font-weight: 700;
   </style>
 </head>
 <body>
-<header class="post-hero">
-  <div class="back-link-wrap">
-    <a href="/" class="back-link">← 메인으로</a>
-  </div>
+  <a href="#content" class="sr-only">본문 바로가기</a>
 
-  <div class="post-hero-bg" id="heroBg" style="display:none;"></div>
-  <div class="post-hero-overlay"></div>
-
-  <div class="post-hero-inner">
-    <div class="post-header">
-      <div class="category" id="category" style="display:none;"></div>
-      <h1 class="post-title" id="title">불러오는 중</h1>
-      <div class="meta" id="meta"></div>
+  <header class="post-hero">
+    <div class="back-link-wrap">
+      <a href="/" class="back-link">← 메인으로</a>
     </div>
-  </div>
-</header>
 
-<main class="content-wrap">
-  <article class="content" id="content"></article>
+    <div class="post-hero-bg" id="heroBg" style="display:none;"></div>
+    <div class="post-hero-overlay"></div>
 
-  <footer class="post-footer">
-    ©Jiphyeon. Powered by GitHub.
-  </footer>
-</main>
+    <div class="post-hero-inner">
+      <div class="post-header">
+        <div class="category" id="category" style="display:none;"></div>
+        <h1 class="post-title" id="title">불러오는 중</h1>
+        <div class="meta" id="meta"></div>
+      </div>
+    </div>
+  </header>
+
+  <main class="content-wrap">
+    <article class="content" id="content"></article>
+
+    <footer class="post-footer">
+      ©Jiphyeon. Powered by GitHub.
+    </footer>
+  </main>
 
   <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
   <script>
     function parseFrontMatter(markdown = "") {
-  const match = markdown.match(/^---\s*\n([\s\S]*?)\n---\s*\n?/);
+      const match = markdown.match(/^---\s*\n([\s\S]*?)\n---\s*\n?/);
 
-  if (!match) {
-    return { data: {}, content: markdown };
-  }
+      if (!match) {
+        return { data: {}, content: markdown };
+      }
 
-  const raw = match[1];
-  const content = markdown.replace(/^---\s*\n[\s\S]*?\n---\s*\n?/, "");
-  const data = {};
+      const raw = match[1];
+      const content = markdown.replace(/^---\s*\n[\s\S]*?\n---\s*\n?/, "");
+      const data = {};
 
-  raw.split("\n").forEach(line => {
-    const index = line.indexOf(":");
-    if (index === -1) return;
+      raw.split("\n").forEach(line => {
+        const index = line.indexOf(":");
+        if (index === -1) return;
 
-    const key = line.slice(0, index).trim();
-    const value = line.slice(index + 1).trim();
-    data[key] = value;
-  });
+        const key = line.slice(0, index).trim();
+        const value = line.slice(index + 1).trim();
+        data[key] = value;
+      });
 
-  return { data, content };
-}
+      return { data, content };
+    }
+
     const params = new URLSearchParams(window.location.search);
     const slug = params.get("slug");
 
@@ -533,7 +558,7 @@ font-weight: 700;
 
         const heroImageUrl = getThumbnailUrl(post, 1600, 900);
         heroBgEl.style.display = "block";
-        heroBgEl.innerHTML = `<img src="https://picsum.photos/1600/900" alt="">`;
+        heroBgEl.innerHTML = `<img src="${escapeHtml(heroImageUrl)}" alt="">`;
 
         const markdownResponse = await fetch(
           `/content/blog/${encodeURIComponent(post.category)}/${encodeURIComponent(slug)}.md`,
@@ -543,10 +568,10 @@ font-weight: 700;
         if (!markdownResponse.ok) throw new Error("Markdown 로드 실패");
 
         const markdown = await markdownResponse.text();
-const { data: frontMatter, content: cleanedMarkdown } = parseFrontMatter(markdown);
+        const { data: frontMatter, content: cleanedMarkdown } = parseFrontMatter(markdown);
 
-metaEl.textContent = frontMatter.date || post.date || "";
-contentEl.innerHTML = marked.parse(cleanedMarkdown);
+        metaEl.textContent = frontMatter.date || "";
+        contentEl.innerHTML = marked.parse(cleanedMarkdown);
       } catch (error) {
         console.error(error);
         titleEl.textContent = "불러오기 실패";
