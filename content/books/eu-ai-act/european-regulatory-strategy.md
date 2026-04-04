@@ -10,7 +10,7 @@ thumbnail: "/images/eu-regulation.jpg"
 date: 2026-02-25
 ---
 
-![유럽의 규제 전략](/images/eu-regulation.png)
+![유럽 지도 위에 ‘AI Continent Action Plan’을 중심으로 AI Office, AI (Giga)Factories, Cloud & AI Development Act 등 주요 정책 요소가 연결된 구조를 보여주는 인포그래픽](/images/eu-regulation.png)
 
 1950년대부터 유럽은 통합의 길을 모색해왔다. 하나의 국가로는 기술도, 자원도, 시장도 한계가 명확했기 때문이다. 그래서 유럽은 국가가 아닌 연합으로 경쟁하기로 했다.
 

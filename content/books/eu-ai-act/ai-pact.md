@@ -7,7 +7,7 @@ thumbnail: "/images/ai-pact.jpg"
 date: 2026-03-01
 ---
 
-![EU 깃발 위에 ‘AI Artificial Intelligence’ 텍스트와 상승하는 그래프가 겹쳐진 이미지](/images/ai-pact.jpg)
+![유럽 인공지능 사무국(European Artificial Intelligence Office)의 ‘AI Pact’ 배너로, 인간과 로봇 손의 악수를 통해 조직의 AI 책임과 협력을 상징하는 이미지](/images/ai-pact.jpg)
 
 EU AI Act는 6월 공식 발효되었지만, 실제 의무사항은 2025년부터 2027년까지 단계적으로 시행된다. EU는 이 공백기를 전략적으로 활용했다. 법적 규제
 이전에 기업들이 자발적으로 EU 기준을 따르도록 하는 새로운 실험, AI Pact를 시작했다.
