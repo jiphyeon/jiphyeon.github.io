@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build:meta": "node scripts/build-meta.js",
+    "build:posts": "node scripts/build-posts.js",
+    "build:all": "node scripts/build-meta.js && node scripts/build-posts.js"
   },
   "repository": {
     "type": "git",

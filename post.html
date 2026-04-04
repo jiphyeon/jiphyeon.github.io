@@ -556,10 +556,9 @@ function getThumbnailUrl(post, width = 1600, height = 900) {
         heroBgEl.style.display = "block";
         heroBgEl.innerHTML = `<img src="${heroImageUrl}" alt="">`;
 
-        const markdownResponse = await fetch(
-          `/content/blog/${encodeURIComponent(post.category)}/${encodeURIComponent(slug)}.md`,
-          { cache: "no-store" }
-        );
+        const markdownResponse = await fetch(`/${post.file}`, {
+  cache: "no-store"
+});
 
         if (!markdownResponse.ok) throw new Error("Markdown 로드 실패");
 
