@@ -557,8 +557,10 @@
         }
 
         const heroImageUrl = getThumbnailUrl(post, 1600, 900);
-        heroBgEl.style.display = "block";
-        heroBgEl.innerHTML = `<img src="${heroImageUrl}" alt="">`;
+console.log("heroImageUrl:", heroImageUrl);
+
+heroBgEl.style.display = "block";
+heroBgEl.innerHTML = `<img src="${heroImageUrl}" alt="">`;
 
         const markdownResponse = await fetch(
           `/content/blog/${encodeURIComponent(post.category)}/${encodeURIComponent(slug)}.md`,
