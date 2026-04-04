@@ -4,7 +4,7 @@ part: "규제 패권"
 order: 5
 slug: "regulatory-backlash"
 thumbnail: "/images/regulatory-backlash.jpg"
-date: 2025-05-2
+date: 2025-05-02
 ---
 
 
