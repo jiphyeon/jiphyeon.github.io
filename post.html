@@ -508,13 +508,24 @@
     }
 
     function getThumbnailUrl(post, width = 1600, height = 900) {
-  if (post.thumbnail && post.thumbnail.trim() !== "") {
-    return post.thumbnail;
-  }
+      const thumbnail = (post.thumbnail || "").trim();
 
-  const seed = encodeURIComponent(post.slug || post.title || "jiphyeon");
-  return `https://picsum.photos/seed/${seed}/${width}/${height}`;
-}
+      if (thumbnail !== "") {
+        if (
+          thumbnail.startsWith("http://") ||
+          thumbnail.startsWith("https://") ||
+          thumbnail.startsWith("//") ||
+          thumbnail.startsWith("/")
+        ) {
+          return thumbnail;
+        }
+
+        return `/${thumbnail.replace(/^\.?\//, "")}`;
+      }
+
+      const seed = encodeURIComponent(post.slug || post.title || "jiphyeon");
+      return `https://picsum.photos/seed/${seed}/${width}/${height}`;
+    }
 
     marked.setOptions({
       breaks: false,
@@ -557,8 +568,8 @@
         }
 
         const heroImageUrl = getThumbnailUrl(post, 1600, 900);
-heroBgEl.style.display = "block";
-heroBgEl.innerHTML = `<img src="${heroImageUrl}" alt="">`;
+        heroBgEl.style.display = "block";
+        heroBgEl.innerHTML = `<img src="${heroImageUrl}" alt="">`;
 
         const markdownResponse = await fetch(
           `/content/blog/${encodeURIComponent(post.category)}/${encodeURIComponent(slug)}.md`,
