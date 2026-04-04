@@ -7,7 +7,7 @@ order: 1
 slug: "european-regulatory-strategy"
 excerpt: "유럽 규제 전략의 방향을 설명하는 문서"
 thumbnail: "/images/eu-regulation.jpg"
-date: 2026-02-25
+date: 2025-04-22
 ---
 
 ![유럽 지도 위에 ‘AI Continent Action Plan’을 중심으로 AI Office, AI (Giga)Factories, Cloud & AI Development Act 등 주요 정책 요소가 연결된 구조를 보여주는 인포그래픽](/images/eu-regulation.png)

@@ -4,7 +4,7 @@ part: "규제 패권"
 order: 3
 slug: "ai-pact"
 thumbnail: "/images/ai-pact.jpg"
-date: 2026-03-01
+date: 2025-04-28
 ---
 
 ![유럽 인공지능 사무국(European Artificial Intelligence Office)의 ‘AI Pact’ 배너로, 인간과 로봇 손의 악수를 통해 조직의 AI 책임과 협력을 상징하는 이미지](/images/ai-pact.jpg)

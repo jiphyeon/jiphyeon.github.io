@@ -6,7 +6,7 @@ part: "규제 패권"
 order: 2
 slug: "fast-legislation"
 thumbnail: "/images/fast-legislation.jpg"
-date: 2026-02-26
+date: 2025-04-22
 ---
 
 ![EU 깃발 위에 ‘AI Artificial Intelligence’ 텍스트와 상승하는 그래프가 겹쳐진 이미지](/images/fast-legislation.jpg)
