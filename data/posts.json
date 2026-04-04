@@ -1,6 +1,6 @@
 [
   {
-    "id": 2,
+    "id": 3,
     "type": "post",
     "title": "OECD, 왜 만들어졌나",
     "excerpt": "",
@@ -12,5 +12,19 @@
     "order": 1,
     "series": "visual-brief",
     "file": "content/blog/visual-brief/what-is-oecd.md"
+  },
+  {
+    "id": 2,
+    "type": "post",
+    "title": "넛지",
+    "excerpt": "",
+    "category": "비주얼 브리프",
+    "tags": [],
+    "thumbnail": "/images/nudge.png",
+    "date": "2024-08-08",
+    "slug": "nudge",
+    "order": 2,
+    "series": "visual-brief",
+    "file": "content/blog/visual-brief/nudge.md"
   }
 ]
