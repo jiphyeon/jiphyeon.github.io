@@ -2,7 +2,7 @@ const fs = require("fs");
 const path = require("path");
 const matter = require("gray-matter");
 
-const blogRoot = path.join(process.cwd(), "blog");
+const blogRoot = path.join(process.cwd(), "content", "blog");
 
 /**
  * 현재 post.html이 fetch("/posts.json")이면 이 경로 유지
@@ -57,6 +57,8 @@ function safeNumber(value, fallback = 999) {
 }
 
 function buildPosts() {
+  console.log("blogRoot:", blogRoot);
+
   if (!fs.existsSync(blogRoot)) {
     console.error("blog 폴더를 찾을 수 없습니다.");
     process.exit(1);
