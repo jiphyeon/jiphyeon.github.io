@@ -335,7 +335,7 @@
     .post-footer {
       margin-top: 60px;
       padding-top: 0;
-      font-size: 13px;
+      font-size: 14px;
       line-height: 1.6;
       color: #6f6f6f;
       text-align: left;
@@ -558,7 +558,7 @@
 
         const heroImageUrl = getThumbnailUrl(post, 1600, 900);
         heroBgEl.style.display = "block";
-        heroBgEl.innerHTML = `<img src="${escapeHtml(heroImageUrl)}" alt="">`;
+        heroBgEl.innerHTML = `<img src="${heroImageUrl}" alt="">`;
 
         const markdownResponse = await fetch(
           `/content/blog/${encodeURIComponent(post.category)}/${encodeURIComponent(slug)}.md`,
