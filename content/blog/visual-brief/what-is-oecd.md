@@ -4,7 +4,7 @@ type: "post"
 category: "비주얼 브리프"
 tags: ["비주얼 브리프", "OECD", "국제기구"]
 thumbnail: "/images/what-is-oecd.png"
-date: "2024-07-31"
+date: 2024-07-31
 slug: "what-is-oecd"
 excerpt: "OECD의 구조와 역할을 한 장으로 정리한 비주얼 브리프"
 order: 1
