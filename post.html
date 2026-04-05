@@ -60,7 +60,7 @@
       left: 50%;
       transform: translateX(-50%);
       width: calc(100% - 40px);
-      max-width: 760px;
+      max-width: 1120px;
       z-index: 5;
     }
 
@@ -116,7 +116,7 @@
       position: relative;
       z-index: 3;
       width: 100%;
-      max-width: 760px;
+      max-width: 1120px;
       margin: 0 auto;
       padding: 120px 20px 48px;
     }
@@ -162,9 +162,20 @@
 
     .content-wrap {
       width: 100%;
-      max-width: 760px;
+      max-width: 1120px;
       margin: 0 auto;
       padding: 56px 20px 96px;
+    }
+
+    .post-layout {
+      display: grid;
+      grid-template-columns: minmax(0, 760px) 320px;
+      gap: 40px;
+      align-items: start;
+    }
+
+    .content-column {
+      min-width: 0;
     }
 
     .content {
@@ -299,6 +310,7 @@
       height: auto;
       margin: 32px auto;
       border-radius: 14px;
+      cursor: zoom-in;
     }
 
     .content code {
@@ -341,6 +353,107 @@
       text-align: left;
     }
 
+    .related-sidebar {
+      min-width: 0;
+    }
+
+    .related-sidebar-inner {
+      position: sticky;
+      top: 32px;
+      max-height: calc(100vh - 64px);
+      overflow-y: auto;
+      padding-right: 6px;
+    }
+
+    .related-sidebar-inner::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .related-sidebar-inner::-webkit-scrollbar-thumb {
+      background: rgba(0, 0, 0, 0.16);
+      border-radius: 999px;
+    }
+
+    .related-title {
+      margin: 0 0 16px;
+      font-size: 18px;
+      font-weight: 700;
+      line-height: 1.4;
+      letter-spacing: -0.03em;
+      color: var(--text-main);
+    }
+
+    .related-list {
+      display: grid;
+      gap: 14px;
+    }
+
+    .related-card {
+      display: grid;
+      grid-template-columns: 112px minmax(0, 1fr);
+      gap: 14px;
+      align-items: start;
+      text-decoration: none;
+      color: inherit;
+      padding: 0;
+    }
+
+    .related-card:hover .related-card-post-title {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .related-card.is-current {
+      background: #fafafa;
+      border-radius: 14px;
+      padding: 10px;
+    }
+
+    .related-thumb {
+      width: 112px;
+      aspect-ratio: 16 / 10;
+      border-radius: 12px;
+      overflow: hidden;
+      background: #f2f2f2;
+      flex-shrink: 0;
+    }
+
+    .related-thumb img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .related-thumb-fallback {
+      width: 100%;
+      height: 100%;
+      border-radius: 12px;
+    }
+
+    .related-card-body {
+      min-width: 0;
+    }
+
+    .related-card-post-title {
+      margin: 0 0 6px;
+      font-size: 15px;
+      font-weight: 600;
+      line-height: 1.5;
+      letter-spacing: -0.02em;
+      color: var(--text-main);
+      display: -webkit-box;
+      -webkit-line-clamp: 2;
+      -webkit-box-orient: vertical;
+      overflow: hidden;
+    }
+
+    .related-date {
+      font-size: 13px;
+      line-height: 1.5;
+      color: #7a7a7a;
+    }
+
     .error {
       color: #b00020;
       font-size: 15px;
@@ -348,10 +461,75 @@
     }
 
     .back-link:focus-visible,
-    .content a:focus-visible {
+    .content a:focus-visible,
+    .related-card:focus-visible {
       outline: 3px solid var(--focus-ring);
       outline-offset: 3px;
       border-radius: 4px;
+    }
+
+    .image-lightbox {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.92);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      padding: 32px;
+      z-index: 9999;
+      cursor: zoom-out;
+    }
+
+    .image-lightbox.is-open {
+      display: flex;
+    }
+
+    .image-lightbox img {
+      max-width: min(1200px, 92vw);
+      max-height: 88vh;
+      width: auto;
+      height: auto;
+      object-fit: contain;
+      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+      cursor: default;
+    }
+
+    .image-lightbox-close {
+      position: absolute;
+      top: 20px;
+      right: 24px;
+      border: 0;
+      background: transparent;
+      color: #fff;
+      font-size: 40px;
+      line-height: 1;
+      cursor: pointer;
+    }
+
+    @media (max-width: 1180px) {
+      .back-link-wrap {
+        max-width: 760px;
+      }
+
+      .post-hero-inner {
+        max-width: 760px;
+      }
+
+      .content-wrap {
+        max-width: 760px;
+      }
+
+      .post-layout {
+        grid-template-columns: minmax(0, 1fr);
+        gap: 48px;
+      }
+
+      .related-sidebar-inner {
+        position: static;
+        max-height: none;
+        overflow: visible;
+        padding-right: 0;
+      }
     }
 
     @media (max-width: 768px) {
@@ -439,48 +617,33 @@
         margin-top: 48px;
         font-size: 12px;
       }
+
+      .related-card {
+        grid-template-columns: 96px minmax(0, 1fr);
+        gap: 12px;
+      }
+
+      .related-thumb {
+        width: 96px;
+        border-radius: 10px;
+      }
+
+      .related-card.is-current {
+        border-radius: 12px;
+      }
+
+      .related-title {
+        font-size: 17px;
+      }
+
+      .related-card-post-title {
+        font-size: 14px;
+      }
+
+      .related-date {
+        font-size: 12px;
+      }
     }
-    .image-lightbox {
-  position: fixed;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.92);
-  display: none;
-  align-items: center;
-  justify-content: center;
-  padding: 32px;
-  z-index: 9999;
-  cursor: zoom-out;
-}
-
-.image-lightbox.is-open {
-  display: flex;
-}
-
-.image-lightbox img {
-  max-width: min(1200px, 92vw);
-  max-height: 88vh;
-  width: auto;
-  height: auto;
-  object-fit: contain;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
-  cursor: default;
-}
-
-.image-lightbox-close {
-  position: absolute;
-  top: 20px;
-  right: 24px;
-  border: 0;
-  background: transparent;
-  color: #fff;
-  font-size: 40px;
-  line-height: 1;
-  cursor: pointer;
-}
-
-.content img {
-  cursor: zoom-in;
-}
   </style>
 </head>
 <body>
@@ -504,169 +667,287 @@
   </header>
 
   <main class="content-wrap">
-    <article class="content" id="content"></article>
+    <div class="post-layout">
+      <article class="content-column">
+        <article class="content" id="content"></article>
 
-    <footer class="post-footer">
-      ©Jiphyeon. Powered by GitHub.
-    </footer>
+        <footer class="post-footer">
+          ©Jiphyeon. Powered by GitHub.
+        </footer>
+      </article>
+
+      <aside class="related-sidebar" aria-label="같은 카테고리 글">
+        <div class="related-sidebar-inner">
+          <h2 class="related-title">같은 카테고리의 글</h2>
+          <div class="related-list" id="relatedList"></div>
+        </div>
+      </aside>
+    </div>
   </main>
 
-<script src="https://cdn.jsdelivr.net/npm/markdown-it/dist/markdown-it.min.js"></script>
-<script>
-  function parseFrontMatter(markdown = "") {
-    const match = markdown.match(/^---\s*\n([\s\S]*?)\n---\s*\n?/);
+  <script src="https://cdn.jsdelivr.net/npm/markdown-it/dist/markdown-it.min.js"></script>
+  <script>
+    function parseFrontMatter(markdown = "") {
+      const match = markdown.match(/^---\s*\n([\s\S]*?)\n---\s*\n?/);
 
-    if (!match) {
-      return { data: {}, content: markdown };
-    }
-
-    const raw = match[1];
-    const content = markdown.replace(/^---\s*\n[\s\S]*?\n---\s*\n?/, "");
-    const data = {};
-
-    raw.split("\n").forEach(line => {
-      const index = line.indexOf(":");
-      if (index === -1) return;
-
-      const key = line.slice(0, index).trim();
-      const value = line.slice(index + 1).trim();
-      data[key] = value;
-    });
-
-    return { data, content };
-  }
-
-  const params = new URLSearchParams(window.location.search);
-  const slug = params.get("slug");
-
-  function escapeHtml(value = "") {
-    return String(value)
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#039;");
-  }
-
-  function getThumbnailUrl(post, width = 1600, height = 900) {
-    const seed = encodeURIComponent(post.slug || post.title || "jiphyeon");
-    return `https://picsum.photos/seed/${seed}/${width}/${height}`;
-  }
-
-  function bindContentImageLightbox() {
-    const lightbox = document.getElementById("image-lightbox");
-    const lightboxImg = document.getElementById("image-lightbox-img");
-    const closeBtn = document.getElementById("image-lightbox-close");
-
-    if (!lightbox || !lightboxImg || !closeBtn) return;
-
-    const contentImages = document.querySelectorAll(".content img");
-
-    function openLightbox(img) {
-      lightboxImg.src = img.src;
-      lightboxImg.alt = img.alt || "";
-      lightbox.classList.add("is-open");
-      lightbox.setAttribute("aria-hidden", "false");
-      document.body.style.overflow = "hidden";
-    }
-
-    function closeLightbox() {
-      lightbox.classList.remove("is-open");
-      lightbox.setAttribute("aria-hidden", "true");
-      lightboxImg.src = "";
-      lightboxImg.alt = "";
-      document.body.style.overflow = "";
-    }
-
-    contentImages.forEach((img) => {
-      img.style.cursor = "zoom-in";
-      img.onclick = () => openLightbox(img);
-    });
-
-    closeBtn.onclick = closeLightbox;
-
-    lightbox.onclick = (event) => {
-      if (event.target === lightbox) {
-        closeLightbox();
+      if (!match) {
+        return { data: {}, content: markdown };
       }
-    };
 
-    document.onkeydown = (event) => {
-      if (event.key === "Escape" && lightbox.classList.contains("is-open")) {
-        closeLightbox();
-      }
-    };
-  }
+      const raw = match[1];
+      const content = markdown.replace(/^---\s*\n[\s\S]*?\n---\s*\n?/, "");
+      const data = {};
 
-  const md = window.markdownit({ breaks: false });
+      raw.split("\n").forEach(line => {
+        const index = line.indexOf(":");
+        if (index === -1) return;
 
-  async function initializePostPage() {
-    const titleEl = document.getElementById("title");
-    const metaEl = document.getElementById("meta");
-    const contentEl = document.getElementById("content");
-    const categoryEl = document.getElementById("category");
-    const heroBgEl = document.getElementById("heroBg");
+        const key = line.slice(0, index).trim();
+        const value = line.slice(index + 1).trim();
+        data[key] = value;
+      });
 
-    if (!slug) {
-      titleEl.textContent = "잘못된 접근";
-      contentEl.innerHTML = '<p class="error">slug 값이 없습니다.</p>';
-      return;
+      return { data, content };
     }
 
-    try {
-      const postResponse = await fetch("/data/posts.json", { cache: "no-store" });
-      if (!postResponse.ok) throw new Error("posts.json 로드 실패");
+    const params = new URLSearchParams(window.location.search);
+    const slug = params.get("slug");
 
-      const posts = await postResponse.json();
-      const post = posts.find(item => item.slug === slug);
+    function escapeHtml(value = "") {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    }
 
-      if (!post) {
-        titleEl.textContent = "게시물을 찾을 수 없음";
-        contentEl.innerHTML = '<p class="error">해당 게시물을 찾을 수 없습니다.</p>';
+    function getThumbnailUrl(post, width = 1600, height = 900) {
+      const thumbnail = (post.thumbnail || "").trim();
+
+      if (thumbnail !== "") {
+        if (
+          thumbnail.startsWith("http://") ||
+          thumbnail.startsWith("https://") ||
+          thumbnail.startsWith("//") ||
+          thumbnail.startsWith("/")
+        ) {
+          return thumbnail;
+        }
+
+        return `/${thumbnail.replace(/^\.?\//, "")}`;
+      }
+
+      const seed = encodeURIComponent(post.slug || post.title || "jiphyeon");
+      return `https://picsum.photos/seed/${seed}/${width}/${height}`;
+    }
+
+    function bindContentImageLightbox() {
+      const lightbox = document.getElementById("image-lightbox");
+      const lightboxImg = document.getElementById("image-lightbox-img");
+      const closeBtn = document.getElementById("image-lightbox-close");
+
+      if (!lightbox || !lightboxImg || !closeBtn) return;
+
+      const contentImages = document.querySelectorAll(".content img");
+
+      function openLightbox(img) {
+        lightboxImg.src = img.src;
+        lightboxImg.alt = img.alt || "";
+        lightbox.classList.add("is-open");
+        lightbox.setAttribute("aria-hidden", "false");
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeLightbox() {
+        lightbox.classList.remove("is-open");
+        lightbox.setAttribute("aria-hidden", "true");
+        lightboxImg.src = "";
+        lightboxImg.alt = "";
+        document.body.style.overflow = "";
+      }
+
+      contentImages.forEach((img) => {
+        img.style.cursor = "zoom-in";
+        img.onclick = () => openLightbox(img);
+      });
+
+      closeBtn.onclick = closeLightbox;
+
+      lightbox.onclick = (event) => {
+        if (event.target === lightbox) {
+          closeLightbox();
+        }
+      };
+
+      document.onkeydown = (event) => {
+        if (event.key === "Escape" && lightbox.classList.contains("is-open")) {
+          closeLightbox();
+        }
+      };
+    }
+
+    function getFirstContentImageUrl(container) {
+      if (!container) return "";
+
+      const images = Array.from(container.querySelectorAll("img"));
+      const validImage = images.find((img) => {
+        const src = (img.getAttribute("src") || "").trim();
+        if (!src) return false;
+        if (src.startsWith("data:")) return false;
+        return true;
+      });
+
+      return validImage ? validImage.src : "";
+    }
+
+    function createSeededGradient(slugText = "") {
+      let hash = 0;
+      for (let i = 0; i < slugText.length; i += 1) {
+        hash = slugText.charCodeAt(i) + ((hash << 5) - hash);
+        hash |= 0;
+      }
+
+      const hue1 = Math.abs(hash) % 360;
+      const hue2 = (hue1 + 55) % 360;
+      const hue3 = (hue1 + 120) % 360;
+
+      return `
+        background:
+          radial-gradient(circle at 20% 20%, hsla(${hue1}, 82%, 72%, 0.95), transparent 42%),
+          radial-gradient(circle at 80% 30%, hsla(${hue2}, 78%, 66%, 0.88), transparent 40%),
+          radial-gradient(circle at 50% 80%, hsla(${hue3}, 72%, 62%, 0.78), transparent 44%),
+          linear-gradient(135deg, hsl(${hue1}, 42%, 18%), hsl(${hue2}, 38%, 12%));
+      `;
+    }
+
+    function buildRelatedCard(post, currentSlug, thumbnailUrl) {
+      const isCurrent = post.slug === currentSlug;
+
+      return `
+        <a class="related-card${isCurrent ? " is-current" : ""}" href="/post.html?slug=${encodeURIComponent(post.slug || "")}">
+          <div class="related-thumb">
+            ${
+              thumbnailUrl
+                ? `<img src="${escapeHtml(thumbnailUrl)}" alt="">`
+                : `<div class="related-thumb-fallback" style="${createSeededGradient(post.slug || post.title || "jiphyeon")}"></div>`
+            }
+          </div>
+          <div class="related-card-body">
+            <p class="related-card-post-title">${escapeHtml(post.title || "")}</p>
+            <div class="related-date">${escapeHtml(post.date || "")}</div>
+          </div>
+        </a>
+      `;
+    }
+
+    function renderRelatedPosts(posts, currentPost, contentEl) {
+      const relatedListEl = document.getElementById("relatedList");
+      if (!relatedListEl || !currentPost || !(currentPost.category || currentPost.categoryLabel)) {
         return;
       }
 
-      document.title = post.title || "Post";
-      titleEl.textContent = post.title || "";
-      metaEl.textContent = "";
-
-      if (post.category || post.categoryLabel) {
-        categoryEl.style.display = "inline-flex";
-        categoryEl.textContent = post.categoryLabel || post.category;
-      }
-
-      const heroImageUrl = getThumbnailUrl(post, 1600, 900);
-      heroBgEl.style.display = "block";
-      heroBgEl.innerHTML = `<img src="${heroImageUrl}" alt="">`;
-
-      const markdownResponse = await fetch(`/${post.file}`, {
-        cache: "no-store"
+      const currentCategory = currentPost.category || currentPost.categoryLabel;
+      const sameCategoryPosts = posts.filter((item) => {
+        const itemCategory = item.category || item.categoryLabel;
+        return itemCategory === currentCategory;
       });
 
-      if (!markdownResponse.ok) throw new Error("Markdown 로드 실패");
+      if (sameCategoryPosts.length <= 1) {
+        relatedListEl.innerHTML = "";
+        return;
+      }
 
-      const markdown = await markdownResponse.text();
-      const { data: frontMatter, content: cleanedMarkdown } = parseFrontMatter(markdown);
+      const firstImageUrl = getFirstContentImageUrl(contentEl);
 
-      metaEl.textContent = frontMatter.date || "";
+      const relatedMarkup = sameCategoryPosts
+        .map((item) => {
+          const thumbnailUrl =
+            item.slug === currentPost.slug
+              ? firstImageUrl
+              : ((item.thumbnail || "").trim() ? getThumbnailUrl(item, 400, 250) : "");
 
-      const processedMarkdown = cleanedMarkdown.replace(/\*\*([^*]+)\*\*/g, ' **$1** ');
-      contentEl.innerHTML = md.render(processedMarkdown);
+          return buildRelatedCard(item, currentPost.slug, thumbnailUrl);
+        })
+        .join("");
 
-      bindContentImageLightbox();
-
-    } catch (error) {
-      console.error(error);
-      titleEl.textContent = "불러오기 실패";
-      contentEl.innerHTML = '<p class="error">본문을 불러오지 못했습니다.</p>';
+      relatedListEl.innerHTML = relatedMarkup;
     }
-  }
 
-  initializePostPage();
-</script>
+    const md = window.markdownit({ breaks: false });
+
+    async function initializePostPage() {
+      const titleEl = document.getElementById("title");
+      const metaEl = document.getElementById("meta");
+      const contentEl = document.getElementById("content");
+      const categoryEl = document.getElementById("category");
+      const heroBgEl = document.getElementById("heroBg");
+      const relatedListEl = document.getElementById("relatedList");
+
+      if (!slug) {
+        titleEl.textContent = "잘못된 접근";
+        contentEl.innerHTML = '<p class="error">slug 값이 없습니다.</p>';
+        return;
+      }
+
+      try {
+        const postResponse = await fetch("/data/posts.json", { cache: "no-store" });
+        if (!postResponse.ok) throw new Error("posts.json 로드 실패");
+
+        const posts = await postResponse.json();
+        const post = posts.find(item => item.slug === slug);
+
+        if (!post) {
+          titleEl.textContent = "게시물을 찾을 수 없음";
+          contentEl.innerHTML = '<p class="error">해당 게시물을 찾을 수 없습니다.</p>';
+          return;
+        }
+
+        document.title = post.title || "Post";
+        titleEl.textContent = post.title || "";
+        metaEl.textContent = "";
+
+        if (post.category || post.categoryLabel) {
+          categoryEl.style.display = "inline-flex";
+          categoryEl.textContent = post.categoryLabel || post.category;
+        } else if (relatedListEl) {
+          relatedListEl.innerHTML = "";
+        }
+
+        const heroImageUrl = getThumbnailUrl(post, 1600, 900);
+        heroBgEl.style.display = "block";
+        heroBgEl.innerHTML = `<img src="${heroImageUrl}" alt="">`;
+
+        const markdownResponse = await fetch(`/${post.file}`, {
+          cache: "no-store"
+        });
+
+        if (!markdownResponse.ok) throw new Error("Markdown 로드 실패");
+
+        const markdown = await markdownResponse.text();
+        const { data: frontMatter, content: cleanedMarkdown } = parseFrontMatter(markdown);
+
+        metaEl.textContent = frontMatter.date || post.date || "";
+
+        const processedMarkdown = cleanedMarkdown.replace(/\*\*([^*]+)\*\*/g, " **$1** ");
+        contentEl.innerHTML = md.render(processedMarkdown);
+
+        renderRelatedPosts(posts, post, contentEl);
+        bindContentImageLightbox();
+
+      } catch (error) {
+        console.error(error);
+        titleEl.textContent = "불러오기 실패";
+        contentEl.innerHTML = '<p class="error">본문을 불러오지 못했습니다.</p>';
+      }
+    }
+
+    initializePostPage();
+  </script>
+
   <div id="image-lightbox" class="image-lightbox" aria-hidden="true">
-  <button class="image-lightbox-close" id="image-lightbox-close" aria-label="이미지 닫기">×</button>
-  <img id="image-lightbox-img" src="" alt="">
-</div>
+    <button class="image-lightbox-close" id="image-lightbox-close" aria-label="이미지 닫기">×</button>
+    <img id="image-lightbox-img" src="" alt="">
+  </div>
 </body>
 </html>
