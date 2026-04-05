@@ -440,6 +440,47 @@
         font-size: 12px;
       }
     }
+    .image-lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.92);
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+  z-index: 9999;
+  cursor: zoom-out;
+}
+
+.image-lightbox.is-open {
+  display: flex;
+}
+
+.image-lightbox img {
+  max-width: min(1200px, 92vw);
+  max-height: 88vh;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+  cursor: default;
+}
+
+.image-lightbox-close {
+  position: absolute;
+  top: 20px;
+  right: 24px;
+  border: 0;
+  background: transparent;
+  color: #fff;
+  font-size: 40px;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.content img {
+  cursor: zoom-in;
+}
   </style>
 </head>
 <body>
@@ -470,111 +511,162 @@
     </footer>
   </main>
 
-  <script src="https://cdn.jsdelivr.net/npm/markdown-it/dist/markdown-it.min.js"></script>
-  <script>
-    function parseFrontMatter(markdown = "") {
-      const match = markdown.match(/^---\s*\n([\s\S]*?)\n---\s*\n?/);
+<script src="https://cdn.jsdelivr.net/npm/markdown-it/dist/markdown-it.min.js"></script>
+<script>
+  function parseFrontMatter(markdown = "") {
+    const match = markdown.match(/^---\s*\n([\s\S]*?)\n---\s*\n?/);
 
-      if (!match) {
-        return { data: {}, content: markdown };
+    if (!match) {
+      return { data: {}, content: markdown };
+    }
+
+    const raw = match[1];
+    const content = markdown.replace(/^---\s*\n[\s\S]*?\n---\s*\n?/, "");
+    const data = {};
+
+    raw.split("\n").forEach(line => {
+      const index = line.indexOf(":");
+      if (index === -1) return;
+
+      const key = line.slice(0, index).trim();
+      const value = line.slice(index + 1).trim();
+      data[key] = value;
+    });
+
+    return { data, content };
+  }
+
+  const params = new URLSearchParams(window.location.search);
+  const slug = params.get("slug");
+
+  function escapeHtml(value = "") {
+    return String(value)
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+  }
+
+  function getThumbnailUrl(post, width = 1600, height = 900) {
+    const seed = encodeURIComponent(post.slug || post.title || "jiphyeon");
+    return `https://picsum.photos/seed/${seed}/${width}/${height}`;
+  }
+
+  function bindContentImageLightbox() {
+    const lightbox = document.getElementById("image-lightbox");
+    const lightboxImg = document.getElementById("image-lightbox-img");
+    const closeBtn = document.getElementById("image-lightbox-close");
+
+    if (!lightbox || !lightboxImg || !closeBtn) return;
+
+    const contentImages = document.querySelectorAll(".content img");
+
+    function openLightbox(img) {
+      lightboxImg.src = img.src;
+      lightboxImg.alt = img.alt || "";
+      lightbox.classList.add("is-open");
+      lightbox.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove("is-open");
+      lightbox.setAttribute("aria-hidden", "true");
+      lightboxImg.src = "";
+      lightboxImg.alt = "";
+      document.body.style.overflow = "";
+    }
+
+    contentImages.forEach((img) => {
+      img.style.cursor = "zoom-in";
+      img.onclick = () => openLightbox(img);
+    });
+
+    closeBtn.onclick = closeLightbox;
+
+    lightbox.onclick = (event) => {
+      if (event.target === lightbox) {
+        closeLightbox();
       }
+    };
 
-      const raw = match[1];
-      const content = markdown.replace(/^---\s*\n[\s\S]*?\n---\s*\n?/, "");
-      const data = {};
+    document.onkeydown = (event) => {
+      if (event.key === "Escape" && lightbox.classList.contains("is-open")) {
+        closeLightbox();
+      }
+    };
+  }
 
-      raw.split("\n").forEach(line => {
-        const index = line.indexOf(":");
-        if (index === -1) return;
+  const md = window.markdownit({ breaks: false });
 
-        const key = line.slice(0, index).trim();
-        const value = line.slice(index + 1).trim();
-        data[key] = value;
-      });
+  async function initializePostPage() {
+    const titleEl = document.getElementById("title");
+    const metaEl = document.getElementById("meta");
+    const contentEl = document.getElementById("content");
+    const categoryEl = document.getElementById("category");
+    const heroBgEl = document.getElementById("heroBg");
 
-      return { data, content };
+    if (!slug) {
+      titleEl.textContent = "잘못된 접근";
+      contentEl.innerHTML = '<p class="error">slug 값이 없습니다.</p>';
+      return;
     }
 
-    const params = new URLSearchParams(window.location.search);
-    const slug = params.get("slug");
+    try {
+      const postResponse = await fetch("/data/posts.json", { cache: "no-store" });
+      if (!postResponse.ok) throw new Error("posts.json 로드 실패");
 
-    function escapeHtml(value = "") {
-      return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
-    }
+      const posts = await postResponse.json();
+      const post = posts.find(item => item.slug === slug);
 
-function getThumbnailUrl(post, width = 1600, height = 900) {
-  const seed = encodeURIComponent(post.slug || post.title || "jiphyeon");
-  return `https://picsum.photos/seed/${seed}/${width}/${height}`;
-}
-
-   const md = window.markdownit({ breaks: false });
-
-
-    async function initializePostPage() {
-      const titleEl = document.getElementById("title");
-      const metaEl = document.getElementById("meta");
-      const contentEl = document.getElementById("content");
-      const categoryEl = document.getElementById("category");
-      const heroBgEl = document.getElementById("heroBg");
-
-      if (!slug) {
-        titleEl.textContent = "잘못된 접근";
-        contentEl.innerHTML = '<p class="error">slug 값이 없습니다.</p>';
+      if (!post) {
+        titleEl.textContent = "게시물을 찾을 수 없음";
+        contentEl.innerHTML = '<p class="error">해당 게시물을 찾을 수 없습니다.</p>';
         return;
       }
 
-      try {
-        const postResponse = await fetch("/data/posts.json", { cache: "no-store" });
-        if (!postResponse.ok) throw new Error("posts.json 로드 실패");
+      document.title = post.title || "Post";
+      titleEl.textContent = post.title || "";
+      metaEl.textContent = "";
 
-        const posts = await postResponse.json();
-        const post = posts.find(item => item.slug === slug);
-
-        if (!post) {
-          titleEl.textContent = "게시물을 찾을 수 없음";
-          contentEl.innerHTML = '<p class="error">해당 게시물을 찾을 수 없습니다.</p>';
-          return;
-        }
-
-        document.title = post.title || "Post";
-        titleEl.textContent = post.title || "";
-        metaEl.textContent = "";
-
-        if (post.category || post.categoryLabel) {
-          categoryEl.style.display = "inline-flex";
-          categoryEl.textContent = post.categoryLabel || post.category;
-        }
-
-        const heroImageUrl = getThumbnailUrl(post, 1600, 900);
-        heroBgEl.style.display = "block";
-        heroBgEl.innerHTML = `<img src="${heroImageUrl}" alt="">`;
-
-        const markdownResponse = await fetch(`/${post.file}`, {
-  cache: "no-store"
-});
-
-        if (!markdownResponse.ok) throw new Error("Markdown 로드 실패");
-
-        const markdown = await markdownResponse.text();
-        const { data: frontMatter, content: cleanedMarkdown } = parseFrontMatter(markdown);
-
-        metaEl.textContent = frontMatter.date || "";
-        const processedMarkdown = cleanedMarkdown.replace(/\*\*([^*]+)\*\*/g, ' **$1** ');
-contentEl.innerHTML = md.render(processedMarkdown);
-
-      } catch (error) {
-        console.error(error);
-        titleEl.textContent = "불러오기 실패";
-        contentEl.innerHTML = '<p class="error">본문을 불러오지 못했습니다.</p>';
+      if (post.category || post.categoryLabel) {
+        categoryEl.style.display = "inline-flex";
+        categoryEl.textContent = post.categoryLabel || post.category;
       }
-    }
 
-    initializePostPage();
-  </script>
+      const heroImageUrl = getThumbnailUrl(post, 1600, 900);
+      heroBgEl.style.display = "block";
+      heroBgEl.innerHTML = `<img src="${heroImageUrl}" alt="">`;
+
+      const markdownResponse = await fetch(`/${post.file}`, {
+        cache: "no-store"
+      });
+
+      if (!markdownResponse.ok) throw new Error("Markdown 로드 실패");
+
+      const markdown = await markdownResponse.text();
+      const { data: frontMatter, content: cleanedMarkdown } = parseFrontMatter(markdown);
+
+      metaEl.textContent = frontMatter.date || "";
+
+      const processedMarkdown = cleanedMarkdown.replace(/\*\*([^*]+)\*\*/g, ' **$1** ');
+      contentEl.innerHTML = md.render(processedMarkdown);
+
+      bindContentImageLightbox();
+
+    } catch (error) {
+      console.error(error);
+      titleEl.textContent = "불러오기 실패";
+      contentEl.innerHTML = '<p class="error">본문을 불러오지 못했습니다.</p>';
+    }
+  }
+
+  initializePostPage();
+</script>
+  <div id="image-lightbox" class="image-lightbox" aria-hidden="true">
+  <button class="image-lightbox-close" id="image-lightbox-close" aria-label="이미지 닫기">×</button>
+  <img id="image-lightbox-img" src="" alt="">
+</div>
 </body>
 </html>
