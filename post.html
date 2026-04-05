@@ -678,7 +678,7 @@
 
       <aside class="related-sidebar" aria-label="같은 카테고리 글">
         <div class="related-sidebar-inner">
-          <h2 class="related-title">같은 카테고리의 글</h2>
+          <h2 class="related-title" id="relatedTitle"></h2>
           <div class="related-list" id="relatedList"></div>
         </div>
       </aside>
@@ -882,7 +882,8 @@
       const contentEl = document.getElementById("content");
       const categoryEl = document.getElementById("category");
       const heroBgEl = document.getElementById("heroBg");
-      const relatedListEl = document.getElementById("relatedList");
+const relatedListEl = document.getElementById("relatedList");
+const relatedTitleEl = document.getElementById("relatedTitle");
 
       if (!slug) {
         titleEl.textContent = "잘못된 접근";
@@ -908,15 +909,27 @@
         metaEl.textContent = "";
 
         if (post.category || post.categoryLabel) {
-          categoryEl.style.display = "inline-flex";
-          categoryEl.textContent = post.categoryLabel || post.category;
-        } else if (relatedListEl) {
-          relatedListEl.innerHTML = "";
-        }
+  const currentCategoryName = post.categoryLabel || post.category;
+  categoryEl.style.display = "inline-flex";
+  categoryEl.textContent = currentCategoryName;
 
-        const heroImageUrl = getThumbnailUrl(post, 1600, 900);
-        heroBgEl.style.display = "block";
-        heroBgEl.innerHTML = `<img src="${heroImageUrl}" alt="">`;
+  if (relatedTitleEl) {
+    relatedTitleEl.textContent = currentCategoryName;
+  }
+} else {
+  if (relatedListEl) {
+    relatedListEl.innerHTML = "";
+  }
+  if (relatedTitleEl) {
+    relatedTitleEl.textContent = "";
+  }
+}
+
+        const seed = encodeURIComponent(post.slug || post.title || "jiphyeon");
+const heroImageUrl = `https://picsum.photos/seed/${seed}/1600/900`;
+
+heroBgEl.style.display = "block";
+heroBgEl.innerHTML = `<img src="${heroImageUrl}" alt="">`;
 
         const markdownResponse = await fetch(`/${post.file}`, {
           cache: "no-store"
