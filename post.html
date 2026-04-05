@@ -470,7 +470,7 @@
     </footer>
   </main>
 
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <<script src="https://cdn.jsdelivr.net/npm/markdown-it/dist/markdown-it.min.js"></script>
   <script>
     function parseFrontMatter(markdown = "") {
       const match = markdown.match(/^---\s*\n([\s\S]*?)\n---\s*\n?/);
@@ -512,10 +512,7 @@ function getThumbnailUrl(post, width = 1600, height = 900) {
   return `https://picsum.photos/seed/${seed}/${width}/${height}`;
 }
 
-    marked.setOptions({
-      breaks: false,
-      gfm: true
-    });
+    const md = window.markdownit({ breaks: false });
 
     async function initializePostPage() {
       const titleEl = document.getElementById("title");
@@ -566,7 +563,8 @@ function getThumbnailUrl(post, width = 1600, height = 900) {
         const { data: frontMatter, content: cleanedMarkdown } = parseFrontMatter(markdown);
 
         metaEl.textContent = frontMatter.date || "";
-        contentEl.innerHTML = marked.parse(cleanedMarkdown);
+        contentEl.innerHTML = md.render(cleanedMarkdown);
+
       } catch (error) {
         console.error(error);
         titleEl.textContent = "불러오기 실패";

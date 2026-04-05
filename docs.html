@@ -597,7 +597,8 @@
     </main>
   </div>
 
-  <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/markdown-it/dist/markdown-it.min.js"></script>
+
   <script>
     function parseFrontMatter(markdown = "") {
       const match = markdown.match(/^---\s*\n([\s\S]*?)\n---\s*\n?/);
@@ -734,10 +735,7 @@
       });
     }
 
-    marked.setOptions({
-      breaks: false,
-      gfm: true
-    });
+    const md = window.markdownit({ breaks: false });
 
     async function initializeDocsPage() {
       const titleEl = document.getElementById("title");
@@ -788,7 +786,8 @@
         const { data: frontMatter, content: cleanedMarkdown } = parseFrontMatter(markdown);
 
         metaEl.textContent = frontMatter.date || "";
-        contentEl.innerHTML = marked.parse(cleanedMarkdown);
+        contentEl.innerHTML = md.render(cleanedMarkdown);
+
 
         applyReferenceHeadingStyle(contentEl);
         setupNavigation(docs, current, book);
