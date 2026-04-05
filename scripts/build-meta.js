@@ -2,6 +2,14 @@ const fs = require("fs");
 const path = require("path");
 const matter = require("gray-matter");
 
+let existingMeta = {};
+
+const metaPath = path.join(bookDir, "meta.json");
+
+if (fs.existsSync(metaPath)) {
+  existingMeta = JSON.parse(fs.readFileSync(metaPath, "utf8"));
+}
+
 const booksRoot = path.join(process.cwd(), "content", "books");
 
 function buildBookMeta(bookId) {
@@ -69,11 +77,11 @@ function buildBookMeta(bookId) {
   });
 
   const meta = {
-    id: bookId,
-    title: bookId,
-    description: "",
-    structure
-  };
+  id: bookId,
+  title: existingMeta.title || bookId,
+  description: existingMeta.description || "",
+  structure
+};
 
   const metaPath = path.join(bookDir, "meta.json");
   fs.writeFileSync(metaPath, JSON.stringify(meta, null, 2) + "\n", "utf8");
