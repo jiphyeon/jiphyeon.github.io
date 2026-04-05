@@ -786,7 +786,8 @@
         const { data: frontMatter, content: cleanedMarkdown } = parseFrontMatter(markdown);
 
         metaEl.textContent = frontMatter.date || "";
-        contentEl.innerHTML = md.render(cleanedMarkdown);
+        const processedMarkdown = cleanedMarkdown.replace(/\*\*([^*]+)\*\*/g, ' **$1** ');
+contentEl.innerHTML = md.render(processedMarkdown);
 
 
         applyReferenceHeadingStyle(contentEl);
