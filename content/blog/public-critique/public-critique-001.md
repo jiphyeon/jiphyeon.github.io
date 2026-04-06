@@ -1,5 +1,9 @@
 ---
-date: 2026-04-03
+title: "웹사이트 총량제, 무지와 전시행정의 결과"
+type: "post"
+category: "public-critique"
+date: 2026-03-03
+slug: "public-critique-001"
 ---
 
 우리나라 공공 웹사이트는 몇 개일까?
