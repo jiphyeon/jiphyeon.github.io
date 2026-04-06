@@ -1,6 +1,20 @@
 [
   {
-    "id": 4,
+    "id": 1,
+    "type": "post",
+    "title": "웹사이트 총량제, 무지와 전시행정의 결과",
+    "excerpt": "",
+    "category": "public-critique",
+    "tags": [],
+    "thumbnail": "",
+    "date": "2026-03-03",
+    "slug": "public-critique-001",
+    "order": 999,
+    "series": "public-critique",
+    "file": "content/blog/public-critique/public-critique-001.md"
+  },
+  {
+    "id": 5,
     "type": "post",
     "title": "OECD, 왜 만들어졌나",
     "excerpt": "",
@@ -14,7 +28,7 @@
     "file": "content/blog/visual-brief/what-is-oecd.md"
   },
   {
-    "id": 2,
+    "id": 3,
     "type": "post",
     "title": "넛지",
     "excerpt": "",
@@ -28,7 +42,7 @@
     "file": "content/blog/visual-brief/nudge.md"
   },
   {
-    "id": 3,
+    "id": 4,
     "type": "post",
     "title": "유통공룡의 탐욕, PB 상품",
     "excerpt": "",
