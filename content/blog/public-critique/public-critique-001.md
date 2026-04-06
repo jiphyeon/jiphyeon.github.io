@@ -1,7 +1,7 @@
 ---
 title: "웹사이트 총량제, 무지와 전시행정의 결과"
 type: "post"
-category: "public-critique"
+category: "공공정보화의 불편한 진실"
 date: 2026-03-03
 slug: "public-critique-001"
 ---
