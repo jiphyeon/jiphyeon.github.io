@@ -1,5 +1,33 @@
 [
   {
+    "id": 3,
+    "type": "post",
+    "title": "신청주의는 잔인한 제도 아닙니까",
+    "excerpt": "",
+    "category": "공공정보화의 불편한 진실",
+    "tags": [],
+    "thumbnail": "",
+    "date": "2025-08-25",
+    "slug": "public-critique-003",
+    "order": 999,
+    "series": "public-critique",
+    "file": "content/blog/public-critique/public-critique-003.md"
+  },
+  {
+    "id": 2,
+    "type": "post",
+    "title": "심사 비즈니스화",
+    "excerpt": "",
+    "category": "공공정보화의 불편한 진실",
+    "tags": [],
+    "thumbnail": "",
+    "date": "2025-08-27",
+    "slug": "public-critique-002",
+    "order": 999,
+    "series": "public-critique",
+    "file": "content/blog/public-critique/public-critique-002.md"
+  },
+  {
     "id": 1,
     "type": "post",
     "title": "웹사이트 총량제, 무지와 전시행정의 결과",
@@ -14,7 +42,7 @@
     "file": "content/blog/public-critique/public-critique-001.md"
   },
   {
-    "id": 5,
+    "id": 6,
     "type": "post",
     "title": "OECD, 왜 만들어졌나",
     "excerpt": "",
@@ -28,7 +56,7 @@
     "file": "content/blog/visual-brief/what-is-oecd.md"
   },
   {
-    "id": 3,
+    "id": 4,
     "type": "post",
     "title": "넛지",
     "excerpt": "",
@@ -42,7 +70,7 @@
     "file": "content/blog/visual-brief/nudge.md"
   },
   {
-    "id": 4,
+    "id": 5,
     "type": "post",
     "title": "유통공룡의 탐욕, PB 상품",
     "excerpt": "",
