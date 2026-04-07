@@ -138,14 +138,11 @@ function buildPosts() {
     .filter((post) => post.title && post.slug);
 
   posts.sort((a, b) => {
-    if (a.series === b.series) {
-      if (a.order !== b.order) return a.order - b.order;
-      return a.title.localeCompare(b.title, "ko");
-    }
-
     const aTime = a.date ? new Date(a.date).getTime() : 0;
     const bTime = b.date ? new Date(b.date).getTime() : 0;
-    return bTime - aTime;
+
+    if (bTime !== aTime) return bTime - aTime;
+    return a.title.localeCompare(b.title, "ko");
   });
 
   fs.mkdirSync(path.dirname(outputPath), { recursive: true });

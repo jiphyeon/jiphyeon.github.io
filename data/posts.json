@@ -1,17 +1,17 @@
 [
   {
-    "id": 3,
+    "id": 1,
     "type": "post",
-    "title": "신청주의는 잔인한 제도 아닙니까",
+    "title": "웹사이트 총량제, 무지와 전시행정의 결과",
     "excerpt": "",
     "category": "공공정보화의 불편한 진실",
     "tags": [],
-    "thumbnail": "/images/posts/public-critique/public-critique-003-a.png",
-    "date": "2025-08-25",
-    "slug": "public-critique-003",
+    "thumbnail": "",
+    "date": "2026-03-03",
+    "slug": "public-critique-001",
     "order": 999,
     "series": "public-critique",
-    "file": "content/blog/public-critique/public-critique-003.md"
+    "file": "content/blog/public-critique/public-critique-001.md"
   },
   {
     "id": 2,
@@ -28,32 +28,18 @@
     "file": "content/blog/public-critique/public-critique-002.md"
   },
   {
-    "id": 1,
+    "id": 3,
     "type": "post",
-    "title": "웹사이트 총량제, 무지와 전시행정의 결과",
+    "title": "신청주의는 잔인한 제도 아닙니까",
     "excerpt": "",
     "category": "공공정보화의 불편한 진실",
     "tags": [],
-    "thumbnail": "",
-    "date": "2026-03-03",
-    "slug": "public-critique-001",
+    "thumbnail": "/images/posts/public-critique/public-critique-003-a.png",
+    "date": "2025-08-25",
+    "slug": "public-critique-003",
     "order": 999,
     "series": "public-critique",
-    "file": "content/blog/public-critique/public-critique-001.md"
-  },
-  {
-    "id": 6,
-    "type": "post",
-    "title": "OECD, 왜 만들어졌나",
-    "excerpt": "",
-    "category": "비주얼 브리프",
-    "tags": [],
-    "thumbnail": "/images/posts/visual-brief/what-is-oecd.png",
-    "date": "2024-07-31",
-    "slug": "what-is-oecd",
-    "order": 1,
-    "series": "visual-brief",
-    "file": "content/blog/visual-brief/what-is-oecd.md"
+    "file": "content/blog/public-critique/public-critique-003.md"
   },
   {
     "id": 4,
@@ -82,5 +68,19 @@
     "order": 3,
     "series": "visual-brief",
     "file": "content/blog/visual-brief/private-brand.md"
+  },
+  {
+    "id": 6,
+    "type": "post",
+    "title": "OECD, 왜 만들어졌나",
+    "excerpt": "",
+    "category": "비주얼 브리프",
+    "tags": [],
+    "thumbnail": "/images/posts/visual-brief/what-is-oecd.png",
+    "date": "2024-07-31",
+    "slug": "what-is-oecd",
+    "order": 1,
+    "series": "visual-brief",
+    "file": "content/blog/visual-brief/what-is-oecd.md"
   }
 ]
