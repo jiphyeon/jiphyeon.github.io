@@ -56,6 +56,41 @@ function safeNumber(value, fallback = 999) {
   return Number.isFinite(n) ? n : fallback;
 }
 
+function extractFirstImageFromMarkdown(content = "") {
+  if (!content) return "";
+
+  const match = content.match(/!\[[^\]]*?\]\(([^)\s]+(?:\s+"[^"]*")?)\)/);
+  if (!match || !match[1]) return "";
+
+  let imagePath = match[1].trim();
+
+  if (imagePath.startsWith("<") && imagePath.endsWith(">")) {
+    imagePath = imagePath.slice(1, -1).trim();
+  }
+
+  if (imagePath.includes(' "')) {
+    imagePath = imagePath.split(' "')[0].trim();
+  }
+
+  return imagePath;
+}
+
+function normalizeImagePath(value) {
+  const imagePath = normalizeString(value);
+  if (!imagePath) return "";
+
+  if (
+    imagePath.startsWith("http://") ||
+    imagePath.startsWith("https://") ||
+    imagePath.startsWith("//") ||
+    imagePath.startsWith("/")
+  ) {
+    return imagePath;
+  }
+
+  return `/${imagePath.replace(/^\.?\//, "")}`;
+}
+
 function buildPosts() {
   console.log("blogRoot:", blogRoot);
 
@@ -72,10 +107,15 @@ function buildPosts() {
       const raw = fs.readFileSync(fullPath, "utf8");
       const parsed = matter(raw);
       const data = parsed.data || {};
+      const content = parsed.content || "";
 
       const relativePath = path.relative(process.cwd(), fullPath).replace(/\\/g, "/");
       const folderName = path.basename(path.dirname(fullPath));
       const fileName = path.basename(fullPath, ".md");
+
+      const frontmatterThumbnail = normalizeString(data.thumbnail);
+      const firstImageFromContent = extractFirstImageFromMarkdown(content);
+      const thumbnail = normalizeImagePath(frontmatterThumbnail || firstImageFromContent);
 
       const post = {
         id: safeNumber(data.id, index + 1),
@@ -84,7 +124,7 @@ function buildPosts() {
         excerpt: normalizeString(data.excerpt),
         category: normalizeString(data.category, folderName),
         tags: normalizeArray(data.tags),
-        thumbnail: normalizeString(data.thumbnail),
+        thumbnail,
         date: normalizeDate(data.date),
         slug: normalizeString(data.slug, fileName),
         order: safeNumber(data.order, 999),
@@ -108,6 +148,7 @@ function buildPosts() {
     return bTime - aTime;
   });
 
+  fs.mkdirSync(path.dirname(outputPath), { recursive: true });
   fs.writeFileSync(outputPath, JSON.stringify(posts, null, 2) + "\n", "utf8");
 
   console.log(`saved: ${outputPath}`);
