@@ -2,7 +2,7 @@
 title: "넛지"
 type: "post"
 category: "비주얼 브리프"
-thumbnail: "/images/posts/nudge.png"
+thumbnail: "/images/posts/visual-brief/nudge.png"
 date: 2024-08-08
 slug: "nudge"
 order: 2
