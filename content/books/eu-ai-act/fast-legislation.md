@@ -5,11 +5,11 @@ series: "eu-ai-act"
 part: "규제 패권"
 order: 2
 slug: "fast-legislation"
-thumbnail: "/images/fast-legislation.jpg"
+thumbnail: "/images/docs/eu-ai-act/fast-legislation.jpg"
 date: 2025-04-22
 ---
 
-![EU 깃발 위에 ‘AI Artificial Intelligence’ 텍스트와 상승하는 그래프가 겹쳐진 이미지](/images/fast-legislation.jpg)
+![EU 깃발 위에 ‘AI Artificial Intelligence’ 텍스트와 상승하는 그래프가 겹쳐진 이미지](/images/docs/eu-ai-act/fast-legislation.jpg)
 
 EU는 매사 신중하고 단계적인 접근을 취해왔지만, 이번 AI Act는 이례적으로 속도를 높였다. 이렇게 서두른 배경에는 생성형 AI의 확산, 딥페이크 논란, 시민사회의 제도 불신이 있다.
 

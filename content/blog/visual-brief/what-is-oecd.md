@@ -2,14 +2,14 @@
 title: "OECD, 왜 만들어졌나"
 type: "post"
 category: "비주얼 브리프"
-thumbnail: "/images/what-is-oecd.png"
+thumbnail: "/images/posts/visual-brief/what-is-oecd.png"
 date: 2024-07-31
 slug: "what-is-oecd"
 order: 1
 series: "visual-brief"
 ---
 
-![OECD의 개념, 목적과 기본 가치, 회원국 구성 및 G20과의 관계를 정리한 인포그래픽](/images/what-is-oecd.png)
+![OECD의 개념, 목적과 기본 가치, 회원국 구성 및 G20과의 관계를 정리한 인포그래픽](/images/posts/visual-brief/what-is-oecd.png)
 
 "한국 연금 소득대체율 47%, OECD 평균보다 11%P 낮아", "한국 노인 상대적 빈곤율 OECD 꼴찌", "우리나라 자살률 OECD 1위" 등 정부, 학계, 재계, 언론이 즐겨 인용하는 기준 중 하나가 바로 'OECD'다. 왜 이렇게 OECD를 자주 인용할까? OECD가 정말 권위 있는 기준일까? 이를 이해하려면 OECD의 탄생부터 살펴봐야 한다.
 
