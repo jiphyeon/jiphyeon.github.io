@@ -94,6 +94,9 @@
       position: absolute;
       inset: 0;
       z-index: 1;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
     }
 
     .post-hero-bg img {
@@ -354,8 +357,8 @@
     }
 
     .related-sidebar {
-       min-width: 0;
-  padding-top: 22px;
+      min-width: 0;
+      padding-top: 22px;
     }
 
     .related-sidebar-inner {
@@ -430,6 +433,9 @@
       width: 100%;
       height: 100%;
       border-radius: 12px;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
     }
 
     .related-card-body {
@@ -673,7 +679,7 @@
         <article class="content" id="content"></article>
 
         <footer class="post-footer">
-          ©Jiphyeon. Powered by GitHub.
+          ©Jiphyeon.
         </footer>
       </article>
 
@@ -714,6 +720,15 @@
     const params = new URLSearchParams(window.location.search);
     const slug = params.get("slug");
 
+    const gradientPalette = [
+      "#F4F5FA",
+      "#D4EAFF",
+      "#F1FF62",
+      "#0192C6",
+      "#004499",
+      "#112358"
+    ];
+
     function escapeHtml(value = "") {
       return String(value)
         .replaceAll("&", "&amp;")
@@ -723,24 +738,75 @@
         .replaceAll("'", "&#039;");
     }
 
-    function getThumbnailUrl(post, width = 1600, height = 900) {
-      const thumbnail = (post.thumbnail || "").trim();
+    function normalizePath(value = "") {
+      const path = String(value).trim();
 
-      if (thumbnail !== "") {
-        if (
-          thumbnail.startsWith("http://") ||
-          thumbnail.startsWith("https://") ||
-          thumbnail.startsWith("//") ||
-          thumbnail.startsWith("/")
-        ) {
-          return thumbnail;
-        }
+      if (!path) return "";
 
-        return `/${thumbnail.replace(/^\.?\//, "")}`;
+      if (
+        path.startsWith("http://") ||
+        path.startsWith("https://") ||
+        path.startsWith("//") ||
+        path.startsWith("/")
+      ) {
+        return path;
       }
 
-      const seed = encodeURIComponent(post.slug || post.title || "jiphyeon");
-      return `https://picsum.photos/seed/${seed}/${width}/${height}`;
+      return `/${path.replace(/^\.?\//, "")}`;
+    }
+
+    function getThumbnailUrl(post) {
+      const thumbnail = normalizePath(post.thumbnail || "");
+      return thumbnail || "";
+    }
+
+    function getSeedHash(seedText = "") {
+      let hash = 0;
+
+      for (let i = 0; i < seedText.length; i += 1) {
+        hash = seedText.charCodeAt(i) + ((hash << 5) - hash);
+        hash |= 0;
+      }
+
+      return Math.abs(hash);
+    }
+
+    function getGradientColors(seedText = "") {
+      const hash = getSeedHash(seedText || "jiphyeon");
+      const length = gradientPalette.length;
+
+      const color1 = gradientPalette[hash % length];
+      const color2 = gradientPalette[(hash + 2) % length];
+      const color3 = gradientPalette[(hash + 4) % length];
+
+      return [color1, color2, color3];
+    }
+
+    function createSeededGradient(seedText = "") {
+      const [color1, color2, color3] = getGradientColors(seedText);
+
+      return `
+        radial-gradient(circle at 18% 22%, ${color1} 0%, transparent 42%),
+        radial-gradient(circle at 82% 30%, ${color2} 0%, transparent 40%),
+        radial-gradient(circle at 50% 82%, ${color3} 0%, transparent 46%),
+        linear-gradient(135deg, ${color1} 0%, ${color2} 52%, ${color3} 100%)
+      `;
+    }
+
+    function setHeroBackground(heroBgEl, post) {
+      const thumbnailUrl = getThumbnailUrl(post);
+      const seedText = post.slug || post.title || "jiphyeon";
+
+      heroBgEl.style.display = "block";
+
+      if (thumbnailUrl) {
+        heroBgEl.style.backgroundImage = "";
+        heroBgEl.innerHTML = `<img src="${escapeHtml(thumbnailUrl)}" alt="">`;
+        return;
+      }
+
+      heroBgEl.innerHTML = "";
+      heroBgEl.style.backgroundImage = createSeededGradient(seedText);
     }
 
     function bindContentImageLightbox() {
@@ -802,30 +868,12 @@
       return validImage ? validImage.src : "";
     }
 
-    function createSeededGradient(slugText = "") {
-      let hash = 0;
-      for (let i = 0; i < slugText.length; i += 1) {
-        hash = slugText.charCodeAt(i) + ((hash << 5) - hash);
-        hash |= 0;
-      }
-
-      const hue1 = Math.abs(hash) % 360;
-      const hue2 = (hue1 + 55) % 360;
-      const hue3 = (hue1 + 120) % 360;
-
-      return `
-        background:
-          radial-gradient(circle at 20% 20%, hsla(${hue1}, 82%, 72%, 0.95), transparent 42%),
-          radial-gradient(circle at 80% 30%, hsla(${hue2}, 78%, 66%, 0.88), transparent 40%),
-          radial-gradient(circle at 50% 80%, hsla(${hue3}, 72%, 62%, 0.78), transparent 44%),
-          linear-gradient(135deg, hsl(${hue1}, 42%, 18%), hsl(${hue2}, 38%, 12%));
-      `;
-    }
-
     function buildRelatedCard(post, currentSlug, thumbnailUrl) {
       const isCurrent =
-  (post.slug || "").trim().toLowerCase() ===
-  (currentSlug || "").trim().toLowerCase();
+        (post.slug || "").trim().toLowerCase() ===
+        (currentSlug || "").trim().toLowerCase();
+
+      const fallbackGradient = createSeededGradient(post.slug || post.title || "jiphyeon");
 
       return `
         <a class="related-card${isCurrent ? " is-current" : ""}" href="/post.html?slug=${encodeURIComponent(post.slug || "")}">
@@ -833,7 +881,7 @@
             ${
               thumbnailUrl
                 ? `<img src="${escapeHtml(thumbnailUrl)}" alt="">`
-                : `<div class="related-thumb-fallback" style="${createSeededGradient(post.slug || post.title || "jiphyeon")}"></div>`
+                : `<div class="related-thumb-fallback" style="background-image: ${fallbackGradient};"></div>`
             }
           </div>
           <div class="related-card-body">
@@ -868,7 +916,7 @@
           const thumbnailUrl =
             item.slug === currentPost.slug
               ? firstImageUrl
-              : ((item.thumbnail || "").trim() ? getThumbnailUrl(item, 400, 250) : "");
+              : getThumbnailUrl(item);
 
           return buildRelatedCard(item, currentPost.slug, thumbnailUrl);
         })
@@ -885,8 +933,8 @@
       const contentEl = document.getElementById("content");
       const categoryEl = document.getElementById("category");
       const heroBgEl = document.getElementById("heroBg");
-const relatedListEl = document.getElementById("relatedList");
-const relatedTitleEl = document.getElementById("relatedTitle");
+      const relatedListEl = document.getElementById("relatedList");
+      const relatedTitleEl = document.getElementById("relatedTitle");
 
       if (!slug) {
         titleEl.textContent = "잘못된 접근";
@@ -912,27 +960,23 @@ const relatedTitleEl = document.getElementById("relatedTitle");
         metaEl.textContent = "";
 
         if (post.category || post.categoryLabel) {
-  const currentCategoryName = post.categoryLabel || post.category;
-  categoryEl.style.display = "inline-flex";
-  categoryEl.textContent = currentCategoryName;
+          const currentCategoryName = post.categoryLabel || post.category;
+          categoryEl.style.display = "inline-flex";
+          categoryEl.textContent = currentCategoryName;
 
-  if (relatedTitleEl) {
-    relatedTitleEl.textContent = currentCategoryName;
-  }
-} else {
-  if (relatedListEl) {
-    relatedListEl.innerHTML = "";
-  }
-  if (relatedTitleEl) {
-    relatedTitleEl.textContent = "";
-  }
-}
+          if (relatedTitleEl) {
+            relatedTitleEl.textContent = currentCategoryName;
+          }
+        } else {
+          if (relatedListEl) {
+            relatedListEl.innerHTML = "";
+          }
+          if (relatedTitleEl) {
+            relatedTitleEl.textContent = "";
+          }
+        }
 
-        const seed = encodeURIComponent(post.slug || post.title || "jiphyeon");
-const heroImageUrl = `https://picsum.photos/seed/${seed}/1600/900`;
-
-heroBgEl.style.display = "block";
-heroBgEl.innerHTML = `<img src="${heroImageUrl}" alt="">`;
+        setHeroBackground(heroBgEl, post);
 
         const markdownResponse = await fetch(`/${post.file}`, {
           cache: "no-store"
