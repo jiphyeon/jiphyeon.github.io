@@ -418,7 +418,8 @@
       aspect-ratio: 16 / 10;
       border-radius: 12px;
       overflow: hidden;
-      background: #f2f2f2;
+      background: #fff;
+      border: 1px solid #dcdcdc;
       flex-shrink: 0;
     }
 
@@ -433,9 +434,10 @@
       width: 100%;
       height: 100%;
       border-radius: 12px;
-      background-size: cover;
+      background-color: #fff;
+      background-repeat: repeat;
       background-position: center;
-      background-repeat: no-repeat;
+      background-size: 8px 8px;
     }
 
     .related-card-body {
@@ -679,7 +681,7 @@
         <article class="content" id="content"></article>
 
         <footer class="post-footer">
-          ©Jiphyeon.
+          ©Jiphyeon. Powered by Vercel+GitHub+Notion.
         </footer>
       </article>
 
@@ -719,15 +721,6 @@
 
     const params = new URLSearchParams(window.location.search);
     const slug = params.get("slug");
-
-    const gradientPalette = [
-      "#F4F5FA",
-      "#D4EAFF",
-      "#F1FF62",
-      "#0192C6",
-      "#004499",
-      "#112358"
-    ];
 
     function escapeHtml(value = "") {
       return String(value)
@@ -771,29 +764,33 @@
       return Math.abs(hash);
     }
 
-    function getGradientColors(seedText = "") {
+    function createPattern(seedText = "") {
       const hash = getSeedHash(seedText || "jiphyeon");
-      const length = gradientPalette.length;
+      const type = hash % 6;
 
-      const color1 = gradientPalette[hash % length];
-      const color2 = gradientPalette[(hash + 2) % length];
-      const color3 = gradientPalette[(hash + 4) % length];
-
-      return [color1, color2, color3];
+      switch (type) {
+        case 0:
+          return "repeating-linear-gradient(90deg, #000 0px, #000 1px, transparent 1px, transparent 6px)";
+        case 1:
+          return "repeating-linear-gradient(0deg, #000 0px, #000 1px, transparent 1px, transparent 6px)";
+        case 2:
+          return "repeating-linear-gradient(45deg, #000 0px, #000 1px, transparent 1px, transparent 6px)";
+        case 3:
+          return "repeating-linear-gradient(-45deg, #000 0px, #000 1px, transparent 1px, transparent 6px)";
+        case 4:
+          return `
+            repeating-linear-gradient(0deg, #000 0px, #000 1px, transparent 1px, transparent 6px),
+            repeating-linear-gradient(90deg, #000 0px, #000 1px, transparent 1px, transparent 6px)
+          `.replace(/\s+/g, " ").trim();
+        default:
+          return "radial-gradient(#000 0.8px, transparent 0.8px)";
+      }
     }
 
-    function createSeededGradient(seedText = "") {
-      const [color1, color2, color3] = getGradientColors(seedText);
-
-      return `
-        linear-gradient(
-          135deg,
-          ${color1} 0%,
-          ${color1} 18%,
-          ${color2} 56%,
-          ${color3} 100%
-        )
-      `.trim();
+    function getPatternBackgroundSize(seedText = "") {
+      const hash = getSeedHash(seedText || "jiphyeon");
+      const type = hash % 6;
+      return type === 5 ? "8px 8px" : "auto";
     }
 
     function setHeroBackground(heroBgEl, post) {
@@ -869,7 +866,9 @@
         (post.slug || "").trim().toLowerCase() ===
         (currentSlug || "").trim().toLowerCase();
 
-      const fallbackGradient = createSeededGradient(post.slug || post.title || "jiphyeon");
+      const seedText = post.slug || post.title || "jiphyeon";
+      const fallbackPattern = createPattern(seedText);
+      const backgroundSize = getPatternBackgroundSize(seedText);
 
       return `
         <a class="related-card${isCurrent ? " is-current" : ""}" href="/post.html?slug=${encodeURIComponent(post.slug || "")}">
@@ -877,7 +876,7 @@
             ${
               thumbnailUrl
                 ? `<img src="${escapeHtml(thumbnailUrl)}" alt="">`
-                : `<div class="related-thumb-fallback" style="background-image: ${fallbackGradient};"></div>`
+                : `<div class="related-thumb-fallback" style="background-image: ${fallbackPattern}; background-size: ${backgroundSize};"></div>`
             }
           </div>
           <div class="related-card-body">
