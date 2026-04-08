@@ -414,37 +414,38 @@
     }
 
     .related-thumb {
+      position: relative;
       width: 112px;
       aspect-ratio: 16 / 10;
       border-radius: 12px;
-      overflow: hidden;
-      background: #fff;
-      border: 1px solid #dcdcdc;
       flex-shrink: 0;
+      overflow: visible;
     }
 
-    .related-thumb img {
+    .related-thumb-frame {
+      position: relative;
       width: 100%;
       height: 100%;
-      object-fit: cover;
-      display: block;
+      border-radius: 12px;
+      background: #ffffff;
+      border: 1px solid #dcdcdc;
+      overflow: visible;
     }
 
     .related-thumb-fallback {
-      width: 100%;
-      height: 100%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: #ffffff;
+      position: absolute;
+      inset: 0;
       border-radius: 12px;
+      overflow: visible;
+      pointer-events: none;
     }
 
-    .related-thumb-fallback img {
-      width: 62%;
-      height: 62%;
+    .related-thumb-shape {
+      position: absolute;
       object-fit: contain;
       display: block;
+      pointer-events: none;
+      user-select: none;
     }
 
     .related-card-body {
@@ -641,6 +642,9 @@
 
       .related-thumb {
         width: 96px;
+      }
+
+      .related-thumb-frame {
         border-radius: 10px;
       }
 
@@ -742,28 +746,6 @@
         .replaceAll("'", "&#039;");
     }
 
-    function normalizePath(value = "") {
-      const path = String(value).trim();
-
-      if (!path) return "";
-
-      if (
-        path.startsWith("http://") ||
-        path.startsWith("https://") ||
-        path.startsWith("//") ||
-        path.startsWith("/")
-      ) {
-        return path;
-      }
-
-      return `/${path.replace(/^\.?\//, "")}`;
-    }
-
-    function getThumbnailUrl(post) {
-      const thumbnail = normalizePath(post.thumbnail || "");
-      return thumbnail || "";
-    }
-
     function getSeedHash(seedText = "") {
       let hash = 0;
 
@@ -779,6 +761,22 @@
       const hash = getSeedHash(seedText || "jiphyeon");
       const index = hash % shapeList.length;
       return shapeList[index];
+    }
+
+    function getShapeStyleBySeed(seedText = "") {
+      const hash = getSeedHash(seedText || "jiphyeon");
+
+      const width = 92 + (hash % 56);          // 92% ~ 147%
+      const left = -18 + ((hash >> 3) % 36);   // -18% ~ 17%
+      const top = -20 + ((hash >> 6) % 40);    // -20% ~ 19%
+      const rotate = -24 + ((hash >> 9) % 49); // -24deg ~ 24deg
+
+      return {
+        width: `${width}%`,
+        left: `${left}%`,
+        top: `${top}%`,
+        rotate: `${rotate}deg`
+      };
     }
 
     function setHeroBackground(heroBgEl, post) {
@@ -835,35 +833,33 @@
       };
     }
 
-    function getFirstContentImageUrl(container) {
-      if (!container) return "";
-
-      const images = Array.from(container.querySelectorAll("img"));
-      const validImage = images.find((img) => {
-        const src = (img.getAttribute("src") || "").trim();
-        if (!src) return false;
-        if (src.startsWith("data:")) return false;
-        return true;
-      });
-
-      return validImage ? validImage.src : "";
-    }
-
-    function buildRelatedCard(post, currentSlug, thumbnailUrl) {
+    function buildRelatedCard(post, currentSlug) {
       const isCurrent =
         (post.slug || "").trim().toLowerCase() ===
         (currentSlug || "").trim().toLowerCase();
 
-      const shapeUrl = getShapeBySeed(post.slug || post.title || "jiphyeon");
+      const seedText = post.slug || post.title || "jiphyeon";
+      const shapeUrl = getShapeBySeed(seedText);
+      const shapeStyle = getShapeStyleBySeed(seedText);
 
       return `
         <a class="related-card${isCurrent ? " is-current" : ""}" href="/post.html?slug=${encodeURIComponent(post.slug || "")}">
           <div class="related-thumb">
-            ${
-              thumbnailUrl
-                ? `<img src="${escapeHtml(thumbnailUrl)}" alt="">`
-                : `<div class="related-thumb-fallback"><img src="${escapeHtml(shapeUrl)}" alt=""></div>`
-            }
+            <div class="related-thumb-frame">
+              <div class="related-thumb-fallback">
+                <img
+                  class="related-thumb-shape"
+                  src="${escapeHtml(shapeUrl)}"
+                  alt=""
+                  style="
+                    width: ${shapeStyle.width};
+                    left: ${shapeStyle.left};
+                    top: ${shapeStyle.top};
+                    transform: rotate(${shapeStyle.rotate});
+                  "
+                >
+              </div>
+            </div>
           </div>
           <div class="related-card-body">
             <p class="related-card-post-title">${escapeHtml(post.title || "")}</p>
@@ -873,7 +869,7 @@
       `;
     }
 
-    function renderRelatedPosts(posts, currentPost, contentEl) {
+    function renderRelatedPosts(posts, currentPost) {
       const relatedListEl = document.getElementById("relatedList");
       if (!relatedListEl || !currentPost || !(currentPost.category || currentPost.categoryLabel)) {
         return;
@@ -890,17 +886,8 @@
         return;
       }
 
-      const firstImageUrl = getFirstContentImageUrl(contentEl);
-
       const relatedMarkup = sameCategoryPosts
-        .map((item) => {
-          const thumbnailUrl =
-            item.slug === currentPost.slug
-              ? firstImageUrl
-              : getThumbnailUrl(item);
-
-          return buildRelatedCard(item, currentPost.slug, thumbnailUrl);
-        })
+        .map((item) => buildRelatedCard(item, currentPost.slug))
         .join("");
 
       relatedListEl.innerHTML = relatedMarkup;
@@ -973,7 +960,7 @@
         const processedMarkdown = cleanedMarkdown.replace(/\*\*([^*]+)\*\*/g, " **$1** ");
         contentEl.innerHTML = md.render(processedMarkdown);
 
-        renderRelatedPosts(posts, post, contentEl);
+        renderRelatedPosts(posts, post);
         bindContentImageLightbox();
 
       } catch (error) {
