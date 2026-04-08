@@ -433,11 +433,18 @@
     .related-thumb-fallback {
       width: 100%;
       height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #ffffff;
       border-radius: 12px;
-      background-color: #fff;
-      background-repeat: repeat;
-      background-position: center;
-      background-size: 8px 8px;
+    }
+
+    .related-thumb-fallback img {
+      width: 62%;
+      height: 62%;
+      object-fit: contain;
+      display: block;
     }
 
     .related-card-body {
@@ -722,6 +729,10 @@
     const params = new URLSearchParams(window.location.search);
     const slug = params.get("slug");
 
+    const shapeList = Array.from({ length: 24 }, (_, i) => {
+      return `/images/shapes/shape-${i + 1}.svg`;
+    });
+
     function escapeHtml(value = "") {
       return String(value)
         .replaceAll("&", "&amp;")
@@ -764,46 +775,11 @@
       return Math.abs(hash);
     }
 
-   function createPattern(seedText = "") {
-  const hash = getSeedHash(seedText || "jiphyeon");
-  const type = hash % 5;
-
-  switch (type) {
-    // 얇은 우하향 사선
-    case 0:
-      return "repeating-linear-gradient(45deg, #000 0px, #000 1.5px, transparent 1.5px, transparent 7px)";
-
-    // 얇은 우상향 사선
-    case 1:
-      return "repeating-linear-gradient(-45deg, #000 0px, #000 1.5px, transparent 1.5px, transparent 7px)";
-
-    // 가로선
-    case 2:
-      return "repeating-linear-gradient(0deg, #000 0px, #000 1.5px, transparent 1.5px, transparent 7px)";
-
-    // 교차 해칭
-    case 3:
-      return `
-        repeating-linear-gradient(45deg, #000 0px, #000 1.5px, transparent 1.5px, transparent 8px),
-        repeating-linear-gradient(-45deg, #000 0px, #000 1.5px, transparent 1.5px, transparent 8px)
-      `.replace(/\s+/g, " ").trim();
-
-    // 다이아몬드
-    default:
-      return `
-        linear-gradient(45deg, #000 1.5px, transparent 1.5px) 0 0 / 12px 12px,
-        linear-gradient(-45deg, #000 1.5px, transparent 1.5px) 0 0 / 12px 12px
-      `.replace(/\s+/g, " ").trim();
-  }
-}
-
- function getPatternBackgroundSize(seedText = "") {
-  const hash = getSeedHash(seedText || "jiphyeon");
-  const type = hash % 5;
-
-  if (type === 4) return "12px 12px, 12px 12px";
-  return "auto";
-}
+    function getShapeBySeed(seedText = "") {
+      const hash = getSeedHash(seedText || "jiphyeon");
+      const index = hash % shapeList.length;
+      return shapeList[index];
+    }
 
     function setHeroBackground(heroBgEl, post) {
       const seed = encodeURIComponent(post.slug || post.title || "jiphyeon");
@@ -878,9 +854,7 @@
         (post.slug || "").trim().toLowerCase() ===
         (currentSlug || "").trim().toLowerCase();
 
-      const seedText = post.slug || post.title || "jiphyeon";
-      const fallbackPattern = createPattern(seedText);
-      const backgroundSize = getPatternBackgroundSize(seedText);
+      const shapeUrl = getShapeBySeed(post.slug || post.title || "jiphyeon");
 
       return `
         <a class="related-card${isCurrent ? " is-current" : ""}" href="/post.html?slug=${encodeURIComponent(post.slug || "")}">
@@ -888,7 +862,7 @@
             ${
               thumbnailUrl
                 ? `<img src="${escapeHtml(thumbnailUrl)}" alt="">`
-                : `<div class="related-thumb-fallback" style="background-image: ${fallbackPattern}; background-size: ${backgroundSize};"></div>`
+                : `<div class="related-thumb-fallback"><img src="${escapeHtml(shapeUrl)}" alt=""></div>`
             }
           </div>
           <div class="related-card-body">
