@@ -768,23 +768,23 @@
   }
 
   function getShapeStyleBySeed(seedText = "") {
-    const h1 = getSeedHash(seedText + "a");
-    const h2 = getSeedHash(seedText + "b");
-    const h3 = getSeedHash(seedText + "c");
-    const h4 = getSeedHash(seedText + "d");
+  const h1 = getSeedHash(seedText + "a");
+  const h2 = getSeedHash(seedText + "b");
+  const h3 = getSeedHash(seedText + "c");
+  const h4 = getSeedHash(seedText + "d");
 
-    const width = 70 + (h1 % 70);        // 70% ~ 139%
-    const left = -30 + (h2 % 80);        // -30% ~ 49%
-    const top = -30 + (h3 % 80);         // -30% ~ 49%
-    const rotate = -35 + (h4 % 70);      // -35deg ~ 34deg
+  const width = 78 + (h1 % 38);        // 78% ~ 115%
+  const left = -12 + (h2 % 28);        // -12% ~ 15%
+  const top = -12 + (h3 % 28);         // -12% ~ 15%
+  const rotate = -18 + (h4 % 36);      // -18deg ~ 17deg
 
-    return {
-      width: `${width}%`,
-      left: `${left}%`,
-      top: `${top}%`,
-      rotate: `${rotate}deg`
-    };
-  }
+  return {
+    width: `${width}%`,
+    left: `${left}%`,
+    top: `${top}%`,
+    rotate: `${rotate}deg`
+  };
+}
 
   function setHeroBackground(heroBgEl, post) {
     const seed = encodeURIComponent(post.slug || post.title || "jiphyeon");
