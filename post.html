@@ -428,7 +428,7 @@
   height: 100%;
   border-radius: 12px;
   background: #ffffff;
-  border: 1px solid #dcdcdc;
+  border: 1px solid #383838;
   overflow: hidden;
     }
 
@@ -761,19 +761,19 @@
       return Math.abs(hash);
     }
 
-    function getShapeBySeed(seedText = "") {
-      const hash = getSeedHash(seedText || "jiphyeon");
-      const index = hash % shapeList.length;
-      return shapeList[index];
-    }
+   function getShapeStyleBySeed(seedText = "") {
+  const base = getSeedHash(seedText || "jiphyeon");
 
-    function getShapeStyleBySeed(seedText = "") {
-  const hash = getSeedHash(seedText || "jiphyeon");
+  // 서로 다른 해시 생성 (중요)
+  const h1 = getSeedHash(seedText + "a");
+  const h2 = getSeedHash(seedText + "b");
+  const h3 = getSeedHash(seedText + "c");
+  const h4 = getSeedHash(seedText + "d");
 
-  const width = 68 + (hash % 78);             // 68% ~ 145%
-  const left = -22 + ((hash >> 3) % 55);      // -22% ~ 32%
-  const top = -24 + ((hash >> 6) % 60);       // -24% ~ 35%
-  const rotate = -28 + ((hash >> 9) % 57);    // -28deg ~ 28deg
+  const width = 70 + (h1 % 70);          // 70% ~ 140%
+  const left = -30 + (h2 % 80);          // -30% ~ 50%
+  const top = -30 + (h3 % 80);           // -30% ~ 50%
+  const rotate = -35 + (h4 % 70);        // -35deg ~ 35deg
 
   return {
     width: `${width}%`,
