@@ -711,271 +711,274 @@
 
   <script src="https://cdn.jsdelivr.net/npm/markdown-it/dist/markdown-it.min.js"></script>
   <script>
-    function parseFrontMatter(markdown = "") {
-      const match = markdown.match(/^---\s*\n([\s\S]*?)\n---\s*\n?/);
+  function parseFrontMatter(markdown = "") {
+    const match = markdown.match(/^---\s*\n([\s\S]*?)\n---\s*\n?/);
 
-      if (!match) {
-        return { data: {}, content: markdown };
-      }
-
-      const raw = match[1];
-      const content = markdown.replace(/^---\s*\n[\s\S]*?\n---\s*\n?/, "");
-      const data = {};
-
-      raw.split("\n").forEach(line => {
-        const index = line.indexOf(":");
-        if (index === -1) return;
-
-        const key = line.slice(0, index).trim();
-        const value = line.slice(index + 1).trim();
-        data[key] = value;
-      });
-
-      return { data, content };
+    if (!match) {
+      return { data: {}, content: markdown };
     }
 
-    const params = new URLSearchParams(window.location.search);
-    const slug = params.get("slug");
+    const raw = match[1];
+    const content = markdown.replace(/^---\s*\n[\s\S]*?\n---\s*\n?/, "");
+    const data = {};
 
-    const shapeList = Array.from({ length: 24 }, (_, i) => {
-      return `/images/shapes/shape-${i + 1}.svg`;
+    raw.split("\n").forEach(line => {
+      const index = line.indexOf(":");
+      if (index === -1) return;
+
+      const key = line.slice(0, index).trim();
+      const value = line.slice(index + 1).trim();
+      data[key] = value;
     });
 
-    function escapeHtml(value = "") {
-      return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
+    return { data, content };
+  }
+
+  const params = new URLSearchParams(window.location.search);
+  const slug = params.get("slug");
+
+  const shapeList = Array.from({ length: 24 }, (_, i) => {
+    return `/images/shapes/shape-${i + 1}.svg`;
+  });
+
+  function escapeHtml(value = "") {
+    return String(value)
+      .replaceAll("&", "&amp;")
+      .replaceAll("<", "&lt;")
+      .replaceAll(">", "&gt;")
+      .replaceAll('"', "&quot;")
+      .replaceAll("'", "&#039;");
+  }
+
+  function getSeedHash(seedText = "") {
+    let hash = 0;
+
+    for (let i = 0; i < seedText.length; i += 1) {
+      hash = seedText.charCodeAt(i) + ((hash << 5) - hash);
+      hash |= 0;
     }
 
-    function getSeedHash(seedText = "") {
-      let hash = 0;
+    return Math.abs(hash);
+  }
 
-      for (let i = 0; i < seedText.length; i += 1) {
-        hash = seedText.charCodeAt(i) + ((hash << 5) - hash);
-        hash |= 0;
+  function getShapeBySeed(seedText = "") {
+    const hash = getSeedHash(seedText || "jiphyeon");
+    const index = hash % shapeList.length;
+    return shapeList[index];
+  }
+
+  function getShapeStyleBySeed(seedText = "") {
+    const h1 = getSeedHash(seedText + "a");
+    const h2 = getSeedHash(seedText + "b");
+    const h3 = getSeedHash(seedText + "c");
+    const h4 = getSeedHash(seedText + "d");
+
+    const width = 70 + (h1 % 70);        // 70% ~ 139%
+    const left = -30 + (h2 % 80);        // -30% ~ 49%
+    const top = -30 + (h3 % 80);         // -30% ~ 49%
+    const rotate = -35 + (h4 % 70);      // -35deg ~ 34deg
+
+    return {
+      width: `${width}%`,
+      left: `${left}%`,
+      top: `${top}%`,
+      rotate: `${rotate}deg`
+    };
+  }
+
+  function setHeroBackground(heroBgEl, post) {
+    const seed = encodeURIComponent(post.slug || post.title || "jiphyeon");
+    const heroImageUrl = `https://picsum.photos/seed/${seed}/1600/900`;
+
+    heroBgEl.style.display = "block";
+    heroBgEl.style.backgroundImage = "";
+    heroBgEl.innerHTML = `<img src="${heroImageUrl}" alt="">`;
+  }
+
+  function bindContentImageLightbox() {
+    const lightbox = document.getElementById("image-lightbox");
+    const lightboxImg = document.getElementById("image-lightbox-img");
+    const closeBtn = document.getElementById("image-lightbox-close");
+
+    if (!lightbox || !lightboxImg || !closeBtn) return;
+
+    const contentImages = document.querySelectorAll(".content img");
+
+    function openLightbox(img) {
+      lightboxImg.src = img.src;
+      lightboxImg.alt = img.alt || "";
+      lightbox.classList.add("is-open");
+      lightbox.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
+    }
+
+    function closeLightbox() {
+      lightbox.classList.remove("is-open");
+      lightbox.setAttribute("aria-hidden", "true");
+      lightboxImg.src = "";
+      lightboxImg.alt = "";
+      document.body.style.overflow = "";
+    }
+
+    contentImages.forEach((img) => {
+      img.style.cursor = "zoom-in";
+      img.onclick = () => openLightbox(img);
+    });
+
+    closeBtn.onclick = closeLightbox;
+
+    lightbox.onclick = (event) => {
+      if (event.target === lightbox) {
+        closeLightbox();
       }
+    };
 
-      return Math.abs(hash);
-    }
-
-   function getShapeStyleBySeed(seedText = "") {
-  const base = getSeedHash(seedText || "jiphyeon");
-
-  // 서로 다른 해시 생성 (중요)
-  const h1 = getSeedHash(seedText + "a");
-  const h2 = getSeedHash(seedText + "b");
-  const h3 = getSeedHash(seedText + "c");
-  const h4 = getSeedHash(seedText + "d");
-
-  const width = 70 + (h1 % 70);          // 70% ~ 140%
-  const left = -30 + (h2 % 80);          // -30% ~ 50%
-  const top = -30 + (h3 % 80);           // -30% ~ 50%
-  const rotate = -35 + (h4 % 70);        // -35deg ~ 35deg
-
-  return {
-    width: `${width}%`,
-    left: `${left}%`,
-    top: `${top}%`,
-    rotate: `${rotate}deg`
-  };
-}
-
-    function setHeroBackground(heroBgEl, post) {
-      const seed = encodeURIComponent(post.slug || post.title || "jiphyeon");
-      const heroImageUrl = `https://picsum.photos/seed/${seed}/1600/900`;
-
-      heroBgEl.style.display = "block";
-      heroBgEl.style.backgroundImage = "";
-      heroBgEl.innerHTML = `<img src="${heroImageUrl}" alt="">`;
-    }
-
-    function bindContentImageLightbox() {
-      const lightbox = document.getElementById("image-lightbox");
-      const lightboxImg = document.getElementById("image-lightbox-img");
-      const closeBtn = document.getElementById("image-lightbox-close");
-
-      if (!lightbox || !lightboxImg || !closeBtn) return;
-
-      const contentImages = document.querySelectorAll(".content img");
-
-      function openLightbox(img) {
-        lightboxImg.src = img.src;
-        lightboxImg.alt = img.alt || "";
-        lightbox.classList.add("is-open");
-        lightbox.setAttribute("aria-hidden", "false");
-        document.body.style.overflow = "hidden";
+    document.onkeydown = (event) => {
+      if (event.key === "Escape" && lightbox.classList.contains("is-open")) {
+        closeLightbox();
       }
+    };
+  }
 
-      function closeLightbox() {
-        lightbox.classList.remove("is-open");
-        lightbox.setAttribute("aria-hidden", "true");
-        lightboxImg.src = "";
-        lightboxImg.alt = "";
-        document.body.style.overflow = "";
-      }
+  function buildRelatedCard(post, currentSlug) {
+    const isCurrent =
+      (post.slug || "").trim().toLowerCase() ===
+      (currentSlug || "").trim().toLowerCase();
 
-      contentImages.forEach((img) => {
-        img.style.cursor = "zoom-in";
-        img.onclick = () => openLightbox(img);
-      });
+    const seedText = post.slug || post.title || "jiphyeon";
+    const shapeUrl = getShapeBySeed(seedText);
+    const shapeStyle = getShapeStyleBySeed(seedText);
 
-      closeBtn.onclick = closeLightbox;
-
-      lightbox.onclick = (event) => {
-        if (event.target === lightbox) {
-          closeLightbox();
-        }
-      };
-
-      document.onkeydown = (event) => {
-        if (event.key === "Escape" && lightbox.classList.contains("is-open")) {
-          closeLightbox();
-        }
-      };
-    }
-
-    function buildRelatedCard(post, currentSlug) {
-      const isCurrent =
-        (post.slug || "").trim().toLowerCase() ===
-        (currentSlug || "").trim().toLowerCase();
-
-      const seedText = post.slug || post.title || "jiphyeon";
-      const shapeUrl = getShapeBySeed(seedText);
-      const shapeStyle = getShapeStyleBySeed(seedText);
-
-      return `
-        <a class="related-card${isCurrent ? " is-current" : ""}" href="/post.html?slug=${encodeURIComponent(post.slug || "")}">
-          <div class="related-thumb">
-            <div class="related-thumb-frame">
-              <div class="related-thumb-fallback">
-                <img
-                  class="related-thumb-shape"
-                  src="${escapeHtml(shapeUrl)}"
-                  alt=""
-                  style="
-                    width: ${shapeStyle.width};
-                    left: ${shapeStyle.left};
-                    top: ${shapeStyle.top};
-                    transform: rotate(${shapeStyle.rotate});
-                  "
-                >
-              </div>
+    return `
+      <a class="related-card${isCurrent ? " is-current" : ""}" href="/post.html?slug=${encodeURIComponent(post.slug || "")}">
+        <div class="related-thumb">
+          <div class="related-thumb-frame">
+            <div class="related-thumb-fallback">
+              <img
+                class="related-thumb-shape"
+                src="${escapeHtml(shapeUrl)}"
+                alt=""
+                style="
+                  width: ${shapeStyle.width};
+                  left: ${shapeStyle.left};
+                  top: ${shapeStyle.top};
+                  transform: rotate(${shapeStyle.rotate});
+                "
+              >
             </div>
           </div>
-          <div class="related-card-body">
-            <p class="related-card-post-title">${escapeHtml(post.title || "")}</p>
-            <div class="related-date">${escapeHtml(post.date || "")}</div>
-          </div>
-        </a>
-      `;
+        </div>
+        <div class="related-card-body">
+          <p class="related-card-post-title">${escapeHtml(post.title || "")}</p>
+          <div class="related-date">${escapeHtml(post.date || "")}</div>
+        </div>
+      </a>
+    `;
+  }
+
+  function renderRelatedPosts(posts, currentPost) {
+    const relatedListEl = document.getElementById("relatedList");
+    if (!relatedListEl || !currentPost || !(currentPost.category || currentPost.categoryLabel)) {
+      return;
     }
 
-    function renderRelatedPosts(posts, currentPost) {
-      const relatedListEl = document.getElementById("relatedList");
-      if (!relatedListEl || !currentPost || !(currentPost.category || currentPost.categoryLabel)) {
+    const currentCategory = currentPost.category || currentPost.categoryLabel;
+    const sameCategoryPosts = posts.filter((item) => {
+      const itemCategory = item.category || item.categoryLabel;
+      return itemCategory === currentCategory;
+    });
+
+    if (sameCategoryPosts.length <= 1) {
+      relatedListEl.innerHTML = "";
+      return;
+    }
+
+    const relatedMarkup = sameCategoryPosts
+      .map((item) => buildRelatedCard(item, currentPost.slug))
+      .join("");
+
+    relatedListEl.innerHTML = relatedMarkup;
+  }
+
+  const md = window.markdownit({ breaks: false });
+
+  async function initializePostPage() {
+    const titleEl = document.getElementById("title");
+    const metaEl = document.getElementById("meta");
+    const contentEl = document.getElementById("content");
+    const categoryEl = document.getElementById("category");
+    const heroBgEl = document.getElementById("heroBg");
+    const relatedListEl = document.getElementById("relatedList");
+    const relatedTitleEl = document.getElementById("relatedTitle");
+
+    if (!slug) {
+      titleEl.textContent = "잘못된 접근";
+      contentEl.innerHTML = '<p class="error">slug 값이 없습니다.</p>';
+      return;
+    }
+
+    try {
+      const postResponse = await fetch("/data/posts.json", { cache: "no-store" });
+      if (!postResponse.ok) throw new Error("posts.json 로드 실패");
+
+      const posts = await postResponse.json();
+      const post = posts.find(item => item.slug === slug);
+
+      if (!post) {
+        titleEl.textContent = "게시물을 찾을 수 없음";
+        contentEl.innerHTML = '<p class="error">해당 게시물을 찾을 수 없습니다.</p>';
         return;
       }
 
-      const currentCategory = currentPost.category || currentPost.categoryLabel;
-      const sameCategoryPosts = posts.filter((item) => {
-        const itemCategory = item.category || item.categoryLabel;
-        return itemCategory === currentCategory;
+      document.title = post.title || "Post";
+      titleEl.textContent = post.title || "";
+      metaEl.textContent = "";
+
+      if (post.category || post.categoryLabel) {
+        const currentCategoryName = post.categoryLabel || post.category;
+        categoryEl.style.display = "inline-flex";
+        categoryEl.textContent = currentCategoryName;
+
+        if (relatedTitleEl) {
+          relatedTitleEl.textContent = currentCategoryName;
+        }
+      } else {
+        if (relatedListEl) {
+          relatedListEl.innerHTML = "";
+        }
+        if (relatedTitleEl) {
+          relatedTitleEl.textContent = "";
+        }
+      }
+
+      setHeroBackground(heroBgEl, post);
+
+      const markdownResponse = await fetch(`/${post.file}`, {
+        cache: "no-store"
       });
 
-      if (sameCategoryPosts.length <= 1) {
-        relatedListEl.innerHTML = "";
-        return;
-      }
+      if (!markdownResponse.ok) throw new Error("Markdown 로드 실패");
 
-      const relatedMarkup = sameCategoryPosts
-        .map((item) => buildRelatedCard(item, currentPost.slug))
-        .join("");
+      const markdown = await markdownResponse.text();
+      const { data: frontMatter, content: cleanedMarkdown } = parseFrontMatter(markdown);
 
-      relatedListEl.innerHTML = relatedMarkup;
+      metaEl.textContent = frontMatter.date || post.date || "";
+
+      const processedMarkdown = cleanedMarkdown.replace(/\*\*([^*]+)\*\*/g, " **$1** ");
+      contentEl.innerHTML = md.render(processedMarkdown);
+
+      renderRelatedPosts(posts, post);
+      bindContentImageLightbox();
+
+    } catch (error) {
+      console.error(error);
+      titleEl.textContent = "불러오기 실패";
+      contentEl.innerHTML = '<p class="error">본문을 불러오지 못했습니다.</p>';
     }
+  }
 
-    const md = window.markdownit({ breaks: false });
-
-    async function initializePostPage() {
-      const titleEl = document.getElementById("title");
-      const metaEl = document.getElementById("meta");
-      const contentEl = document.getElementById("content");
-      const categoryEl = document.getElementById("category");
-      const heroBgEl = document.getElementById("heroBg");
-      const relatedListEl = document.getElementById("relatedList");
-      const relatedTitleEl = document.getElementById("relatedTitle");
-
-      if (!slug) {
-        titleEl.textContent = "잘못된 접근";
-        contentEl.innerHTML = '<p class="error">slug 값이 없습니다.</p>';
-        return;
-      }
-
-      try {
-        const postResponse = await fetch("/data/posts.json", { cache: "no-store" });
-        if (!postResponse.ok) throw new Error("posts.json 로드 실패");
-
-        const posts = await postResponse.json();
-        const post = posts.find(item => item.slug === slug);
-
-        if (!post) {
-          titleEl.textContent = "게시물을 찾을 수 없음";
-          contentEl.innerHTML = '<p class="error">해당 게시물을 찾을 수 없습니다.</p>';
-          return;
-        }
-
-        document.title = post.title || "Post";
-        titleEl.textContent = post.title || "";
-        metaEl.textContent = "";
-
-        if (post.category || post.categoryLabel) {
-          const currentCategoryName = post.categoryLabel || post.category;
-          categoryEl.style.display = "inline-flex";
-          categoryEl.textContent = currentCategoryName;
-
-          if (relatedTitleEl) {
-            relatedTitleEl.textContent = currentCategoryName;
-          }
-        } else {
-          if (relatedListEl) {
-            relatedListEl.innerHTML = "";
-          }
-          if (relatedTitleEl) {
-            relatedTitleEl.textContent = "";
-          }
-        }
-
-        setHeroBackground(heroBgEl, post);
-
-        const markdownResponse = await fetch(`/${post.file}`, {
-          cache: "no-store"
-        });
-
-        if (!markdownResponse.ok) throw new Error("Markdown 로드 실패");
-
-        const markdown = await markdownResponse.text();
-        const { data: frontMatter, content: cleanedMarkdown } = parseFrontMatter(markdown);
-
-        metaEl.textContent = frontMatter.date || post.date || "";
-
-        const processedMarkdown = cleanedMarkdown.replace(/\*\*([^*]+)\*\*/g, " **$1** ");
-        contentEl.innerHTML = md.render(processedMarkdown);
-
-        renderRelatedPosts(posts, post);
-        bindContentImageLightbox();
-
-      } catch (error) {
-        console.error(error);
-        titleEl.textContent = "불러오기 실패";
-        contentEl.innerHTML = '<p class="error">본문을 불러오지 못했습니다.</p>';
-      }
-    }
-
-    initializePostPage();
-  </script>
+  initializePostPage();
+</script>
 
   <div id="image-lightbox" class="image-lightbox" aria-hidden="true">
     <button class="image-lightbox-close" id="image-lightbox-close" aria-label="이미지 닫기">×</button>
