@@ -786,27 +786,23 @@
       const [color1, color2, color3] = getGradientColors(seedText);
 
       return `
-        radial-gradient(circle at 18% 22%, ${color1} 0%, transparent 42%),
-        radial-gradient(circle at 82% 30%, ${color2} 0%, transparent 40%),
-        radial-gradient(circle at 50% 82%, ${color3} 0%, transparent 46%),
-        linear-gradient(135deg, ${color1} 0%, ${color2} 52%, ${color3} 100%)
-      `;
+        linear-gradient(
+          135deg,
+          ${color1} 0%,
+          ${color1} 18%,
+          ${color2} 56%,
+          ${color3} 100%
+        )
+      `.trim();
     }
 
     function setHeroBackground(heroBgEl, post) {
-      const thumbnailUrl = getThumbnailUrl(post);
-      const seedText = post.slug || post.title || "jiphyeon";
+      const seed = encodeURIComponent(post.slug || post.title || "jiphyeon");
+      const heroImageUrl = `https://picsum.photos/seed/${seed}/1600/900`;
 
       heroBgEl.style.display = "block";
-
-      if (thumbnailUrl) {
-        heroBgEl.style.backgroundImage = "";
-        heroBgEl.innerHTML = `<img src="${escapeHtml(thumbnailUrl)}" alt="">`;
-        return;
-      }
-
-      heroBgEl.innerHTML = "";
-      heroBgEl.style.backgroundImage = createSeededGradient(seedText);
+      heroBgEl.style.backgroundImage = "";
+      heroBgEl.innerHTML = `<img src="${heroImageUrl}" alt="">`;
     }
 
     function bindContentImageLightbox() {
