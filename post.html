@@ -765,33 +765,56 @@
     }
 
     function createPattern(seedText = "") {
-      const hash = getSeedHash(seedText || "jiphyeon");
-      const type = hash % 6;
+  const hash = getSeedHash(seedText || "jiphyeon");
+  const type = hash % 6;
 
-      switch (type) {
-        case 0:
-          return "repeating-linear-gradient(90deg, #000 0px, #000 1px, transparent 1px, transparent 6px)";
-        case 1:
-          return "repeating-linear-gradient(0deg, #000 0px, #000 1px, transparent 1px, transparent 6px)";
-        case 2:
-          return "repeating-linear-gradient(45deg, #000 0px, #000 1px, transparent 1px, transparent 6px)";
-        case 3:
-          return "repeating-linear-gradient(-45deg, #000 0px, #000 1px, transparent 1px, transparent 6px)";
-        case 4:
-          return `
-            repeating-linear-gradient(0deg, #000 0px, #000 1px, transparent 1px, transparent 6px),
-            repeating-linear-gradient(90deg, #000 0px, #000 1px, transparent 1px, transparent 6px)
-          `.replace(/\s+/g, " ").trim();
-        default:
-          return "radial-gradient(#000 0.8px, transparent 0.8px)";
-      }
-    }
+  switch (type) {
+    // 얇은 우하향 사선
+    case 0:
+      return "repeating-linear-gradient(45deg, #000 0px, #000 1px, transparent 1px, transparent 7px)";
+
+    // 얇은 우상향 사선
+    case 1:
+      return "repeating-linear-gradient(-45deg, #000 0px, #000 1px, transparent 1px, transparent 7px)";
+
+    // 얇은 가로선
+    case 2:
+      return "repeating-linear-gradient(0deg, #000 0px, #000 1px, transparent 1px, transparent 7px)";
+
+    // 지그재그
+    case 3:
+      return `
+        linear-gradient(135deg, transparent 75%, #000 75%) 0 0 / 12px 12px,
+        linear-gradient(225deg, transparent 75%, #000 75%) 0 0 / 12px 12px,
+        linear-gradient(315deg, transparent 75%, #000 75%) 6px 0 / 12px 12px,
+        linear-gradient(45deg, transparent 75%, #000 75%) 6px 0 / 12px 12px
+      `.replace(/\s+/g, " ").trim();
+
+    // 교차 해칭
+    case 4:
+      return `
+        repeating-linear-gradient(45deg, #000 0px, #000 1px, transparent 1px, transparent 8px),
+        repeating-linear-gradient(-45deg, #000 0px, #000 1px, transparent 1px, transparent 8px)
+      `.replace(/\s+/g, " ").trim();
+
+    // 다이아몬드
+    default:
+      return `
+        linear-gradient(45deg, #000 1px, transparent 1px) 0 0 / 12px 12px,
+        linear-gradient(-45deg, #000 1px, transparent 1px) 0 0 / 12px 12px
+      `.replace(/\s+/g, " ").trim();
+  }
+}
 
     function getPatternBackgroundSize(seedText = "") {
-      const hash = getSeedHash(seedText || "jiphyeon");
-      const type = hash % 6;
-      return type === 5 ? "8px 8px" : "auto";
-    }
+  const hash = getSeedHash(seedText || "jiphyeon");
+  const type = hash % 6;
+
+  if (type === 3) return "12px 12px, 12px 12px, 12px 12px, 12px 12px";
+  if (type === 4) return "auto, auto";
+  if (type === 5) return "12px 12px, 12px 12px";
+  return "auto";
+}
 
     function setHeroBackground(heroBgEl, post) {
       const seed = encodeURIComponent(post.slug || post.title || "jiphyeon");
