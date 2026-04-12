@@ -414,38 +414,30 @@
     }
 
     .related-thumb {
-     position: relative;
-  width: 112px;
-  aspect-ratio: 16 / 10;
-  border-radius: 12px;
-  flex-shrink: 0;
-  overflow: hidden;
+      position: relative;
+      width: 112px;
+      aspect-ratio: 1 / 1;
+      border-radius: 0;
+      flex-shrink: 0;
+      overflow: visible;
     }
 
     .related-thumb-frame {
-       position: relative;
-  width: 100%;
-  height: 100%;
-  border-radius: 12px;
-  background: #ffffff;
-  border: 1px solid #383838;
-  overflow: hidden;
+      position: relative;
+      width: 100%;
+      height: 100%;
+      background: #ffffff;
+      border: 10px solid #ffffff;
+      box-shadow: 0 6px 18px rgba(0, 0, 0, 0.12);
+      overflow: hidden;
     }
 
-    .related-thumb-fallback {
-       position: absolute;
-  inset: 0;
-  border-radius: 12px;
-  overflow: hidden;
-  pointer-events: none;
-    }
-
-    .related-thumb-shape {
-      position: absolute;
-      object-fit: contain;
+    .related-thumb-image {
       display: block;
-      pointer-events: none;
-      user-select: none;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      background: #f7f7f7;
     }
 
     .related-card-body {
@@ -644,14 +636,6 @@
         width: 96px;
       }
 
-      .related-thumb-frame {
-        border-radius: 10px;
-      }
-
-      .related-thumb-shape {
-  max-width: none;
-}
-
       .related-card.is-current {
         border-radius: 12px;
       }
@@ -737,7 +721,7 @@
   const params = new URLSearchParams(window.location.search);
   const slug = params.get("slug");
 
-  const shapeList = Array.from({ length: 24 }, (_, i) => {
+  const sidebarThumbnailList = Array.from({ length: 24 }, (_, i) => {
     return `/images/shapes/shape-${i + 1}.svg`;
   });
 
@@ -750,41 +734,29 @@
       .replaceAll("'", "&#039;");
   }
 
-  function getSeedHash(seedText = "") {
-    let hash = 0;
+  function shuffleArray(array = []) {
+    const copied = [...array];
 
-    for (let i = 0; i < seedText.length; i += 1) {
-      hash = seedText.charCodeAt(i) + ((hash << 5) - hash);
-      hash |= 0;
+    for (let i = copied.length - 1; i > 0; i -= 1) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [copied[i], copied[j]] = [copied[j], copied[i]];
     }
 
-    return Math.abs(hash);
+    return copied;
   }
 
-  function getShapeBySeed(seedText = "") {
-    const hash = getSeedHash(seedText || "jiphyeon");
-    const index = hash % shapeList.length;
-    return shapeList[index];
+  function getRandomSidebarThumbnailPool(count = 0) {
+    if (count <= 0) return [];
+
+    const shuffled = shuffleArray(sidebarThumbnailList);
+    const result = [];
+
+    for (let i = 0; i < count; i += 1) {
+      result.push(shuffled[i % shuffled.length]);
+    }
+
+    return result;
   }
-
-  function getShapeStyleBySeed(seedText = "") {
-  const h1 = getSeedHash(seedText + "a");
-  const h2 = getSeedHash(seedText + "b");
-  const h3 = getSeedHash(seedText + "c");
-  const h4 = getSeedHash(seedText + "d");
-
-  const width = 78 + (h1 % 38);        // 78% ~ 115%
-  const left = -12 + (h2 % 28);        // -12% ~ 15%
-  const top = -12 + (h3 % 28);         // -12% ~ 15%
-  const rotate = -18 + (h4 % 36);      // -18deg ~ 17deg
-
-  return {
-    width: `${width}%`,
-    left: `${left}%`,
-    top: `${top}%`,
-    rotate: `${rotate}deg`
-  };
-}
 
   function setHeroBackground(heroBgEl, post) {
     const seed = encodeURIComponent(post.slug || post.title || "jiphyeon");
@@ -840,32 +812,22 @@
     };
   }
 
-  function buildRelatedCard(post, currentSlug) {
+  function buildRelatedCard(post, currentSlug, thumbnailUrl) {
     const isCurrent =
       (post.slug || "").trim().toLowerCase() ===
       (currentSlug || "").trim().toLowerCase();
-
-    const seedText = post.slug || post.title || "jiphyeon";
-    const shapeUrl = getShapeBySeed(seedText);
-    const shapeStyle = getShapeStyleBySeed(seedText);
 
     return `
       <a class="related-card${isCurrent ? " is-current" : ""}" href="/post.html?slug=${encodeURIComponent(post.slug || "")}">
         <div class="related-thumb">
           <div class="related-thumb-frame">
-            <div class="related-thumb-fallback">
-              <img
-                class="related-thumb-shape"
-                src="${escapeHtml(shapeUrl)}"
-                alt=""
-                style="
-                  width: ${shapeStyle.width};
-                  left: ${shapeStyle.left};
-                  top: ${shapeStyle.top};
-                  transform: rotate(${shapeStyle.rotate});
-                "
-              >
-            </div>
+            <img
+              class="related-thumb-image"
+              src="${escapeHtml(thumbnailUrl || "")}"
+              alt=""
+              loading="lazy"
+              decoding="async"
+            >
           </div>
         </div>
         <div class="related-card-body">
@@ -893,8 +855,10 @@
       return;
     }
 
+    const thumbnailPool = getRandomSidebarThumbnailPool(sameCategoryPosts.length);
+
     const relatedMarkup = sameCategoryPosts
-      .map((item) => buildRelatedCard(item, currentPost.slug))
+      .map((item, index) => buildRelatedCard(item, currentPost.slug, thumbnailPool[index]))
       .join("");
 
     relatedListEl.innerHTML = relatedMarkup;
