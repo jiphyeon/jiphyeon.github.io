@@ -1,11 +1,11 @@
 ---
-title: “리비히 최소량의 법칙(Liebig's Law of Minimum)”
-type: “post”
-category: “비주얼 브리프”
-thumbnail: “/images/posts/visual-brief/liebig-law-of-minimum.png”
-date: “2024-10-03”
-slug: “liebig-law-of-minimum”
-thumbnailMode: “content”
+title: "리비히 최소량의 법칙(Liebig's Law of Minimum)"
+type: "post"
+category: "비주얼 브리프"
+thumbnail: "/images/posts/visual-brief/liebig-law-of-minimum.png"
+date: "2024-10-03"
+slug: "liebig-law-of-minimum"
+thumbnailMode: "content"
 ---
 
 ![리비히 최소량의 법칙(Liebig's Law of Minimum)을 설명하는 인포그래픽. 가운데에 나무판 높이가 제각각인 나무통 그림이 있으며, 가장 짧은 나무판 높이까지만 물이 차고 나머지는 넘쳐흐르는 모습을 묘사한다. 오른쪽 상단 화살표가 가장 낮은 나무판을 '최소량(Minimum)'으로 표시한다. 왼쪽에는 독일 화학자 유스투스 폰 리비히(Justus von Liebig)의 초상화와 함께 그가 생물체 내 물질변환을 화학적으로 분석하고 유기화학 발달의 기초를 마련한 '농예화학의 아버지'임을 소개하며, "식물의 성장을 좌우하는 것은 항상 넘치는 요소가 아니라 가장 모자라는 요소"라는 그의 주장을 인용한다. 오른쪽에는 이 법칙의 함의로 "가장 취약한 부분이 전체 성과를 결정한다"고 설명하고, 뒤처진 사람을 도와야 하는 이유, 사소한 것이 결코 사소하지 않은 이유, 취약점 보완의 필요성, '선택과 집중'만으로는 부족한 이유를 나열한다. 하단에 "이러한 이유를 리비히의 '최소량의 법칙'에서 찾을 수 있다"는 결론 문장이 강조 표시되어 있다.](/images/posts/visual-brief/liebig-law-of-minimum.png)
