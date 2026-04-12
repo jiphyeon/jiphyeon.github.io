@@ -402,6 +402,11 @@
       padding: 0;
     }
 
+    .related-card.is-content {
+      grid-template-columns: 120px minmax(0, 1fr);
+      gap: 12px;
+    }
+
     .related-card:hover .related-card-post-title {
       text-decoration: underline;
       text-underline-offset: 3px;
@@ -440,6 +445,22 @@
       width: 100%;
       height: 100%;
       object-fit: cover;
+      background: #f7f7f7;
+    }
+
+    .content-thumb {
+      width: 120px;
+      aspect-ratio: 16 / 10;
+      padding: 0;
+      overflow: hidden;
+      border-radius: 8px;
+    }
+
+    .content-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      border-radius: 8px;
       background: #f7f7f7;
     }
 
@@ -635,9 +656,19 @@
         gap: 9px;
       }
 
+      .related-card.is-content {
+        grid-template-columns: 104px minmax(0, 1fr);
+        gap: 10px;
+      }
+
       .related-thumb {
         width: 60px;
         padding: 1px 1px 4px 1px;
+      }
+
+      .content-thumb {
+        width: 104px;
+        aspect-ratio: 16 / 10;
       }
 
       .related-card.is-current {
@@ -783,15 +814,15 @@
   }
 
   function getThumbnailMode(post = {}, frontMatter = {}) {
-  return String(
-    frontMatter.thumbnailMode ||
-    post.thumbnailMode ||
-    "random"
-  )
-    .trim()
-    .replace(/^['"]|['"]$/g, "")
-    .toLowerCase();
-}
+    return String(
+      frontMatter.thumbnailMode ||
+      post.thumbnailMode ||
+      "random"
+    )
+      .trim()
+      .replace(/^['"]|['"]$/g, "")
+      .toLowerCase();
+  }
 
   function extractFirstImageFromMarkdown(markdownContent = "") {
     const imageMatch = markdownContent.match(/!\[[^\]]*\]\((?:<)?([^)\s>]+)(?:>)?(?:\s+["'][^"']*["'])?\)/);
@@ -915,24 +946,41 @@
     };
   }
 
-  function buildRelatedCard(post, currentSlug, thumbnailUrl) {
+  function buildRelatedCard(post, currentSlug, thumbnailUrl, mode = "random") {
     const isCurrent =
       (post.slug || "").trim().toLowerCase() ===
       (currentSlug || "").trim().toLowerCase();
 
-    return `
-      <a class="related-card${isCurrent ? " is-current" : ""}" href="/post.html?slug=${encodeURIComponent(post.slug || "")}">
-        <div class="related-thumb">
-          <div class="related-thumb-frame">
+    const thumbHtml =
+      mode === "content"
+        ? `
+          <div class="related-thumb content-thumb">
             <img
-              class="related-thumb-image"
+              class="related-thumb-image content-image"
               src="${escapeHtml(thumbnailUrl || "")}"
               alt=""
               loading="lazy"
               decoding="async"
             >
           </div>
-        </div>
+        `
+        : `
+          <div class="related-thumb">
+            <div class="related-thumb-frame">
+              <img
+                class="related-thumb-image"
+                src="${escapeHtml(thumbnailUrl || "")}"
+                alt=""
+                loading="lazy"
+                decoding="async"
+              >
+            </div>
+          </div>
+        `;
+
+    return `
+      <a class="related-card${mode === "content" ? " is-content" : ""}${isCurrent ? " is-current" : ""}" href="/post.html?slug=${encodeURIComponent(post.slug || "")}">
+        ${thumbHtml}
         <div class="related-card-body">
           <p class="related-card-post-title">${escapeHtml(post.title || "")}</p>
           <div class="related-date">${escapeHtml(post.date || "")}</div>
@@ -966,11 +1014,16 @@
       })
     );
 
-    const relatedMarkup = sameCategoryPosts
-      .map((item, index) => buildRelatedCard(item, currentPost.slug, thumbnailPool[index]))
-      .join("");
+    const cards = await Promise.all(
+      sameCategoryPosts.map((item, index) =>
+        getPostMarkdownData(item).then(({ data }) => {
+          const mode = getThumbnailMode(item, data);
+          return buildRelatedCard(item, currentPost.slug, thumbnailPool[index], mode);
+        })
+      )
+    );
 
-    relatedListEl.innerHTML = relatedMarkup;
+    relatedListEl.innerHTML = cards.join("");
   }
 
   const md = window.markdownit({ breaks: false });
