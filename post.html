@@ -783,12 +783,15 @@
   }
 
   function getThumbnailMode(post = {}, frontMatter = {}) {
-    return String(
-      frontMatter.thumbnailMode ||
-      post.thumbnailMode ||
-      "random"
-    ).trim().toLowerCase();
-  }
+  return String(
+    frontMatter.thumbnailMode ||
+    post.thumbnailMode ||
+    "random"
+  )
+    .trim()
+    .replace(/^['"]|['"]$/g, "")
+    .toLowerCase();
+}
 
   function extractFirstImageFromMarkdown(markdownContent = "") {
     const imageMatch = markdownContent.match(/!\[[^\]]*\]\((?:<)?([^)\s>]+)(?:>)?(?:\s+["'][^"']*["'])?\)/);
