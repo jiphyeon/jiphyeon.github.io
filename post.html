@@ -393,13 +393,13 @@
     }
 
     .related-card {
-       display: grid;
-  grid-template-columns: 72px minmax(0, 1fr);
-  gap: 10px;
-  align-items: start;
-  text-decoration: none;
-  color: inherit;
-  padding: 0;
+      display: grid;
+      grid-template-columns: 72px minmax(0, 1fr);
+      gap: 10px;
+      align-items: start;
+      text-decoration: none;
+      color: inherit;
+      padding: 0;
     }
 
     .related-card:hover .related-card-post-title {
@@ -409,30 +409,30 @@
 
     .related-card.is-current {
       background: #ececec;
-  border-radius: 14px;
-  padding: 7px 8px 9px 8px;
+      border-radius: 14px;
+      padding: 7px 8px 9px 8px;
     }
 
     .related-thumb {
-       position: relative;
-  width: 64px;
-  aspect-ratio: 1 / 1;
-  border-radius: 0;
-  flex-shrink: 0;
-  overflow: visible;
-  padding: 1px 1px 4px 1px;
+      position: relative;
+      width: 64px;
+      aspect-ratio: 1 / 1;
+      border-radius: 0;
+      flex-shrink: 0;
+      overflow: visible;
+      padding: 1px 1px 4px 1px;
     }
 
     .related-thumb-frame {
       position: relative;
-  width: 100%;
-  height: 100%;
-  background: #ffffff;
-  border: 4px solid #ffffff;
-  box-shadow:
-    0 1px 3px rgba(0, 0, 0, 0.16),
-    0 0 1px rgba(0, 0, 0, 0.10);
-  overflow: hidden;
+      width: 100%;
+      height: 100%;
+      background: #ffffff;
+      border: 4px solid #ffffff;
+      box-shadow:
+        0 1px 3px rgba(0, 0, 0, 0.16),
+        0 0 1px rgba(0, 0, 0, 0.10);
+      overflow: hidden;
     }
 
     .related-thumb-image {
@@ -632,12 +632,12 @@
 
       .related-card {
         grid-template-columns: 60px minmax(0, 1fr);
-  gap: 9px;
+        gap: 9px;
       }
 
       .related-thumb {
         width: 60px;
-  padding: 1px 1px 4px 1px;
+        padding: 1px 1px 4px 1px;
       }
 
       .related-card.is-current {
@@ -729,6 +729,9 @@
     return `/images/shapes/shape-${i + 1}.svg`;
   });
 
+  const contentThumbnailCache = new Map();
+  const postFrontMatterCache = new Map();
+
   function escapeHtml(value = "") {
     return String(value)
       .replaceAll("&", "&amp;")
@@ -760,6 +763,99 @@
     }
 
     return result;
+  }
+
+  function normalizeAssetUrl(url = "") {
+    const trimmed = String(url || "").trim();
+
+    if (!trimmed) return "";
+
+    if (
+      trimmed.startsWith("http://") ||
+      trimmed.startsWith("https://") ||
+      trimmed.startsWith("//") ||
+      trimmed.startsWith("/")
+    ) {
+      return trimmed;
+    }
+
+    return `/${trimmed.replace(/^\.?\//, "")}`;
+  }
+
+  function getThumbnailMode(post = {}, frontMatter = {}) {
+    return String(
+      frontMatter.thumbnailMode ||
+      post.thumbnailMode ||
+      "random"
+    ).trim().toLowerCase();
+  }
+
+  function extractFirstImageFromMarkdown(markdownContent = "") {
+    const imageMatch = markdownContent.match(/!\[[^\]]*\]\((?:<)?([^)\s>]+)(?:>)?(?:\s+["'][^"']*["'])?\)/);
+
+    if (!imageMatch || !imageMatch[1]) {
+      return "";
+    }
+
+    return normalizeAssetUrl(imageMatch[1]);
+  }
+
+  async function getPostMarkdownData(post) {
+    const cacheKey = post.slug || post.file || post.title || "";
+
+    if (postFrontMatterCache.has(cacheKey)) {
+      return postFrontMatterCache.get(cacheKey);
+    }
+
+    try {
+      const markdownResponse = await fetch(`/${post.file}`, {
+        cache: "no-store"
+      });
+
+      if (!markdownResponse.ok) {
+        throw new Error("Markdown 로드 실패");
+      }
+
+      const markdown = await markdownResponse.text();
+      const parsed = parseFrontMatter(markdown);
+
+      postFrontMatterCache.set(cacheKey, parsed);
+      return parsed;
+    } catch (error) {
+      const fallback = { data: {}, content: "" };
+      postFrontMatterCache.set(cacheKey, fallback);
+      return fallback;
+    }
+  }
+
+  async function getContentThumbnailUrl(post) {
+    const cacheKey = post.slug || post.file || post.title || "";
+
+    if (contentThumbnailCache.has(cacheKey)) {
+      return contentThumbnailCache.get(cacheKey);
+    }
+
+    const { data: frontMatter, content } = await getPostMarkdownData(post);
+
+    const firstContentImage = extractFirstImageFromMarkdown(content);
+    const postThumbnail = normalizeAssetUrl(post.thumbnail || "");
+    const frontMatterThumbnail = normalizeAssetUrl(frontMatter.thumbnail || "");
+    const resolvedThumbnail = firstContentImage || frontMatterThumbnail || postThumbnail || "";
+
+    contentThumbnailCache.set(cacheKey, resolvedThumbnail);
+    return resolvedThumbnail;
+  }
+
+  async function getThumbnailByMode(post, randomThumbnailUrl = "") {
+    const { data: frontMatter } = await getPostMarkdownData(post);
+    const mode = getThumbnailMode(post, frontMatter);
+
+    if (mode === "content") {
+      const contentThumbnail = await getContentThumbnailUrl(post);
+      return contentThumbnail || randomThumbnailUrl;
+    }
+
+    return randomThumbnailUrl;
   }
 
   function setHeroBackground(heroBgEl, post) {
@@ -842,7 +938,7 @@
     `;
   }
 
-  function renderRelatedPosts(posts, currentPost) {
+  async function renderRelatedPosts(posts, currentPost) {
     const relatedListEl = document.getElementById("relatedList");
     if (!relatedListEl || !currentPost || !(currentPost.category || currentPost.categoryLabel)) {
       return;
@@ -859,7 +955,13 @@
       return;
     }
 
-    const thumbnailPool = getRandomSidebarThumbnailPool(sameCategoryPosts.length);
+    const randomThumbnailPool = getRandomSidebarThumbnailPool(sameCategoryPosts.length);
+
+    const thumbnailPool = await Promise.all(
+      sameCategoryPosts.map((item, index) => {
+        return getThumbnailByMode(item, randomThumbnailPool[index]);
+      })
+    );
 
     const relatedMarkup = sameCategoryPosts
       .map((item, index) => buildRelatedCard(item, currentPost.slug, thumbnailPool[index]))
@@ -935,7 +1037,7 @@
       const processedMarkdown = cleanedMarkdown.replace(/\*\*([^*]+)\*\*/g, " **$1** ");
       contentEl.innerHTML = md.render(processedMarkdown);
 
-      renderRelatedPosts(posts, post);
+      await renderRelatedPosts(posts, post);
       bindContentImageLightbox();
 
     } catch (error) {
@@ -946,7 +1048,7 @@
   }
 
   initializePostPage();
-</script>
+  </script>
 
   <div id="image-lightbox" class="image-lightbox" aria-hidden="true">
     <button class="image-lightbox-close" id="image-lightbox-close" aria-label="이미지 닫기">×</button>

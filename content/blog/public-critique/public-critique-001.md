@@ -4,6 +4,7 @@ type: "post"
 category: "공공정보화의 불편한 진실"
 date: 2026-03-03
 slug: "public-critique-001"
+thumbnailMode: "random"
 ---
 
 우리나라 공공 웹사이트는 몇 개일까?

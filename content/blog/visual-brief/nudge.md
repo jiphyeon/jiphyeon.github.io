@@ -5,7 +5,7 @@ category: "비주얼 브리프"
 thumbnail: "/images/posts/visual-brief/nudge.png"
 date: 2024-08-08
 slug: "nudge"
-order: 2
+thumbnailMode: "content"
 ---
 
 ![넛지 파이널 에디션의 책 표지와 개념 다이어그램, 브라질 안전벨트 캠페인 사진으로 구성된 인포그래픽. 중앙에 "똑똑한 선택"이 크게 강조되어 있고, 선택 설계 도구들이 박스로 나열되어 있으며, 오른쪽에 넛지·선택 설계자·슬러지 개념이 텍스트로 정리되어 있다. 하단에 "인간은 천재인 동시에 바보다"라는 문장이 크게 표시되어 있다.](/images/posts/visual-brief/nudge.png)

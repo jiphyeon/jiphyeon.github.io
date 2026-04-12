@@ -5,7 +5,7 @@ category: "비주얼 브리프"
 thumbnail: "/images/posts/visual-brief/what-is-oecd.png"
 date: 2024-07-31
 slug: "what-is-oecd"
-order: 1
+thumbnailMode: "content"
 series: "visual-brief"
 ---
 

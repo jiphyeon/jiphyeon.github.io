@@ -5,7 +5,7 @@ category: "비주얼 브리프"
 thumbnail: "/images/posts/visual-brief/private-brand.png"
 date: 2024-08-08
 slug: "private-brand"
-order: 3
+thumbnailMode: "content"
 ---
 
 ![PB 상품의 개념과 유통 구조를 설명한 인포그래픽. 제조업체와 유통업체의 관계를 도식으로 보여주며, NB·PB·WH 세 가지 상품 유형을 설명한다. 유통업체의 PB 상품 확대를 비판하는 메시지와 함께, 네이버·카카오의 'PB 상품 미판매' 입장을 대비 사례로 소개하고 있다.](/images/posts/visual-brief/private-brand.png)
