@@ -2,15 +2,28 @@ const fs = require("fs");
 const path = require("path");
 const matter = require("gray-matter");
 
-let existingMeta = {};
+const booksRoot = path.join(process.cwd(), "content", "books");
 
-const metaPath = path.join(bookDir, "meta.json");
-
-if (fs.existsSync(metaPath)) {
-  existingMeta = JSON.parse(fs.readFileSync(metaPath, "utf8"));
+function normalizeQuotes(value = "") {
+  return String(value)
+    .replace(/[“”]/g, "\"")
+    .replace(/[‘’]/g, "'")
+    .trim();
 }
 
-const booksRoot = path.join(process.cwd(), "content", "books");
+function stripWrappingQuotes(value = "") {
+  return String(value).replace(/^["']+|["']+$/g, "").trim();
+}
+
+function normalizeString(value, fallback = "") {
+  if (value === undefined || value === null) return fallback;
+  return stripWrappingQuotes(normalizeQuotes(value));
+}
+
+function safeNumber(value, fallback = 999) {
+  const n = Number(normalizeString(value));
+  return Number.isFinite(n) ? n : fallback;
+}
 
 function buildBookMeta(bookId) {
   const bookDir = path.join(booksRoot, bookId);
@@ -19,9 +32,20 @@ function buildBookMeta(bookId) {
     return;
   }
 
+  let existingMeta = {};
+  const metaPath = path.join(bookDir, "meta.json");
+
+  if (fs.existsSync(metaPath)) {
+    try {
+      existingMeta = JSON.parse(fs.readFileSync(metaPath, "utf8"));
+    } catch (error) {
+      console.warn(`meta.json 읽기 실패: ${metaPath}`);
+    }
+  }
+
   const files = fs
     .readdirSync(bookDir)
-    .filter((file) => file.endsWith(".md"));
+    .filter((file) => file.toLowerCase().endsWith(".md"));
 
   console.log(`\n[${bookId}] md files:`, files);
 
@@ -32,29 +56,32 @@ function buildBookMeta(bookId) {
       const parsed = matter(raw);
       const data = parsed.data || {};
 
-      console.log(`parsed: ${file}`, data);
-
-      return {
-        title: data.title || "",
-        slug: data.slug || file.replace(/\.md$/, ""),
-        part: data.part || "기타",
-        order: Number(data.order || 999),
+      const doc = {
+        title: normalizeString(data.title),
+        slug: normalizeString(data.slug, file.replace(/\.md$/i, "")),
+        part: normalizeString(data.part, "기타"),
+        order: safeNumber(data.order, 999),
         file
       };
+
+      console.log(`parsed: ${file}`, doc);
+      return doc;
     })
     .filter((doc) => doc.title && doc.slug);
 
   const structureMap = new Map();
 
   docs.forEach((doc) => {
-    const normalizedPart = String(doc.part).trim();
-    const sectionType = normalizedPart === "Overview" ? "overview" : "part";
-    const sectionKey = `${sectionType}::${normalizedPart}`;
+    const normalizedPart = normalizeString(doc.part, "기타");
+    const isOverview = normalizedPart.toLowerCase() === "overview";
+    const sectionType = isOverview ? "overview" : "part";
+    const sectionTitle = isOverview ? "Overview" : normalizedPart;
+    const sectionKey = `${sectionType}::${sectionTitle}`;
 
     if (!structureMap.has(sectionKey)) {
       structureMap.set(sectionKey, {
         type: sectionType,
-        title: normalizedPart,
+        title: sectionTitle,
         items: []
       });
     }
@@ -77,13 +104,12 @@ function buildBookMeta(bookId) {
   });
 
   const meta = {
-  id: bookId,
-  title: existingMeta.title || bookId,
-  description: existingMeta.description || "",
-  structure
-};
+    id: bookId,
+    title: normalizeString(existingMeta.title, bookId),
+    description: normalizeString(existingMeta.description, ""),
+    structure
+  };
 
-  const metaPath = path.join(bookDir, "meta.json");
   fs.writeFileSync(metaPath, JSON.stringify(meta, null, 2) + "\n", "utf8");
 
   console.log(`완료: ${bookId}`);

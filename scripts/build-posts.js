@@ -27,28 +27,46 @@ function walkMarkdownFiles(dir) {
   return results;
 }
 
+function normalizeQuotes(value = "") {
+  return String(value)
+    .replace(/[“”]/g, "\"")
+    .replace(/[‘’]/g, "'")
+    .trim();
+}
+
+function stripWrappingQuotes(value = "") {
+  return String(value).replace(/^["']+|["']+$/g, "").trim();
+}
+
 function normalizeString(value, fallback = "") {
   if (value === undefined || value === null) return fallback;
-  return String(value).trim();
+  return stripWrappingQuotes(normalizeQuotes(value));
 }
 
 function normalizeDate(value) {
   if (!value) return "";
+
   if (typeof value === "string") {
-    return value.trim().replace(/^["']|["']$/g, "");
+    return stripWrappingQuotes(normalizeQuotes(value));
   }
+
   if (value instanceof Date && !Number.isNaN(value.getTime())) {
     return value.toISOString().slice(0, 10);
   }
-  return String(value).trim();
+
+  return stripWrappingQuotes(normalizeQuotes(value));
 }
 
 function normalizeArray(value) {
   if (!value) return [];
+
   if (Array.isArray(value)) {
-    return value.map((item) => String(item).trim()).filter(Boolean);
+    return value
+      .map((item) => normalizeString(item))
+      .filter(Boolean);
   }
-  return [String(value).trim()].filter(Boolean);
+
+  return [normalizeString(value)].filter(Boolean);
 }
 
 function safeNumber(value, fallback = 999) {
@@ -62,7 +80,7 @@ function extractFirstImageFromMarkdown(content = "") {
   const match = content.match(/!\[[^\]]*?\]\(([^)\s]+(?:\s+"[^"]*")?)\)/);
   if (!match || !match[1]) return "";
 
-  let imagePath = match[1].trim();
+  let imagePath = normalizeQuotes(match[1]);
 
   if (imagePath.startsWith("<") && imagePath.endsWith(">")) {
     imagePath = imagePath.slice(1, -1).trim();
@@ -72,7 +90,7 @@ function extractFirstImageFromMarkdown(content = "") {
     imagePath = imagePath.split(' "')[0].trim();
   }
 
-  return imagePath;
+  return stripWrappingQuotes(imagePath);
 }
 
 function normalizeImagePath(value) {

@@ -3,7 +3,7 @@ title: "리비히 최소량의 법칙(Liebig's Law of Minimum)"
 type: "post"
 category: "비주얼 브리프"
 thumbnail: "/images/posts/visual-brief/liebig-law-of-minimum.png"
-date: "2024-10-03"
+date: 2024-10-03
 slug: "liebig-law-of-minimum"
 thumbnailMode: "content"
 ---
