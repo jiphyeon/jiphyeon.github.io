@@ -3,7 +3,7 @@ title: "넛지"
 type: "post"
 category: "비주얼 브리프"
 thumbnail: "/images/posts/visual-brief/nudge.png"
-date: 2024-08-08
+date: 2024-09-14
 slug: "nudge"
 thumbnailMode: "content"
 ---
