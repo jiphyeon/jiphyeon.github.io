@@ -556,12 +556,60 @@
       font-size: 12px;
     }
   }
-.content::-webkit-scrollbar-thumb {
+/* ===== Docs 페이지 스크롤바: 오버레이 스타일 ===== */
+
+/* Firefox */
+html,
+body,
+.sidebar,
+.main {
+  scrollbar-width: thin;
+  scrollbar-color: transparent transparent;
+}
+
+html:hover,
+body:hover,
+.sidebar:hover,
+.main:hover {
+  scrollbar-color: rgba(0, 0, 0, 0.25) transparent;
+}
+
+/* Chrome, Edge, Safari */
+html::-webkit-scrollbar,
+body::-webkit-scrollbar,
+.sidebar::-webkit-scrollbar,
+.main::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+html::-webkit-scrollbar-track,
+body::-webkit-scrollbar-track,
+.sidebar::-webkit-scrollbar-track,
+.main::-webkit-scrollbar-track {
   background: transparent;
 }
 
-.content:hover::-webkit-scrollbar-thumb {
-  background: rgba(0,0,0,0.25);
+html::-webkit-scrollbar-thumb,
+body::-webkit-scrollbar-thumb,
+.sidebar::-webkit-scrollbar-thumb,
+.main::-webkit-scrollbar-thumb {
+  background: transparent;
+  border-radius: 999px;
+}
+
+html:hover::-webkit-scrollbar-thumb,
+body:hover::-webkit-scrollbar-thumb,
+.sidebar:hover::-webkit-scrollbar-thumb,
+.main:hover::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.25);
+}
+
+html:hover::-webkit-scrollbar-thumb:hover,
+body:hover::-webkit-scrollbar-thumb:hover,
+.sidebar:hover::-webkit-scrollbar-thumb:hover,
+.main:hover::-webkit-scrollbar-thumb:hover {
+  background: rgba(0, 0, 0, 0.38);
 }
 </style>
 </head>
