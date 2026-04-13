@@ -3,7 +3,7 @@ title: "스타트업 투자 단계"
 type: "post"
 category: "비주얼 브리프"
 thumbnail: "/images/posts/visual-brief/startup-investment-stages.png"
-date: 2025-02-15
+date: 2024-07-06
 slug: "startup-investment-stages"
 thumbnailMode: "content"
 ---

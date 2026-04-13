@@ -3,7 +3,7 @@ title: "유통공룡의 탐욕, PB 상품"
 type: "post"
 category: "비주얼 브리프"
 thumbnail: "/images/posts/visual-brief/private-brand.png"
-date: 2024-08-08
+date: 2024-07-19
 slug: "private-brand"
 thumbnailMode: "content"
 ---

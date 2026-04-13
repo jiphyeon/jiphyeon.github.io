@@ -3,7 +3,7 @@ title: "OECD, 왜 만들어졌나"
 type: "post"
 category: "비주얼 브리프"
 thumbnail: "/images/posts/visual-brief/what-is-oecd.png"
-date: 2024-07-31
+date: 2024-06-17
 slug: "what-is-oecd"
 thumbnailMode: "content"
 series: "visual-brief"
