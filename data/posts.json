@@ -42,6 +42,20 @@
     "file": "content/blog/public-critique/public-critique-003.md"
   },
   {
+    "id": 7,
+    "type": "post",
+    "title": "스타트업 투자 단계",
+    "excerpt": "",
+    "category": "비주얼 브리프",
+    "tags": [],
+    "thumbnail": "/images/posts/visual-brief/startup-investment-stages.png",
+    "date": "2025-02-15",
+    "slug": "startup-investment-stages",
+    "order": 999,
+    "series": "visual-brief",
+    "file": "content/blog/visual-brief/startup-investment-stages.md"
+  },
+  {
     "id": 4,
     "type": "post",
     "title": "리비히 최소량의 법칙(Liebig's Law of Minimum)",
