@@ -2,13 +2,13 @@
 title: "무지의 베일(Veil of Ignorance)"
 type: "post"
 category: "비주얼 브리프"
-thumbnail: "/images/posts/visual-brief/veil of ignorance.png"
+thumbnail: "/images/posts/visual-brief/veil-of-ignorance.png"
 date: 2024-07-31
-slug: "veil of ignorance"
+slug: "veil-of-ignorance"
 thumbnailMode: "content"
 ---
 
-![존 롤스의 무지의 베일(Veil of Ignorance) 개념을 설명한 인포그래픽. 롤스의 사진과 정의론 표지, 원초적 상태와 무지의 베일 개념 설명, 정의의 두 원칙이 담겨 있다. 오른쪽에는 베일 뒤에 가려진 사람들과 베일 앞에 다양한 인종과 외형의 사람들이 배치된 일러스트로 무지의 베일 개념을 시각적으로 표현했으며, 하단에 정의의 원칙이 평등한 자유의 원칙과 차등의 원칙(공정한 기회균등의 원칙 포함)으로 구조화되어 있다.](/images/posts/visual-brief/veil of ignorance.png)
+![존 롤스의 무지의 베일(Veil of Ignorance) 개념을 설명한 인포그래픽. 롤스의 사진과 정의론 표지, 원초적 상태와 무지의 베일 개념 설명, 정의의 두 원칙이 담겨 있다. 오른쪽에는 베일 뒤에 가려진 사람들과 베일 앞에 다양한 인종과 외형의 사람들이 배치된 일러스트로 무지의 베일 개념을 시각적으로 표현했으며, 하단에 정의의 원칙이 평등한 자유의 원칙과 차등의 원칙(공정한 기회균등의 원칙 포함)으로 구조화되어 있다.](/images/posts/visual-brief/veil-of-ignorance.png)
 
 
 당신이 새로운 사회의 규칙을 설계해야 한다고 가정해보자. 단, 한 가지 조건이 있다. 그 사회에서 당신이 어떤 사람으로 태어날지를 전혀 알 수 없다. 부자가 될지 가난한 사람이 될지, 어떤 인종으로 태어날지, 남자인지 여자인지, 건강한지 장애가 있는지. 아무것도 모르는 상태에서 규칙을 만들어야 한다면, 당신은 어떤 사회를 설계하겠는가.
