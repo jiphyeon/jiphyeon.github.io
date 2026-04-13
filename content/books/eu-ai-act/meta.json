@@ -2,42 +2,5 @@
   "id": "eu-ai-act",
   "title": "EU AI Act",
   "description": "",
-  "structure": [
-    {
-      "type": "part",
-      "title": "규제 패권",
-      "items": [
-        {
-          "title": "유럽의 규제 전략",
-          "slug": "european-regulatory-strategy",
-          "file": "regulatory-hegemony/european-regulatory-strategy.md"
-        },
-        {
-          "title": "빠른 입법",
-          "slug": "fast-legislation",
-          "file": "regulatory-hegemony/fast-legislation.md"
-        },
-        {
-          "title": "AI Pact",
-          "slug": "ai-pact",
-          "file": "regulatory-hegemony/ai-pact.md"
-        },
-        {
-          "title": "AI 규제의 시행착오",
-          "slug": "trial-and-error",
-          "file": "regulatory-hegemony/trial-and-error.md"
-        },
-        {
-          "title": "규제 반작용",
-          "slug": "regulatory-backlash",
-          "file": "regulatory-hegemony/regulatory-backlash.md"
-        },
-        {
-          "title": "규제 시행",
-          "slug": "regulatory-implementation",
-          "file": "regulatory-hegemony/regulatory-implementation.md"
-        }
-      ]
-    }
-  ]
+  "structure": []
 }
