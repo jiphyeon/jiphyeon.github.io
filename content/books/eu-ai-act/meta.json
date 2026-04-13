@@ -10,32 +10,32 @@
         {
           "title": "유럽의 규제 전략",
           "slug": "european-regulatory-strategy",
-          "file": "european-regulatory-strategy.md"
+          "file": "regulatory-hegemony/european-regulatory-strategy.md"
         },
         {
           "title": "빠른 입법",
           "slug": "fast-legislation",
-          "file": "fast-legislation.md"
+          "file": "regulatory-hegemony/fast-legislation.md"
         },
         {
           "title": "AI Pact",
           "slug": "ai-pact",
-          "file": "ai-pact.md"
+          "file": "regulatory-hegemony/ai-pact.md"
         },
         {
           "title": "AI 규제의 시행착오",
           "slug": "trial-and-error",
-          "file": "trial-and-error.md"
+          "file": "regulatory-hegemony/trial-and-error.md"
         },
         {
           "title": "규제 반작용",
           "slug": "regulatory-backlash",
-          "file": "regulatory-backlash.md"
+          "file": "regulatory-hegemony/regulatory-backlash.md"
         },
         {
           "title": "규제 시행",
           "slug": "regulatory-implementation",
-          "file": "regulatory-implementation.md"
+          "file": "regulatory-hegemony/regulatory-implementation.md"
         }
       ]
     }
