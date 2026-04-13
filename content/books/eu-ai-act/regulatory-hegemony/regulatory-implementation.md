@@ -1,6 +1,7 @@
 ---
 title: "규제 시행"
 part: "규제 패권"
+partOrder: 1
 order: 6
 slug: "regulatory-implementation"
 thumbnail: "/images/regulatory-implementation.jpg"

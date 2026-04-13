@@ -3,6 +3,7 @@ title: "유럽의 규제 전략"
 type: "doc"
 series: "eu-ai-act"
 part: "규제 패권"
+partOrder: 1
 order: 1
 slug: "european-regulatory-strategy"
 excerpt: "유럽 규제 전략의 방향을 설명하는 문서"

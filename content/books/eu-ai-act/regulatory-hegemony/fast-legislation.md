@@ -3,6 +3,7 @@ title: "빠른 입법"
 type: "doc"
 series: "eu-ai-act"
 part: "규제 패권"
+partOrder: 1
 order: 2
 slug: "fast-legislation"
 thumbnail: "/images/docs/eu-ai-act/fast-legislation.jpg"

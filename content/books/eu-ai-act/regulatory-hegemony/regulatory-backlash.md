@@ -1,6 +1,7 @@
 ---
 title: "규제 반작용"
 part: "규제 패권"
+partOrder: 1
 order: 5
 slug: "regulatory-backlash"
 thumbnail: "/images/regulatory-backlash.jpg"

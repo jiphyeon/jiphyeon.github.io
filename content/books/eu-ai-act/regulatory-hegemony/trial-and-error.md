@@ -1,6 +1,7 @@
 ---
 title: "AI 규제의 시행착오"
 part: "규제 패권"
+partOrder: 1
 order: 4
 slug: "trial-and-error"
 date: 2025-04-29

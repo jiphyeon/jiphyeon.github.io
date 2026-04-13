@@ -5,17 +5,6 @@
   "structure": [
     {
       "type": "part",
-      "title": "EU AI Act 브리프",
-      "items": [
-        {
-          "title": "EU AI Act",
-          "slug": "eu-ai-act",
-          "file": "eu-ai-act-brief/eu-ai-act.md"
-        }
-      ]
-    },
-    {
-      "type": "part",
       "title": "규제 패권",
       "items": [
         {
@@ -47,6 +36,17 @@
           "title": "규제 시행",
           "slug": "regulatory-implementation",
           "file": "regulatory-hegemony/regulatory-implementation.md"
+        }
+      ]
+    },
+    {
+      "type": "part",
+      "title": "EU AI Act 브리프",
+      "items": [
+        {
+          "title": "EU AI Act",
+          "slug": "eu-ai-act",
+          "file": "eu-ai-act-brief/eu-ai-act.md"
         }
       ]
     }

@@ -1,6 +1,7 @@
 ---
 title: "AI Pact"
 part: "규제 패권"
+partOrder: 1
 order: 3
 slug: "ai-pact"
 thumbnail: "/images/docs/eu-ai-act/ai-pact.jpg"

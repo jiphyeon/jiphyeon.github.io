@@ -27,7 +27,6 @@ function safeNumber(value, fallback = 999) {
 
 function walkMarkdownFiles(dir, baseDir) {
   const results = [];
-
   const entries = fs.readdirSync(dir, { withFileTypes: true });
 
   entries.forEach((entry) => {
@@ -84,6 +83,7 @@ function buildBookMeta(bookId) {
         title: normalizeString(data.title),
         slug: normalizeString(data.slug, filename.replace(/\.md$/i, "")),
         part: normalizeString(data.part, "기타"),
+        partOrder: safeNumber(data.partOrder, 999),
         order: safeNumber(data.order, 999),
         file
       };
@@ -106,26 +106,51 @@ function buildBookMeta(bookId) {
       structureMap.set(sectionKey, {
         type: sectionType,
         title: sectionTitle,
+        partOrder: doc.partOrder,
         items: []
       });
     }
 
-    structureMap.get(sectionKey).items.push(doc);
+    const section = structureMap.get(sectionKey);
+
+    if (doc.partOrder < section.partOrder) {
+      section.partOrder = doc.partOrder;
+    }
+
+    section.items.push(doc);
   });
 
-  const structure = Array.from(structureMap.values()).map((section) => {
-    section.items.sort((a, b) => a.order - b.order);
+  const structure = Array.from(structureMap.values())
+    .sort((a, b) => {
+      if (a.partOrder !== b.partOrder) {
+        return a.partOrder - b.partOrder;
+      }
 
-    return {
-      type: section.type,
-      title: section.title,
-      items: section.items.map((doc) => ({
-        title: doc.title,
-        slug: doc.slug,
-        file: doc.file
-      }))
-    };
-  });
+      if (a.type !== b.type) {
+        if (a.type === "overview") return -1;
+        if (b.type === "overview") return 1;
+      }
+
+      return a.title.localeCompare(b.title, "ko");
+    })
+    .map((section) => {
+      section.items.sort((a, b) => {
+        if (a.order !== b.order) {
+          return a.order - b.order;
+        }
+        return a.title.localeCompare(b.title, "ko");
+      });
+
+      return {
+        type: section.type,
+        title: section.title,
+        items: section.items.map((doc) => ({
+          title: doc.title,
+          slug: doc.slug,
+          file: doc.file
+        }))
+      };
+    });
 
   const meta = {
     id: bookId,
