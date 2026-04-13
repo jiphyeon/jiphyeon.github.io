@@ -25,6 +25,30 @@ function safeNumber(value, fallback = 999) {
   return Number.isFinite(n) ? n : fallback;
 }
 
+function walkMarkdownFiles(dir, baseDir) {
+  const results = [];
+
+  const entries = fs.readdirSync(dir, { withFileTypes: true });
+
+  entries.forEach((entry) => {
+    const fullPath = path.join(dir, entry.name);
+
+    if (entry.isDirectory()) {
+      if (entry.name.startsWith(".")) return;
+      results.push(...walkMarkdownFiles(fullPath, baseDir));
+      return;
+    }
+
+    if (!entry.isFile()) return;
+    if (!entry.name.toLowerCase().endsWith(".md")) return;
+
+    const relativePath = path.relative(baseDir, fullPath).replace(/\\/g, "/");
+    results.push(relativePath);
+  });
+
+  return results;
+}
+
 function buildBookMeta(bookId) {
   const bookDir = path.join(booksRoot, bookId);
 
@@ -43,9 +67,7 @@ function buildBookMeta(bookId) {
     }
   }
 
-  const files = fs
-    .readdirSync(bookDir)
-    .filter((file) => file.toLowerCase().endsWith(".md"));
+  const files = walkMarkdownFiles(bookDir, bookDir);
 
   console.log(`\n[${bookId}] md files:`, files);
 
@@ -56,9 +78,11 @@ function buildBookMeta(bookId) {
       const parsed = matter(raw);
       const data = parsed.data || {};
 
+      const filename = path.basename(file);
+
       const doc = {
         title: normalizeString(data.title),
-        slug: normalizeString(data.slug, file.replace(/\.md$/i, "")),
+        slug: normalizeString(data.slug, filename.replace(/\.md$/i, "")),
         part: normalizeString(data.part, "기타"),
         order: safeNumber(data.order, 999),
         file

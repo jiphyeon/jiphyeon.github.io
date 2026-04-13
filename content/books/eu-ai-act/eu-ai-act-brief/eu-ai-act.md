@@ -4,7 +4,7 @@ part: "EU AI Act 브리프"
 order: 1
 slug: "eu-ai-act"
 thumbnail: "/images/docs/eu-ai-act/eu-ai-act.jpg"
-date: 2025-04-28
+date: 2025-06-04
 ---
 
 ![파란색 데이터 센터 서버실 배경 위에 유럽 연합의 별 상징과 'EU Artificial Intelligence Act'라는 문구가 적힌 이미지](/images/docs/eu-ai-act/eu-ai-act.jpg)
