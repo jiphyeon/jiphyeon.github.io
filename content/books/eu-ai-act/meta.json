@@ -47,6 +47,11 @@
           "title": "EU AI Act",
           "slug": "eu-ai-act",
           "file": "eu-ai-act-brief/eu-ai-act.md"
+        },
+        {
+          "title": "타임라인",
+          "slug": "time",
+          "file": "eu-ai-act-brief/timeline.md"
         }
       ]
     }
