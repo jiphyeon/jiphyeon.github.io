@@ -52,6 +52,16 @@
           "title": "타임라인",
           "slug": "time",
           "file": "eu-ai-act-brief/timeline.md"
+        },
+        {
+          "title": "법령 체계",
+          "slug": "legal-framework",
+          "file": "eu-ai-act-brief/legal-framework.md"
+        },
+        {
+          "title": "제정 과정",
+          "slug": "legislative-process",
+          "file": "eu-ai-act-brief/legislative-process.md"
         }
       ]
     }
