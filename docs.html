@@ -790,10 +790,7 @@ body:hover::-webkit-scrollbar-thumb:hover,
       });
     }
 
-    cconst md = window.markdownit({ 
-  breaks: false,
-  html: true
-});
+    const md = window.markdownit({ breaks: false, html: true });
 
     async function initializeDocsPage() {
       const titleEl = document.getElementById("title");
