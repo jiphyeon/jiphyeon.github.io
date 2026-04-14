@@ -7,7 +7,7 @@ slug: "legislative-process"
 date: 2025-08-11
 ---
 
-![EU AI법(AIA) 제정과 관련된 EU 기관 구조도. EU 표준 설정과 EU 입법 주체 두 영역으로 나뉜다. 표준 설정 영역에서는 시민사회·산업계·학계가 국가표준기구를 통해 CENELEC·ETSI 등 유럽표준기구에 참여하는 구조를 보여준다. 입법 주체 영역에서는 EU 시민이 회원국 정부와 유럽의회를 선출하고, 유럽집행위원회가 법안을 제안하면 IMCO·LIBE 위원회와 유럽의회가 심의·승인하는 입법 흐름을 나타낸다.](/images/docs/eu-ai-act/legislative-process.jpg)
+![EU AI법(AIA) 제정과 관련된 EU 기관 구조도. EU 표준 설정과 EU 입법 주체 두 영역으로 나뉜다. 표준 설정 영역에서는 시민사회·산업계·학계가 국가표준기구를 통해 CENELEC·ETSI 등 유럽표준기구에 참여하는 구조를 보여준다. 입법 주체 영역에서는 EU 시민이 회원국 정부와 유럽의회를 선출하고, 유럽집행위원회가 법안을 제안하면 IMCO·LIBE 위원회와 유럽의회가 심의·승인하는 입법 흐름을 나타낸다.](/images/docs/eu-ai-act/legislative-process.jpeg)
 
 
 AIA는 **기술과 입법 영역의 상호작용**으로 제정되었다.
