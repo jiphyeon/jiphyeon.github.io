@@ -1071,7 +1071,10 @@
     relatedListEl.innerHTML = cards.join("");
   }
 
-  const md = window.markdownit({ breaks: false });
+const md = window.markdownit({ 
+  breaks: false,
+  html: true
+});
 
   async function initializePostPage() {
     const titleEl = document.getElementById("title");
