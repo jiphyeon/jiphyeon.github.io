@@ -88,6 +88,11 @@
           "title": "제4조 AI 리터러시",
           "slug": "article-4-ai-literacy",
           "file": "legal-interpretation/article-4-ai-literacy.md"
+        },
+        {
+          "title": "제5조 금지 AI 행위",
+          "slug": "article-5-prohibited-ai-practices",
+          "file": "legal-interpretation/article-5-prohibited-ai-practices.md"
         }
       ]
     }
