@@ -64,6 +64,17 @@
           "file": "eu-ai-act-brief/legislative-process.md"
         }
       ]
+    },
+    {
+      "type": "part",
+      "title": "법령 해설",
+      "items": [
+        {
+          "title": "제1조 목적",
+          "slug": "article-1-subject-matter",
+          "file": "legal-interpretation/article-1-subject-matter.md"
+        }
+      ]
     }
   ]
 }
