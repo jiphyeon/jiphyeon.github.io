@@ -78,6 +78,16 @@
           "title": "제2조 적용범위",
           "slug": "article-2-scope",
           "file": "legal-interpretation/article-2-scope.md"
+        },
+        {
+          "title": "제3조 정의",
+          "slug": "article-3-definition",
+          "file": "legal-interpretation/article-3-definition.md"
+        },
+        {
+          "title": "제4조 AI 리터러시",
+          "slug": "article-4-ai-literacy",
+          "file": "legal-interpretation/article-4-ai-literacy.md"
         }
       ]
     }
