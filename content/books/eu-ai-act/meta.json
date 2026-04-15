@@ -73,6 +73,11 @@
           "title": "제1조 목적",
           "slug": "article-1-subject-matter",
           "file": "legal-interpretation/article-1-subject-matter.md"
+        },
+        {
+          "title": "제2조 적용범위",
+          "slug": "article-2-scope",
+          "file": "legal-interpretation/article-2-scope.md"
         }
       ]
     }
