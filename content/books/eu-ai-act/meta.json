@@ -93,6 +93,16 @@
           "title": "제5조 금지 AI 행위",
           "slug": "article-5-prohibited-ai-practices",
           "file": "legal-interpretation/article-5-prohibited-ai-practices.md"
+        },
+        {
+          "title": "제6조 고위험 AI 시스템의 분류 규칙",
+          "slug": "classification-rules",
+          "file": "legal-interpretation/article-6-classification-rules.md"
+        },
+        {
+          "title": "제7조 부속서Ⅲ의 개정",
+          "slug": "amendments-to-annex",
+          "file": "legal-interpretation/article-7-amendments-to-annex.md"
         }
       ]
     }
