@@ -103,6 +103,16 @@
           "title": "제7조 부속서Ⅲ의 개정",
           "slug": "amendments-to-annex",
           "file": "legal-interpretation/article-7-amendments-to-annex.md"
+        },
+        {
+          "title": "제8조 고위험 AI 시스템의 규제 준수 의무",
+          "slug": "compliance-with-the-requirements",
+          "file": "legal-interpretation/article-8-compliance-with-the-requirements.md"
+        },
+        {
+          "title": "제9조 위험 관리 체계",
+          "slug": "risk-management-system",
+          "file": "legal-interpretation/article-9-risk-management-system.md"
         }
       ]
     }
