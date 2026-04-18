@@ -1,10 +1,10 @@
 ---
 title: "웹사이트 총량제, 무지와 전시행정의 결과"
 type: "post"
-category: "공공정보화의 불편한 진실"
+category: "기술비평"
 date: 2026-03-03
 status: "published"
-slug: "public-critique-001"
+slug: "tech-critique-001"
 thumbnailMode: "random"
 ---
 
