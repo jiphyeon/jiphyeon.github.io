@@ -56,33 +56,34 @@
 
     .sticky-header {
       position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 64px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-      padding: 0 20px;
-      background: rgba(255, 255, 255, 0.96);
-      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
-      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.06);
-      backdrop-filter: blur(10px);
-      -webkit-backdrop-filter: blur(10px);
-      z-index: 1000;
-      opacity: 0;
-      visibility: hidden;
-      transform: translateY(-100%);
-      transition:
-        opacity 0.24s ease,
-        transform 0.24s ease,
-        visibility 0.24s ease;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 0 20px;
+  background: rgba(255, 255, 255, 0.94);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.05);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 1000;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateY(-12px);
+  transition:
+    opacity 0.38s ease,
+    transform 0.38s ease,
+    background 0.38s ease,
+    box-shadow 0.38s ease;
     }
 
     .sticky-header.is-visible {
       opacity: 1;
-      visibility: visible;
-      transform: translateY(0);
+  pointer-events: auto;
+  transform: translateY(0);
     }
 
     .sticky-header-inner {
@@ -1092,16 +1093,16 @@
 
     const applyState = () => {
       const scrollY = window.scrollY || window.pageYOffset || 0;
-      const shouldCondense = scrollY > 36;
-      document.body.classList.toggle("hero-condensed", shouldCondense);
+  const shouldCondense = scrollY > 36;
+  document.body.classList.toggle("hero-condensed", shouldCondense);
 
-      if (!heroEl || !stickyHeaderEl) return;
+  if (!heroEl || !stickyHeaderEl) return;
 
-      const trigger = Math.max(heroEl.offsetHeight - 96, 120);
-      const shouldShowSticky = scrollY > trigger;
+  const trigger = Math.max(heroEl.offsetHeight - 120, 140);
+  const shouldShowSticky = scrollY > trigger;
 
-      stickyHeaderEl.classList.toggle("is-visible", shouldShowSticky);
-      stickyHeaderEl.setAttribute("aria-hidden", shouldShowSticky ? "false" : "true");
+  stickyHeaderEl.classList.toggle("is-visible", shouldShowSticky);
+  stickyHeaderEl.setAttribute("aria-hidden", shouldShowSticky ? "false" : "true");
     };
 
     applyState();
