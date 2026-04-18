@@ -282,8 +282,8 @@
     }
 
     .content b {
-  font-weight: 700;
-}
+      font-weight: 700;
+    }
 
     .content em {
       font-style: italic;
@@ -926,6 +926,10 @@
     return randomThumbnailUrl;
   }
 
+  function isPublishedPost(post = {}) {
+    return (post.status || "published") === "published";
+  }
+
   function setHeroBackground(heroBgEl, post) {
     const seed = encodeURIComponent(post.slug || post.title || "jiphyeon");
     const heroImageUrl = `https://picsum.photos/seed/${seed}/1600/900`;
@@ -1043,7 +1047,7 @@
     const currentCategory = currentPost.category || currentPost.categoryLabel;
     const sameCategoryPosts = posts.filter((item) => {
       const itemCategory = item.category || item.categoryLabel;
-      return itemCategory === currentCategory;
+      return itemCategory === currentCategory && isPublishedPost(item);
     });
 
     if (sameCategoryPosts.length <= 1) {
@@ -1071,10 +1075,10 @@
     relatedListEl.innerHTML = cards.join("");
   }
 
-const md = window.markdownit({ 
-  breaks: false,
-  html: true
-});
+  const md = window.markdownit({
+    breaks: false,
+    html: true
+  });
 
   async function initializePostPage() {
     const titleEl = document.getElementById("title");

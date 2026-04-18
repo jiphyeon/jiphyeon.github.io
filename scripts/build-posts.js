@@ -43,6 +43,15 @@ function normalizeString(value, fallback = "") {
   return stripWrappingQuotes(normalizeQuotes(value));
 }
 
+function normalizeStatus(value, fallback = "published") {
+  const normalized = normalizeString(value, fallback).toLowerCase();
+
+  if (normalized === "draft") return "draft";
+  if (normalized === "published") return "published";
+
+  return fallback;
+}
+
 function normalizeDate(value) {
   if (!value) return "";
 
@@ -147,6 +156,7 @@ function buildPosts() {
         slug: normalizeString(data.slug, fileName),
         order: safeNumber(data.order, 999),
         series: normalizeString(data.series, folderName),
+        status: normalizeStatus(data.status, "published"),
         file: relativePath
       };
 

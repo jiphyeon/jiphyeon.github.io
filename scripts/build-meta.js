@@ -20,6 +20,15 @@ function normalizeString(value, fallback = "") {
   return stripWrappingQuotes(normalizeQuotes(value));
 }
 
+function normalizeStatus(value, fallback = "published") {
+  const normalized = normalizeString(value, fallback).toLowerCase();
+
+  if (normalized === "draft") return "draft";
+  if (normalized === "published") return "published";
+
+  return fallback;
+}
+
 function safeNumber(value, fallback = 999) {
   const n = Number(normalizeString(value));
   return Number.isFinite(n) ? n : fallback;
@@ -85,6 +94,7 @@ function buildBookMeta(bookId) {
         part: normalizeString(data.part, "기타"),
         partOrder: safeNumber(data.partOrder, 999),
         order: safeNumber(data.order, 999),
+        status: normalizeStatus(data.status, "published"),
         file
       };
 
@@ -147,7 +157,8 @@ function buildBookMeta(bookId) {
         items: section.items.map((doc) => ({
           title: doc.title,
           slug: doc.slug,
-          file: doc.file
+          file: doc.file,
+          status: doc.status
         }))
       };
     });
