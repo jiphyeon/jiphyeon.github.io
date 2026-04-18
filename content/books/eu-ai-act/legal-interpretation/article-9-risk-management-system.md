@@ -2,7 +2,7 @@
 title: "제9조 위험 관리 체계"
 part: "법령 해설"
 partOrder: 3
-order: 8
+order: 9
 slug: "risk-management-system"
 date: 2025-09-23
 ---

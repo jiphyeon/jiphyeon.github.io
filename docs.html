@@ -230,8 +230,8 @@
   }
 
   .content b {
-  font-weight: 700;
-}
+    font-weight: 700;
+  }
 
   .content > *:first-child {
     margin-top: 0 !important;
@@ -560,6 +560,7 @@
       font-size: 12px;
     }
   }
+
 /* ===== Docs 페이지 스크롤바: 오버레이 스타일 ===== */
 
 /* Firefox */
@@ -685,6 +686,14 @@ body:hover::-webkit-scrollbar-thumb:hover,
     const params = new URLSearchParams(window.location.search);
     const book = params.get("book");
     const chapter = params.get("chapter");
+    const PREVIEW_TOKEN = "abc123";
+    const isPreview = params.get("preview") === PREVIEW_TOKEN;
+
+    function appendPreviewParam(url = "") {
+      if (!isPreview) return url;
+      const separator = url.includes("?") ? "&" : "?";
+      return `${url}${separator}preview=${encodeURIComponent(PREVIEW_TOKEN)}`;
+    }
 
     function escapeHtml(value = "") {
       return String(value)
@@ -719,13 +728,20 @@ body:hover::-webkit-scrollbar-thumb:hover,
       if (!tocEl) return;
 
       tocEl.innerHTML = (structure || []).map(group => {
-        const items = Array.isArray(group.items) ? group.items : [];
+        const items = (Array.isArray(group.items) ? group.items : []).filter(item => {
+          return (item.status || "published") === "published" || isPreview;
+        });
+
+        if (!items.length) {
+          return "";
+        }
+
         const groupTitle = group.title
           ? `<div class="toc-group-title">${escapeHtml(group.title)}</div>`
           : "";
 
         const links = items.map(item => `
-          <a href="/docs.html?book=${encodeURIComponent(currentBook)}&chapter=${encodeURIComponent(item.slug)}"
+          <a href="${appendPreviewParam(`/docs.html?book=${encodeURIComponent(currentBook)}&chapter=${encodeURIComponent(item.slug)}`)}"
              class="${item.slug === currentSlug ? "active" : ""}"
              ${item.slug === currentSlug ? 'aria-current="page"' : ""}>
             ${escapeHtml(item.title || "")}
@@ -755,7 +771,7 @@ body:hover::-webkit-scrollbar-thumb:hover,
           prevWrap.style.display = "block";
           prevWrap.className = "";
           prevWrap.innerHTML = `
-            <a href="/docs.html?book=${encodeURIComponent(currentBook)}&chapter=${encodeURIComponent(prev.slug)}">
+            <a href="${appendPreviewParam(`/docs.html?book=${encodeURIComponent(currentBook)}&chapter=${encodeURIComponent(prev.slug)}`)}">
               <span class="nav-label">이전</span>
               <span class="nav-title">← ${escapeHtml(prev.title)}</span>
             </a>
@@ -772,7 +788,7 @@ body:hover::-webkit-scrollbar-thumb:hover,
           nextWrap.style.display = "block";
           nextWrap.className = "doc-nav-next";
           nextWrap.innerHTML = `
-            <a href="/docs.html?book=${encodeURIComponent(currentBook)}&chapter=${encodeURIComponent(next.slug)}" class="doc-nav-next">
+            <a href="${appendPreviewParam(`/docs.html?book=${encodeURIComponent(currentBook)}&chapter=${encodeURIComponent(next.slug)}`)}" class="doc-nav-next">
               <span class="nav-label">다음</span>
               <span class="nav-title">${escapeHtml(next.title)} →</span>
             </a>
@@ -816,16 +832,30 @@ body:hover::-webkit-scrollbar-thumb:hover,
         const meta = await response.json();
         const structure = Array.isArray(meta.structure) ? meta.structure : [];
         const docs = flattenDocs(structure);
+        const visibleDocs = docs.filter(item => {
+          return (item.status || "published") === "published" || isPreview;
+        });
 
         seriesTitleEl.textContent = meta.title || "문서";
 
-        if (!docs.length) {
+        if (!visibleDocs.length) {
           titleEl.textContent = "문서를 찾을 수 없음";
           contentEl.innerHTML = '<p class="error">챕터가 없습니다.</p>';
           return;
         }
 
-        const current = docs.find(item => item.slug === chapter) || docs[0];
+        let current = null;
+
+        if (chapter) {
+          current = visibleDocs.find(item => item.slug === chapter);
+          if (!current) {
+            titleEl.textContent = "문서를 찾을 수 없음";
+            contentEl.innerHTML = '<p class="error">해당 문서는 공개되지 않았거나 존재하지 않습니다.</p>';
+            return;
+          }
+        } else {
+          current = visibleDocs[0];
+        }
 
         renderToc(structure, current.slug, book);
 
@@ -846,11 +876,10 @@ body:hover::-webkit-scrollbar-thumb:hover,
 
         metaEl.textContent = frontMatter.date || "";
         const processedMarkdown = cleanedMarkdown.replace(/\*\*([^*]+)\*\*/g, ' **$1** ');
-contentEl.innerHTML = md.render(processedMarkdown);
-
+        contentEl.innerHTML = md.render(processedMarkdown);
 
         applyReferenceHeadingStyle(contentEl);
-        setupNavigation(docs, current, book);
+        setupNavigation(visibleDocs, current, book);
       } catch (error) {
         console.error(error);
         titleEl.textContent = "불러오기 실패";
