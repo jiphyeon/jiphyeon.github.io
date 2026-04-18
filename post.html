@@ -54,6 +54,76 @@
       border: 0 !important;
     }
 
+    .sticky-header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 0 20px;
+      background: rgba(255, 255, 255, 0.96);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+      box-shadow: 0 6px 24px rgba(0, 0, 0, 0.06);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      z-index: 1000;
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-100%);
+      transition:
+        opacity 0.24s ease,
+        transform 0.24s ease,
+        visibility 0.24s ease;
+    }
+
+    .sticky-header.is-visible {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .sticky-header-inner {
+      width: 100%;
+      max-width: 1120px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      min-width: 0;
+    }
+
+    .sticky-home,
+    .sticky-home:visited,
+    .sticky-home:hover,
+    .sticky-home:active {
+      flex-shrink: 0;
+      font-size: 14px;
+      font-weight: 500;
+      color: #191919 !important;
+      text-decoration: none;
+      white-space: nowrap;
+    }
+
+    .sticky-home:hover {
+      text-decoration: underline;
+      text-underline-offset: 3px;
+    }
+
+    .sticky-title {
+      min-width: 0;
+      font-size: 16px;
+      font-weight: 600;
+      line-height: 1.4;
+      color: #111;
+      letter-spacing: -0.03em;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
     .back-link-wrap {
       position: absolute;
       top: 32px;
@@ -520,6 +590,7 @@
     }
 
     .back-link:focus-visible,
+    .sticky-home:focus-visible,
     .content a:focus-visible,
     .related-card:focus-visible {
       outline: 3px solid var(--focus-ring);
@@ -566,6 +637,10 @@
     }
 
     @media (max-width: 1180px) {
+      .sticky-header-inner {
+        max-width: 760px;
+      }
+
       .back-link-wrap {
         max-width: 760px;
       }
@@ -592,6 +667,26 @@
     }
 
     @media (max-width: 768px) {
+      .sticky-header {
+        height: 58px;
+        padding: 0 18px;
+      }
+
+      .sticky-header-inner {
+        gap: 12px;
+      }
+
+      .sticky-home,
+      .sticky-home:visited,
+      .sticky-home:hover,
+      .sticky-home:active {
+        font-size: 13px;
+      }
+
+      .sticky-title {
+        font-size: 15px;
+      }
+
       .back-link-wrap {
         top: 24px;
         left: 50%;
@@ -726,7 +821,14 @@
 <body>
   <a href="#content" class="sr-only">본문 바로가기</a>
 
-  <header class="post-hero">
+  <div class="sticky-header" id="stickyHeader" aria-hidden="true">
+    <div class="sticky-header-inner">
+      <a href="/" class="sticky-home">← 메인으로</a>
+      <div class="sticky-title" id="stickyTitle"></div>
+    </div>
+  </div>
+
+  <header class="post-hero" id="postHero">
     <div class="back-link-wrap">
       <a href="/" class="back-link">← 메인으로</a>
     </div>
@@ -985,9 +1087,21 @@
   }
 
   function bindHeroScrollInteraction() {
+    const heroEl = document.getElementById("postHero");
+    const stickyHeaderEl = document.getElementById("stickyHeader");
+
     const applyState = () => {
-      const shouldCondense = window.scrollY > 36;
+      const scrollY = window.scrollY || window.pageYOffset || 0;
+      const shouldCondense = scrollY > 36;
       document.body.classList.toggle("hero-condensed", shouldCondense);
+
+      if (!heroEl || !stickyHeaderEl) return;
+
+      const trigger = Math.max(heroEl.offsetHeight - 96, 120);
+      const shouldShowSticky = scrollY > trigger;
+
+      stickyHeaderEl.classList.toggle("is-visible", shouldShowSticky);
+      stickyHeaderEl.setAttribute("aria-hidden", shouldShowSticky ? "false" : "true");
     };
 
     applyState();
@@ -1088,10 +1202,12 @@
     const heroBgEl = document.getElementById("heroBg");
     const relatedListEl = document.getElementById("relatedList");
     const relatedTitleEl = document.getElementById("relatedTitle");
+    const stickyTitleEl = document.getElementById("stickyTitle");
 
     if (!slug) {
       titleEl.textContent = "잘못된 접근";
       contentEl.innerHTML = '<p class="error">slug 값이 없습니다.</p>';
+      if (stickyTitleEl) stickyTitleEl.textContent = "";
       return;
     }
 
@@ -1105,11 +1221,15 @@
       if (!post) {
         titleEl.textContent = "게시물을 찾을 수 없음";
         contentEl.innerHTML = '<p class="error">해당 게시물을 찾을 수 없습니다.</p>';
+        if (stickyTitleEl) stickyTitleEl.textContent = "";
         return;
       }
 
       document.title = post.title || "Post";
       titleEl.textContent = post.title || "";
+      if (stickyTitleEl) {
+        stickyTitleEl.textContent = post.title || "";
+      }
       metaEl.textContent = "";
 
       if (post.category || post.categoryLabel) {
@@ -1152,6 +1272,7 @@
       console.error(error);
       titleEl.textContent = "불러오기 실패";
       contentEl.innerHTML = '<p class="error">본문을 불러오지 못했습니다.</p>';
+      if (stickyTitleEl) stickyTitleEl.textContent = "";
     }
   }
 
