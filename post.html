@@ -55,7 +55,7 @@
     }
 
     .sticky-header {
-      position: fixed;
+   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -64,26 +64,22 @@
   align-items: center;
   gap: 16px;
   padding: 0 20px;
-  background: rgba(255, 255, 255, 0.94);
-  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.05);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: rgba(255, 255, 255, 0);
+  border-bottom: 1px solid rgba(0, 0, 0, 0);
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0);
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
   z-index: 1000;
+
   opacity: 0;
   pointer-events: none;
-  transform: translateY(-12px);
-  transition:
-    opacity 0.38s ease,
-    transform 0.38s ease,
-    background 0.38s ease,
-    box-shadow 0.38s ease;
+  transform: translateY(-14px);
+
+  will-change: opacity, transform, background, box-shadow, border-color, backdrop-filter;
     }
 
     .sticky-header.is-visible {
-      opacity: 1;
-  pointer-events: auto;
-  transform: translateY(0);
+    pointer-events: auto;
     }
 
     .sticky-header-inner {
@@ -1091,23 +1087,52 @@
     const heroEl = document.getElementById("postHero");
     const stickyHeaderEl = document.getElementById("stickyHeader");
 
-    const applyState = () => {
+    if (!heroEl || !stickyHeaderEl) return;
+
+    let ticking = false;
+
+    function clamp(value, min, max) {
+      return Math.min(Math.max(value, min), max);
+    }
+
+    function applyState() {
       const scrollY = window.scrollY || window.pageYOffset || 0;
-  const shouldCondense = scrollY > 36;
-  document.body.classList.toggle("hero-condensed", shouldCondense);
+      const shouldCondense = scrollY > 36;
+      document.body.classList.toggle("hero-condensed", shouldCondense);
 
-  if (!heroEl || !stickyHeaderEl) return;
+      const heroHeight = heroEl.offsetHeight || 0;
 
-  const trigger = Math.max(heroEl.offsetHeight - 120, 140);
-  const shouldShowSticky = scrollY > trigger;
+      const fadeStart = Math.max(heroHeight - 180, 80);
+      const fadeEnd = Math.max(heroHeight - 20, fadeStart + 1);
 
-  stickyHeaderEl.classList.toggle("is-visible", shouldShowSticky);
-  stickyHeaderEl.setAttribute("aria-hidden", shouldShowSticky ? "false" : "true");
-    };
+      const progress = clamp((scrollY - fadeStart) / (fadeEnd - fadeStart), 0, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+
+      stickyHeaderEl.style.opacity = eased.toFixed(3);
+      stickyHeaderEl.style.transform = `translateY(${(-14 * (1 - eased)).toFixed(2)}px)`;
+      stickyHeaderEl.style.background = `rgba(255, 255, 255, ${(0.82 + eased * 0.14).toFixed(3)})`;
+      stickyHeaderEl.style.borderBottomColor = `rgba(0, 0, 0, ${(0.03 + eased * 0.05).toFixed(3)})`;
+      stickyHeaderEl.style.boxShadow = `0 6px 24px rgba(0, 0, 0, ${(0.02 + eased * 0.05).toFixed(3)})`;
+      stickyHeaderEl.style.backdropFilter = `blur(${(eased * 10).toFixed(2)}px)`;
+      stickyHeaderEl.style.webkitBackdropFilter = `blur(${(eased * 10).toFixed(2)}px)`;
+
+      const isVisible = eased > 0.02;
+      stickyHeaderEl.classList.toggle("is-visible", isVisible);
+      stickyHeaderEl.setAttribute("aria-hidden", isVisible ? "false" : "true");
+
+      ticking = false;
+    }
+
+    function requestTick() {
+      if (!ticking) {
+        window.requestAnimationFrame(applyState);
+        ticking = true;
+      }
+    }
 
     applyState();
-    window.addEventListener("scroll", applyState, { passive: true });
-    window.addEventListener("resize", applyState);
+    window.addEventListener("scroll", requestTick, { passive: true });
+    window.addEventListener("resize", requestTick);
   }
 
   function buildRelatedCard(post, currentSlug, thumbnailUrl, mode = "random") {
@@ -1279,7 +1304,7 @@
 
   bindHeroScrollInteraction();
   initializePostPage();
-  </script>
+</script>
 
   <div id="image-lightbox" class="image-lightbox" aria-hidden="true">
     <button class="image-lightbox-close" id="image-lightbox-close" aria-label="이미지 닫기">×</button>
