@@ -10,32 +10,38 @@
         {
           "title": "유럽의 규제 전략",
           "slug": "european-regulatory-strategy",
-          "file": "regulatory-hegemony/european-regulatory-strategy.md"
+          "file": "regulatory-hegemony/european-regulatory-strategy.md",
+          "status": "published"
         },
         {
           "title": "빠른 입법",
           "slug": "fast-legislation",
-          "file": "regulatory-hegemony/fast-legislation.md"
+          "file": "regulatory-hegemony/fast-legislation.md",
+          "status": "published"
         },
         {
           "title": "AI Pact",
           "slug": "ai-pact",
-          "file": "regulatory-hegemony/ai-pact.md"
+          "file": "regulatory-hegemony/ai-pact.md",
+          "status": "published"
         },
         {
           "title": "AI 규제의 시행착오",
           "slug": "trial-and-error",
-          "file": "regulatory-hegemony/trial-and-error.md"
+          "file": "regulatory-hegemony/trial-and-error.md",
+          "status": "published"
         },
         {
           "title": "규제 반작용",
           "slug": "regulatory-backlash",
-          "file": "regulatory-hegemony/regulatory-backlash.md"
+          "file": "regulatory-hegemony/regulatory-backlash.md",
+          "status": "published"
         },
         {
           "title": "규제 시행",
           "slug": "regulatory-implementation",
-          "file": "regulatory-hegemony/regulatory-implementation.md"
+          "file": "regulatory-hegemony/regulatory-implementation.md",
+          "status": "published"
         }
       ]
     },
@@ -46,22 +52,26 @@
         {
           "title": "EU AI Act",
           "slug": "eu-ai-act",
-          "file": "eu-ai-act-brief/eu-ai-act.md"
+          "file": "eu-ai-act-brief/eu-ai-act.md",
+          "status": "published"
         },
         {
           "title": "타임라인",
           "slug": "time",
-          "file": "eu-ai-act-brief/timeline.md"
+          "file": "eu-ai-act-brief/timeline.md",
+          "status": "published"
         },
         {
           "title": "법령 체계",
           "slug": "legal-framework",
-          "file": "eu-ai-act-brief/legal-framework.md"
+          "file": "eu-ai-act-brief/legal-framework.md",
+          "status": "published"
         },
         {
           "title": "제정 과정",
           "slug": "legislative-process",
-          "file": "eu-ai-act-brief/legislative-process.md"
+          "file": "eu-ai-act-brief/legislative-process.md",
+          "status": "published"
         }
       ]
     },
@@ -72,47 +82,62 @@
         {
           "title": "제1조 목적",
           "slug": "article-1-subject-matter",
-          "file": "legal-interpretation/article-1-subject-matter.md"
+          "file": "legal-interpretation/article-1-subject-matter.md",
+          "status": "published"
         },
         {
           "title": "제2조 적용범위",
           "slug": "article-2-scope",
-          "file": "legal-interpretation/article-2-scope.md"
+          "file": "legal-interpretation/article-2-scope.md",
+          "status": "published"
         },
         {
           "title": "제3조 정의",
           "slug": "article-3-definition",
-          "file": "legal-interpretation/article-3-definition.md"
+          "file": "legal-interpretation/article-3-definition.md",
+          "status": "draft"
         },
         {
           "title": "제4조 AI 리터러시",
           "slug": "article-4-ai-literacy",
-          "file": "legal-interpretation/article-4-ai-literacy.md"
+          "file": "legal-interpretation/article-4-ai-literacy.md",
+          "status": "published"
         },
         {
           "title": "제5조 금지 AI 행위",
           "slug": "article-5-prohibited-ai-practices",
-          "file": "legal-interpretation/article-5-prohibited-ai-practices.md"
+          "file": "legal-interpretation/article-5-prohibited-ai-practices.md",
+          "status": "published"
         },
         {
           "title": "제6조 고위험 AI 시스템의 분류 규칙",
           "slug": "classification-rules",
-          "file": "legal-interpretation/article-6-classification-rules.md"
+          "file": "legal-interpretation/article-6-classification-rules.md",
+          "status": "published"
         },
         {
           "title": "제7조 부속서Ⅲ의 개정",
           "slug": "amendments-to-annex",
-          "file": "legal-interpretation/article-7-amendments-to-annex.md"
+          "file": "legal-interpretation/article-7-amendments-to-annex.md",
+          "status": "published"
         },
         {
           "title": "제8조 고위험 AI 시스템의 규제 준수 의무",
           "slug": "compliance-with-the-requirements",
-          "file": "legal-interpretation/article-8-compliance-with-the-requirements.md"
+          "file": "legal-interpretation/article-8-compliance-with-the-requirements.md",
+          "status": "published"
         },
         {
           "title": "제9조 위험 관리 체계",
           "slug": "risk-management-system",
-          "file": "legal-interpretation/article-9-risk-management-system.md"
+          "file": "legal-interpretation/article-9-risk-management-system.md",
+          "status": "published"
+        },
+        {
+          "title": "제10조 데이터와 데이터 거버넌스",
+          "slug": "data-governace",
+          "file": "legal-interpretation/article-10-data-governance.md",
+          "status": "published"
         }
       ]
     }

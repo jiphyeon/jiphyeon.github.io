@@ -11,6 +11,7 @@
     "slug": "public-critique-001",
     "order": 999,
     "series": "public-critique",
+    "status": "published",
     "file": "content/blog/public-critique/public-critique-001.md"
   },
   {
@@ -25,6 +26,7 @@
     "slug": "public-critique-002",
     "order": 999,
     "series": "public-critique",
+    "status": "draft",
     "file": "content/blog/public-critique/public-critique-002.md"
   },
   {
@@ -39,6 +41,7 @@
     "slug": "public-critique-003",
     "order": 999,
     "series": "public-critique",
+    "status": "published",
     "file": "content/blog/public-critique/public-critique-003.md"
   },
   {
@@ -53,6 +56,7 @@
     "slug": "sinatra-test",
     "order": 999,
     "series": "visual-brief",
+    "status": "published",
     "file": "content/blog/visual-brief/sinatra-test.md"
   },
   {
@@ -67,6 +71,7 @@
     "slug": "veil-of-ignorance",
     "order": 999,
     "series": "visual-brief",
+    "status": "published",
     "file": "content/blog/visual-brief/veil of ignorance.md"
   },
   {
@@ -81,6 +86,7 @@
     "slug": "private-brand",
     "order": 999,
     "series": "visual-brief",
+    "status": "published",
     "file": "content/blog/visual-brief/private-brand.md"
   },
   {
@@ -95,6 +101,7 @@
     "slug": "nudge",
     "order": 999,
     "series": "visual-brief",
+    "status": "published",
     "file": "content/blog/visual-brief/nudge.md"
   },
   {
@@ -109,6 +116,7 @@
     "slug": "2024_budget",
     "order": 999,
     "series": "visual-brief",
+    "status": "published",
     "file": "content/blog/visual-brief/2024_budget.md"
   },
   {
@@ -123,6 +131,7 @@
     "slug": "startup-investment-stages",
     "order": 999,
     "series": "visual-brief",
+    "status": "published",
     "file": "content/blog/visual-brief/startup-investment-stages.md"
   },
   {
@@ -137,6 +146,7 @@
     "slug": "regional-extinction",
     "order": 999,
     "series": "visual-brief",
+    "status": "published",
     "file": "content/blog/visual-brief/regional-extinction.md"
   },
   {
@@ -151,6 +161,7 @@
     "slug": "liebig-law-of-minimum",
     "order": 999,
     "series": "visual-brief",
+    "status": "published",
     "file": "content/blog/visual-brief/liebig-law-of-minimum.md"
   },
   {
@@ -165,6 +176,7 @@
     "slug": "availability-bias",
     "order": 999,
     "series": "visual-brief",
+    "status": "published",
     "file": "content/blog/visual-brief/availability-bias.md"
   },
   {
@@ -179,6 +191,7 @@
     "slug": "stick",
     "order": 999,
     "series": "visual-brief",
+    "status": "published",
     "file": "content/blog/visual-brief/stick.md"
   },
   {
@@ -193,6 +206,7 @@
     "slug": "what-is-oecd",
     "order": 999,
     "series": "visual-brief",
+    "status": "published",
     "file": "content/blog/visual-brief/what-is-oecd.md"
   }
 ]
