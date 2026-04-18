@@ -3,6 +3,7 @@ title: "제1조 목적"
 part: "법령 해설"
 partOrder: 3
 order: 1
+status: "published"
 slug: "article-1-subject-matter"
 date: 2025-09-02
 ---

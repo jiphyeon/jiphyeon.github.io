@@ -3,6 +3,7 @@ title: "법령 체계"
 part: "EU AI Act 브리프"
 partOrder: 2
 order: 3
+status: "published"
 slug: "legal-framework"
 date: 2025-08-11
 ---

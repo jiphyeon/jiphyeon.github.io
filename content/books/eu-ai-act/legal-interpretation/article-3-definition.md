@@ -3,7 +3,7 @@ title: "제3조 정의"
 part: "법령 해설"
 partOrder: 3
 order: 3
-status : "draft"
+status : "published"
 slug: "article-3-definition"
 date: 2025-09-09
 ---

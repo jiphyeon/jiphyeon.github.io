@@ -95,7 +95,7 @@
           "title": "제3조 정의",
           "slug": "article-3-definition",
           "file": "legal-interpretation/article-3-definition.md",
-          "status": "draft"
+          "status": "published"
         },
         {
           "title": "제4조 AI 리터러시",
@@ -137,7 +137,7 @@
           "title": "제10조 데이터와 데이터 거버넌스",
           "slug": "data-governace",
           "file": "legal-interpretation/article-10-data-governance.md",
-          "status": "published"
+          "status": "draft"
         }
       ]
     }

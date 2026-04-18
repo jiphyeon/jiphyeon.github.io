@@ -5,6 +5,7 @@ series: "eu-ai-act"
 part: "규제 패권"
 partOrder: 1
 order: 2
+status: "published"
 slug: "fast-legislation"
 thumbnail: "/images/docs/eu-ai-act/fast-legislation.jpg"
 date: 2025-04-22

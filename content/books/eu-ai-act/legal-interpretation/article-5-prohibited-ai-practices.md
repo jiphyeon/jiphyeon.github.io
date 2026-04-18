@@ -3,6 +3,7 @@ title: "제5조 금지 AI 행위"
 part: "법령 해설"
 partOrder: 3
 order: 5
+status: "published"
 slug: "article-5-prohibited-ai-practices"
 date: 2025-09-10
 ---

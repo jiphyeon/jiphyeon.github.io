@@ -3,6 +3,7 @@ title: "EU AI Act"
 part: "EU AI Act 브리프"
 partOrder: 2
 order: 1
+status: "published"
 slug: "eu-ai-act"
 thumbnail: "/images/docs/eu-ai-act/eu-ai-act.jpg"
 date: 2025-06-04

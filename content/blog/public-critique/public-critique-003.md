@@ -3,6 +3,7 @@ title: "신청주의는 잔인한 제도 아닙니까"
 type: "post"
 category: "공공정보화의 불편한 진실"
 date: 2025-08-25
+status: "published"
 thumbnailMode: "random"
 ---
 

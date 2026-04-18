@@ -3,6 +3,7 @@ title: "제4조 AI 리터러시"
 part: "법령 해설"
 partOrder: 3
 order: 4
+status: "published"
 slug: "article-4-ai-literacy"
 date: 2025-09-10
 ---

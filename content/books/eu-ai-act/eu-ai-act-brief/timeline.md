@@ -3,6 +3,7 @@ title: "타임라인"
 part: "EU AI Act 브리프"
 partOrder: 2
 order: 2
+status: "published"
 slug: "time"
 date: 2025-08-09
 ---

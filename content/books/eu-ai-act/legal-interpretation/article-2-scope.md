@@ -3,6 +3,7 @@ title: "제2조 적용범위"
 part: "법령 해설"
 partOrder: 3
 order: 2
+status: "published"
 slug: "article-2-scope"
 date: 2025-09-05
 ---

@@ -3,6 +3,7 @@ title: "제6조 고위험 AI 시스템의 분류 규칙"
 part: "법령 해설"
 partOrder: 3
 order: 6
+status: "published"
 slug: "classification-rules"
 date: 2025-09-22
 ---

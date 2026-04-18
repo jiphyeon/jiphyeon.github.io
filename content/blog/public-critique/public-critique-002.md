@@ -3,7 +3,7 @@ title: "심사 비즈니스화"
 type: "post"
 category: "공공정보화의 불편한 진실"
 date: 2025-08-27
-status : "draft"
+status : "published"
 slug: "public-critique-002"
 thumbnailMode: "random"
 ---

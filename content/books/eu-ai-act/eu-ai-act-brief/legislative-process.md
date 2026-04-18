@@ -3,6 +3,7 @@ title: "제정 과정"
 part: "EU AI Act 브리프"
 partOrder: 2
 order: 4
+status: "published"
 slug: "legislative-process"
 date: 2025-08-11
 ---

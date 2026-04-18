@@ -5,6 +5,7 @@ series: "eu-ai-act"
 part: "규제 패권"
 partOrder: 1
 order: 1
+status: "published"
 slug: "european-regulatory-strategy"
 excerpt: "유럽 규제 전략의 방향을 설명하는 문서"
 thumbnail: "/images/docs/eu-ai-act/eu-regulation.jpg"

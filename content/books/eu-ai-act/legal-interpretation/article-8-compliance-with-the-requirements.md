@@ -3,6 +3,7 @@ title: "제8조 고위험 AI 시스템의 규제 준수 의무"
 part: "법령 해설"
 partOrder: 3
 order: 8
+status: "published"
 slug: "compliance-with-the-requirements"
 date: 2025-09-22
 ---

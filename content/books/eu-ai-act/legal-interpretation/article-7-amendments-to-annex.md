@@ -3,6 +3,7 @@ title: "제7조 부속서Ⅲ의 개정"
 part: "법령 해설"
 partOrder: 3
 order: 7
+status: "published"
 slug: "amendments-to-annex"
 date: 2025-09-22
 ---

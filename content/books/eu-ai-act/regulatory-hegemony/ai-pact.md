@@ -3,6 +3,7 @@ title: "AI Pact"
 part: "규제 패권"
 partOrder: 1
 order: 3
+status: "published"
 slug: "ai-pact"
 thumbnail: "/images/docs/eu-ai-act/ai-pact.jpg"
 date: 2025-04-28
