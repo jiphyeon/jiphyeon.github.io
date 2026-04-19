@@ -157,25 +157,29 @@
 
     .post-hero {
       position: relative;
-      width: 100%;
-      min-height: 360px;
-      display: flex;
-      align-items: flex-end;
-      overflow: hidden;
-      background: #111;
-      transition: min-height 0.28s ease;
+  width: 100%;
+  min-height: 360px;
+  display: flex;
+  align-items: flex-end;
+  overflow: hidden;
+  background: #fff;
+  transition:
+    min-height 0.28s ease,
+    background 0.55s ease;
     }
 
     .post-hero-bg {
       position: absolute;
-      inset: 0;
-      z-index: 1;
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-      transition:
-        transform 0.55s ease,
-        opacity 0.55s ease;
+  inset: 0;
+  z-index: 1;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  visibility: visible;
+  transition:
+    transform 0.55s ease,
+    opacity 0.55s ease,
+    visibility 0.55s ease;
     }
 
     .post-hero-bg img {
@@ -185,17 +189,23 @@
       display: block;
     }
 
-    .post-hero-overlay {
-      position: absolute;
-      inset: 0;
-      z-index: 2;
-      background:
-        linear-gradient(to top, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.18)),
-        linear-gradient(to bottom, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.08));
-      transition:
-        opacity 0.55s ease,
-        background 0.55s ease;
-    }
+   .post-hero-overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  background:
+    linear-gradient(to top, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.18)),
+    linear-gradient(to bottom, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.08));
+  visibility: visible;
+  transition:
+    opacity 0.55s ease,
+    background 0.55s ease,
+    visibility 0.55s ease;
+}
+
+body.sticky-active .post-hero {
+  background: #fff;
+}
 
     .post-hero-inner {
       position: relative;
@@ -229,12 +239,14 @@
     }
 
 body.sticky-active .post-hero-bg {
-  opacity: 0.04;
+  opacity: 0;
   transform: scale(1.01);
+  visibility: hidden;
 }
 
 body.sticky-active .post-hero-overlay {
-  opacity: 0.02;
+  opacity: 0;
+  visibility: hidden;
 }
 
    body.sticky-active .post-hero-inner {
