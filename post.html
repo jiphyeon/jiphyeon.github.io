@@ -300,6 +300,13 @@
       pointer-events: auto;
     }
 
+    #heroSentinel {
+      position: relative;
+      width: 100%;
+      height: 1px;
+      pointer-events: none;
+    }
+
     .post-header {
       max-width: 760px;
     }
@@ -937,6 +944,8 @@
     </div>
   </header>
 
+  <div id="heroSentinel" aria-hidden="true"></div>
+
   <main class="content-wrap">
     <div class="post-layout">
       <article class="content-column">
@@ -1179,53 +1188,20 @@
     }
 
     function bindHeroScrollInteraction() {
-      const heroEl = document.getElementById("postHero");
       const stickyHeaderEl = document.getElementById("stickyHeader");
+      const sentinelEl = document.getElementById("heroSentinel");
 
-      if (!heroEl || !stickyHeaderEl) return;
+      if (!stickyHeaderEl || !sentinelEl) return;
 
-      let ticking = false;
-      let stickyTrigger = 180;
-
-      function updateTrigger() {
-        const heroBaseHeight = heroEl.offsetHeight || 0;
-        stickyTrigger = Math.max(heroBaseHeight - 120, 140);
-      }
-
-      function forceResetAtTop() {
+      function applyTopState() {
         const scrollY = window.scrollY || window.pageYOffset || 0;
+        const shouldCondense = scrollY > 36;
+
+        document.body.classList.toggle("hero-condensed", shouldCondense);
 
         if (scrollY <= 8) {
           document.body.classList.remove("sticky-active");
-          document.body.classList.remove("hero-condensed");
           stickyHeaderEl.setAttribute("aria-hidden", "true");
-        }
-      }
-
-      function applyState() {
-        const scrollY = window.scrollY || window.pageYOffset || 0;
-
-        const shouldCondense = scrollY > 36;
-        let shouldActivateSticky = scrollY > stickyTrigger;
-
-        if (scrollY <= 8) {
-          shouldActivateSticky = false;
-        }
-
-        document.body.classList.toggle("hero-condensed", shouldCondense);
-        document.body.classList.toggle("sticky-active", shouldActivateSticky);
-        stickyHeaderEl.setAttribute(
-          "aria-hidden",
-          shouldActivateSticky ? "false" : "true"
-        );
-
-        ticking = false;
-      }
-
-      function requestTick() {
-        if (!ticking) {
-          window.requestAnimationFrame(applyState);
-          ticking = true;
         }
       }
 
@@ -1233,28 +1209,31 @@
         history.scrollRestoration = "manual";
       }
 
-      updateTrigger();
-      forceResetAtTop();
-      applyState();
+      const observer = new IntersectionObserver(
+        (entries) => {
+          const entry = entries[0];
+          const isAboveSentinel = !entry.isIntersecting;
 
-      window.addEventListener("scroll", requestTick, { passive: true });
+          document.body.classList.toggle("sticky-active", isAboveSentinel);
+          stickyHeaderEl.setAttribute("aria-hidden", isAboveSentinel ? "false" : "true");
 
-      window.addEventListener("resize", () => {
-        updateTrigger();
-        requestTick();
-      });
+          applyTopState();
+        },
+        {
+          root: null,
+          threshold: 0,
+          rootMargin: "-64px 0px 0px 0px"
+        }
+      );
 
-      window.addEventListener("pageshow", () => {
-        updateTrigger();
-        forceResetAtTop();
-        requestTick();
-      });
+      observer.observe(sentinelEl);
 
-      window.addEventListener("load", () => {
-        updateTrigger();
-        forceResetAtTop();
-        requestTick();
-      });
+      applyTopState();
+
+      window.addEventListener("scroll", applyTopState, { passive: true });
+      window.addEventListener("resize", applyTopState);
+      window.addEventListener("pageshow", applyTopState);
+      window.addEventListener("load", applyTopState);
     }
 
     function buildRelatedCard(post, currentSlug, thumbnailUrl, mode = "random") {
