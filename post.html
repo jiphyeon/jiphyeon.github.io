@@ -909,17 +909,17 @@
   <script src="https://cdn.jsdelivr.net/npm/markdown-it/dist/markdown-it.min.js"></script>
   <script>
     function parseFrontMatter(markdown = "") {
-      const match = markdown.match(/^---\\s*\\n([\\s\\S]*?)\\n---\\s*\\n?/);
+      const match = markdown.match(/^---\s*\n([\s\S]*?)\n---\s*\n?/);
 
       if (!match) {
         return { data: {}, content: markdown };
       }
 
       const raw = match[1];
-      const content = markdown.replace(/^---\\s*\\n[\\s\\S]*?\\n---\\s*\\n?/, "");
+      const content = markdown.replace(/^---\s*\n[\s\S]*?\n---\s*\n?/, "");
       const data = {};
 
-      raw.split("\\n").forEach(line => {
+      raw.split("\n").forEach(line => {
         const index = line.indexOf(":");
         if (index === -1) return;
 
@@ -988,7 +988,7 @@
         return trimmed;
       }
 
-      return `/${trimmed.replace(/^\\.?\\//, "")}`;
+      return `/${trimmed.replace(/^\.?\//, "")}`;
     }
 
     function getThumbnailMode(post = {}, frontMatter = {}) {
@@ -1003,7 +1003,7 @@
     }
 
     function extractFirstImageFromMarkdown(markdownContent = "") {
-      const imageMatch = markdownContent.match(/!\\[[^\\]]*\\]\\((?:<)?([^)\\s>]+)(?:>)?(?:\\s+["'][^"']*["'])?\\)/);
+      const imageMatch = markdownContent.match(/!\[[^\]]*\]\((?:<)?([^)\s>]+)(?:>)?(?:\s+["'][^"']*["'])?\)/);
 
       if (!imageMatch || !imageMatch[1]) {
         return "";
@@ -1134,26 +1134,9 @@
 
       if (!stickyHeaderEl || !sentinelEl) return;
 
-      let observer = null;
-
-      function isShortPage() {
-        const doc = document.documentElement;
-        const pageHeight = Math.max(
-          document.body.scrollHeight,
-          doc.scrollHeight,
-          document.body.offsetHeight,
-          doc.offsetHeight
-        );
-
-        const viewportHeight = window.innerHeight || doc.clientHeight || 0;
-        return pageHeight <= viewportHeight + 220;
-      }
-
       function applyTopState() {
         const scrollY = window.scrollY || window.pageYOffset || 0;
-        const shouldCondense = scrollY > 36;
-
-        document.body.classList.toggle("hero-condensed", shouldCondense);
+        document.body.classList.toggle("hero-condensed", scrollY > 36);
 
         if (scrollY <= 8) {
           document.body.classList.remove("sticky-active");
@@ -1161,63 +1144,30 @@
         }
       }
 
-      function disableStickyMode() {
-        document.body.classList.remove("sticky-active");
-        stickyHeaderEl.setAttribute("aria-hidden", "true");
-      }
-
-      function setupObserver() {
-        if (observer) {
-          observer.disconnect();
-          observer = null;
-        }
-
-        if (isShortPage()) {
-          disableStickyMode();
-          applyTopState();
-          return;
-        }
-
-        observer = new IntersectionObserver(
-          (entries) => {
-            const entry = entries[0];
-            const isAboveSentinel = !entry.isIntersecting;
-
-            document.body.classList.toggle("sticky-active", isAboveSentinel);
-            stickyHeaderEl.setAttribute("aria-hidden", isAboveSentinel ? "false" : "true");
-
-            applyTopState();
-          },
-          {
-            root: null,
-            threshold: 0,
-            rootMargin: "-64px 0px 0px 0px"
-          }
-        );
-
-        observer.observe(sentinelEl);
-        applyTopState();
-      }
-
       if ("scrollRestoration" in history) {
         history.scrollRestoration = "manual";
       }
 
-      setupObserver();
+      const observer = new IntersectionObserver(
+        (entries) => {
+          const entry = entries[0];
+          const shouldActivateSticky = !entry.isIntersecting;
 
+          document.body.classList.toggle("sticky-active", shouldActivateSticky);
+          stickyHeaderEl.setAttribute("aria-hidden", shouldActivateSticky ? "false" : "true");
+        },
+        {
+          root: null,
+          threshold: 0,
+          rootMargin: "-64px 0px 0px 0px"
+        }
+      );
+
+      observer.observe(sentinelEl);
+
+      applyTopState();
       window.addEventListener("scroll", applyTopState, { passive: true });
-
-      window.addEventListener("resize", () => {
-        setupObserver();
-      });
-
-      window.addEventListener("pageshow", () => {
-        setupObserver();
-      });
-
-      window.addEventListener("load", () => {
-        setupObserver();
-      });
+      window.addEventListener("pageshow", applyTopState);
     }
 
     function buildRelatedCard(post, currentSlug, thumbnailUrl, mode = "random") {
@@ -1373,7 +1323,7 @@
 
         metaEl.textContent = frontMatter.date || post.date || "";
 
-        const processedMarkdown = cleanedMarkdown.replace(/\\*\\*([^*]+)\\*\\*/g, " **$1** ");
+        const processedMarkdown = cleanedMarkdown.replace(/\*\*([^*]+)\*\*/g, " **$1** ");
         contentEl.innerHTML = md.render(processedMarkdown);
 
         await renderRelatedPosts(posts, post);
