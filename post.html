@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ko">
 <head>
@@ -550,8 +551,9 @@
 
     .related-sidebar-inner {
       position: sticky;
-      top: 32px;
-      max-height: calc(100vh - 64px);
+      /* 수정: sticky header(64px) + 여유 16px = 80px */
+      top: 80px;
+      max-height: calc(100vh - 96px);
       overflow-y: auto;
       padding-right: 6px;
     }
@@ -1187,98 +1189,74 @@
       };
     }
 
-   function bindHeroScrollInteraction() {
-  const stickyHeaderEl = document.getElementById("stickyHeader");
-  const sentinelEl = document.getElementById("heroSentinel");
+    function bindHeroScrollInteraction() {
+      const stickyHeaderEl = document.getElementById("stickyHeader");
+      const sentinelEl = document.getElementById("heroSentinel");
 
-  if (!stickyHeaderEl || !sentinelEl) return;
+      if (!stickyHeaderEl || !sentinelEl) return;
 
-  let observer = null;
+      let observer = null;
 
-  function isShortPage() {
-    const doc = document.documentElement;
-    const pageHeight = Math.max(
-      document.body.scrollHeight,
-      doc.scrollHeight,
-      document.body.offsetHeight,
-      doc.offsetHeight
-    );
+      function applyTopState() {
+        const scrollY = window.scrollY || window.pageYOffset || 0;
+        const shouldCondense = scrollY > 36;
 
-    const viewportHeight = window.innerHeight || doc.clientHeight || 0;
+        document.body.classList.toggle("hero-condensed", shouldCondense);
 
-    return pageHeight <= viewportHeight + 220;
-  }
-
-  function applyTopState() {
-    const scrollY = window.scrollY || window.pageYOffset || 0;
-    const shouldCondense = scrollY > 36;
-
-    document.body.classList.toggle("hero-condensed", shouldCondense);
-
-    if (scrollY <= 8) {
-      document.body.classList.remove("sticky-active");
-      stickyHeaderEl.setAttribute("aria-hidden", "true");
-    }
-  }
-
-  function disableStickyMode() {
-    document.body.classList.remove("sticky-active");
-    stickyHeaderEl.setAttribute("aria-hidden", "true");
-  }
-
-  function setupObserver() {
-    if (observer) {
-      observer.disconnect();
-      observer = null;
-    }
-
-    if (isShortPage()) {
-      disableStickyMode();
-      applyTopState();
-      return;
-    }
-
-    observer = new IntersectionObserver(
-      (entries) => {
-        const entry = entries[0];
-        const isAboveSentinel = !entry.isIntersecting;
-
-        document.body.classList.toggle("sticky-active", isAboveSentinel);
-        stickyHeaderEl.setAttribute("aria-hidden", isAboveSentinel ? "false" : "true");
-
-        applyTopState();
-      },
-      {
-        root: null,
-        threshold: 0,
-        rootMargin: "-64px 0px 0px 0px"
+        if (scrollY <= 8) {
+          document.body.classList.remove("sticky-active");
+          stickyHeaderEl.setAttribute("aria-hidden", "true");
+        }
       }
-    );
 
-    observer.observe(sentinelEl);
-    applyTopState();
-  }
+      function setupObserver() {
+        if (observer) {
+          observer.disconnect();
+          observer = null;
+        }
 
-  if ("scrollRestoration" in history) {
-    history.scrollRestoration = "manual";
-  }
+        // isShortPage 분기 제거 — 페이지 길이와 무관하게 항상 observer 등록
+        observer = new IntersectionObserver(
+          (entries) => {
+            const entry = entries[0];
+            const isAboveSentinel = !entry.isIntersecting;
 
-  setupObserver();
+            document.body.classList.toggle("sticky-active", isAboveSentinel);
+            stickyHeaderEl.setAttribute("aria-hidden", isAboveSentinel ? "false" : "true");
 
-  window.addEventListener("scroll", applyTopState, { passive: true });
+            applyTopState();
+          },
+          {
+            root: null,
+            threshold: 0,
+            rootMargin: "-64px 0px 0px 0px"
+          }
+        );
 
-  window.addEventListener("resize", () => {
-    setupObserver();
-  });
+        observer.observe(sentinelEl);
+        applyTopState();
+      }
 
-  window.addEventListener("pageshow", () => {
-    setupObserver();
-  });
+      if ("scrollRestoration" in history) {
+        history.scrollRestoration = "manual";
+      }
 
-  window.addEventListener("load", () => {
-    setupObserver();
-  });
-}
+      setupObserver();
+
+      window.addEventListener("scroll", applyTopState, { passive: true });
+
+      window.addEventListener("resize", () => {
+        setupObserver();
+      });
+
+      window.addEventListener("pageshow", () => {
+        setupObserver();
+      });
+
+      window.addEventListener("load", () => {
+        setupObserver();
+      });
+    }
 
     function buildRelatedCard(post, currentSlug, thumbnailUrl, mode = "random") {
       const isCurrent =
