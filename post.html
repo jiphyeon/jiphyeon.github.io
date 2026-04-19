@@ -15,16 +15,16 @@
     }
 
     :root {
-       --text-main: #191919;
-  --text-body: #2f2f2f;
-  --text-muted: rgba(255, 255, 255, 0.82);
-  --line-soft: #ececec;
-  --surface-code: #f6f6f3;
-  --accent: #df0f57;
-  --link-color: #0b6bcb;
-  --focus-ring: #1a73e8;
-  --hero-progress: 0;
-  --hero-current-height: 520px;
+      --text-main: #191919;
+      --text-body: #2f2f2f;
+      --text-muted: rgba(255, 255, 255, 0.82);
+      --line-soft: #ececec;
+      --surface-code: #f6f6f3;
+      --accent: #df0f57;
+      --link-color: #0b6bcb;
+      --focus-ring: #1a73e8;
+      --hero-progress: 0;
+      --hero-current-height: 520px;
     }
 
     html {
@@ -165,25 +165,22 @@
 
     .post-hero {
       position: relative;
-  width: 100%;
-  height: var(--hero-current-height);
-  min-height: 0;
-  display: flex;
-  align-items: flex-end;
-  overflow: hidden;
-  background: #fff;
+      width: 100%;
+      height: var(--hero-current-height);
+      min-height: 0;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+      background: #fff;
     }
 
     .post-hero-bg {
       position: absolute;
       inset: 0;
       z-index: 1;
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
       opacity: calc(1 - var(--hero-progress));
       visibility: visible;
-      transform: scale(calc(1 + (0.06 * var(--hero-progress))));
+      transform: scale(calc(1 + (0.05 * var(--hero-progress))));
       transition:
         opacity 0.18s linear,
         transform 0.18s linear;
@@ -206,13 +203,11 @@
       inset: 0;
       z-index: 2;
       background:
-        linear-gradient(to top, rgba(0, 0, 0, 0.48), rgba(0, 0, 0, 0.18)),
-        linear-gradient(to bottom, rgba(0, 0, 0, 0.20), rgba(0, 0, 0, 0.08));
+        linear-gradient(to top, rgba(0, 0, 0, 0.42), rgba(0, 0, 0, 0.16)),
+        linear-gradient(to bottom, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.06));
       opacity: calc(1 - var(--hero-progress));
       visibility: visible;
-      transition:
-        opacity 0.18s linear,
-        background 0.28s ease;
+      transition: opacity 0.18s linear;
       will-change: opacity;
     }
 
@@ -228,10 +223,10 @@
       margin: 0 auto;
       padding: 110px 20px 42px;
       opacity: calc(1 - var(--hero-progress));
-      transform: translateY(calc(-34px * var(--hero-progress)));
+      transform: translateY(calc(-30px * var(--hero-progress)));
       pointer-events: auto;
       transition:
-        padding 0.28s ease,
+        padding 0.24s ease,
         opacity 0.18s linear,
         transform 0.18s linear;
       will-change: opacity, transform;
@@ -239,10 +234,6 @@
 
     body.sticky-active .post-hero-inner {
       pointer-events: none;
-    }
-
-    body.hero-condensed .post-hero {
-      min-height: 470px;
     }
 
     body.hero-condensed .post-hero-inner {
@@ -271,16 +262,16 @@
     }
 
     .post-title {
-       margin: 0;
-  font-size: 30px;
-  font-weight: 500;
-  line-height: 1.28;
-  letter-spacing: -0.05em;
-  color: #fff;
+      margin: 0;
+      font-size: 30px;
+      font-weight: 500;
+      line-height: 1.28;
+      letter-spacing: -0.05em;
+      color: #fff;
     }
 
     .meta {
-      margin-top: 12px;
+      margin-top: 10px;
       font-size: 14px;
       font-weight: 400;
       line-height: 1.6;
@@ -726,13 +717,13 @@
       }
 
       .post-hero {
-        min-height: 380px;
+        height: var(--hero-current-height);
+        min-height: 0;
       }
 
       .post-hero-inner {
         padding: 84px 18px 30px;
       }
-
 
       body.hero-condensed .post-hero-inner {
         padding: 64px 18px 22px;
@@ -905,7 +896,7 @@
       const content = markdown.replace(/^---\s*\n[\s\S]*?\n---\s*\n?/, "");
       const data = {};
 
-      raw.split("\n").forEach(line => {
+      raw.split("\n").forEach((line) => {
         const index = line.indexOf(":");
         if (index === -1) return;
 
@@ -1069,7 +1060,6 @@
       const heroImageUrl = `https://picsum.photos/seed/${seed}/1800/1200`;
 
       heroBgEl.style.display = "block";
-      heroBgEl.style.backgroundImage = "";
       heroBgEl.innerHTML = `<img src="${heroImageUrl}" alt="">`;
     }
 
@@ -1118,86 +1108,60 @@
       };
     }
 
-   function bindHeroScrollInteraction() {
-  const stickyHeaderEl = document.getElementById("stickyHeader");
-  const heroEl = document.getElementById("postHero");
+    function bindHeroScrollInteraction() {
+      const stickyHeaderEl = document.getElementById("stickyHeader");
 
-  if (!stickyHeaderEl || !heroEl) return;
+      if (!stickyHeaderEl) return;
 
-  let ticking = false;
+      let ticking = false;
 
-  function getExpandedHeroHeight() {
-    return window.innerWidth <= 768 ? 360 : 520;
-  }
+      function getExpandedHeroHeight() {
+        return window.innerWidth <= 768 ? 360 : 520;
+      }
 
-  function getCollapsedHeroHeight() {
-    return 0;
-  }
+      function applyHeroState() {
+        const scrollY = window.scrollY || window.pageYOffset || 0;
+        const viewportHeight =
+          window.innerHeight || document.documentElement.clientHeight || 1;
+        const documentHeight = Math.max(
+          document.body.scrollHeight,
+          document.documentElement.scrollHeight
+        );
+        const maxScrollable = Math.max(documentHeight - viewportHeight, 0);
 
-  function applyHeroState() {
-    const scrollY = window.scrollY || window.pageYOffset || 0;
-    const viewportHeight =
-      window.innerHeight || document.documentElement.clientHeight || 1;
-    const documentHeight = Math.max(
-      document.body.scrollHeight,
-      document.documentElement.scrollHeight
-    );
-    const maxScrollable = Math.max(documentHeight - viewportHeight, 0);
+        const expandedHeight = getExpandedHeroHeight();
+        const fadeDistanceBase = window.innerWidth <= 768 ? 120 : 170;
+        const fadeDistance =
+          maxScrollable > 0
+            ? Math.min(fadeDistanceBase, Math.max(64, maxScrollable))
+            : 1;
 
-    const expandedHeight = getExpandedHeroHeight();
-    const collapsedHeight = getCollapsedHeroHeight();
+        const progress = clamp(scrollY / fadeDistance, 0, 1);
+        const currentHeight = Math.round(expandedHeight * (1 - progress));
 
-    const fadeDistanceBase = window.innerWidth <= 768 ? 120 : 170;
-    const fadeDistance =
-      maxScrollable > 0
-        ? Math.min(fadeDistanceBase, Math.max(64, maxScrollable))
-        : 1;
+        document.documentElement.style.setProperty(
+          "--hero-progress",
+          progress.toFixed(4)
+        );
+        document.documentElement.style.setProperty(
+          "--hero-current-height",
+          `${currentHeight}px`
+        );
 
-    const progress = clamp(scrollY / fadeDistance, 0, 1);
-    const currentHeight = Math.round(
-      expandedHeight - (expandedHeight - collapsedHeight) * progress
-    );
+        document.body.classList.toggle(
+          "hero-condensed",
+          scrollY > 24 && progress < 0.98
+        );
 
-    document.documentElement.style.setProperty(
-      "--hero-progress",
-      progress.toFixed(4)
-    );
-    document.documentElement.style.setProperty(
-      "--hero-current-height",
-      `${currentHeight}px`
-    );
+        const isSticky = progress >= 0.98;
+        document.body.classList.toggle("sticky-active", isSticky);
+        stickyHeaderEl.setAttribute("aria-hidden", isSticky ? "false" : "true");
 
-    document.body.classList.toggle("hero-condensed", scrollY > 24 && progress < 0.98);
-
-    const isSticky = progress >= 0.98;
-    document.body.classList.toggle("sticky-active", isSticky);
-    stickyHeaderEl.setAttribute("aria-hidden", isSticky ? "false" : "true");
-
-    ticking = false;
-  }
-
-  function requestApplyHeroState() {
-    if (ticking) return;
-    ticking = true;
-    window.requestAnimationFrame(applyHeroState);
-  }
-
-  if ("scrollRestoration" in history) {
-    history.scrollRestoration = "manual";
-  }
-
-  applyHeroState();
-
-  window.addEventListener("scroll", requestApplyHeroState, { passive: true });
-  window.addEventListener("resize", requestApplyHeroState);
-  window.addEventListener("orientationchange", requestApplyHeroState);
-  window.addEventListener("pageshow", requestApplyHeroState);
-  window.addEventListener("load", requestApplyHeroState);
-}
+        ticking = false;
+      }
 
       function requestApplyHeroState() {
         if (ticking) return;
-
         ticking = true;
         window.requestAnimationFrame(applyHeroState);
       }
@@ -1322,7 +1286,7 @@
         if (!postResponse.ok) throw new Error("posts.json 로드 실패");
 
         const posts = await postResponse.json();
-        const post = posts.find(item => item.slug === slug);
+        const post = posts.find((item) => item.slug === slug);
 
         if (!post) {
           titleEl.textContent = "게시물을 찾을 수 없음";
@@ -1377,7 +1341,6 @@
         requestAnimationFrame(() => {
           window.dispatchEvent(new Event("resize"));
         });
-
       } catch (error) {
         console.error(error);
         titleEl.textContent = "불러오기 실패";
