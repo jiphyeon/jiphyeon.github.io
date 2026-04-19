@@ -55,7 +55,7 @@
     }
 
     .sticky-header {
-   position: fixed;
+    position: fixed;
   top: 0;
   left: 0;
   width: 100%;
@@ -70,12 +70,11 @@
   backdrop-filter: blur(0px);
   -webkit-backdrop-filter: blur(0px);
   z-index: 1000;
-
   opacity: 0;
   pointer-events: none;
   transform: translateY(-14px);
-
   will-change: opacity, transform, background, box-shadow, border-color, backdrop-filter;
+}
     }
 
     .sticky-header.is-visible {
@@ -862,7 +861,7 @@
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/markdown-it/dist/markdown-it.min.js"></script>
-  <script>
+<script>
   function parseFrontMatter(markdown = "") {
     const match = markdown.match(/^---\s*\n([\s\S]*?)\n---\s*\n?/);
 
@@ -1102,21 +1101,21 @@
 
       const heroHeight = heroEl.offsetHeight || 0;
 
-      const fadeStart = Math.max(heroHeight - 180, 80);
-      const fadeEnd = Math.max(heroHeight - 20, fadeStart + 1);
+      const fadeStart = Math.max(heroHeight - 260, 60);
+      const fadeEnd = Math.max(heroHeight - 40, fadeStart + 1);
 
       const progress = clamp((scrollY - fadeStart) / (fadeEnd - fadeStart), 0, 1);
-      const eased = 1 - Math.pow(1 - progress, 3);
+      const eased = progress * progress * (3 - 2 * progress);
 
       stickyHeaderEl.style.opacity = eased.toFixed(3);
-      stickyHeaderEl.style.transform = `translateY(${(-14 * (1 - eased)).toFixed(2)}px)`;
-      stickyHeaderEl.style.background = `rgba(255, 255, 255, ${(0.82 + eased * 0.14).toFixed(3)})`;
-      stickyHeaderEl.style.borderBottomColor = `rgba(0, 0, 0, ${(0.03 + eased * 0.05).toFixed(3)})`;
-      stickyHeaderEl.style.boxShadow = `0 6px 24px rgba(0, 0, 0, ${(0.02 + eased * 0.05).toFixed(3)})`;
-      stickyHeaderEl.style.backdropFilter = `blur(${(eased * 10).toFixed(2)}px)`;
-      stickyHeaderEl.style.webkitBackdropFilter = `blur(${(eased * 10).toFixed(2)}px)`;
+      stickyHeaderEl.style.transform = `translateY(${(-18 * (1 - eased)).toFixed(2)}px)`;
+      stickyHeaderEl.style.background = `rgba(255, 255, 255, ${(0.72 + eased * 0.24).toFixed(3)})`;
+      stickyHeaderEl.style.borderBottomColor = `rgba(0, 0, 0, ${(0.02 + eased * 0.06).toFixed(3)})`;
+      stickyHeaderEl.style.boxShadow = `0 8px 28px rgba(0, 0, 0, ${(0.01 + eased * 0.06).toFixed(3)})`;
+      stickyHeaderEl.style.backdropFilter = `blur(${(eased * 12).toFixed(2)}px)`;
+      stickyHeaderEl.style.webkitBackdropFilter = `blur(${(eased * 12).toFixed(2)}px)`;
 
-      const isVisible = eased > 0.02;
+      const isVisible = eased > 0.01;
       stickyHeaderEl.classList.toggle("is-visible", isVisible);
       stickyHeaderEl.setAttribute("aria-hidden", isVisible ? "false" : "true");
 
