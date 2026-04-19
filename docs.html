@@ -856,8 +856,7 @@ body:hover::-webkit-scrollbar-thumb:hover,
         const { data: frontMatter, content: cleanedMarkdown } = parseFrontMatter(markdown);
 
         metaEl.textContent = frontMatter.date || "";
-        const processedMarkdown = cleanedMarkdown.replace(/\*\*([^*]+)\*\*/g, ' **$1** ');
-        contentEl.innerHTML = md.render(processedMarkdown);
+       contentEl.innerHTML = md.render(cleanedMarkdown);
 
         applyReferenceHeadingStyle(contentEl);
 
