@@ -1088,50 +1088,68 @@
 
     if (!heroEl || !stickyHeaderEl) return;
 
-    let ticking = false;
+    let currentProgress = 0;
+    let targetProgress = 0;
+    let rafId = null;
 
     function clamp(value, min, max) {
       return Math.min(Math.max(value, min), max);
     }
 
-    function applyState() {
+    function render() {
+      const eased = currentProgress * currentProgress * (3 - 2 * currentProgress);
+
+      stickyHeaderEl.style.opacity = eased.toFixed(3);
+      stickyHeaderEl.style.transform = `translateY(${(-24 * (1 - eased)).toFixed(2)}px)`;
+      stickyHeaderEl.style.background = `rgba(255, 255, 255, ${(0.68 + eased * 0.28).toFixed(3)})`;
+      stickyHeaderEl.style.borderBottomColor = `rgba(0, 0, 0, ${(0.01 + eased * 0.07).toFixed(3)})`;
+      stickyHeaderEl.style.boxShadow = `0 10px 32px rgba(0, 0, 0, ${(0.00 + eased * 0.08).toFixed(3)})`;
+      stickyHeaderEl.style.backdropFilter = `blur(${(eased * 14).toFixed(2)}px)`;
+      stickyHeaderEl.style.webkitBackdropFilter = `blur(${(eased * 14).toFixed(2)}px)`;
+
+      const isVisible = eased > 0.01;
+      stickyHeaderEl.classList.toggle("is-visible", isVisible);
+      stickyHeaderEl.setAttribute("aria-hidden", isVisible ? "false" : "true");
+    }
+
+    function animate() {
+      const diff = targetProgress - currentProgress;
+
+      currentProgress += diff * 0.12;
+
+      if (Math.abs(diff) < 0.001) {
+        currentProgress = targetProgress;
+        render();
+        rafId = null;
+        return;
+      }
+
+      render();
+      rafId = window.requestAnimationFrame(animate);
+    }
+
+    function updateTarget() {
       const scrollY = window.scrollY || window.pageYOffset || 0;
       const shouldCondense = scrollY > 36;
       document.body.classList.toggle("hero-condensed", shouldCondense);
 
       const heroHeight = heroEl.offsetHeight || 0;
 
-      const fadeStart = Math.max(heroHeight - 260, 60);
-      const fadeEnd = Math.max(heroHeight - 40, fadeStart + 1);
+      const fadeStart = Math.max(heroHeight - 420, 20);
+      const fadeEnd = Math.max(heroHeight + 40, fadeStart + 1);
 
-      const progress = clamp((scrollY - fadeStart) / (fadeEnd - fadeStart), 0, 1);
-      const eased = progress * progress * (3 - 2 * progress);
+      targetProgress = clamp((scrollY - fadeStart) / (fadeEnd - fadeStart), 0, 1);
 
-      stickyHeaderEl.style.opacity = eased.toFixed(3);
-      stickyHeaderEl.style.transform = `translateY(${(-18 * (1 - eased)).toFixed(2)}px)`;
-      stickyHeaderEl.style.background = `rgba(255, 255, 255, ${(0.72 + eased * 0.24).toFixed(3)})`;
-      stickyHeaderEl.style.borderBottomColor = `rgba(0, 0, 0, ${(0.02 + eased * 0.06).toFixed(3)})`;
-      stickyHeaderEl.style.boxShadow = `0 8px 28px rgba(0, 0, 0, ${(0.01 + eased * 0.06).toFixed(3)})`;
-      stickyHeaderEl.style.backdropFilter = `blur(${(eased * 12).toFixed(2)}px)`;
-      stickyHeaderEl.style.webkitBackdropFilter = `blur(${(eased * 12).toFixed(2)}px)`;
-
-      const isVisible = eased > 0.01;
-      stickyHeaderEl.classList.toggle("is-visible", isVisible);
-      stickyHeaderEl.setAttribute("aria-hidden", isVisible ? "false" : "true");
-
-      ticking = false;
-    }
-
-    function requestTick() {
-      if (!ticking) {
-        window.requestAnimationFrame(applyState);
-        ticking = true;
+      if (!rafId) {
+        rafId = window.requestAnimationFrame(animate);
       }
     }
 
-    applyState();
-    window.addEventListener("scroll", requestTick, { passive: true });
-    window.addEventListener("resize", requestTick);
+    updateTarget();
+    render();
+
+    window.addEventListener("scroll", updateTarget, { passive: true });
+    window.addEventListener("resize", updateTarget);
   }
 
   function buildRelatedCard(post, currentSlug, thumbnailUrl, mode = "random") {
