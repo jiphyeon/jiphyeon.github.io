@@ -170,9 +170,13 @@
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
-      transition: transform 0.35s ease, opacity 0.35s ease;
       opacity: 1;
       visibility: visible;
+      transform: scale(1);
+      transition:
+        transform 0.45s ease,
+        opacity 0.45s ease,
+        visibility 0s linear 0s;
     }
 
     .post-hero-bg img {
@@ -189,9 +193,12 @@
       background:
         linear-gradient(to top, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.18)),
         linear-gradient(to bottom, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.08));
-      transition: background 0.35s ease, opacity 0.35s ease;
       opacity: 1;
       visibility: visible;
+      transition:
+        opacity 0.45s ease,
+        background 0.45s ease,
+        visibility 0s linear 0s;
     }
 
     .post-hero-inner {
@@ -201,10 +208,13 @@
       max-width: 1120px;
       margin: 0 auto;
       padding: 80px 20px 32px;
-      transition: padding 0.28s ease;
       opacity: 1;
       transform: translateY(0);
       pointer-events: auto;
+      transition:
+        padding 0.28s ease,
+        opacity 0.45s ease,
+        transform 0.45s ease;
     }
 
     body.hero-condensed .post-hero {
@@ -225,28 +235,77 @@
         linear-gradient(to bottom, rgba(0, 0, 0, 0.16), rgba(0, 0, 0, 0.06));
     }
 
-    /* sticky가 켜져도 히어로는 그대로 유지 */
     body.sticky-active .post-hero-bg {
-      opacity: 1;
-      visibility: visible;
-      transform: scale(1.03);
+      opacity: 0;
+      visibility: hidden;
+      transform: scale(1.01);
+      transition:
+        transform 0.45s ease,
+        opacity 0.45s ease,
+        visibility 0s linear 0.45s;
     }
 
     body.sticky-active .post-hero-overlay {
-      opacity: 1;
-      visibility: visible;
+      opacity: 0;
+      visibility: hidden;
+      transition:
+        opacity 0.45s ease,
+        visibility 0s linear 0.45s;
     }
 
     body.sticky-active .post-hero-inner {
-      opacity: 1;
-      transform: translateY(0);
-      pointer-events: auto;
+      opacity: 0;
+      transform: translateY(-24px);
+      pointer-events: none;
+      transition:
+        opacity 0.45s ease,
+        transform 0.45s ease;
     }
 
     body.sticky-active .back-link-wrap {
+      opacity: 0;
+      transform: translateX(-50%) translateY(-24px);
+      pointer-events: none;
+      transition:
+        opacity 0.45s ease,
+        transform 0.45s ease;
+    }
+
+    body:not(.sticky-active) .post-hero-bg {
+      opacity: 1;
+      visibility: visible;
+      transform: scale(1);
+      transition:
+        transform 0.45s ease,
+        opacity 0.45s ease,
+        visibility 0s linear 0s;
+    }
+
+    body:not(.sticky-active) .post-hero-overlay {
+      opacity: 1;
+      visibility: visible;
+      transition:
+        opacity 0.45s ease,
+        background 0.45s ease,
+        visibility 0s linear 0s;
+    }
+
+    body:not(.sticky-active) .post-hero-inner {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+      transition:
+        opacity 0.45s ease,
+        transform 0.45s ease;
+    }
+
+    body:not(.sticky-active) .back-link-wrap {
       opacity: 1;
       transform: translateX(-50%) translateY(0);
       pointer-events: auto;
+      transition:
+        opacity 0.45s ease,
+        transform 0.45s ease;
     }
 
     #heroSentinel {
@@ -734,6 +793,14 @@
         width: calc(100% - 36px);
       }
 
+      body.sticky-active .back-link-wrap {
+        transform: translateX(-50%) translateY(-18px);
+      }
+
+      body:not(.sticky-active) .back-link-wrap {
+        transform: translateX(-50%) translateY(0);
+      }
+
       .post-hero {
         min-height: 300px;
       }
@@ -1159,7 +1226,7 @@
         {
           root: null,
           threshold: 0,
-          rootMargin: "-64px 0px 0px 0px"
+          rootMargin: "-120px 0px 0px 0px"
         }
       );
 
