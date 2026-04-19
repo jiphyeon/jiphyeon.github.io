@@ -1308,8 +1308,7 @@
 
         metaEl.textContent = frontMatter.date || post.date || "";
 
-        const processedMarkdown = cleanedMarkdown.replace(/\*\*([^*]+)\*\*/g, " **$1** ");
-        contentEl.innerHTML = md.render(processedMarkdown);
+       contentEl.innerHTML = md.render(cleanedMarkdown);
 
         await renderRelatedPosts(posts, post);
         bindContentImageLightbox();
