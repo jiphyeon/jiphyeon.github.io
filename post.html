@@ -157,29 +157,29 @@
 
     .post-hero {
       position: relative;
-  width: 100%;
-  min-height: 360px;
-  display: flex;
-  align-items: flex-end;
-  overflow: hidden;
-  background: #fff;
-  transition:
-    min-height 0.28s ease,
-    background 0.55s ease;
+      width: 100%;
+      min-height: 360px;
+      display: flex;
+      align-items: flex-end;
+      overflow: hidden;
+      background: #fff;
+      transition:
+        min-height 0.28s ease,
+        background 0.55s ease;
     }
 
     .post-hero-bg {
       position: absolute;
-  inset: 0;
-  z-index: 1;
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  visibility: visible;
-  transition:
-    transform 0.55s ease,
-    opacity 0.55s ease,
-    visibility 0.55s ease;
+      inset: 0;
+      z-index: 1;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      visibility: visible;
+      transition:
+        transform 0.55s ease,
+        opacity 0.55s ease,
+        visibility 0s linear 0.55s;
     }
 
     .post-hero-bg img {
@@ -189,23 +189,19 @@
       display: block;
     }
 
-   .post-hero-overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 2;
-  background:
-    linear-gradient(to top, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.18)),
-    linear-gradient(to bottom, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.08));
-  visibility: visible;
-  transition:
-    opacity 0.55s ease,
-    background 0.55s ease,
-    visibility 0.55s ease;
-}
-
-body.sticky-active .post-hero {
-  background: #fff;
-}
+    .post-hero-overlay {
+      position: absolute;
+      inset: 0;
+      z-index: 2;
+      background:
+        linear-gradient(to top, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.18)),
+        linear-gradient(to bottom, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.08));
+      visibility: visible;
+      transition:
+        opacity 0.55s ease,
+        background 0.55s ease,
+        visibility 0s linear 0.55s;
+    }
 
     .post-hero-inner {
       position: relative;
@@ -238,28 +234,71 @@ body.sticky-active .post-hero {
         linear-gradient(to bottom, rgba(0, 0, 0, 0.16), rgba(0, 0, 0, 0.06));
     }
 
-body.sticky-active .post-hero-bg {
-  opacity: 0;
-  transform: scale(1.01);
-  visibility: hidden;
-}
+    body.sticky-active .post-hero {
+      background: #fff;
+    }
 
-body.sticky-active .post-hero-overlay {
-  opacity: 0;
-  visibility: hidden;
-}
+    body.sticky-active .post-hero-bg {
+      opacity: 0;
+      transform: scale(1.01);
+      visibility: hidden;
+      transition:
+        transform 0.55s ease,
+        opacity 0.55s ease,
+        visibility 0s linear 0.55s;
+    }
 
-   body.sticky-active .post-hero-inner {
-  opacity: 0;
-  transform: translateY(-18px);
-  pointer-events: none;
-}
+    body.sticky-active .post-hero-overlay {
+      opacity: 0;
+      visibility: hidden;
+      transition:
+        opacity 0.55s ease,
+        background 0.55s ease,
+        visibility 0s linear 0.55s;
+    }
 
-body.sticky-active .back-link-wrap {
-  opacity: 0;
-  transform: translateX(-50%) translateY(-18px);
-  pointer-events: none;
-}
+    body.sticky-active .post-hero-inner {
+      opacity: 0;
+      transform: translateY(-18px);
+      pointer-events: none;
+    }
+
+    body.sticky-active .back-link-wrap {
+      opacity: 0;
+      transform: translateX(-50%) translateY(-18px);
+      pointer-events: none;
+    }
+
+    body:not(.sticky-active) .post-hero-bg {
+      opacity: 1;
+      visibility: visible;
+      transform: scale(1);
+      transition:
+        transform 0.55s ease,
+        opacity 0.55s ease,
+        visibility 0s linear 0s;
+    }
+
+    body:not(.sticky-active) .post-hero-overlay {
+      opacity: 1;
+      visibility: visible;
+      transition:
+        opacity 0.55s ease,
+        background 0.55s ease,
+        visibility 0s linear 0s;
+    }
+
+    body:not(.sticky-active) .post-hero-inner {
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
+    }
+
+    body:not(.sticky-active) .back-link-wrap {
+      opacity: 1;
+      transform: translateX(-50%) translateY(0);
+      pointer-events: auto;
+    }
 
     .post-header {
       max-width: 760px;
@@ -743,6 +782,10 @@ body.sticky-active .back-link-wrap {
         transform: translateX(-50%) translateY(-12px);
       }
 
+      body:not(.sticky-active) .back-link-wrap {
+        transform: translateX(-50%) translateY(0);
+      }
+
       .post-hero {
         min-height: 300px;
       }
@@ -1135,64 +1178,84 @@ body.sticky-active .back-link-wrap {
       };
     }
 
-function bindHeroScrollInteraction() {
-  const heroEl = document.getElementById("postHero");
-  const stickyHeaderEl = document.getElementById("stickyHeader");
+    function bindHeroScrollInteraction() {
+      const heroEl = document.getElementById("postHero");
+      const stickyHeaderEl = document.getElementById("stickyHeader");
 
-  if (!heroEl || !stickyHeaderEl) return;
+      if (!heroEl || !stickyHeaderEl) return;
 
-  let ticking = false;
-  let stickyTrigger = 180; // 기준값 고정
+      let ticking = false;
+      let stickyTrigger = 180;
 
-  function updateTrigger() {
-    // 최초 기준 높이만 잡는다 (중간에 변하지 않게)
-    const heroBaseHeight =
-      heroEl.getBoundingClientRect().height ||
-      heroEl.offsetHeight ||
-      0;
+      function updateTrigger() {
+        const heroBaseHeight = heroEl.offsetHeight || 0;
+        stickyTrigger = Math.max(heroBaseHeight - 120, 140);
+      }
 
-    stickyTrigger = Math.max(heroBaseHeight - 120, 140);
-  }
+      function forceResetAtTop() {
+        const scrollY = window.scrollY || window.pageYOffset || 0;
 
-  function applyState() {
-    const scrollY = window.scrollY || window.pageYOffset || 0;
+        if (scrollY <= 8) {
+          document.body.classList.remove("sticky-active");
+          document.body.classList.remove("hero-condensed");
+          stickyHeaderEl.setAttribute("aria-hidden", "true");
+        }
+      }
 
-    const shouldCondense = scrollY > 36;
-    const shouldActivateSticky = scrollY > stickyTrigger;
+      function applyState() {
+        const scrollY = window.scrollY || window.pageYOffset || 0;
 
-    document.body.classList.toggle("hero-condensed", shouldCondense);
-    document.body.classList.toggle("sticky-active", shouldActivateSticky);
-    stickyHeaderEl.setAttribute(
-      "aria-hidden",
-      shouldActivateSticky ? "false" : "true"
-    );
+        const shouldCondense = scrollY > 36;
+        let shouldActivateSticky = scrollY > stickyTrigger;
 
-    ticking = false;
-  }
+        if (scrollY <= 8) {
+          shouldActivateSticky = false;
+        }
 
-  function requestTick() {
-    if (!ticking) {
-      window.requestAnimationFrame(applyState);
-      ticking = true;
+        document.body.classList.toggle("hero-condensed", shouldCondense);
+        document.body.classList.toggle("sticky-active", shouldActivateSticky);
+        stickyHeaderEl.setAttribute(
+          "aria-hidden",
+          shouldActivateSticky ? "false" : "true"
+        );
+
+        ticking = false;
+      }
+
+      function requestTick() {
+        if (!ticking) {
+          window.requestAnimationFrame(applyState);
+          ticking = true;
+        }
+      }
+
+      if ("scrollRestoration" in history) {
+        history.scrollRestoration = "manual";
+      }
+
+      updateTrigger();
+      forceResetAtTop();
+      applyState();
+
+      window.addEventListener("scroll", requestTick, { passive: true });
+
+      window.addEventListener("resize", () => {
+        updateTrigger();
+        requestTick();
+      });
+
+      window.addEventListener("pageshow", () => {
+        updateTrigger();
+        forceResetAtTop();
+        requestTick();
+      });
+
+      window.addEventListener("load", () => {
+        updateTrigger();
+        forceResetAtTop();
+        requestTick();
+      });
     }
-  }
-
-  // ✅ 핵심: 기준을 먼저 고정
-  updateTrigger();
-  applyState();
-
-  window.addEventListener("scroll", requestTick, { passive: true });
-
-  window.addEventListener("resize", () => {
-    updateTrigger();
-    applyState();
-  });
-
-  window.addEventListener("pageshow", () => {
-    updateTrigger();
-    applyState();
-  });
-}
 
     function buildRelatedCard(post, currentSlug, thumbnailUrl, mode = "random") {
       const isCurrent =
