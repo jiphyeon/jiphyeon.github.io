@@ -1187,54 +1187,98 @@
       };
     }
 
-    function bindHeroScrollInteraction() {
-      const stickyHeaderEl = document.getElementById("stickyHeader");
-      const sentinelEl = document.getElementById("heroSentinel");
+   function bindHeroScrollInteraction() {
+  const stickyHeaderEl = document.getElementById("stickyHeader");
+  const sentinelEl = document.getElementById("heroSentinel");
 
-      if (!stickyHeaderEl || !sentinelEl) return;
+  if (!stickyHeaderEl || !sentinelEl) return;
 
-      function applyTopState() {
-        const scrollY = window.scrollY || window.pageYOffset || 0;
-        const shouldCondense = scrollY > 36;
+  let observer = null;
 
-        document.body.classList.toggle("hero-condensed", shouldCondense);
+  function isShortPage() {
+    const doc = document.documentElement;
+    const pageHeight = Math.max(
+      document.body.scrollHeight,
+      doc.scrollHeight,
+      document.body.offsetHeight,
+      doc.offsetHeight
+    );
 
-        if (scrollY <= 8) {
-          document.body.classList.remove("sticky-active");
-          stickyHeaderEl.setAttribute("aria-hidden", "true");
-        }
-      }
+    const viewportHeight = window.innerHeight || doc.clientHeight || 0;
 
-      if ("scrollRestoration" in history) {
-        history.scrollRestoration = "manual";
-      }
+    return pageHeight <= viewportHeight + 220;
+  }
 
-      const observer = new IntersectionObserver(
-        (entries) => {
-          const entry = entries[0];
-          const isAboveSentinel = !entry.isIntersecting;
+  function applyTopState() {
+    const scrollY = window.scrollY || window.pageYOffset || 0;
+    const shouldCondense = scrollY > 36;
 
-          document.body.classList.toggle("sticky-active", isAboveSentinel);
-          stickyHeaderEl.setAttribute("aria-hidden", isAboveSentinel ? "false" : "true");
+    document.body.classList.toggle("hero-condensed", shouldCondense);
 
-          applyTopState();
-        },
-        {
-          root: null,
-          threshold: 0,
-          rootMargin: "-64px 0px 0px 0px"
-        }
-      );
-
-      observer.observe(sentinelEl);
-
-      applyTopState();
-
-      window.addEventListener("scroll", applyTopState, { passive: true });
-      window.addEventListener("resize", applyTopState);
-      window.addEventListener("pageshow", applyTopState);
-      window.addEventListener("load", applyTopState);
+    if (scrollY <= 8) {
+      document.body.classList.remove("sticky-active");
+      stickyHeaderEl.setAttribute("aria-hidden", "true");
     }
+  }
+
+  function disableStickyMode() {
+    document.body.classList.remove("sticky-active");
+    stickyHeaderEl.setAttribute("aria-hidden", "true");
+  }
+
+  function setupObserver() {
+    if (observer) {
+      observer.disconnect();
+      observer = null;
+    }
+
+    if (isShortPage()) {
+      disableStickyMode();
+      applyTopState();
+      return;
+    }
+
+    observer = new IntersectionObserver(
+      (entries) => {
+        const entry = entries[0];
+        const isAboveSentinel = !entry.isIntersecting;
+
+        document.body.classList.toggle("sticky-active", isAboveSentinel);
+        stickyHeaderEl.setAttribute("aria-hidden", isAboveSentinel ? "false" : "true");
+
+        applyTopState();
+      },
+      {
+        root: null,
+        threshold: 0,
+        rootMargin: "-64px 0px 0px 0px"
+      }
+    );
+
+    observer.observe(sentinelEl);
+    applyTopState();
+  }
+
+  if ("scrollRestoration" in history) {
+    history.scrollRestoration = "manual";
+  }
+
+  setupObserver();
+
+  window.addEventListener("scroll", applyTopState, { passive: true });
+
+  window.addEventListener("resize", () => {
+    setupObserver();
+  });
+
+  window.addEventListener("pageshow", () => {
+    setupObserver();
+  });
+
+  window.addEventListener("load", () => {
+    setupObserver();
+  });
+}
 
     function buildRelatedCard(post, currentSlug, thumbnailUrl, mode = "random") {
       const isCurrent =
