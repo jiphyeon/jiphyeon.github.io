@@ -55,30 +55,36 @@
     }
 
     .sticky-header {
-    position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 64px;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 0 20px;
-  background: rgba(255, 255, 255, 0);
-  border-bottom: 1px solid rgba(0, 0, 0, 0);
-  box-shadow: 0 6px 24px rgba(0, 0, 0, 0);
-  backdrop-filter: blur(0px);
-  -webkit-backdrop-filter: blur(0px);
-  z-index: 1000;
-  opacity: 0;
-  pointer-events: none;
-  transform: translateY(-14px);
-  will-change: opacity, transform, background, box-shadow, border-color, backdrop-filter;
-}
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 64px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      padding: 0 20px;
+      background: rgba(255, 255, 255, 0.96);
+      border-bottom: 1px solid rgba(0, 0, 0, 0.06);
+      box-shadow: 0 8px 28px rgba(0, 0, 0, 0.06);
+      backdrop-filter: blur(10px);
+      -webkit-backdrop-filter: blur(10px);
+      z-index: 1000;
+      opacity: 0;
+      pointer-events: none;
+      transform: translateY(-18px);
+      transition:
+        opacity 0.55s ease,
+        transform 0.55s ease,
+        box-shadow 0.55s ease,
+        background 0.55s ease,
+        border-color 0.55s ease;
     }
 
-    .sticky-header.is-visible {
-    pointer-events: auto;
+    body.sticky-active .sticky-header {
+      opacity: 1;
+      pointer-events: auto;
+      transform: translateY(0);
     }
 
     .sticky-header-inner {
@@ -128,6 +134,9 @@
       width: calc(100% - 40px);
       max-width: 1120px;
       z-index: 5;
+      transition:
+        opacity 0.55s ease,
+        transform 0.55s ease;
     }
 
     .back-link,
@@ -164,7 +173,9 @@
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;
-      transition: transform 0.4s ease, opacity 0.28s ease;
+      transition:
+        transform 0.55s ease,
+        opacity 0.55s ease;
     }
 
     .post-hero-bg img {
@@ -181,7 +192,9 @@
       background:
         linear-gradient(to top, rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.18)),
         linear-gradient(to bottom, rgba(0, 0, 0, 0.18), rgba(0, 0, 0, 0.08));
-      transition: background 0.28s ease;
+      transition:
+        opacity 0.55s ease,
+        background 0.55s ease;
     }
 
     .post-hero-inner {
@@ -191,7 +204,10 @@
       max-width: 1120px;
       margin: 0 auto;
       padding: 80px 20px 32px;
-      transition: padding 0.28s ease, transform 0.28s ease;
+      transition:
+        padding 0.28s ease,
+        transform 0.55s ease,
+        opacity 0.55s ease;
     }
 
     body.hero-condensed .post-hero {
@@ -210,6 +226,27 @@
       background:
         linear-gradient(to top, rgba(0, 0, 0, 0.52), rgba(0, 0, 0, 0.22)),
         linear-gradient(to bottom, rgba(0, 0, 0, 0.16), rgba(0, 0, 0, 0.06));
+    }
+
+    body.sticky-active .post-hero-bg {
+      opacity: 0.14;
+      transform: scale(1.02);
+    }
+
+    body.sticky-active .post-hero-overlay {
+      opacity: 0.06;
+    }
+
+    body.sticky-active .post-hero-inner {
+      opacity: 0;
+      transform: translateY(-14px);
+      pointer-events: none;
+    }
+
+    body.sticky-active .back-link-wrap {
+      opacity: 0;
+      transform: translateX(-50%) translateY(-14px);
+      pointer-events: none;
     }
 
     .post-header {
@@ -690,6 +727,10 @@
         width: calc(100% - 36px);
       }
 
+      body.sticky-active .back-link-wrap {
+        transform: translateX(-50%) translateY(-12px);
+      }
+
       .post-hero {
         min-height: 300px;
       }
@@ -861,467 +902,432 @@
   </main>
 
   <script src="https://cdn.jsdelivr.net/npm/markdown-it/dist/markdown-it.min.js"></script>
-<script>
-  function parseFrontMatter(markdown = "") {
-    const match = markdown.match(/^---\s*\n([\s\S]*?)\n---\s*\n?/);
+  <script>
+    function parseFrontMatter(markdown = "") {
+      const match = markdown.match(/^---\s*\n([\s\S]*?)\n---\s*\n?/);
 
-    if (!match) {
-      return { data: {}, content: markdown };
-    }
+      if (!match) {
+        return { data: {}, content: markdown };
+      }
 
-    const raw = match[1];
-    const content = markdown.replace(/^---\s*\n[\s\S]*?\n---\s*\n?/, "");
-    const data = {};
+      const raw = match[1];
+      const content = markdown.replace(/^---\s*\n[\s\S]*?\n---\s*\n?/, "");
+      const data = {};
 
-    raw.split("\n").forEach(line => {
-      const index = line.indexOf(":");
-      if (index === -1) return;
+      raw.split("\n").forEach(line => {
+        const index = line.indexOf(":");
+        if (index === -1) return;
 
-      const key = line.slice(0, index).trim();
-      const value = line.slice(index + 1).trim();
-      data[key] = value;
-    });
-
-    return { data, content };
-  }
-
-  const params = new URLSearchParams(window.location.search);
-  const slug = params.get("slug");
-
-  const sidebarThumbnailList = Array.from({ length: 24 }, (_, i) => {
-    return `/images/shapes/shape-${i + 1}.svg`;
-  });
-
-  const contentThumbnailCache = new Map();
-  const postFrontMatterCache = new Map();
-
-  function escapeHtml(value = "") {
-    return String(value)
-      .replaceAll("&", "&amp;")
-      .replaceAll("<", "&lt;")
-      .replaceAll(">", "&gt;")
-      .replaceAll('"', "&quot;")
-      .replaceAll("'", "&#039;");
-  }
-
-  function shuffleArray(array = []) {
-    const copied = [...array];
-
-    for (let i = copied.length - 1; i > 0; i -= 1) {
-      const j = Math.floor(Math.random() * (i + 1));
-      [copied[i], copied[j]] = [copied[j], copied[i]];
-    }
-
-    return copied;
-  }
-
-  function getRandomSidebarThumbnailPool(count = 0) {
-    if (count <= 0) return [];
-
-    const shuffled = shuffleArray(sidebarThumbnailList);
-    const result = [];
-
-    for (let i = 0; i < count; i += 1) {
-      result.push(shuffled[i % shuffled.length]);
-    }
-
-    return result;
-  }
-
-  function normalizeAssetUrl(url = "") {
-    const trimmed = String(url || "").trim();
-
-    if (!trimmed) return "";
-
-    if (
-      trimmed.startsWith("http://") ||
-      trimmed.startsWith("https://") ||
-      trimmed.startsWith("//") ||
-      trimmed.startsWith("/")
-    ) {
-      return trimmed;
-    }
-
-    return `/${trimmed.replace(/^\.?\//, "")}`;
-  }
-
-  function getThumbnailMode(post = {}, frontMatter = {}) {
-    return String(
-      frontMatter.thumbnailMode ||
-      post.thumbnailMode ||
-      "random"
-    )
-      .trim()
-      .replace(/^['"]|['"]$/g, "")
-      .toLowerCase();
-  }
-
-  function extractFirstImageFromMarkdown(markdownContent = "") {
-    const imageMatch = markdownContent.match(/!\[[^\]]*\]\((?:<)?([^)\s>]+)(?:>)?(?:\s+["'][^"']*["'])?\)/);
-
-    if (!imageMatch || !imageMatch[1]) {
-      return "";
-    }
-
-    return normalizeAssetUrl(imageMatch[1]);
-  }
-
-  async function getPostMarkdownData(post) {
-    const cacheKey = post.slug || post.file || post.title || "";
-
-    if (postFrontMatterCache.has(cacheKey)) {
-      return postFrontMatterCache.get(cacheKey);
-    }
-
-    try {
-      const markdownResponse = await fetch(`/${post.file}`, {
-        cache: "no-store"
+        const key = line.slice(0, index).trim();
+        const value = line.slice(index + 1).trim();
+        data[key] = value;
       });
 
-      if (!markdownResponse.ok) {
-        throw new Error("Markdown 로드 실패");
-      }
-
-      const markdown = await markdownResponse.text();
-      const parsed = parseFrontMatter(markdown);
-
-      postFrontMatterCache.set(cacheKey, parsed);
-      return parsed;
-    } catch (error) {
-      const fallback = { data: {}, content: "" };
-      postFrontMatterCache.set(cacheKey, fallback);
-      return fallback;
-    }
-  }
-
-  async function getContentThumbnailUrl(post) {
-    const cacheKey = post.slug || post.file || post.title || "";
-
-    if (contentThumbnailCache.has(cacheKey)) {
-      return contentThumbnailCache.get(cacheKey);
+      return { data, content };
     }
 
-    const { data: frontMatter, content } = await getPostMarkdownData(post);
+    const params = new URLSearchParams(window.location.search);
+    const slug = params.get("slug");
 
-    const firstContentImage = extractFirstImageFromMarkdown(content);
-    const postThumbnail = normalizeAssetUrl(post.thumbnail || "");
-    const frontMatterThumbnail = normalizeAssetUrl(frontMatter.thumbnail || "");
-    const resolvedThumbnail = firstContentImage || frontMatterThumbnail || postThumbnail || "";
-
-    contentThumbnailCache.set(cacheKey, resolvedThumbnail);
-    return resolvedThumbnail;
-  }
-
-  async function getThumbnailByMode(post, randomThumbnailUrl = "") {
-    const { data: frontMatter } = await getPostMarkdownData(post);
-    const mode = getThumbnailMode(post, frontMatter);
-
-    if (mode === "content") {
-      const contentThumbnail = await getContentThumbnailUrl(post);
-      return contentThumbnail || randomThumbnailUrl;
-    }
-
-    return randomThumbnailUrl;
-  }
-
-  function isPublishedPost(post = {}) {
-    return (post.status || "published") === "published";
-  }
-
-  function setHeroBackground(heroBgEl, post) {
-    const seed = encodeURIComponent(post.slug || post.title || "jiphyeon");
-    const heroImageUrl = `https://picsum.photos/seed/${seed}/1600/900`;
-
-    heroBgEl.style.display = "block";
-    heroBgEl.style.backgroundImage = "";
-    heroBgEl.innerHTML = `<img src="${heroImageUrl}" alt="">`;
-  }
-
-  function bindContentImageLightbox() {
-    const lightbox = document.getElementById("image-lightbox");
-    const lightboxImg = document.getElementById("image-lightbox-img");
-    const closeBtn = document.getElementById("image-lightbox-close");
-
-    if (!lightbox || !lightboxImg || !closeBtn) return;
-
-    const contentImages = document.querySelectorAll(".content img");
-
-    function openLightbox(img) {
-      lightboxImg.src = img.src;
-      lightboxImg.alt = img.alt || "";
-      lightbox.classList.add("is-open");
-      lightbox.setAttribute("aria-hidden", "false");
-      document.body.style.overflow = "hidden";
-    }
-
-    function closeLightbox() {
-      lightbox.classList.remove("is-open");
-      lightbox.setAttribute("aria-hidden", "true");
-      lightboxImg.src = "";
-      lightboxImg.alt = "";
-      document.body.style.overflow = "";
-    }
-
-    contentImages.forEach((img) => {
-      img.style.cursor = "zoom-in";
-      img.onclick = () => openLightbox(img);
+    const sidebarThumbnailList = Array.from({ length: 24 }, (_, i) => {
+      return `/images/shapes/shape-${i + 1}.svg`;
     });
 
-    closeBtn.onclick = closeLightbox;
+    const contentThumbnailCache = new Map();
+    const postFrontMatterCache = new Map();
 
-    lightbox.onclick = (event) => {
-      if (event.target === lightbox) {
-        closeLightbox();
-      }
-    };
-
-    document.onkeydown = (event) => {
-      if (event.key === "Escape" && lightbox.classList.contains("is-open")) {
-        closeLightbox();
-      }
-    };
-  }
-
-  function bindHeroScrollInteraction() {
-    const heroEl = document.getElementById("postHero");
-    const stickyHeaderEl = document.getElementById("stickyHeader");
-
-    if (!heroEl || !stickyHeaderEl) return;
-
-    let currentProgress = 0;
-    let targetProgress = 0;
-    let rafId = null;
-
-    function clamp(value, min, max) {
-      return Math.min(Math.max(value, min), max);
+    function escapeHtml(value = "") {
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
     }
 
-    function render() {
-      const eased = currentProgress * currentProgress * (3 - 2 * currentProgress);
+    function shuffleArray(array = []) {
+      const copied = [...array];
 
-      stickyHeaderEl.style.opacity = eased.toFixed(3);
-      stickyHeaderEl.style.transform = `translateY(${(-24 * (1 - eased)).toFixed(2)}px)`;
-      stickyHeaderEl.style.background = `rgba(255, 255, 255, ${(0.68 + eased * 0.28).toFixed(3)})`;
-      stickyHeaderEl.style.borderBottomColor = `rgba(0, 0, 0, ${(0.01 + eased * 0.07).toFixed(3)})`;
-      stickyHeaderEl.style.boxShadow = `0 10px 32px rgba(0, 0, 0, ${(0.00 + eased * 0.08).toFixed(3)})`;
-      stickyHeaderEl.style.backdropFilter = `blur(${(eased * 14).toFixed(2)}px)`;
-      stickyHeaderEl.style.webkitBackdropFilter = `blur(${(eased * 14).toFixed(2)}px)`;
-
-      const isVisible = eased > 0.01;
-      stickyHeaderEl.classList.toggle("is-visible", isVisible);
-      stickyHeaderEl.setAttribute("aria-hidden", isVisible ? "false" : "true");
-    }
-
-    function animate() {
-      const diff = targetProgress - currentProgress;
-
-      currentProgress += diff * 0.12;
-
-      if (Math.abs(diff) < 0.001) {
-        currentProgress = targetProgress;
-        render();
-        rafId = null;
-        return;
+      for (let i = copied.length - 1; i > 0; i -= 1) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [copied[i], copied[j]] = [copied[j], copied[i]];
       }
 
-      render();
-      rafId = window.requestAnimationFrame(animate);
+      return copied;
     }
 
-    function updateTarget() {
-      const scrollY = window.scrollY || window.pageYOffset || 0;
-      const shouldCondense = scrollY > 36;
-      document.body.classList.toggle("hero-condensed", shouldCondense);
+    function getRandomSidebarThumbnailPool(count = 0) {
+      if (count <= 0) return [];
 
-      const heroHeight = heroEl.offsetHeight || 0;
+      const shuffled = shuffleArray(sidebarThumbnailList);
+      const result = [];
 
-      const fadeStart = Math.max(heroHeight - 420, 20);
-      const fadeEnd = Math.max(heroHeight + 40, fadeStart + 1);
+      for (let i = 0; i < count; i += 1) {
+        result.push(shuffled[i % shuffled.length]);
+      }
 
-      targetProgress = clamp((scrollY - fadeStart) / (fadeEnd - fadeStart), 0, 1);
+      return result;
+    }
 
-      if (!rafId) {
-        rafId = window.requestAnimationFrame(animate);
+    function normalizeAssetUrl(url = "") {
+      const trimmed = String(url || "").trim();
+
+      if (!trimmed) return "";
+
+      if (
+        trimmed.startsWith("http://") ||
+        trimmed.startsWith("https://") ||
+        trimmed.startsWith("//") ||
+        trimmed.startsWith("/")
+      ) {
+        return trimmed;
+      }
+
+      return `/${trimmed.replace(/^\.?\//, "")}`;
+    }
+
+    function getThumbnailMode(post = {}, frontMatter = {}) {
+      return String(
+        frontMatter.thumbnailMode ||
+        post.thumbnailMode ||
+        "random"
+      )
+        .trim()
+        .replace(/^['"]|['"]$/g, "")
+        .toLowerCase();
+    }
+
+    function extractFirstImageFromMarkdown(markdownContent = "") {
+      const imageMatch = markdownContent.match(/!\[[^\]]*\]\((?:<)?([^)\s>]+)(?:>)?(?:\s+["'][^"']*["'])?\)/);
+
+      if (!imageMatch || !imageMatch[1]) {
+        return "";
+      }
+
+      return normalizeAssetUrl(imageMatch[1]);
+    }
+
+    async function getPostMarkdownData(post) {
+      const cacheKey = post.slug || post.file || post.title || "";
+
+      if (postFrontMatterCache.has(cacheKey)) {
+        return postFrontMatterCache.get(cacheKey);
+      }
+
+      try {
+        const markdownResponse = await fetch(`/${post.file}`, {
+          cache: "no-store"
+        });
+
+        if (!markdownResponse.ok) {
+          throw new Error("Markdown 로드 실패");
+        }
+
+        const markdown = await markdownResponse.text();
+        const parsed = parseFrontMatter(markdown);
+
+        postFrontMatterCache.set(cacheKey, parsed);
+        return parsed;
+      } catch (error) {
+        const fallback = { data: {}, content: "" };
+        postFrontMatterCache.set(cacheKey, fallback);
+        return fallback;
       }
     }
 
-    updateTarget();
-    render();
+    async function getContentThumbnailUrl(post) {
+      const cacheKey = post.slug || post.file || post.title || "";
 
-    window.addEventListener("scroll", updateTarget, { passive: true });
-    window.addEventListener("resize", updateTarget);
-  }
+      if (contentThumbnailCache.has(cacheKey)) {
+        return contentThumbnailCache.get(cacheKey);
+      }
 
-  function buildRelatedCard(post, currentSlug, thumbnailUrl, mode = "random") {
-    const isCurrent =
-      (post.slug || "").trim().toLowerCase() ===
-      (currentSlug || "").trim().toLowerCase();
+      const { data: frontMatter, content } = await getPostMarkdownData(post);
 
-    const thumbHtml =
-      mode === "content"
-        ? `
-          <div class="related-thumb content-thumb">
-            <img
-              class="related-thumb-image content-image"
-              src="${escapeHtml(thumbnailUrl || "")}"
-              alt=""
-              loading="lazy"
-              decoding="async"
-            >
-          </div>
-        `
-        : `
-          <div class="related-thumb">
-            <div class="related-thumb-frame">
+      const firstContentImage = extractFirstImageFromMarkdown(content);
+      const postThumbnail = normalizeAssetUrl(post.thumbnail || "");
+      const frontMatterThumbnail = normalizeAssetUrl(frontMatter.thumbnail || "");
+      const resolvedThumbnail = firstContentImage || frontMatterThumbnail || postThumbnail || "";
+
+      contentThumbnailCache.set(cacheKey, resolvedThumbnail);
+      return resolvedThumbnail;
+    }
+
+    async function getThumbnailByMode(post, randomThumbnailUrl = "") {
+      const { data: frontMatter } = await getPostMarkdownData(post);
+      const mode = getThumbnailMode(post, frontMatter);
+
+      if (mode === "content") {
+        const contentThumbnail = await getContentThumbnailUrl(post);
+        return contentThumbnail || randomThumbnailUrl;
+      }
+
+      return randomThumbnailUrl;
+    }
+
+    function isPublishedPost(post = {}) {
+      return (post.status || "published") === "published";
+    }
+
+    function setHeroBackground(heroBgEl, post) {
+      const seed = encodeURIComponent(post.slug || post.title || "jiphyeon");
+      const heroImageUrl = `https://picsum.photos/seed/${seed}/1600/900`;
+
+      heroBgEl.style.display = "block";
+      heroBgEl.style.backgroundImage = "";
+      heroBgEl.innerHTML = `<img src="${heroImageUrl}" alt="">`;
+    }
+
+    function bindContentImageLightbox() {
+      const lightbox = document.getElementById("image-lightbox");
+      const lightboxImg = document.getElementById("image-lightbox-img");
+      const closeBtn = document.getElementById("image-lightbox-close");
+
+      if (!lightbox || !lightboxImg || !closeBtn) return;
+
+      const contentImages = document.querySelectorAll(".content img");
+
+      function openLightbox(img) {
+        lightboxImg.src = img.src;
+        lightboxImg.alt = img.alt || "";
+        lightbox.classList.add("is-open");
+        lightbox.setAttribute("aria-hidden", "false");
+        document.body.style.overflow = "hidden";
+      }
+
+      function closeLightbox() {
+        lightbox.classList.remove("is-open");
+        lightbox.setAttribute("aria-hidden", "true");
+        lightboxImg.src = "";
+        lightboxImg.alt = "";
+        document.body.style.overflow = "";
+      }
+
+      contentImages.forEach((img) => {
+        img.style.cursor = "zoom-in";
+        img.onclick = () => openLightbox(img);
+      });
+
+      closeBtn.onclick = closeLightbox;
+
+      lightbox.onclick = (event) => {
+        if (event.target === lightbox) {
+          closeLightbox();
+        }
+      };
+
+      document.onkeydown = (event) => {
+        if (event.key === "Escape" && lightbox.classList.contains("is-open")) {
+          closeLightbox();
+        }
+      };
+    }
+
+    function bindHeroScrollInteraction() {
+      const heroEl = document.getElementById("postHero");
+      const stickyHeaderEl = document.getElementById("stickyHeader");
+
+      if (!heroEl || !stickyHeaderEl) return;
+
+      let ticking = false;
+
+      function applyState() {
+        const scrollY = window.scrollY || window.pageYOffset || 0;
+        const heroHeight = heroEl.offsetHeight || 0;
+
+        const shouldCondense = scrollY > 36;
+        const shouldActivateSticky = scrollY > Math.max(heroHeight - 120, 140);
+
+        document.body.classList.toggle("hero-condensed", shouldCondense);
+        document.body.classList.toggle("sticky-active", shouldActivateSticky);
+        stickyHeaderEl.setAttribute("aria-hidden", shouldActivateSticky ? "false" : "true");
+
+        ticking = false;
+      }
+
+      function requestTick() {
+        if (!ticking) {
+          window.requestAnimationFrame(applyState);
+          ticking = true;
+        }
+      }
+
+      applyState();
+      window.addEventListener("scroll", requestTick, { passive: true });
+      window.addEventListener("resize", requestTick);
+      window.addEventListener("pageshow", applyState);
+    }
+
+    function buildRelatedCard(post, currentSlug, thumbnailUrl, mode = "random") {
+      const isCurrent =
+        (post.slug || "").trim().toLowerCase() ===
+        (currentSlug || "").trim().toLowerCase();
+
+      const thumbHtml =
+        mode === "content"
+          ? `
+            <div class="related-thumb content-thumb">
               <img
-                class="related-thumb-image"
+                class="related-thumb-image content-image"
                 src="${escapeHtml(thumbnailUrl || "")}"
                 alt=""
                 loading="lazy"
                 decoding="async"
               >
             </div>
+          `
+          : `
+            <div class="related-thumb">
+              <div class="related-thumb-frame">
+                <img
+                  class="related-thumb-image"
+                  src="${escapeHtml(thumbnailUrl || "")}"
+                  alt=""
+                  loading="lazy"
+                  decoding="async"
+                >
+              </div>
+            </div>
+          `;
+
+      return `
+        <a class="related-card${mode === "content" ? " is-content" : ""}${isCurrent ? " is-current" : ""}" href="/post.html?slug=${encodeURIComponent(post.slug || "")}">
+          ${thumbHtml}
+          <div class="related-card-body">
+            <p class="related-card-post-title">${escapeHtml(post.title || "")}</p>
+            <div class="related-date">${escapeHtml(post.date || "")}</div>
           </div>
-        `;
-
-    return `
-      <a class="related-card${mode === "content" ? " is-content" : ""}${isCurrent ? " is-current" : ""}" href="/post.html?slug=${encodeURIComponent(post.slug || "")}">
-        ${thumbHtml}
-        <div class="related-card-body">
-          <p class="related-card-post-title">${escapeHtml(post.title || "")}</p>
-          <div class="related-date">${escapeHtml(post.date || "")}</div>
-        </div>
-      </a>
-    `;
-  }
-
-  async function renderRelatedPosts(posts, currentPost) {
-    const relatedListEl = document.getElementById("relatedList");
-    if (!relatedListEl || !currentPost || !(currentPost.category || currentPost.categoryLabel)) {
-      return;
+        </a>
+      `;
     }
 
-    const currentCategory = currentPost.category || currentPost.categoryLabel;
-    const sameCategoryPosts = posts.filter((item) => {
-      const itemCategory = item.category || item.categoryLabel;
-      return itemCategory === currentCategory && isPublishedPost(item);
+    async function renderRelatedPosts(posts, currentPost) {
+      const relatedListEl = document.getElementById("relatedList");
+      if (!relatedListEl || !currentPost || !(currentPost.category || currentPost.categoryLabel)) {
+        return;
+      }
+
+      const currentCategory = currentPost.category || currentPost.categoryLabel;
+      const sameCategoryPosts = posts.filter((item) => {
+        const itemCategory = item.category || item.categoryLabel;
+        return itemCategory === currentCategory && isPublishedPost(item);
+      });
+
+      if (sameCategoryPosts.length <= 1) {
+        relatedListEl.innerHTML = "";
+        return;
+      }
+
+      const randomThumbnailPool = getRandomSidebarThumbnailPool(sameCategoryPosts.length);
+
+      const thumbnailPool = await Promise.all(
+        sameCategoryPosts.map((item, index) => {
+          return getThumbnailByMode(item, randomThumbnailPool[index]);
+        })
+      );
+
+      const cards = await Promise.all(
+        sameCategoryPosts.map((item, index) =>
+          getPostMarkdownData(item).then(({ data }) => {
+            const mode = getThumbnailMode(item, data);
+            return buildRelatedCard(item, currentPost.slug, thumbnailPool[index], mode);
+          })
+        )
+      );
+
+      relatedListEl.innerHTML = cards.join("");
+    }
+
+    const md = window.markdownit({
+      breaks: false,
+      html: true
     });
 
-    if (sameCategoryPosts.length <= 1) {
-      relatedListEl.innerHTML = "";
-      return;
-    }
+    async function initializePostPage() {
+      const titleEl = document.getElementById("title");
+      const metaEl = document.getElementById("meta");
+      const contentEl = document.getElementById("content");
+      const categoryEl = document.getElementById("category");
+      const heroBgEl = document.getElementById("heroBg");
+      const relatedListEl = document.getElementById("relatedList");
+      const relatedTitleEl = document.getElementById("relatedTitle");
+      const stickyTitleEl = document.getElementById("stickyTitle");
 
-    const randomThumbnailPool = getRandomSidebarThumbnailPool(sameCategoryPosts.length);
-
-    const thumbnailPool = await Promise.all(
-      sameCategoryPosts.map((item, index) => {
-        return getThumbnailByMode(item, randomThumbnailPool[index]);
-      })
-    );
-
-    const cards = await Promise.all(
-      sameCategoryPosts.map((item, index) =>
-        getPostMarkdownData(item).then(({ data }) => {
-          const mode = getThumbnailMode(item, data);
-          return buildRelatedCard(item, currentPost.slug, thumbnailPool[index], mode);
-        })
-      )
-    );
-
-    relatedListEl.innerHTML = cards.join("");
-  }
-
-  const md = window.markdownit({
-    breaks: false,
-    html: true
-  });
-
-  async function initializePostPage() {
-    const titleEl = document.getElementById("title");
-    const metaEl = document.getElementById("meta");
-    const contentEl = document.getElementById("content");
-    const categoryEl = document.getElementById("category");
-    const heroBgEl = document.getElementById("heroBg");
-    const relatedListEl = document.getElementById("relatedList");
-    const relatedTitleEl = document.getElementById("relatedTitle");
-    const stickyTitleEl = document.getElementById("stickyTitle");
-
-    if (!slug) {
-      titleEl.textContent = "잘못된 접근";
-      contentEl.innerHTML = '<p class="error">slug 값이 없습니다.</p>';
-      if (stickyTitleEl) stickyTitleEl.textContent = "";
-      return;
-    }
-
-    try {
-      const postResponse = await fetch("/data/posts.json", { cache: "no-store" });
-      if (!postResponse.ok) throw new Error("posts.json 로드 실패");
-
-      const posts = await postResponse.json();
-      const post = posts.find(item => item.slug === slug);
-
-      if (!post) {
-        titleEl.textContent = "게시물을 찾을 수 없음";
-        contentEl.innerHTML = '<p class="error">해당 게시물을 찾을 수 없습니다.</p>';
+      if (!slug) {
+        titleEl.textContent = "잘못된 접근";
+        contentEl.innerHTML = '<p class="error">slug 값이 없습니다.</p>';
         if (stickyTitleEl) stickyTitleEl.textContent = "";
         return;
       }
 
-      document.title = post.title || "Post";
-      titleEl.textContent = post.title || "";
-      if (stickyTitleEl) {
-        stickyTitleEl.textContent = post.title || "";
+      try {
+        const postResponse = await fetch("/data/posts.json", { cache: "no-store" });
+        if (!postResponse.ok) throw new Error("posts.json 로드 실패");
+
+        const posts = await postResponse.json();
+        const post = posts.find(item => item.slug === slug);
+
+        if (!post) {
+          titleEl.textContent = "게시물을 찾을 수 없음";
+          contentEl.innerHTML = '<p class="error">해당 게시물을 찾을 수 없습니다.</p>';
+          if (stickyTitleEl) stickyTitleEl.textContent = "";
+          return;
+        }
+
+        document.title = post.title || "Post";
+        titleEl.textContent = post.title || "";
+        if (stickyTitleEl) {
+          stickyTitleEl.textContent = post.title || "";
+        }
+        metaEl.textContent = "";
+
+        if (post.category || post.categoryLabel) {
+          const currentCategoryName = post.categoryLabel || post.category;
+          categoryEl.style.display = "inline-flex";
+          categoryEl.textContent = currentCategoryName;
+
+          if (relatedTitleEl) {
+            relatedTitleEl.textContent = currentCategoryName;
+          }
+        } else {
+          if (relatedListEl) {
+            relatedListEl.innerHTML = "";
+          }
+          if (relatedTitleEl) {
+            relatedTitleEl.textContent = "";
+          }
+        }
+
+        setHeroBackground(heroBgEl, post);
+
+        const markdownResponse = await fetch(`/${post.file}`, {
+          cache: "no-store"
+        });
+
+        if (!markdownResponse.ok) throw new Error("Markdown 로드 실패");
+
+        const markdown = await markdownResponse.text();
+        const { data: frontMatter, content: cleanedMarkdown } = parseFrontMatter(markdown);
+
+        metaEl.textContent = frontMatter.date || post.date || "";
+
+        const processedMarkdown = cleanedMarkdown.replace(/\*\*([^*]+)\*\*/g, " **$1** ");
+        contentEl.innerHTML = md.render(processedMarkdown);
+
+        await renderRelatedPosts(posts, post);
+        bindContentImageLightbox();
+
+      } catch (error) {
+        console.error(error);
+        titleEl.textContent = "불러오기 실패";
+        contentEl.innerHTML = '<p class="error">본문을 불러오지 못했습니다.</p>';
+        if (stickyTitleEl) stickyTitleEl.textContent = "";
       }
-      metaEl.textContent = "";
-
-      if (post.category || post.categoryLabel) {
-        const currentCategoryName = post.categoryLabel || post.category;
-        categoryEl.style.display = "inline-flex";
-        categoryEl.textContent = currentCategoryName;
-
-        if (relatedTitleEl) {
-          relatedTitleEl.textContent = currentCategoryName;
-        }
-      } else {
-        if (relatedListEl) {
-          relatedListEl.innerHTML = "";
-        }
-        if (relatedTitleEl) {
-          relatedTitleEl.textContent = "";
-        }
-      }
-
-      setHeroBackground(heroBgEl, post);
-
-      const markdownResponse = await fetch(`/${post.file}`, {
-        cache: "no-store"
-      });
-
-      if (!markdownResponse.ok) throw new Error("Markdown 로드 실패");
-
-      const markdown = await markdownResponse.text();
-      const { data: frontMatter, content: cleanedMarkdown } = parseFrontMatter(markdown);
-
-      metaEl.textContent = frontMatter.date || post.date || "";
-
-      const processedMarkdown = cleanedMarkdown.replace(/\*\*([^*]+)\*\*/g, " **$1** ");
-      contentEl.innerHTML = md.render(processedMarkdown);
-
-      await renderRelatedPosts(posts, post);
-      bindContentImageLightbox();
-
-    } catch (error) {
-      console.error(error);
-      titleEl.textContent = "불러오기 실패";
-      contentEl.innerHTML = '<p class="error">본문을 불러오지 못했습니다.</p>';
-      if (stickyTitleEl) stickyTitleEl.textContent = "";
     }
-  }
 
-  bindHeroScrollInteraction();
-  initializePostPage();
-</script>
+    bindHeroScrollInteraction();
+    initializePostPage();
+  </script>
 
   <div id="image-lightbox" class="image-lightbox" aria-hidden="true">
     <button class="image-lightbox-close" id="image-lightbox-close" aria-label="이미지 닫기">×</button>
