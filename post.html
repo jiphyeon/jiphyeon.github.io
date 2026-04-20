@@ -957,21 +957,23 @@
     }
 
     function normalizeAssetUrl(url = "") {
-      const trimmed = String(url || "").trim();
+  const trimmed = String(url || "")
+    .trim()
+    .replace(/^["']+|["']+$/g, "");
 
-      if (!trimmed) return "";
+  if (!trimmed) return "";
 
-      if (
-        trimmed.startsWith("http://") ||
-        trimmed.startsWith("https://") ||
-        trimmed.startsWith("//") ||
-        trimmed.startsWith("/")
-      ) {
-        return trimmed;
-      }
+  if (
+    trimmed.startsWith("http://") ||
+    trimmed.startsWith("https://") ||
+    trimmed.startsWith("//") ||
+    trimmed.startsWith("/")
+  ) {
+    return trimmed;
+  }
 
-      return `/${trimmed.replace(/^\.?\//, "")}`;
-    }
+  return `/${trimmed.replace(/^\.?\//, "")}`;
+}
 
     function getThumbnailMode(post = {}, frontMatter = {}) {
       return String(
