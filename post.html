@@ -1032,9 +1032,11 @@
       const { data: frontMatter, content } = await getPostMarkdownData(post);
 
       const firstContentImage = extractFirstImageFromMarkdown(content);
-      const postThumbnail = normalizeAssetUrl(post.thumbnail || "");
-      const frontMatterThumbnail = normalizeAssetUrl(frontMatter.thumbnail || "");
-      const resolvedThumbnail = firstContentImage || frontMatterThumbnail || postThumbnail || "";
+const postThumbnail = normalizeAssetUrl(post.thumbnail || "");
+const frontMatterThumbnail = normalizeAssetUrl(frontMatter.thumbnail || "");
+
+// thumbnail이 있으면 우선 사용, 없으면 본문 첫 이미지 사용
+const resolvedThumbnail = frontMatterThumbnail || postThumbnail || firstContentImage || "";
 
       contentThumbnailCache.set(cacheKey, resolvedThumbnail);
       return resolvedThumbnail;
