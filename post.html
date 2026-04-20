@@ -1225,12 +1225,12 @@
         return itemCategory === currentCategory && isPublishedPost(item);
       });
 
-      if (sameCategoryPosts.length <= 1) {
-        relatedSidebarEl.classList.add("is-hidden");
-        relatedTitleEl.textContent = "";
-        relatedListEl.innerHTML = "";
-        return;
-      }
+     if (sameCategoryPosts.length === 0) {
+  relatedSidebarEl.classList.add("is-hidden");
+  relatedTitleEl.textContent = "";
+  relatedListEl.innerHTML = "";
+  return;
+}
 
       relatedSidebarEl.classList.remove("is-hidden");
       relatedTitleEl.textContent = currentCategory;
