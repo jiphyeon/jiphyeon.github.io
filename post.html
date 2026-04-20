@@ -479,6 +479,10 @@
       padding-top: 22px;
     }
 
+    .related-sidebar.is-hidden {
+      display: none;
+    }
+
     .related-sidebar-inner {
       position: sticky;
       top: 32px;
@@ -871,7 +875,7 @@
         </footer>
       </article>
 
-      <aside class="related-sidebar" aria-label="연관 글">
+      <aside class="related-sidebar" id="relatedSidebar" aria-label="같은 카테고리 글">
         <div class="related-sidebar-inner">
           <h2 class="related-title" id="relatedTitle"></h2>
           <div class="related-list" id="relatedList"></div>
@@ -1198,17 +1202,49 @@
       `;
     }
 
-    async function buildSidebarCards(postsToRender, currentPost) {
-      const randomThumbnailPool = getRandomSidebarThumbnailPool(postsToRender.length);
+    async function renderRelatedPosts(posts, currentPost) {
+      const relatedSidebarEl = document.getElementById("relatedSidebar");
+      const relatedListEl = document.getElementById("relatedList");
+      const relatedTitleEl = document.getElementById("relatedTitle");
+
+      if (!relatedSidebarEl || !relatedListEl || !relatedTitleEl || !currentPost) {
+        return;
+      }
+
+      const currentCategory = currentPost.category || currentPost.categoryLabel || "";
+
+      if (!currentCategory) {
+        relatedSidebarEl.classList.add("is-hidden");
+        relatedTitleEl.textContent = "";
+        relatedListEl.innerHTML = "";
+        return;
+      }
+
+      const sameCategoryPosts = posts.filter((item) => {
+        const itemCategory = item.category || item.categoryLabel || "";
+        return itemCategory === currentCategory && isPublishedPost(item);
+      });
+
+      if (sameCategoryPosts.length <= 1) {
+        relatedSidebarEl.classList.add("is-hidden");
+        relatedTitleEl.textContent = "";
+        relatedListEl.innerHTML = "";
+        return;
+      }
+
+      relatedSidebarEl.classList.remove("is-hidden");
+      relatedTitleEl.textContent = currentCategory;
+
+      const randomThumbnailPool = getRandomSidebarThumbnailPool(sameCategoryPosts.length);
 
       const thumbnailPool = await Promise.all(
-        postsToRender.map((item, index) => {
+        sameCategoryPosts.map((item, index) => {
           return getThumbnailByMode(item, randomThumbnailPool[index]);
         })
       );
 
       const cards = await Promise.all(
-        postsToRender.map((item, index) =>
+        sameCategoryPosts.map((item, index) =>
           getPostMarkdownData(item).then(({ data }) => {
             const mode = getThumbnailMode(item, data);
             return buildRelatedCard(item, currentPost.slug, thumbnailPool[index], mode);
@@ -1216,44 +1252,7 @@
         )
       );
 
-      return cards.join("");
-    }
-
-    async function renderSidebarPosts(posts, currentPost) {
-      const relatedListEl = document.getElementById("relatedList");
-      const relatedTitleEl = document.getElementById("relatedTitle");
-
-      if (!relatedListEl || !relatedTitleEl || !currentPost) {
-        return;
-      }
-
-      const publishedPosts = posts.filter(isPublishedPost);
-      const currentCategory = currentPost.category || currentPost.categoryLabel || "";
-
-      const sameCategoryPosts = publishedPosts.filter((item) => {
-        const itemCategory = item.category || item.categoryLabel || "";
-        return itemCategory === currentCategory;
-      });
-
-      if (sameCategoryPosts.length > 1) {
-        relatedTitleEl.textContent = currentCategory;
-        relatedListEl.innerHTML = await buildSidebarCards(sameCategoryPosts, currentPost);
-        return;
-      }
-
-      const fallbackPosts = publishedPosts
-        .filter((item) => item.slug !== currentPost.slug)
-        .sort((a, b) => new Date(b.date) - new Date(a.date))
-        .slice(0, 8);
-
-      if (fallbackPosts.length === 0) {
-        relatedTitleEl.textContent = "";
-        relatedListEl.innerHTML = "";
-        return;
-      }
-
-      relatedTitleEl.textContent = "최근 글";
-      relatedListEl.innerHTML = await buildSidebarCards(fallbackPosts, currentPost);
+      relatedListEl.innerHTML = cards.join("");
     }
 
     const md = window.markdownit({
@@ -1317,7 +1316,7 @@
         metaEl.textContent = frontMatter.date || post.date || "";
         contentEl.innerHTML = md.render(cleanedMarkdown);
 
-        await renderSidebarPosts(posts, post);
+        await renderRelatedPosts(posts, post);
         bindContentImageLightbox();
 
         requestAnimationFrame(() => {
