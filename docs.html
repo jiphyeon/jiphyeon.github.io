@@ -804,7 +804,10 @@ body:hover::-webkit-scrollbar-thumb:hover,
       });
     }
 
-    const md = window.markdownit({ breaks: false, html: true });
+    const md = window.markdownit({  breaks: false,
+  html: true,
+  linkify: true,
+  typographer: true });
 
     async function initializeDocsPage() {
       const titleEl = document.getElementById("title");

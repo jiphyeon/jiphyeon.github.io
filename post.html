@@ -1260,8 +1260,10 @@ const resolvedThumbnail = frontMatterThumbnail || postThumbnail || firstContentI
     }
 
     const md = window.markdownit({
-      breaks: false,
-      html: true
+       breaks: false,
+  html: true,
+  linkify: true,
+  typographer: true
     });
 
     async function initializePostPage() {
