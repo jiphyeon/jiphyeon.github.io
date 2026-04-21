@@ -32,12 +32,12 @@ thumbnailMode: "content"
 세 요소는 독립적으로 존재하는 것이 아니라 하나의 흐름으로 연결된다. 목적이 방향을 제시하고, 우선순위가 집중점을 정하며, 원칙이 판단의 경계를 설정한다. 이 구조 안에서 통제는 외부 규정과 승인 중심에서 구성원 내부의 자기규율로 전환된다.
 
 <div style="text-align: center;">
-  <img src="/images/posts/management-design/3p-framework-gulati.png" style="width: 60%;" alt="란제이 굴라티(Ranjay Gulati)의 3P 프레임워크를 소개하는 일러스트. 프레임워크는 자유(Freedom)와 통제(Control) 두 요소가 상단에 나란히 배치되고, 그 아래 삼각형 안에 목적(Purpose), 우선순위(Priorities), 원칙(Principles)의 3P가 토대로 표시된 구조다.">
+  <img src="/images/posts/management-design/3p-framework-gulati.png" style="width: 70%;" alt="란제이 굴라티(Ranjay Gulati)의 3P 프레임워크를 소개하는 일러스트. 프레임워크는 자유(Freedom)와 통제(Control) 두 요소가 상단에 나란히 배치되고, 그 아래 삼각형 안에 목적(Purpose), 우선순위(Priorities), 원칙(Principles)의 3P가 토대로 표시된 구조다.">
   
-  <div style="margin-top: 8px; font-size: 12px; color: #888;">
+  <div style="margin-top: 8px; font-size: 14px; color: #424242;">
     이미지 출처 :
     <a href="https://rudyct.com/ab/3P-Framework%28Ranjay.Gulati%29.pdf" target="_blank">
-      3P Framework PDF
+      3P Framework
     </a>
   </div>
 </div>
