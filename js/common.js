@@ -29,3 +29,4 @@ function escapeHtml(value = "") {
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
 }
+console.log("common.js loaded", typeof parseFrontMatter, typeof escapeHtml);
