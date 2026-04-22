@@ -1,4 +1,7 @@
 <script>
+    const params = new URLSearchParams(window.location.search);
+const book = params.get("book");
+const chapter = params.get("chapter");
     function parseFrontMatter(markdown = "") {
       const match = markdown.match(/^---\s*\n([\s\S]*?)\n---\s*\n?/);
 
