@@ -456,11 +456,11 @@
 
     .content table {
       border-collapse: collapse;
-      width: 100%;
+      width: auto;
       margin: 28px 0;
       font-size: 15px;
       line-height: 1.6;
-      table-layout: fixed;
+      table-layout: auto;
     }
 
     .content th,
@@ -469,8 +469,7 @@
       padding: 6px 12px;
       text-align: left;
       vertical-align: middle;
-      word-break: keep-all;
-      overflow-wrap: break-word;
+      white-space: nowrap;
     }
 
     .content th {
