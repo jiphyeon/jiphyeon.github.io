@@ -62,7 +62,37 @@
         const params = new URLSearchParams(window.location.search);
     const slug = params.get("slug");
 
-       function clamp(value, min, max) {
+    function parseFrontMatter(markdown = "") {
+      const match = markdown.match(/^---\s*\n([\s\S]*?)\n---\s*\n?/);
+
+      if (!match) {
+        return { data: {}, content: markdown };
+      }
+
+      const raw = match[1];
+      const content = markdown.replace(/^---\s*\n[\s\S]*?\n---\s*\n?/, "");
+      const data = {};
+
+      raw.split("\n").forEach((line) => {
+        const index = line.indexOf(":");
+        if (index === -1) return;
+
+        const key = line.slice(0, index).trim();
+        const value = line.slice(index + 1).trim();
+        data[key] = value;
+      });
+
+      return { data, content };
+    }
+
+    const sidebarThumbnailList = Array.from({ length: 24 }, (_, i) => {
+      return `/images/shapes/shape-${i + 1}.svg`;
+    });
+
+    const contentThumbnailCache = new Map();
+    const postFrontMatterCache = new Map();
+
+    function clamp(value, min, max) {
       return Math.min(Math.max(value, min), max);
     }
 
