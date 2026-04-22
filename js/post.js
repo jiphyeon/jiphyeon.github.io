@@ -1,4 +1,3 @@
-<script>
         const params = new URLSearchParams(window.location.search);
     const slug = params.get("slug");
 
@@ -442,4 +441,3 @@ const resolvedThumbnail = frontMatterThumbnail || postThumbnail || firstContentI
 
     bindHeroScrollInteraction();
     initializePostPage();
-  </script>
