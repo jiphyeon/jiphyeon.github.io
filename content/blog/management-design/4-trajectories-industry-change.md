@@ -1,8 +1,11 @@
 ---
 title: 산업 변화의 4가지 경로
-date: 2025-04-23
-category: management-design
+type : "post"
+date: 2023-06-03
+status: "published"
+slug: "4-trajectories-industry-change"
 categoryLabel: 경영기법
+thumbnailMode: "content"
 ---
 
 경영자라면 한 번쯤 이런 상황을 겪었을 것이다. 경쟁사가 새로운 서비스를 출시했다, 디지털 전환이 화두가 됐다, 컨설턴트가 파괴적 혁신을 경고한다. 그때마다 조직은 분주히 대응책을 고민하지만, 정작 "우리 산업이 구조적으로 어떻게 변하고 있는가"라는 근본적 질문에는 답하지 못하는 경우가 많다.

@@ -45,21 +45,6 @@
     "file": "content/blog/tech-critique/tech-critique-003.md"
   },
   {
-    "id": 2,
-    "type": "post",
-    "title": "산업 변화의 4가지 경로",
-    "excerpt": "",
-    "category": "management-design",
-    "tags": [],
-    "thumbnail": "",
-    "date": "2025-04-23",
-    "slug": "4-trajectories-industry-change",
-    "order": 999,
-    "series": "management-design",
-    "status": "published",
-    "file": "content/blog/management-design/4-trajectories-industry-change.md"
-  },
-  {
     "id": 12,
     "type": "post",
     "title": "시나트라 테스트(Sinatra Test)",
@@ -223,6 +208,21 @@
     "series": "visual-brief",
     "status": "published",
     "file": "content/blog/visual-brief/what-is-oecd.md"
+  },
+  {
+    "id": 2,
+    "type": "post",
+    "title": "산업 변화의 4가지 경로",
+    "excerpt": "",
+    "category": "management-design",
+    "tags": [],
+    "thumbnail": "",
+    "date": "2023-06-03",
+    "slug": "4-trajectories-industry-change",
+    "order": 999,
+    "series": "management-design",
+    "status": "published",
+    "file": "content/blog/management-design/4-trajectories-industry-change.md"
   },
   {
     "id": 1,
