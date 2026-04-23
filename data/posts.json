@@ -1,6 +1,6 @@
 [
   {
-    "id": 2,
+    "id": 3,
     "type": "post",
     "title": "웹사이트 총량제, 무지와 전시행정의 결과",
     "excerpt": "",
@@ -15,7 +15,7 @@
     "file": "content/blog/tech-critique/tech-critique-001.md"
   },
   {
-    "id": 3,
+    "id": 4,
     "type": "post",
     "title": "심사 비즈니스화",
     "excerpt": "",
@@ -30,7 +30,7 @@
     "file": "content/blog/tech-critique/tech-critique-002.md"
   },
   {
-    "id": 4,
+    "id": 5,
     "type": "post",
     "title": "신청주의는 잔인한 제도 아닙니까",
     "excerpt": "",
@@ -45,7 +45,22 @@
     "file": "content/blog/tech-critique/tech-critique-003.md"
   },
   {
-    "id": 11,
+    "id": 2,
+    "type": "post",
+    "title": "산업 변화의 4가지 경로",
+    "excerpt": "",
+    "category": "management-design",
+    "tags": [],
+    "thumbnail": "",
+    "date": "2025-04-23",
+    "slug": "4-trajectories-industry-change",
+    "order": 999,
+    "series": "management-design",
+    "status": "published",
+    "file": "content/blog/management-design/4-trajectories-industry-change.md"
+  },
+  {
+    "id": 12,
     "type": "post",
     "title": "시나트라 테스트(Sinatra Test)",
     "excerpt": "",
@@ -60,7 +75,7 @@
     "file": "content/blog/visual-brief/sinatra-test.md"
   },
   {
-    "id": 14,
+    "id": 15,
     "type": "post",
     "title": "무지의 베일(Veil of Ignorance)",
     "excerpt": "",
@@ -75,7 +90,7 @@
     "file": "content/blog/visual-brief/veil of ignorance.md"
   },
   {
-    "id": 9,
+    "id": 10,
     "type": "post",
     "title": "유통공룡의 탐욕, PB 상품",
     "excerpt": "",
@@ -90,7 +105,7 @@
     "file": "content/blog/visual-brief/private-brand.md"
   },
   {
-    "id": 8,
+    "id": 9,
     "type": "post",
     "title": "넛지",
     "excerpt": "",
@@ -105,7 +120,7 @@
     "file": "content/blog/visual-brief/nudge.md"
   },
   {
-    "id": 5,
+    "id": 6,
     "type": "post",
     "title": "2024년도 부처별 총지출 예산 규모",
     "excerpt": "",
@@ -120,7 +135,7 @@
     "file": "content/blog/visual-brief/2024_budget.md"
   },
   {
-    "id": 12,
+    "id": 13,
     "type": "post",
     "title": "스타트업 투자 단계",
     "excerpt": "",
@@ -135,7 +150,7 @@
     "file": "content/blog/visual-brief/startup-investment-stages.md"
   },
   {
-    "id": 10,
+    "id": 11,
     "type": "post",
     "title": "지방소멸의 당연한 이유",
     "excerpt": "",
@@ -150,7 +165,7 @@
     "file": "content/blog/visual-brief/regional-extinction.md"
   },
   {
-    "id": 7,
+    "id": 8,
     "type": "post",
     "title": "리비히 최소량의 법칙(Liebig's Law of Minimum)",
     "excerpt": "",
@@ -165,7 +180,7 @@
     "file": "content/blog/visual-brief/liebig-law-of-minimum.md"
   },
   {
-    "id": 6,
+    "id": 7,
     "type": "post",
     "title": "가용성 편향(Availability Bias)",
     "excerpt": "",
@@ -180,7 +195,7 @@
     "file": "content/blog/visual-brief/availability-bias.md"
   },
   {
-    "id": 13,
+    "id": 14,
     "type": "post",
     "title": "스틱, 1초만에 달라붙는 메시지의 법칙",
     "excerpt": "",
@@ -195,7 +210,7 @@
     "file": "content/blog/visual-brief/stick.md"
   },
   {
-    "id": 15,
+    "id": 16,
     "type": "post",
     "title": "OECD, 왜 만들어졌나",
     "excerpt": "",
@@ -216,7 +231,7 @@
     "excerpt": "",
     "category": "경영설계",
     "tags": [],
-    "thumbnail": "/images/posts/management-design/3p-framework-gulati.png",
+    "thumbnail": "/images/posts/management-design/3p-framework-jiphyeon.png",
     "date": "2023-05-25",
     "slug": "3p-framework",
     "order": 999,
