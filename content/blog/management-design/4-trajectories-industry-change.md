@@ -1,10 +1,11 @@
 ---
 title: 산업 변화의 4가지 경로
 type : "post"
+category: "경영설계"
 date: 2023-06-03
 status: "published"
 slug: "4-trajectories-industry-change"
-categoryLabel: 경영기법
+thumbnail: "/images/posts/management-design/4-trajectories-industry-change.png"
 thumbnailMode: "content"
 ---
 
