@@ -301,7 +301,7 @@
     max-width: 100%;
     height: auto;
     margin: 40px 0 48px;
-    border-radius: 12px;
+    border-radius: 0px;
   }
 
   .content code {
