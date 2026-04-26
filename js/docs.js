@@ -142,6 +142,60 @@ function applyReferenceHeadingStyle(contentEl) {
   });
 }
 
+function setupContentImageLightbox(contentEl) {
+  if (!contentEl) return;
+
+  contentEl.querySelectorAll("img").forEach((img) => {
+    img.style.cursor = "zoom-in";
+
+    img.addEventListener("click", () => {
+      const lightbox = document.getElementById("image-lightbox");
+      const lightboxImg = document.getElementById("image-lightbox-img");
+
+      if (!lightbox || !lightboxImg) return;
+
+      lightboxImg.src = img.src;
+      lightboxImg.alt = img.alt || "";
+
+      lightbox.classList.add("is-active");
+      lightbox.setAttribute("aria-hidden", "false");
+    });
+  });
+}
+
+function setupLightboxClose() {
+  document.addEventListener("click", (event) => {
+    const lightbox = document.getElementById("image-lightbox");
+    const lightboxImg = document.getElementById("image-lightbox-img");
+
+    if (!lightbox || !lightboxImg) return;
+
+    const isBackdrop = event.target.id === "image-lightbox";
+    const isCloseButton = event.target.id === "image-lightbox-close";
+
+    if (!isBackdrop && !isCloseButton) return;
+
+    lightbox.classList.remove("is-active");
+    lightbox.setAttribute("aria-hidden", "true");
+    lightboxImg.src = "";
+    lightboxImg.alt = "";
+  });
+
+  document.addEventListener("keydown", (event) => {
+    if (event.key !== "Escape") return;
+
+    const lightbox = document.getElementById("image-lightbox");
+    const lightboxImg = document.getElementById("image-lightbox-img");
+
+    if (!lightbox || !lightboxImg) return;
+
+    lightbox.classList.remove("is-active");
+    lightbox.setAttribute("aria-hidden", "true");
+    lightboxImg.src = "";
+    lightboxImg.alt = "";
+  });
+}
+
 const md = window.markdownit({
   breaks: false,
   html: true,
@@ -202,6 +256,7 @@ async function initializeDocsPage() {
     contentEl.innerHTML = md.render(cleanedMarkdown);
 
     applyReferenceHeadingStyle(contentEl);
+    setupContentImageLightbox(contentEl);
 
     const navDocs = isPublishedDoc(current) ? publishedDocs : docs;
     setupNavigation(navDocs, current, book);
@@ -212,4 +267,5 @@ async function initializeDocsPage() {
   }
 }
 
+setupLightboxClose();
 initializeDocsPage();
