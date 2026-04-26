@@ -9,7 +9,10 @@ thumbnail: "/images/docs/ax-planning/01-04-identity-verification.png"
 date: 2024-01-20
 ---
 
-![신분증 인증 프로세스를 단계별로 나타낸 흐름도. 객체 탐지(OpenCV 이미지 전처리, YOLO로 신분증 탐지, Faster R-CNN으로 세부 영역 정밀 탐지, Tesseract OCR로 텍스트 추출) 이후, 신분증 분석 단계에서 홀로그램 빛 반사 패턴, 얼굴 사진 합성·변조 여부, 미세 문양 패턴, EXIF 메타데이터를 검토하고, 위변조 검증(CNN 보안 요소 패턴 분석, 딥페이크 탐지, ExifTool 메타데이터 분석)을 거쳐, 최종적으로 신뢰도 점수(0~0.25 위조, 0.25~0.5 의심, 0.5~0.75 미확정, 0.75~1.0 진본)로 결과를 판정하는 구조.](/images/docs/ax-planning/01-04-identity-verification.png)
+<img
+  src="/images/docs/ax-planning/01-04-identity-verification.png"
+  alt="YOLO 및 R-CNN 기반 객체 탐지, OCR 추출, 홀로그램 및 딥페이크 분석을 통한 위변조 검증 후 신뢰도 점수로 진본 여부를 판정하는 신분증 인증 프로세스"
+  class="img-small">
 
 * 금융 거래, 민원 신청 등 디지털 환경에서 신분증 기반 신원 확인이 보편화되고 있음
 * 신용카드 등록과 비슷한 흐름이지만 신분증은 더 많은 정보를 담고 있고 레이아웃도 제각각이라 난이도가 더 높음

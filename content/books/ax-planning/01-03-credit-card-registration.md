@@ -9,7 +9,10 @@ thumbnail: "/images/docs/ax-planning/01-03-credit-card-registration.png"
 date: 2024-01-14
 ---
 
-![신용카드 등록 프로세스를 단계별로 나타낸 흐름도. 이미지 전처리(스마트폰 카메라 촬영, OpenCV 이미지 보정, TensorFlow EAST 모델로 카드 영역 자동 감지), 텍스트 추출 OCR(단말기 내 OCR 처리, 카드 번호·만료일·카드사 로고 인식), 유효성 검증(Luhn 알고리즘 적용, 체크섬 계산, 카드 번호 오류 탐지) 순으로 이어지며, 이후 카드 정보·사용자 정보·위치 데이터·행동 데이터를 종합한 신용카드 정보 조회 및 이상 탐지 단계에서 Scikit-learn 기반 머신러닝으로 분석하고, 이상 징후 발생 시 생체 인증(Face ID, 지문) 또는 OTP 추가 인증을 요구하는 구조.](/images/docs/ax-planning/01-03-credit-card-registration.png)
+<img
+  src="/images/docs/ax-planning/01-03-credit-card-registration.png"
+  alt="이미지 전처리, OCR 추출, 유효성 검증 및 머신러닝 기반 이상 탐지를 포함한 단계별 신용카드 등록 및 보안 인증 프로세스 흐름도"
+  class="img-small">
 
 
 * 기존에는 카드 번호, 만료일, CVV 코드를 직접 입력해야 해서 오류와 보안 문제가 자주 발생
