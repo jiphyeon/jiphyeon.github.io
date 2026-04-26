@@ -5,8 +5,25 @@ partOrder: 6
 order: 3
 status: "draft"
 slug: "06-03-rag-based-chatbot"
-thumbnail: "/images/docs/ax-planning/ax-planning.jpg"
-date: 2024-04-26
+thumbnail: "/images/docs/ax-planning/06-03-rag-based-chatbot.png"
+date: 2024-12-18
 ---
 
-![얼굴 인증 프로세스를 단계별로 나타낸 흐름도. 얼굴 탐지(카메라로 얼굴 이미지 획득, OpenCV DNN 모듈, YOLO 얼굴 영역 탐지), 얼굴 벡터 추출(FaceNet으로 벡터 변환, 대안 모델 ArcFace·CosFace, 경량 모델 dlib), 얼굴 벡터 저장(사용자 ID와 함께 저장, 원본 이미지 미저장) 순으로 이어지며, 유사도 분석 단계에서 유클리드 거리 계산(두 벡터 간 직선 거리 측정)과 임계값 기반 판정(0.5 이하면 동일 인물로 판단)으로 인증 여부를 결정. 대규모 시스템에서는 FaceNet·ArcFace 모델과 FAISS·Annoy 벡터 검색을 조합해 밀리초 단위 빠른 매칭을 구현하는 구조..](/images/docs/ax-planning/01-06-face-authentication.png)
+![RAG 기반 챗봇 프로세스를 단계별로 나타낸 흐름도. 사전 준비 단계(문서 수집, 문단 단위 분할/중요도 분류, 문서 임베딩 및 벡터 데이터베이스 저장 FAISS 활용)와 실시간 검색 및 생성 단계(1. 사용자 질문 벡터 변환, 2. Retrieval 관련 문서 검색, 3. Augmentation 프롬프트+문서 결합, 4. Generation LLM 기반 응답 생성, 5. 최종 응답 문서 출처 포함)로 구성됨. LangChain/LlamaIndex 통합 프레임워크로 질문 임베딩 → 관련 문서 추출 → 컨텍스트 강화 과정을 연결하는 구조.](/images/docs/ax-planning/06-03-rag-based-chatbot.png)
+
+* 사용자 질문에 대해 외부 문서를 실시간으로 검색하고, 그 내용을 바탕으로 LLM이 답변을 생성하는 방식
+* FAQ 챗봇처럼 고정된 질문-답변 쌍이 필요 없고, 시나리오 챗봇처럼 대화 흐름을 사전 설계할 필요도 없음
+* 사내 문서, 기술 자료, 정책 정보처럼 정형화되기 어려운 정보를 다룰 때 특히 유용
+* 프로세스는 사전 준비(문서 수집/전처리/임베딩) → 실시간 검색(Retrieval) → 프롬프트 구성(Augmentation) → 응답 생성(Generation) 순으로 이어짐
+
+<b>사전 준비 단계</b> : 사내 문서/기술 자료/정책 등을 수집해 문단 단위로 분할하고 sentence-transformers로 벡터화. 생성된 임베딩은 FAISS 벡터 데이터베이스에 저장. 문서 품질과 분할 구조가 챗봇 성능에 직결되므로 전처리가 핵심
+
+<b>Retrieval(정보 검색)</b> : 사용자 질문을 벡터로 변환하고 FAISS ANN 검색으로 유사도 높은 문서 문단을 실시간 추출
+
+<b>Augmentation(컨텍스트 강화)</b> : 검색된 문서를 LLM 프롬프트에 결합. 시스템 프롬프트로 응답 범위를 제한. 모델이 불필요한 정보를 생성하거나 잘못된 내용을 답변하는 것을 방지
+
+<b>Generation(응답 생성)</b> : LLM이 검색된 문서 내용을 참고해 자연스러운 문장으로 답변 생성. 단순 복사 붙여넣기가 아닌 문맥에 맞게 요약/재구성. 최종 응답에 문서 출처를 함께 제공
+
+<b>통합 프레임워크</b> : LangChain은 검색-생성 과정을 하나의 체인으로 연결. LlamaIndex는 문서를 챗봇이 처리하기 좋은 구조로 분할/태깅. 두 도구를 조합하면 전체 RAG 파이프라인을 빠르게 구현 가능
+
+<b>한계</b> : 검색 정확도가 낮거나 문서가 잘못 분할되면 오답 가능성 증가. LLM 입력 길이 한계로 참조할 수 있는 문서량에 제약. 문서 전처리 품질 관리가 필수

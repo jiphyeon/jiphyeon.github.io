@@ -5,8 +5,24 @@ partOrder: 10
 order: 2
 status: "draft"
 slug: "10-02-retargeting-advertising"
-thumbnail: "/images/docs/ax-planning/ax-planning.jpg"
-date: 2024-04-26
+thumbnail: "/images/docs/ax-planning/10-02-retargeting-advertising.png"
+date: 2025-03-07
 ---
 
-![얼굴 인증 프로세스를 단계별로 나타낸 흐름도. 얼굴 탐지(카메라로 얼굴 이미지 획득, OpenCV DNN 모듈, YOLO 얼굴 영역 탐지), 얼굴 벡터 추출(FaceNet으로 벡터 변환, 대안 모델 ArcFace·CosFace, 경량 모델 dlib), 얼굴 벡터 저장(사용자 ID와 함께 저장, 원본 이미지 미저장) 순으로 이어지며, 유사도 분석 단계에서 유클리드 거리 계산(두 벡터 간 직선 거리 측정)과 임계값 기반 판정(0.5 이하면 동일 인물로 판단)으로 인증 여부를 결정. 대규모 시스템에서는 FaceNet·ArcFace 모델과 FAISS·Annoy 벡터 검색을 조합해 밀리초 단위 빠른 매칭을 구현하는 구조..](/images/docs/ax-planning/01-06-face-authentication.png)
+![리타겟팅 광고 프로세스를 단계별로 나타낸 흐름도. 사용자 행동 데이터 수집(웹사이트 방문, 상품 조회, 장바구니 담기, 구매 시도, 이탈), 데이터 처리 및 타겟 사용자 식별(실시간 데이터 수집 Apache Kafka 활용/실시간 이벤트 로그 처리, 타겟 사용자 분류 Apache Spark 행동 패턴 분석), 광고 콘텐츠 생성(템플릿 기반 자동 생성/생성형 AI 텍스트 생성 GPT 등/이미지 자동 생성 상품 및 컨텍스트에 맞는 시각 요소 제작), 사용자 식별(쿠키 기반 식별/퍼스트파티 데이터 로그인 ID/디바이스 핑거프린팅) 순으로 이어지며, DSP 및 RTB 시스템 연동을 통한 광고 노출로 마무리되는 구조.](/images/docs/ax-planning/10-02-retargeting-advertising.png)
+
+* 한 번 방문한 사용자에게 다시 광고를 노출해 재유입을 유도하는 타겟 광고 기법
+* 이미 관심을 보인 사용자에게만 노출하므로 일반 광고 대비 전환율이 높음
+* 쿠키 기반 리타겟팅이 어려워지면서 퍼스트파티 데이터와 쿠키리스 식별 기술을 접목하는 방향으로 변화 중
+* 프로세스는 사용자 행동 데이터 수집 → 데이터 처리 및 타겟 사용자 식별 → 광고 콘텐츠 생성 → DSP/RTB 시스템 연동을 통한 광고 노출 순으로 이어짐
+
+<b>사용자 행동 데이터 수집</b> : 웹사이트 방문, 상품 조회, 장바구니 담기, 구매 시도, 이탈 등 이벤트 로그를 Apache Kafka로 실시간 수집
+
+<b>데이터 처리 및 타겟 사용자 식별</b> : Apache Spark/PySpark로 조건에 맞는 사용자를 빠르게 추출. SQL를 통해 대량 로그에서 실시간 필터링. window 함수/groupBy/filter 연산으로 시계열 행동 분석
+
+<b>광고 콘텐츠 생성</b> : 세 가지 방식으로 자동 생성
+* <b>템플릿 기반</b> : 사전 정의 문구에 Jinja2로 사용자별 정보를 채워 넣는 방식
+* <b>생성형 AI 텍스트 생성</b> : GPT/Hugging Face Transformers로 사용자 행동 데이터를 프롬프트로 전달해 맞춤형 광고 문구 자동 생성
+* <b>이미지 자동 생성</b> : Stable Diffusion으로 상품/컨텍스트에 맞는 광고용 시각 콘텐츠 자동 제작
+
+<b>DSP 및 RTB 시스템 연동</b> : 생성된 광고 콘텐츠가 DSP에 자동 연동되어 집행. 사용자가 다른 사이트를 방문하면 RTB 경매가 즉시 실행되어 가장 적합한 광고가 노출. Kafka/Spark로 실시간 상태 업데이트하고 성과 데이터 기반으로 지속 학습

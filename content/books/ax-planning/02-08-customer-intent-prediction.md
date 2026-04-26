@@ -5,8 +5,21 @@ partOrder: 2
 order: 8
 status: "draft"
 slug: "02-08-customer-intent-prediction"
-thumbnail: "/images/docs/ax-planning/ax-planning.jpg"
-date: 2024-04-26
+thumbnail: "/images/docs/ax-planning/02-08-customer-intent-prediction.png"
+date: 2024-06-22
 ---
 
-![얼굴 인증 프로세스를 단계별로 나타낸 흐름도. 얼굴 탐지(카메라로 얼굴 이미지 획득, OpenCV DNN 모듈, YOLO 얼굴 영역 탐지), 얼굴 벡터 추출(FaceNet으로 벡터 변환, 대안 모델 ArcFace·CosFace, 경량 모델 dlib), 얼굴 벡터 저장(사용자 ID와 함께 저장, 원본 이미지 미저장) 순으로 이어지며, 유사도 분석 단계에서 유클리드 거리 계산(두 벡터 간 직선 거리 측정)과 임계값 기반 판정(0.5 이하면 동일 인물로 판단)으로 인증 여부를 결정. 대규모 시스템에서는 FaceNet·ArcFace 모델과 FAISS·Annoy 벡터 검색을 조합해 밀리초 단위 빠른 매칭을 구현하는 구조..](/images/docs/ax-planning/01-06-face-authentication.png)
+![고객 의도 예측 프로세스를 단계별로 나타낸 흐름도. 상단에 고객 의도(Intent) 유형으로 구매 의도, 탐색/정보 수집 의도, 이탈/유지 의도가 표시됨. 데이터 수집(클릭 패턴/검색어 분석, 페이지 체류 시간 측정, Kafka/Kinesis 스트리밍), 특성 추출(최근 행동 요약, 시간 기반 특성 생성, Spark/Flink 실시간 처리), 예측 모델(로지스틱 회귀, 랜덤 포레스트, 그래디언트 부스팅/XGBoost) 순으로 이어지며, 실시간 예측 파이프라인으로 행동 로그 수집 → 특성 생성 → 인텐트 예측 → 맞춤 액션 실행의 흐름이 구성된 구조.](/images/docs/ax-planning/02-08-customer-intent-prediction.png)
+
+* 고객이 지금 무엇을 하려는지를 행동 데이터 기반으로 예측하는 분석
+* 구매 의도, 탐색/정보 수집 의도, 이탈/유지 의도 등을 미리 파악해 맞춤형 콘텐츠/혜택을 선제적으로 제공
+* "이 고객은 85% 확률로 24시간 이내에 구매할 것이다"처럼 구체적인 수치로 예측
+* 프로세스는 데이터 수집 → 특성 추출 → 예측 모델 적용 → 실시간 예측 파이프라인 구축 순으로 이어짐
+
+<b>데이터 수집</b> : 클릭 패턴, 검색어, 페이지 체류 시간, 장바구니 담기 등 행동 로그를 Kafka/Kinesis 같은 스트리밍 도구로 실시간 수집
+
+<b>특성 추출</b> : 수집된 로그를 예측 모델이 쓸 수 있는 형태로 가공. 최근 행동 요약(3일간 클릭 수, 1시간 페이지 이동 수 등), 시간 기반 특성(마지막 방문 이후 경과일)을 생성. Spark Streaming/Apache Flink로 실시간 처리하거나 Python과 Redis 캐시를 조합하여 운영
+
+<b>예측 모델</b> : 인텐트를 목표값(Label)으로 설정해 분류 모델을 학습. 예측 기준 시점(t) 이후 24시간 이내 구매가 있으면 인텐트 있음(1), 없으면 없음(0)으로 라벨링. Logistic Regression(결과를 확률로 해석 가능), Random Forest(다양한 변수에 강점), Gradient Boosting/XGBoost(높은 예측 성능)를 주로 활용. scikit-learn으로 구현
+
+<b>실시간 예측 파이프라인</b> : 행동 로그 수집 → 특성 생성 → 인텐트 예측 → 맞춤 액션 실행의 4단계로 구성. 구매 인텐트가 높게 예측된 고객에게는 즉시 맞춤 쿠폰 배너 노출, 관련 상품 추천, 알림 발송 등을 자동 실행. 마케팅 자동화 시스템/A/B 테스트 도구와 연동하여 운영

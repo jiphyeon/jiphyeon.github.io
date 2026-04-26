@@ -5,8 +5,23 @@ partOrder: 8
 order: 1
 status: "draft"
 slug: "08-01-intelligent-call-center"
-thumbnail: "/images/docs/ax-planning/ax-planning.jpg"
-date: 2024-04-26
+thumbnail: "/images/docs/ax-planning/08-01-intelligent-call-center.png"
+date: 2025-01-30
 ---
 
-![얼굴 인증 프로세스를 단계별로 나타낸 흐름도. 얼굴 탐지(카메라로 얼굴 이미지 획득, OpenCV DNN 모듈, YOLO 얼굴 영역 탐지), 얼굴 벡터 추출(FaceNet으로 벡터 변환, 대안 모델 ArcFace·CosFace, 경량 모델 dlib), 얼굴 벡터 저장(사용자 ID와 함께 저장, 원본 이미지 미저장) 순으로 이어지며, 유사도 분석 단계에서 유클리드 거리 계산(두 벡터 간 직선 거리 측정)과 임계값 기반 판정(0.5 이하면 동일 인물로 판단)으로 인증 여부를 결정. 대규모 시스템에서는 FaceNet·ArcFace 모델과 FAISS·Annoy 벡터 검색을 조합해 밀리초 단위 빠른 매칭을 구현하는 구조..](/images/docs/ax-planning/01-06-face-authentication.png)
+![지능형 콜센터 프로세스를 단계별로 나타낸 흐름도. 음성 인식 STT(Whisper 기반, 처리 속도 최적화 모델 크기/처리 방식/하드웨어), 의도 분석(의도 분류 수행, BERT 기반 모델 또는 텍스트 분류 모델 활용, 고객 요청의 의미 분류), 검색 및 추천(FAISS 벡터 검색, 유사 사례 매칭), 음성 합성 TTS(Tacotron2/FastSpeech2/Mozilla TTS 등의 엔진, 텍스트 응답을 자연스러운 음성으로 변환) 순으로 이어지며, 자동화된 보이스봇(AI가 직접 고객 응대, FAQ 기반 또는 검색 기반 응답 제공)과 상담사 보조 시스템(실제 상담사에게 실시간 정보 제공, 유사 사례 추천, 스크립트 및 응대 가이드 제공) 두 가지 방식으로 활용되는 구조. 실시간 모니터링은 OpenTelemetry와 메시지 큐 시스템으로 관리.](/images/docs/ax-planning/08-01-intelligent-call-center.png)
+
+* STT, TTS, NLU, 추천 시스템 등 다양한 AI 기술을 결합해 고객 응대 품질과 운영 효율을 동시에 향상시키는 시스템
+* 기존 번호 입력 방식 대신 자연어로 말하면 시스템이 의미를 이해하고 음성으로 응답
+* 구현 방식은 두 가지로 나뉨 : AI가 직접 고객과 대화하는 자동화된 보이스봇, 상담사 통화를 AI가 실시간으로 보조하는 상담보조 시스템
+* 프로세스는 음성 인식(STT) → 의도 분석 → 검색/추천 → 음성 합성(TTS) 순으로 이어짐
+
+<b>음성 인식(STT)</b> : Whisper가 가장 널리 쓰이는 오픈소스 엔진. 다양한 언어와 잡음 환경을 지원. 실시간 콜센터에 적용하려면 추가 최적화 필요 : 모델 크기 축소(tiny/small), 양자화(모델 크기 최대 4배 감소), 청킹 기법(1~3초 단위로 분할 처리), faster-whisper 활용(원본 대비 최대 4배 빠른 처리). 실무에서는 Whisper small + 양자화 + faster-whisper 조합이 대부분의 실시간 요구사항을 충족
+
+<b>의도 분석</b> : 텍스트로 변환된 고객 음성에서 의도를 분류. "배송 문의", "환불 요청" 등으로 라벨링된 상담 데이터로 BERT 기반 모델을 파인튜닝하거나 Scikit-learn으로 텍스트 분류 모델 구성
+
+<b>검색 및 추천 연계</b> : 의도 파악 후 FAQ 범위라면 규칙 기반 응답 생성. 상담 기록/제품 정보 등 복합 정보가 필요하면 BERT/Universal Sentence Encoder로 과거 상담 사례를 벡터화하고 FAISS로 유사 사례 매칭
+
+<b>음성 합성(TTS)</b> : Tacotron2(억양/높낮이/길이 자연스럽게 구현)와 FastSpeech2(빠른 속도, 실시간 서비스에 적합)가 대표 엔진. 텍스트 → 스펙트로그램 → 실제 음성 순으로 변환. Mozilla TTS(설정 쉬움), ESPnet(커스터마이징에 적합) 등 오픈소스 활용 가능
+
+<b>실시간 스트리밍 구조</b> : 웹소켓으로 음성 실시간 수신. 발화 감지(VAD)로 실제 말하는 구간만 선별 처리. OpenTelemetry로 실시간 모니터링. 메시지 큐 시스템으로 전체 처리 흐름 관리

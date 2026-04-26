@@ -5,9 +5,20 @@ partOrder: 2
 order: 1
 status: "draft"
 slug: "02-01-customer-profiling"
-thumbnail: "/images/docs/ax-planning/ax-planning.jpg"
+thumbnail: "/images/docs/ax-planning/02-01-customer-profiling.png"
 date: 2024-04-26
 ---
 
-![얼굴 인증 프로세스를 단계별로 나타낸 흐름도. 얼굴 탐지(카메라로 얼굴 이미지 획득, OpenCV DNN 모듈, YOLO 얼굴 영역 탐지), 얼굴 벡터 추출(FaceNet으로 벡터 변환, 대안 모델 ArcFace·CosFace, 경량 모델 dlib), 얼굴 벡터 저장(사용자 ID와 함께 저장, 원본 이미지 미저장) 순으로 이어지며, 유사도 분석 단계에서 유클리드 거리 계산(두 벡터 간 직선 거리 측정)과 임계값 기반 판정(0.5 이하면 동일 인물로 판단)으로 인증 여부를 결정. 대규모 시스템에서는 FaceNet·ArcFace 모델과 FAISS·Annoy 벡터 검색을 조합해 밀리초 단위 빠른 매칭을 구현하는 구조..](/images/docs/ax-planning/01-06-face-authentication.png)
+![고객 프로파일링 프로세스를 단계별로 나타낸 흐름도. 고객 데이터 수집(인구통계 정보·거래 이력·행동 정보·CRM 데이터·외부 데이터), 특성 엔지니어링(SQL·Python 데이터 가공, 시계열 로그 데이터 집계, 고객 특성 자동 생성, featuretools 활용), 고객 벡터화(Word2Vec 응용·BERT·Transformer, Item2Vec·SBERT, GNN 기반 임베딩) 순으로 이어지며, 벡터 활용 단계에서 유사 고객 그룹화(코사인 유사도 계산)와 개인화 추천(고객-상품 벡터 비교)에 활용됨. 전체 프로세스는 Airflow·Prefect 기반 데이터 파이프라인으로 프로파일을 자동 갱신하는 구조.](/images/docs/ax-planning/02-01-customer-profiling.png)
 
+* 고객 분석의 출발점. 고객이 누구인지, 어떤 특성을 갖고 있는지를 데이터로 정리하는 작업
+* 이탈 예측, 세분화, 추천, 개인화 마케팅 등 모든 고객 분석은 정확한 프로파일이 전제되어야 가능
+* 프로세스는 고객 데이터 수집 → 특성 엔지니어링 → 고객 벡터화 → 벡터 활용 순으로 이어지며, 데이터 파이프라인으로 프로파일을 자동 갱신
+
+<b>고객 데이터 수집</b> : 인구통계(회원가입), 거래 이력(구매·결제), 행동 정보(로그 데이터), CRM 데이터, 외부 데이터(소셜 미디어, 날씨, 위치)까지 다양한 소스에서 수집. Google Analytics·Firebase로 웹/앱 행동을 수집하고, CRM·CDP로 통합 관리
+
+<b>특성 엔지니어링</b> : 방대한 로그 데이터를 고객 단위로 요약하는 작업. SQL로 방문 횟수, 평균 구매금액 등을 계산하고, Python pandas로 구매 주기 같은 특성을 만들어냄. featuretools로 특성을 자동 생성하는 방식도 활용
+
+<b>고객 벡터화</b> : 고객의 특성을 수학적 벡터로 표현해 유사도 계산이나 추천에 활용. Word2Vec을 응용한 방식에서 시작해서 BERT·Transformer 기반 모델로 행동의 맥락과 순서를 더 정교하게 반영. Item2Vec·SBERT는 고객-상품 관계 포착에 특화되어 있고, GNN 기반 임베딩은 고객, 상품, 행동을 그래프 구조로 연결해 더 풍부한 벡터를 생성
+
+<b>고객 벡터 활용</b> : 유사 고객 그룹화(코사인 유사도 계산), 개인화 추천(고객-상품 벡터 비교) 등에 활용
