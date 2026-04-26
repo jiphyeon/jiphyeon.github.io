@@ -862,16 +862,16 @@
 
 .content h2 {
   position: relative;
-  padding-left: 26px;
+  padding-left: 30px;
 }
 
 .content h2::before {
   content: "";
   position: absolute;
   left: 0;
-  top: 0.5em;
-  width: 12px;
-  height: 12px;
+  top: 0.55em;
+  width: 13px;
+  height: 13px;
   border: 3px solid #111;
   box-sizing: border-box;
   transform: translateY(-50%);
