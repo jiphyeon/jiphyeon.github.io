@@ -860,13 +860,12 @@
       }
     }
 
-/* h2 헤딩 강조 (공통) */
 .content h2::before {
-  content: "□";
+  content: "■";
+  font-family: "Wingdings 2", "Segoe UI Symbol", sans-serif;
   display: inline-block;
   margin-right: 10px;
-  font-size: 0.72em;
-  font-weight: 900;
+  font-size: 0.8em;
   line-height: 1;
   transform: translateY(-0.05em);
 }
