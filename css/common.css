@@ -419,7 +419,7 @@
       max-width: 100%;
       height: auto;
       margin: 32px auto;
-      border-radius: 14px;
+      border-radius: 0px;
       cursor: zoom-in;
     }
 
