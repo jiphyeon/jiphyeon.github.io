@@ -166,32 +166,40 @@ function setupContentImageLightbox(contentEl) {
 }
 
 function setupLightboxClose() {
-  const lightbox = document.getElementById("image-lightbox");
-  const lightboxImg = document.getElementById("image-lightbox-img");
-  const closeBtn = document.getElementById("image-lightbox-close");
+  document.addEventListener("click", function (event) {
+    const lightbox = document.getElementById("image-lightbox");
+    const lightboxImg = document.getElementById("image-lightbox-img");
 
-  if (!lightbox || !lightboxImg || !closeBtn) return;
+    if (!lightbox || !lightboxImg) return;
 
-  function closeLightbox() {
+    const closeBtn = event.target.closest("#image-lightbox-close");
+    const clickedBackdrop = event.target === lightbox;
+
+    if (!closeBtn && !clickedBackdrop) return;
+
+    event.preventDefault();
+    event.stopPropagation();
+
     lightbox.classList.remove("is-open");
     lightbox.setAttribute("aria-hidden", "true");
-    lightboxImg.src = "";
+    lightboxImg.removeAttribute("src");
     lightboxImg.alt = "";
     document.body.style.overflow = "";
-  }
-
-  closeBtn.addEventListener("click", closeLightbox);
-
-  lightbox.addEventListener("click", (event) => {
-    if (event.target === lightbox) {
-      closeLightbox();
-    }
   });
 
-  document.addEventListener("keydown", (event) => {
-    if (event.key === "Escape" && lightbox.classList.contains("is-open")) {
-      closeLightbox();
-    }
+  document.addEventListener("keydown", function (event) {
+    if (event.key !== "Escape") return;
+
+    const lightbox = document.getElementById("image-lightbox");
+    const lightboxImg = document.getElementById("image-lightbox-img");
+
+    if (!lightbox || !lightboxImg) return;
+
+    lightbox.classList.remove("is-open");
+    lightbox.setAttribute("aria-hidden", "true");
+    lightboxImg.removeAttribute("src");
+    lightboxImg.alt = "";
+    document.body.style.overflow = "";
   });
 }
 
