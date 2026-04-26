@@ -3,7 +3,7 @@ title: "시나리오 챗봇"
 part: "챗봇"
 partOrder: 6
 order: 2
-status: "draft"
+status: "published"
 slug: "06-02-scenario-chatbot"
 thumbnail: "/images/docs/ax-planning/06-02-scenario-chatbot.png"
 date: 2024-12-17

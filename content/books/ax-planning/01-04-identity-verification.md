@@ -3,7 +3,7 @@ title: "신분증 인증"
 part: "회원 가입"
 partOrder: 1
 order: 4
-status: "draft"
+status: "published"
 slug: "01-04-identity-verification"
 thumbnail: "/images/docs/ax-planning/01-04-identity-verification.png"
 date: 2024-01-20

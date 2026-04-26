@@ -3,7 +3,7 @@ title: "경로 추천"
 part: "위치 및 공간"
 partOrder: 9
 order: 5
-status: "draft"
+status: "published"
 slug: "09-05-route-recommendation"
 thumbnail: "/images/docs/ax-planning/09-05-route-recommendation.png"
 date: 2025-02-05

@@ -3,7 +3,7 @@ title: "AI 아바타 생성"
 part: "회원 가입"
 partOrder: 1
 order: 8
-status: "draft"
+status: "published"
 slug: "01-08-ai-avatar-generation"
 thumbnail: "/images/docs/ax-planning/01-08-ai-avatar-generation.jpg"
 date: 2024-02-25

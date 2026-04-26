@@ -3,7 +3,7 @@ title: "하이브리드 번역"
 part: "번역"
 partOrder: 7
 order: 3
-status: "draft"
+status: "published"
 slug: "07-03-hybrid-translation"
 thumbnail: "/images/docs/ax-planning/07-03-hybrid-translation.png"
 date: 2025-01-29

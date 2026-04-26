@@ -3,7 +3,7 @@ title: "고객 유지 효과 예측"
 part: "고객 분석"
 partOrder: 2
 order: 7
-status: "draft"
+status: "published"
 slug: "02-07-customer-retention-effect-prediction"
 thumbnail: "/images/docs/ax-planning/02-07-customer-retention-effect-prediction.png"
 date: 2024-06-20

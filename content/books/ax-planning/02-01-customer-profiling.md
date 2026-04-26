@@ -3,7 +3,7 @@ title: "고객 프로파일링"
 part: "고객 분석"
 partOrder: 2
 order: 1
-status: "draft"
+status: "published"
 slug: "02-01-customer-profiling"
 thumbnail: "/images/docs/ax-planning/02-01-customer-profiling.png"
 date: 2024-04-26

@@ -3,7 +3,7 @@ title: "생성형 검색"
 part: "검색"
 partOrder: 4
 order: 3
-status: "draft"
+status: "published"
 slug: "04-03-generative-search"
 thumbnail: "/images/docs/ax-planning/04-03-generative-search.png"
 date: 2024-08-07

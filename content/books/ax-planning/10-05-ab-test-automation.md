@@ -3,7 +3,7 @@ title: "A/B 테스트 자동화"
 part: "광고"
 partOrder: 10
 order: 5
-status: "draft"
+status: "published"
 slug: "10-05-ab-test-automation"
 thumbnail: "/images/docs/ax-planning/10-05-ab-test-automation.png"
 date: 2025-03-12

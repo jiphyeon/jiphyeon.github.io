@@ -3,7 +3,7 @@ title: "이미지 검색"
 part: "검색"
 partOrder: 4
 order: 4
-status: "draft"
+status: "published"
 slug: "04-04-image-search"
 thumbnail: "/images/docs/ax-planning/04-04-image-search.png"
 date: 2024-08-07

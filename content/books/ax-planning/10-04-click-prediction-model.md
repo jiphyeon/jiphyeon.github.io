@@ -3,7 +3,7 @@ title: "클릭 예측 모델"
 part: "광고"
 partOrder: 10
 order: 4
-status: "draft"
+status: "published"
 slug: "10-04-click-prediction-model"
 thumbnail: "/images/docs/ax-planning/10-04-click-prediction-model.jpg"
 date: 2025-03-09

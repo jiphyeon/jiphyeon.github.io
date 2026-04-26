@@ -3,7 +3,7 @@ title: "규칙 기반 추천"
 part: "추천"
 partOrder: 5
 order: 2
-status: "draft"
+status: "published"
 slug: "05-02-rule-based-recommendation"
 thumbnail: "/images/docs/ax-planning/05-02-rule-based-recommendation.png"
 date: 2024-09-04

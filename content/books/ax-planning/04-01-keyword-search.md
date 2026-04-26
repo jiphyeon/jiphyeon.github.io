@@ -3,7 +3,7 @@ title: "키워드 검색"
 part: "검색"
 partOrder: 4
 order: 1
-status: "draft"
+status: "published"
 slug: "04-01-keyword-search"
 thumbnail: "/images/docs/ax-planning/04-01-keyword-search.png"
 date: 2024-07-17

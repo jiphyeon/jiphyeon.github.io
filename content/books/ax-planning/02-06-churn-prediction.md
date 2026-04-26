@@ -3,7 +3,7 @@ title: "고객 이탈 예측"
 part: "고객 분석"
 partOrder: 2
 order: 6
-status: "draft"
+status: "published"
 slug: "02-06-churn-prediction"
 thumbnail: "/images/docs/02-06-churn-prediction.png"
 date: 2024-06-18

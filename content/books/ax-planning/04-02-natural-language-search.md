@@ -3,7 +3,7 @@ title: "자연어 검색"
 part: "검색"
 partOrder: 4
 order: 2
-status: "draft"
+status: "published"
 slug: "04-02-natural-language-search"
 thumbnail: "/images/docs/ax-planning/04-02-natural-language-search.png"
 date: 2024-08-07

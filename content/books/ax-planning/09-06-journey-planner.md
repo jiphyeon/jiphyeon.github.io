@@ -3,7 +3,7 @@ title: "여정 플래너"
 part: "위치 및 공간"
 partOrder: 9
 order: 6
-status: "draft"
+status: "published"
 slug: "09-06-journey-planner"
 thumbnail: "/images/docs/ax-planning/09-06-journey-planner.png"
 date: 2025-02-15

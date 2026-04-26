@@ -3,7 +3,7 @@ title: "오디오 내레이션"
 part: "음성 인터페이스"
 partOrder: 8
 order: 3
-status: "draft"
+status: "published"
 slug: "08-03-audio-narration"
 thumbnail: "/images/docs/ax-planning/08-03-audio-narration.png"
 date: 2025-02-03

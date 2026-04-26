@@ -3,7 +3,7 @@ title: "인구 통계 기반 추천"
 part: "추천"
 partOrder: 5
 order: 1
-status: "draft"
+status: "published"
 slug: "05-01-demographic-based-recommendation"
 thumbnail: "/images/docs/ax-planning/05-01-demographic-based-recommendation.png"
 date: 2024-09-04

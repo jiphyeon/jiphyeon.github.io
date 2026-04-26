@@ -3,7 +3,7 @@ title: "감정 분석"
 part: "고객 분석"
 partOrder: 2
 order: 9
-status: "draft"
+status: "published"
 slug: "02-09-sentiment-analysis"
 thumbnail: "/images/docs/ax-planning/02-09-sentiment-analysis.png"
 date: 2024-06-26

@@ -3,7 +3,7 @@ title: "혼잡도 분석"
 part: "위치 및 공간"
 partOrder: 9
 order: 2
-status: "draft"
+status: "published"
 slug: "09-02-crowd-analysis"
 thumbnail: "/images/docs/ax-planning/09-02-crowd-analysis.png"
 date: 2025-02-13

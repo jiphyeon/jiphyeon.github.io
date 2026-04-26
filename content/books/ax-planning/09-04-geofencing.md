@@ -3,7 +3,7 @@ title: "지오펜싱"
 part: "위치 및 공간"
 partOrder: 9
 order: 4
-status: "draft"
+status: "published"
 slug: "09-04-geofencing"
 thumbnail: "/images/docs/ax-planning/09-04-geofencing.png"
 date: 2025-03-02

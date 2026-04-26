@@ -3,7 +3,7 @@ title: "온보딩 개인화"
 part: "추천"
 partOrder: 5
 order: 3
-status: "draft"
+status: "published"
 slug: "05-03-onboarding-personalization"
 thumbnail: "/images/docs/ax-planning/05-03-onboarding-personalization.png"
 date: 2023-05-01

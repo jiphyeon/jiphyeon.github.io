@@ -3,7 +3,7 @@ title: "리타겟팅 광고"
 part: "광고"
 partOrder: 10
 order: 2
-status: "draft"
+status: "published"
 slug: "10-02-retargeting-advertising"
 thumbnail: "/images/docs/ax-planning/10-02-retargeting-advertising.png"
 date: 2025-03-07

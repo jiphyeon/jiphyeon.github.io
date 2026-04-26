@@ -3,7 +3,7 @@ title: "CAPTCHA 인증"
 part: "회원 가입"
 partOrder: 1
 order: 7
-status: "draft"
+status: "published"
 slug: "01-07-captcha-authentication"
 thumbnail: "/images/docs/ax-planning/01-07-captcha-authentication.png"
 date: 2024-02-19

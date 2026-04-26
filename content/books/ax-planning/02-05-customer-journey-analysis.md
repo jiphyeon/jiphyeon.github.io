@@ -3,7 +3,7 @@ title: "고객 여정 분석"
 part: "고객 분석"
 partOrder: 2
 order: 5
-status: "draft"
+status: "published"
 slug: "02-05-customer-journey-analysis"
 thumbnail: "/images/docs/ax-planning/02-05-customer-journey-analysis.png"
 date: 2024-06-09

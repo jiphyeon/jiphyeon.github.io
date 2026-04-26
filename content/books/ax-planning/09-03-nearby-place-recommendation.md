@@ -3,7 +3,7 @@ title: "주변 장소 추천"
 part: "위치 및 공간"
 partOrder: 9
 order: 3
-status: "draft"
+status: "published"
 slug: "09-03-nearby-place-recommendation"
 thumbnail: "/images/docs/ax-planning/09-03-nearby-place-recommendation.png"
 date: 2025-02-18

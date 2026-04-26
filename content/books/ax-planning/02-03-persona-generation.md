@@ -3,7 +3,7 @@ title: "퍼소나 생성"
 part: "고객 분석"
 partOrder: 2
 order: 3
-status: "draft"
+status: "published"
 slug: "02-03-persona-generation"
 thumbnail: "/images/docs/ax-planning/02-03-persona-generation.png"
 date: 2024-04-30

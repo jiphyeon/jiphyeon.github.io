@@ -3,7 +3,7 @@ title: "지문 인증"
 part: "회원 가입"
 partOrder: 1
 order: 5
-status: "draft"
+status: "published"
 slug: "01-05-fingerprint-authentication"
 thumbnail: "/images/docs/ax-planning/01-05-fingerprint-authentication.png"
 date: 2024-02-18

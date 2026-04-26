@@ -3,7 +3,7 @@ title: "쿠키리스 사용자 식별"
 part: "광고"
 partOrder: 10
 order: 1
-status: "draft"
+status: "published"
 slug: "10-01-cookieless-user-identification"
 thumbnail: "/images/docs/ax-planning/10-01-cookieless-user-identification.png"
 date: 2025-03-05

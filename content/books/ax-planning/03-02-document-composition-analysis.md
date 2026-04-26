@@ -3,7 +3,7 @@ title: "문서 구성 분석"
 part: "문서 분석"
 partOrder: 3
 order: 2
-status: "draft"
+status: "published"
 slug: "03-02-document-composition-analysis"
 thumbnail: "/images/docs/ax-planning/03-02-document-composition-analysis.png"
 date: 2023-06-02

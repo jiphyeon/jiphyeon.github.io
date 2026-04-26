@@ -3,7 +3,7 @@ title: "하이브리드 추천"
 part: "추천"
 partOrder: 5
 order: 8
-status: "draft"
+status: "published"
 slug: "05-08-hybrid-recommendation"
 thumbnail: "/images/docs/ax-planning/05-08-hybrid-recommendation.png"
 date: 2024-11-22

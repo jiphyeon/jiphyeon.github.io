@@ -3,7 +3,7 @@ title: "지식 기반 추천"
 part: "추천"
 partOrder: 5
 order: 4
-status: "draft"
+status: "published"
 slug: "05-04-knowledge-based-recommendation"
 thumbnail: "/images/docs/ax-planning/05-04-knowledge-based-recommendation.png"
 date: 2024-09-10

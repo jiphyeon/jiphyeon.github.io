@@ -3,7 +3,7 @@ title: "멀티모달 검색"
 part: "검색"
 partOrder: 4
 order: 6
-status: "draft"
+status: "published"
 slug: "04-06-multimodal-search"
 thumbnail: "/images/docs/ax-planning/04-06-multimodal-search.png"
 date: 2024-08-12

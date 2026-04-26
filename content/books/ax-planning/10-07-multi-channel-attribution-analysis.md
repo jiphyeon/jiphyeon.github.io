@@ -3,7 +3,7 @@ title: "멀티채널 어트리뷰션 분석"
 part: "광고"
 partOrder: 10
 order: 7
-status: "draft"
+status: "published"
 slug: "10-07-multi-channel-attribution-analysis"
 thumbnail: "/images/docs/ax-planning/10-07-multi-channel-attribution-analysis.png"
 date: 2025-03-17

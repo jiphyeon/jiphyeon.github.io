@@ -3,7 +3,7 @@ title: "고객 세분화"
 part: "고객 분석"
 partOrder: 2
 order: 2
-status: "draft"
+status: "published"
 slug: "02-02-customer-segmentation"
 thumbnail: "/images/docs/ax-planning/02-02-customer-segmentation.png"
 date: 2024-05-03

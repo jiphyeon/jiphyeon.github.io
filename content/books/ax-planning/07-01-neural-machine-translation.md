@@ -3,7 +3,7 @@ title: "신경망 기계 번역"
 part: "번역"
 partOrder: 7
 order: 1
-status: "draft"
+status: "published"
 slug: "07-01-neural-machine-translation"
 thumbnail: "/images/docs/ax-planning/07-01-neural-machine-translation.png"
 date: 2025-01-25

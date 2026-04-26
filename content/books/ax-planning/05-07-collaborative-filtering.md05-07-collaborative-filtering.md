@@ -3,7 +3,7 @@ title: "협업 필터링"
 part: "추천"
 partOrder: 5
 order: 7
-status: "draft"
+status: "published"
 slug: "05-07-collaborative-filtering"
 thumbnail: "/images/docs/ax-planning/05-07-collaborative-filtering.png"
 date: 2024-09-30

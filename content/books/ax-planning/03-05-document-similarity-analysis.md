@@ -3,7 +3,7 @@ title: "문서 유사도 분석"
 part: "문서 분석"
 partOrder: 3
 order: 5
-status: "draft"
+status: "published"
 slug: "03-05-document-similarity-analysis"
 thumbnail: "/images/docs/ax-planning/03-05-document-similarity-analysis.png"
 date: 2023-08-18

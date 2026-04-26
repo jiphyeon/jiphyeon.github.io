@@ -3,7 +3,7 @@ title: "지능형 콜센터"
 part: "음성 인터페이스"
 partOrder: 8
 order: 1
-status: "draft"
+status: "published"
 slug: "08-01-intelligent-call-center"
 thumbnail: "/images/docs/ax-planning/08-01-intelligent-call-center.png"
 date: 2025-01-30

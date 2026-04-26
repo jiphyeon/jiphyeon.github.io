@@ -3,7 +3,7 @@ title: "지능형 회의"
 part: "음성 인터페이스"
 partOrder: 8
 order: 2
-status: "draft"
+status: "published"
 slug: "08-02-intelligent-meeting"
 thumbnail: "/images/docs/ax-planning/08-02-intelligent-meeting.png"
 date: 2025-02-02

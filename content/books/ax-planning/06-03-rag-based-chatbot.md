@@ -3,7 +3,7 @@ title: "RAG 기반 챗봇"
 part: "챗봇"
 partOrder: 6
 order: 3
-status: "draft"
+status: "published"
 slug: "06-03-rag-based-chatbot"
 thumbnail: "/images/docs/ax-planning/06-03-rag-based-chatbot.png"
 date: 2024-12-18

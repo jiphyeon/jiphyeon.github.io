@@ -3,7 +3,7 @@ title: "문서 구조 분석"
 part: "문서 분석"
 partOrder: 3
 order: 3
-status: "draft"
+status: "published"
 slug: "03-03-document-structure-analysis"
 thumbnail: "/images/docs/ax-planning/03-03-document-structure-analysis.png"
 date: 2023-06-26

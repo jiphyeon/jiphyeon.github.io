@@ -3,7 +3,7 @@ title: "콘텐츠 기반 추천"
 part: "추천"
 partOrder: 5
 order: 6
-status: "draft"
+status: "published"
 slug: "05-06-content-based-recommendation"
 thumbnail: "/images/docs/ax-planning/05-06-content-based-recommendation.png"
 date: 2024-09-24

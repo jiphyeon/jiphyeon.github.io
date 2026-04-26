@@ -29,49 +29,49 @@
           "title": "아이디 추천",
           "slug": "01-01-id-recommendation",
           "file": "01-01-id-recommendation.md",
-          "status": "draft"
+          "status": "published"
         },
         {
           "title": "비밀번호 추천",
           "slug": "01-02-password-recommendation",
           "file": "01-02-password-recommendation.md",
-          "status": "draft"
+          "status": "published"
         },
         {
           "title": "신용카드 등록",
           "slug": "01-03-credit-card-registration",
           "file": "01-03-credit-card-registration.md",
-          "status": "draft"
+          "status": "published"
         },
         {
           "title": "신분증 인증",
           "slug": "01-04-identity-verification",
           "file": "01-04-identity-verification.md",
-          "status": "draft"
+          "status": "published"
         },
         {
           "title": "지문 인증",
           "slug": "01-05-fingerprint-authentication",
           "file": "01-05-fingerprint-authentication.md",
-          "status": "draft"
+          "status": "published"
         },
         {
           "title": "얼굴 인증",
           "slug": "01-06-face-authentication",
           "file": "01-06-face-authentication.md",
-          "status": "draft"
+          "status": "published"
         },
         {
           "title": "CAPTCHA 인증",
           "slug": "01-07-captcha-authentication",
           "file": "01-07-captcha-authentication.md",
-          "status": "draft"
+          "status": "published"
         },
         {
           "title": "AI 아바타 생성",
           "slug": "01-08-ai-avatar-generation",
           "file": "01-08-ai-avatar-generation.md",
-          "status": "draft"
+          "status": "published"
         }
       ]
     },
@@ -83,61 +83,61 @@
           "title": "고객 프로파일링",
           "slug": "02-01-customer-profiling",
           "file": "02-01-customer-profiling.md",
-          "status": "draft"
+          "status": "published"
         },
         {
           "title": "고객 세분화",
           "slug": "02-02-customer-segmentation",
           "file": "02-02-customer-segmentation.md",
-          "status": "draft"
+          "status": "published"
         },
         {
           "title": "퍼소나 생성",
           "slug": "02-03-persona-generation",
           "file": "02-03-persona-generation.md",
-          "status": "draft"
+          "status": "published"
         },
         {
           "title": "고객 평생 가치 예측",
           "slug": "02-04-customer-lifetime-value-prediction",
           "file": "02-04-customer-lifetime-value-prediction.md",
-          "status": "draft"
+          "status": "published"
         },
         {
           "title": "고객 여정 분석",
           "slug": "02-05-customer-journey-analysis",
           "file": "02-05-customer-journey-analysis.md",
-          "status": "draft"
+          "status": "published"
         },
         {
           "title": "고객 이탈 예측",
           "slug": "02-06-churn-prediction",
           "file": "02-06-churn-prediction.md",
-          "status": "draft"
+          "status": "published"
         },
         {
           "title": "고객 유지 효과 예측",
           "slug": "02-07-customer-retention-effect-prediction",
           "file": "02-07-customer-retention-effect-prediction.md",
-          "status": "draft"
+          "status": "published"
         },
         {
           "title": "고객 의도 예측",
           "slug": "02-08-customer-intent-prediction",
           "file": "02-08-customer-intent-prediction.md",
-          "status": "draft"
+          "status": "published"
         },
         {
           "title": "감정 분석",
           "slug": "02-09-sentiment-analysis",
           "file": "02-09-sentiment-analysis.md",
-          "status": "draft"
+          "status": "published"
         },
         {
           "title": "VOC 분석",
           "slug": "02-10-voc-analysis",
           "file": "02-10-voc-analysis.md",
-          "status": "draft"
+          "status": "published"
         }
       ]
     },
@@ -149,37 +149,37 @@
           "title": "문서 생성",
           "slug": "03-01-document-generation",
           "file": "03-01-document-generation.md",
-          "status": "draft"
+          "status": "published"
         },
         {
           "title": "문서 구성 분석",
           "slug": "03-02-document-composition-analysis",
           "file": "03-02-document-composition-analysis.md",
-          "status": "draft"
+          "status": "published"
         },
         {
           "title": "문서 구조 분석",
           "slug": "03-03-document-structure-analysis",
           "file": "03-03-document-structure-analysis.md",
-          "status": "draft"
+          "status": "published"
         },
         {
           "title": "지능형 문서 처리",
           "slug": "03-04-intelligent-document-processing",
           "file": "03-04-intelligent-document-processing.md",
-          "status": "draft"
+          "status": "published"
         },
         {
           "title": "문서 유사도 분석",
           "slug": "03-05-document-similarity-analysis",
           "file": "03-05-document-similarity-analysis.md",
-          "status": "draft"
+          "status": "published"
         },
         {
           "title": "엔터티 관리",
           "slug": "03-06-entity-management",
           "file": "03-06-entity-management.md",
-          "status": "draft"
+          "status": "published"
         }
       ]
     },
@@ -191,37 +191,37 @@
           "title": "키워드 검색",
           "slug": "04-01-keyword-search",
           "file": "04-01-keyword-search.md",
-          "status": "draft"
+          "status": "published"
         },
         {
           "title": "자연어 검색",
           "slug": "04-02-natural-language-search",
           "file": "04-02-natural-language-search.md",
-          "status": "draft"
+          "status": "published"
         },
         {
           "title": "생성형 검색",
           "slug": "04-03-generative-search",
           "file": "04-03-generative-search.md",
-          "status": "draft"
+          "status": "published"
         },
         {
           "title": "이미지 검색",
           "slug": "04-04-image-search",
           "file": "04-04-image-search.md",
-          "status": "draft"
+          "status": "published"
         },
         {
           "title": "색상 검색",
           "slug": "04-05-color-search",
           "file": "04-05-color-search.md",
-          "status": "draft"
+          "status": "published"
         },
         {
           "title": "멀티모달 검색",
           "slug": "04-06-multimodal-search",
           "file": "04-06-multimodal-search.md",
-          "status": "draft"
+          "status": "published"
         }
       ]
     },
@@ -233,49 +233,49 @@
           "title": "인구 통계 기반 추천",
           "slug": "05-01-demographic-based-recommendation",
           "file": "05-01-demographic-based-recommendation.md",
-          "status": "draft"
+          "status": "published"
         },
         {
           "title": "규칙 기반 추천",
           "slug": "05-02-rule-based-recommendation",
           "file": "05-02-rule-based-recommendation.md",
-          "status": "draft"
+          "status": "published"
         },
         {
           "title": "온보딩 개인화",
           "slug": "05-03-onboarding-personalization",
           "file": "05-03-onboarding-personalization.md",
-          "status": "draft"
+          "status": "published"
         },
         {
           "title": "지식 기반 추천",
           "slug": "05-04-knowledge-based-recommendation",
           "file": "05-04-knowledge-based-recommendation.md",
-          "status": "draft"
+          "status": "published"
         },
         {
           "title": "맥락 기반 추천",
           "slug": "05-05-context-aware-recommendation",
           "file": "05-05-context-aware-recommendation.md",
-          "status": "draft"
+          "status": "published"
         },
         {
           "title": "콘텐츠 기반 추천",
           "slug": "05-06-content-based-recommendation",
           "file": "05-06-content-based-recommendation.md",
-          "status": "draft"
+          "status": "published"
         },
         {
           "title": "협업 필터링",
           "slug": "05-07-collaborative-filtering",
           "file": "05-07-collaborative-filtering.md05-07-collaborative-filtering.md",
-          "status": "draft"
+          "status": "published"
         },
         {
           "title": "하이브리드 추천",
           "slug": "05-08-hybrid-recommendation",
           "file": "05-08-hybrid-recommendation.md",
-          "status": "draft"
+          "status": "published"
         }
       ]
     },
@@ -287,25 +287,25 @@
           "title": "FAQ 챗봇",
           "slug": "06-01-faq-chatbot",
           "file": "06-01-faq-chatbot.md",
-          "status": "draft"
+          "status": "published"
         },
         {
           "title": "시나리오 챗봇",
           "slug": "06-02-scenario-chatbot",
           "file": "06-02-scenario-chatbot.md",
-          "status": "draft"
+          "status": "published"
         },
         {
           "title": "RAG 기반 챗봇",
           "slug": "06-03-rag-based-chatbot",
           "file": "06-03-rag-based-chatbot.md",
-          "status": "draft"
+          "status": "published"
         },
         {
           "title": "멀티모달 챗봇",
           "slug": "06-04-multimodal-chatbot",
           "file": "06-04-multimodal-chatbot.md",
-          "status": "draft"
+          "status": "published"
         }
       ]
     },
@@ -317,19 +317,19 @@
           "title": "신경망 기계 번역",
           "slug": "07-01-neural-machine-translation",
           "file": "07-01-neural-machine-translation.md",
-          "status": "draft"
+          "status": "published"
         },
         {
           "title": "LLM 기반 번역",
           "slug": "07-02-llm-based-translation",
           "file": "07-02-llm-based-translation.md",
-          "status": "draft"
+          "status": "published"
         },
         {
           "title": "하이브리드 번역",
           "slug": "07-03-hybrid-translation",
           "file": "07-03-hybrid-translation.md",
-          "status": "draft"
+          "status": "published"
         }
       ]
     },
@@ -341,19 +341,19 @@
           "title": "지능형 콜센터",
           "slug": "08-01-intelligent-call-center",
           "file": "08-01-intelligent-call-center.md",
-          "status": "draft"
+          "status": "published"
         },
         {
           "title": "지능형 회의",
           "slug": "08-02-intelligent-meeting",
           "file": "08-02-intelligent-meeting.md",
-          "status": "draft"
+          "status": "published"
         },
         {
           "title": "오디오 내레이션",
           "slug": "08-03-audio-narration",
           "file": "08-03-audio-narration.md",
-          "status": "draft"
+          "status": "published"
         }
       ]
     },
@@ -365,37 +365,37 @@
           "title": "POI 분석",
           "slug": "09-01-poi-analysis",
           "file": "09-01-poi-analysis.md",
-          "status": "draft"
+          "status": "published"
         },
         {
           "title": "혼잡도 분석",
           "slug": "09-02-crowd-analysis",
           "file": "09-02-crowd-analysis.md",
-          "status": "draft"
+          "status": "published"
         },
         {
           "title": "주변 장소 추천",
           "slug": "09-03-nearby-place-recommendation",
           "file": "09-03-nearby-place-recommendation.md",
-          "status": "draft"
+          "status": "published"
         },
         {
           "title": "지오펜싱",
           "slug": "09-04-geofencing",
           "file": "09-04-geofencing.md",
-          "status": "draft"
+          "status": "published"
         },
         {
           "title": "경로 추천",
           "slug": "09-05-route-recommendation",
           "file": "09-05-route-recommendation.md",
-          "status": "draft"
+          "status": "published"
         },
         {
           "title": "여정 플래너",
           "slug": "09-06-journey-planner",
           "file": "09-06-journey-planner.md",
-          "status": "draft"
+          "status": "published"
         }
       ]
     },
@@ -407,43 +407,43 @@
           "title": "쿠키리스 사용자 식별",
           "slug": "10-01-cookieless-user-identification",
           "file": "10-01-cookieless-user-identification.md",
-          "status": "draft"
+          "status": "published"
         },
         {
           "title": "리타겟팅 광고",
           "slug": "10-02-retargeting-advertising",
           "file": "10-02-retargeting-advertising.md",
-          "status": "draft"
+          "status": "published"
         },
         {
           "title": "컨텍스트 광고",
           "slug": "10-03-contextual-advertising",
           "file": "10-03-contextual-advertising.md",
-          "status": "draft"
+          "status": "published"
         },
         {
           "title": "클릭 예측 모델",
           "slug": "10-04-click-prediction-model",
           "file": "10-04-click-prediction-model.md",
-          "status": "draft"
+          "status": "published"
         },
         {
           "title": "A/B 테스트 자동화",
           "slug": "10-05-ab-test-automation",
           "file": "10-05-ab-test-automation.md",
-          "status": "draft"
+          "status": "published"
         },
         {
           "title": "브랜드 리프트 측정",
           "slug": "10-06-brand-lift-measurement",
           "file": "10-06-brand-lift-measurement.md",
-          "status": "draft"
+          "status": "published"
         },
         {
           "title": "멀티채널 어트리뷰션 분석",
           "slug": "10-07-multi-channel-attribution-analysis",
           "file": "10-07-multi-channel-attribution-analysis.md",
-          "status": "draft"
+          "status": "published"
         }
       ]
     }

@@ -3,7 +3,7 @@ title: "신용카드 등록"
 part: "회원 가입"
 partOrder: 1
 order: 3
-status: "draft"
+status: "published"
 slug: "01-03-credit-card-registration"
 thumbnail: "/images/docs/ax-planning/01-03-credit-card-registration.png"
 date: 2024-01-14

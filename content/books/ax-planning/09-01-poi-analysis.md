@@ -3,7 +3,7 @@ title: "POI 분석"
 part: "위치 및 공간"
 partOrder: 9
 order: 1
-status: "draft"
+status: "published"
 slug: "09-01-poi-analysis"
 thumbnail: "/images/docs/ax-planning/09-01-poi-analysis.png"
 date: 2025-02-06

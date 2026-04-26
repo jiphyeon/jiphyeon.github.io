@@ -3,7 +3,7 @@ title: "제12조 기록 유지"
 part: "법령 해설"
 partOrder: 3
 order: 12
-status: "draft"
+status: "published"
 slug: "record-keeping"
 date: 2025-09-26
 ---

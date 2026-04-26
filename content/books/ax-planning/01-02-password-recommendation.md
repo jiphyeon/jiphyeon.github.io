@@ -3,7 +3,7 @@ title: "비밀번호 추천"
 part: "회원 가입"
 partOrder: 1
 order: 2
-status: "draft"
+status: "published"
 slug: "01-02-password-recommendation"
 thumbnail: "/images/docs/ax-planning/01-02-password-recommendation.png"
 date: 2024-01-14

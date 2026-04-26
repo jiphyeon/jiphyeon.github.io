@@ -3,7 +3,7 @@ title: "고객 평생 가치 예측"
 part: "고객 분석"
 partOrder: 2
 order: 4
-status: "draft"
+status: "published"
 slug: "02-04-customer-lifetime-value-prediction"
 thumbnail: "/images/docs/ax-planning/02-04-customer-lifetime-value-prediction.png"
 date: 2024-06-07

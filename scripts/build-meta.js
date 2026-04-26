@@ -21,10 +21,16 @@ function normalizeString(value, fallback = "") {
 }
 
 function normalizeStatus(value, fallback = "published") {
-  const normalized = normalizeString(value, fallback).toLowerCase();
+  const normalized = String(value || fallback)
+    .replace(/[“”]/g, "\"")
+    .replace(/[‘’]/g, "'")
+    .replace(/^["']+|["']+$/g, "")
+    .toLowerCase()
+    .trim();
 
-  if (normalized === "draft") return "draft";
-  if (normalized === "published") return "published";
+  if (normalized.includes("draft")) return "draft";
+  if (normalized.includes("published")) return "published";
+  if (normalized.includes("hidden")) return "hidden";
 
   return fallback;
 }
@@ -148,6 +154,7 @@ function buildBookMeta(bookId) {
         if (a.order !== b.order) {
           return a.order - b.order;
         }
+
         return a.title.localeCompare(b.title, "ko");
       });
 

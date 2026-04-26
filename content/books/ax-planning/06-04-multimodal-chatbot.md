@@ -3,7 +3,7 @@ title: "멀티모달 챗봇"
 part: "챗봇"
 partOrder: 6
 order: 4
-status: "draft"
+status: "published"
 slug: "06-04-multimodal-chatbot"
 thumbnail: "/images/docs/ax-planning/06-04-multimodal-chatbo.png"
 date: 2024-12-20

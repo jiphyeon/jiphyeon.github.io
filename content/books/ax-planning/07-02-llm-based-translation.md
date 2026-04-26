@@ -3,7 +3,7 @@ title: "LLM 기반 번역"
 part: "번역"
 partOrder: 7
 order: 2
-status: "draft"
+status: "published"
 slug: "07-02-llm-based-translation"
 thumbnail: "/images/docs/ax-planning/07-02-llm-based-translation.png"
 date: 2025-01-26

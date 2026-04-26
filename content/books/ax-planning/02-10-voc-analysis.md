@@ -3,7 +3,7 @@ title: "VOC 분석"
 part: "고객 분석"
 partOrder: 2
 order: 10
-status: "draft"
+status: "published"
 slug: "02-10-voc-analysis"
 thumbnail: "/images/docs/ax-planning/02-10-voc-analysis.png"
 date: 2024-07-15

@@ -3,7 +3,7 @@ title: "고객 의도 예측"
 part: "고객 분석"
 partOrder: 2
 order: 8
-status: "draft"
+status: "published"
 slug: "02-08-customer-intent-prediction"
 thumbnail: "/images/docs/ax-planning/02-08-customer-intent-prediction.png"
 date: 2024-06-22

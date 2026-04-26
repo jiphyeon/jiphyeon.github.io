@@ -3,7 +3,7 @@ title: "얼굴 인증"
 part: "회원 가입"
 partOrder: 1
 order: 6
-status: "draft"
+status: "published"
 slug: "01-06-face-authentication"
 thumbnail: "/images/docs/ax-planning/01-06-face-authentication.png"
 date: 2024-02-19

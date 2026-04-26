@@ -3,7 +3,7 @@ title: "브랜드 리프트 측정"
 part: "광고"
 partOrder: 10
 order: 6
-status: "draft"
+status: "published"
 slug: "10-06-brand-lift-measurement"
 thumbnail: "/images/docs/ax-planning/10-06-brand-lift-measurement.png"
 date: 2025-03-14

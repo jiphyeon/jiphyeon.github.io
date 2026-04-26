@@ -3,7 +3,7 @@ title: "엔터티 관리"
 part: "문서 분석"
 partOrder: 3
 order: 6
-status: "draft"
+status: "published"
 slug: "03-06-entity-management"
 thumbnail: "/images/docs/03-06-entity-management.png"
 date: 2023-04-15

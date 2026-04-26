@@ -3,7 +3,7 @@ title: "제10조 데이터와 데이터 거버넌스"
 part: "법령 해설"
 partOrder: 3
 order: 13
-status: "draft"
+status: "published"
 slug: "data-governace"
 date: 2025-09-23
 ---

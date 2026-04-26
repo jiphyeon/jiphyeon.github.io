@@ -3,7 +3,7 @@ title: "색상 검색"
 part: "검색"
 partOrder: 4
 order: 5
-status: "draft"
+status: "published"
 slug: "04-05-color-search"
 thumbnail: "/images/docs/ax-planning/04-05-color-search.png"
 date: 2024-08-08

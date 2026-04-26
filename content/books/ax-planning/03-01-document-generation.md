@@ -3,7 +3,7 @@ title: "문서 생성"
 part: "문서 분석"
 partOrder: 3
 order: 1
-status: "draft"
+status: "published"
 slug: "03-01-document-generation"
 thumbnail: "/images/docs/ax-planning/03-01-document-generation.png"
 date: 2023-05-24

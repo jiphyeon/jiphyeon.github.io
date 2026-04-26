@@ -3,7 +3,7 @@ title: "지능형 문서 처리"
 part: "문서 분석"
 partOrder: 3
 order: 4
-status: "draft"
+status: "published"
 slug: "03-04-intelligent-document-processing"
 thumbnail: "/images/docs/ax-planning/03-04-intelligent-document-processing.png"
 date: 2023-06-28

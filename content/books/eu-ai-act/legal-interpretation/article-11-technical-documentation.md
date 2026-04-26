@@ -3,7 +3,7 @@ title: "제11조 기술문서"
 part: "법령 해설"
 partOrder: 3
 order: 11
-status: "draft"
+status: "published"
 slug: "technical-documentation"
 date: 2025-09-25
 ---

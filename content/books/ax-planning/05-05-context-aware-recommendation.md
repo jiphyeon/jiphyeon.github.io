@@ -3,7 +3,7 @@ title: "맥락 기반 추천"
 part: "추천"
 partOrder: 5
 order: 5
-status: "draft"
+status: "published"
 slug: "05-05-context-aware-recommendation"
 thumbnail: "/images/docs/ax-planning/05-05-context-aware-recommendation.png"
 date: 2024-09-22

@@ -3,7 +3,7 @@ title: "컨텍스트 광고"
 part: "광고"
 partOrder: 10
 order: 3
-status: "draft"
+status: "published"
 slug: "10-03-contextual-advertising"
 thumbnail: "/images/docs/ax-planning/10-03-contextual-advertising.png"
 date: 2025-03-07

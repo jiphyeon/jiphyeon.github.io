@@ -3,7 +3,7 @@ title: "FAQ 챗봇"
 part: "챗봇"
 partOrder: 6
 order: 1
-status: "draft"
+status: "published"
 slug: "06-01-faq-chatbot"
 thumbnail: "/images/docs/ax-planning/06-01-faq-chatbot.png"
 date: 2024-12-17
