@@ -13,7 +13,7 @@ function parseFrontMatter(markdown = "") {
   const content = markdown.replace(/^---\s*\n[\s\S]*?\n---\s*\n?/, "");
   const data = {};
 
-  raw.split("\n").forEach(line => {
+  raw.split("\n").forEach((line) => {
     const index = line.indexOf(":");
     if (index === -1) return;
 
@@ -61,7 +61,7 @@ function renderToc(structure = [], currentSlug = "", currentBook = "") {
   const tocEl = document.getElementById("toc");
   if (!tocEl) return;
 
-  tocEl.innerHTML = (structure || []).map(group => {
+  tocEl.innerHTML = (structure || []).map((group) => {
     const items = (Array.isArray(group.items) ? group.items : []).filter(isPublishedDoc);
 
     if (!items.length) {
@@ -72,7 +72,7 @@ function renderToc(structure = [], currentSlug = "", currentBook = "") {
       ? `<div class="toc-group-title">${escapeHtml(group.title)}</div>`
       : "";
 
-    const links = items.map(item => `
+    const links = items.map((item) => `
       <a href="/docs.html?book=${encodeURIComponent(currentBook)}&chapter=${encodeURIComponent(item.slug)}"
          class="${item.slug === currentSlug ? "active" : ""}"
          ${item.slug === currentSlug ? 'aria-current="page"' : ""}>
@@ -90,7 +90,7 @@ function renderToc(structure = [], currentSlug = "", currentBook = "") {
 }
 
 function setupNavigation(list, current, currentBook) {
-  const index = list.findIndex(item => item.slug === current.slug);
+  const index = list.findIndex((item) => item.slug === current.slug);
 
   const prev = list[index - 1];
   const next = list[index + 1];
@@ -136,6 +136,7 @@ function setupNavigation(list, current, currentBook) {
 function applyReferenceHeadingStyle(contentEl) {
   contentEl.querySelectorAll("p, li").forEach((el) => {
     const text = el.textContent.trim().replace(/\s+/g, "");
+
     if (text.includes("참고자료")) {
       el.classList.add("reference-heading");
     }
@@ -145,54 +146,52 @@ function applyReferenceHeadingStyle(contentEl) {
 function setupContentImageLightbox(contentEl) {
   if (!contentEl) return;
 
+  const lightbox = document.getElementById("image-lightbox");
+  const lightboxImg = document.getElementById("image-lightbox-img");
+
+  if (!lightbox || !lightboxImg) return;
+
   contentEl.querySelectorAll("img").forEach((img) => {
     img.style.cursor = "zoom-in";
 
     img.addEventListener("click", () => {
-      const lightbox = document.getElementById("image-lightbox");
-      const lightboxImg = document.getElementById("image-lightbox-img");
-
-      if (!lightbox || !lightboxImg) return;
-
       lightboxImg.src = img.src;
       lightboxImg.alt = img.alt || "";
 
-      lightbox.classList.add("is-active");
+      lightbox.classList.add("is-open");
       lightbox.setAttribute("aria-hidden", "false");
+      document.body.style.overflow = "hidden";
     });
   });
 }
 
 function setupLightboxClose() {
-  document.addEventListener("click", (event) => {
-    const lightbox = document.getElementById("image-lightbox");
-    const lightboxImg = document.getElementById("image-lightbox-img");
+  const lightbox = document.getElementById("image-lightbox");
+  const lightboxImg = document.getElementById("image-lightbox-img");
+  const closeBtn = document.getElementById("image-lightbox-close");
 
-    if (!lightbox || !lightboxImg) return;
+  if (!lightbox || !lightboxImg || !closeBtn) return;
 
-    const isBackdrop = event.target.id === "image-lightbox";
-    const isCloseButton = event.target.id === "image-lightbox-close";
-
-    if (!isBackdrop && !isCloseButton) return;
-
-    lightbox.classList.remove("is-active");
+  function closeLightbox() {
+    lightbox.classList.remove("is-open");
     lightbox.setAttribute("aria-hidden", "true");
     lightboxImg.src = "";
     lightboxImg.alt = "";
+    document.body.style.overflow = "";
+  }
+
+  closeBtn.addEventListener("click", closeLightbox);
+
+  lightbox.addEventListener("click", (event) => {
+    if (event.target === lightbox) {
+      closeLightbox();
+    }
   });
 
   document.addEventListener("keydown", (event) => {
-    if (event.key !== "Escape") return;
-
-    const lightbox = document.getElementById("image-lightbox");
-    const lightboxImg = document.getElementById("image-lightbox-img");
-
-    if (!lightbox || !lightboxImg) return;
-
-    lightbox.classList.remove("is-active");
-    lightbox.setAttribute("aria-hidden", "true");
-    lightboxImg.src = "";
-    lightboxImg.alt = "";
+    if (event.key === "Escape" && lightbox.classList.contains("is-open")) {
+      closeLightbox();
+    }
   });
 }
 
@@ -217,8 +216,13 @@ async function initializeDocsPage() {
   }
 
   try {
-    const response = await fetch(`/content/books/${encodeURIComponent(book)}/meta.json`, { cache: "no-store" });
-    if (!response.ok) throw new Error("meta.json 로드 실패");
+    const response = await fetch(`/content/books/${encodeURIComponent(book)}/meta.json`, {
+      cache: "no-store"
+    });
+
+    if (!response.ok) {
+      throw new Error("meta.json 로드 실패");
+    }
 
     const meta = await response.json();
     const structure = Array.isArray(meta.structure) ? meta.structure : [];
@@ -233,7 +237,7 @@ async function initializeDocsPage() {
       return;
     }
 
-    const current = docs.find(item => item.slug === chapter) || publishedDocs[0] || docs[0];
+    const current = docs.find((item) => item.slug === chapter) || publishedDocs[0] || docs[0];
 
     renderToc(structure, current.slug, book);
 
@@ -247,7 +251,9 @@ async function initializeDocsPage() {
       { cache: "no-store" }
     );
 
-    if (!markdownResponse.ok) throw new Error("Markdown 로드 실패");
+    if (!markdownResponse.ok) {
+      throw new Error("Markdown 로드 실패");
+    }
 
     const markdown = await markdownResponse.text();
     const { data: frontMatter, content: cleanedMarkdown } = parseFrontMatter(markdown);
