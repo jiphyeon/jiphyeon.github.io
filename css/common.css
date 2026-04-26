@@ -859,4 +859,21 @@
         font-size: 12px;
       }
     }
+
+    /* h2 헤딩 강조 (공통) */
+.content h2 {
+  position: relative;
+  padding-left: 16px;
+}
+
+.content h2::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 8px;
+  height: 8px;
+  border: 2px solid #111;
+  transform: translateY(-50%);
+}
   </style>
