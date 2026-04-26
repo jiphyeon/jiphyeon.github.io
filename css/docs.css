@@ -605,4 +605,14 @@ body:hover::-webkit-scrollbar-thumb:hover,
 .main:hover::-webkit-scrollbar-thumb:hover {
   background: rgba(0, 0, 0, 0.38);
 }
+
+/* docs.html 본문 우측 잘림 방지 */
+.main {
+  overflow-x: hidden;
+}
+
+.content-wrap {
+  padding-right: 32px;
+  box-sizing: border-box;
+}
 </style>
