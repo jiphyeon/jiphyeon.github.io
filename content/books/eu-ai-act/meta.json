@@ -140,14 +140,14 @@
           "status": "draft"
         },
         {
-          "title": "제10조 데이터와 데이터 거버넌스",
-          "slug": "data-governace",
+          "title": "제11조 기술문서",
+          "slug": "technical-documentation",
           "file": "legal-interpretation/article-11-technical-documentation.md",
           "status": "draft"
         },
         {
-          "title": "제10조 데이터와 데이터 거버넌스",
-          "slug": "data-governace",
+          "title": "제12조 기록 유지",
+          "slug": "record-keeping",
           "file": "legal-interpretation/article-12-record-keeping.md",
           "status": "draft"
         },
