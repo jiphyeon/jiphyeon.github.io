@@ -1,7 +1,7 @@
 ---
 title: "산업 변화의 4가지 경로(4 Trajectories of Industry Change)"
 type : "post"
-category: "경영설계"
+category: "경영 설계"
 date: 2023-06-03
 status: "published"
 slug: "4-trajectories-industry-change"

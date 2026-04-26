@@ -1,7 +1,7 @@
 ---
 title: "자율과 통제의 통합 설계 방법론 : Gulati의 3P 프레임워크"
 type: "post"
-category: "경영설계"
+category: "경영 설계"
 date: 2023-05-25
 status: "published"
 slug: "3p-framework"
