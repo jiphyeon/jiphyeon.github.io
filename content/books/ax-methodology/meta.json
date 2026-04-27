@@ -1,0 +1,181 @@
+{
+  "id": "ax-methodology",
+  "title": "ax-methodology",
+  "description": "",
+  "structure": [
+    {
+      "type": "part",
+      "title": "개요",
+      "items": [
+        {
+          "title": "책 소개",
+          "slug": "00-01-book-introduction",
+          "file": "00-01-book-introduction.md",
+          "status": "published"
+        },
+        {
+          "title": "더 알아보기",
+          "slug": "00-02-references",
+          "file": "00-02-references.md",
+          "status": "published"
+        }
+      ]
+    },
+    {
+      "type": "part",
+      "title": "AX 계획",
+      "items": [
+        {
+          "title": "AX 진단",
+          "slug": "01-01-ax-diagnosis",
+          "file": "01-01-ax-diagnosis.md",
+          "status": "published"
+        },
+        {
+          "title": "AX 진단",
+          "slug": "01-01-ax-diagnosis",
+          "file": "01-02-ax-direction.md",
+          "status": "published"
+        },
+        {
+          "title": "AX 진단",
+          "slug": "01-01-ax-diagnosis",
+          "file": "02-01-data-preparation.md",
+          "status": "published"
+        },
+        {
+          "title": "AX 진단",
+          "slug": "01-01-ax-diagnosis",
+          "file": "02-02-data-flow.md",
+          "status": "published"
+        },
+        {
+          "title": "AX 진단",
+          "slug": "01-01-ax-diagnosis",
+          "file": "02-03-data-quality.md",
+          "status": "published"
+        },
+        {
+          "title": "AX 진단",
+          "slug": "01-01-ax-diagnosis",
+          "file": "02-04-data-standard.md",
+          "status": "published"
+        },
+        {
+          "title": "AX 진단",
+          "slug": "01-01-ax-diagnosis",
+          "file": "02-05-data-lifecycle.md",
+          "status": "published"
+        },
+        {
+          "title": "AX 진단",
+          "slug": "01-01-ax-diagnosis",
+          "file": "02-06-data-processing.md",
+          "status": "published"
+        },
+        {
+          "title": "AX 진단",
+          "slug": "01-01-ax-diagnosis",
+          "file": "02-07-data-security.md",
+          "status": "published"
+        },
+        {
+          "title": "AX 진단",
+          "slug": "01-01-ax-diagnosis",
+          "file": "03-01-model-concept-and-role.md",
+          "status": "published"
+        },
+        {
+          "title": "AX 진단",
+          "slug": "01-01-ax-diagnosis",
+          "file": "03-02-model-types-and-categories.md",
+          "status": "published"
+        },
+        {
+          "title": "AX 진단",
+          "slug": "01-01-ax-diagnosis",
+          "file": "03-03-model-selection.md",
+          "status": "published"
+        },
+        {
+          "title": "AX 진단",
+          "slug": "01-01-ax-diagnosis",
+          "file": "03-04-model-training-and-customization.md",
+          "status": "published"
+        },
+        {
+          "title": "AX 진단",
+          "slug": "01-01-ax-diagnosis",
+          "file": "03-05-model-integration-and-execution.md",
+          "status": "published"
+        },
+        {
+          "title": "AX 진단",
+          "slug": "01-01-ax-diagnosis",
+          "file": "04-01-agent-concept-and-role.md",
+          "status": "published"
+        },
+        {
+          "title": "AX 진단",
+          "slug": "01-01-ax-diagnosis",
+          "file": "04-02-agent-components-and-mechanism.md",
+          "status": "published"
+        },
+        {
+          "title": "AX 진단",
+          "slug": "01-01-ax-diagnosis",
+          "file": "04-03-agent-integration.md",
+          "status": "published"
+        },
+        {
+          "title": "AX 진단",
+          "slug": "01-01-ax-diagnosis",
+          "file": "04-04-agent-automation.md",
+          "status": "published"
+        },
+        {
+          "title": "AX 진단",
+          "slug": "01-01-ax-diagnosis",
+          "file": "05-01-infrastructure.md",
+          "status": "published"
+        },
+        {
+          "title": "AX 진단",
+          "slug": "01-01-ax-diagnosis",
+          "file": "05-02-architecture.md",
+          "status": "published"
+        },
+        {
+          "title": "AX 진단",
+          "slug": "01-01-ax-diagnosis",
+          "file": "05-03-frameworks-and-tools.md",
+          "status": "published"
+        },
+        {
+          "title": "AX 진단",
+          "slug": "01-01-ax-diagnosis",
+          "file": "05-04-integration.md",
+          "status": "published"
+        },
+        {
+          "title": "AX 진단",
+          "slug": "01-01-ax-diagnosis",
+          "file": "05-05-deployment.md",
+          "status": "published"
+        },
+        {
+          "title": "AX 진단",
+          "slug": "01-01-ax-diagnosis",
+          "file": "05-06-security.md",
+          "status": "published"
+        },
+        {
+          "title": "AX 진단",
+          "slug": "01-01-ax-diagnosis",
+          "file": "05-07-monitoring.md",
+          "status": "published"
+        }
+      ]
+    }
+  ]
+}
