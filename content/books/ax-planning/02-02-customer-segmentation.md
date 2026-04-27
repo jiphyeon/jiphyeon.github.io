@@ -9,7 +9,10 @@ thumbnail: "/images/docs/ax-planning/02-02-customer-segmentation.png"
 date: 2024-05-03
 ---
 
-![고객 세분화 프로세스를 단계별로 나타낸 흐름도. 데이터 준비(고객 프로파일 테이블, 데이터 표준화·정규화, 결측치 처리, Python·pandas 활용), 클러스터링 알고리즘(K-Means, DBSCAN, 계층적 클러스터링, scikit-learn 활용) 순으로 이어지며, 세분화 결과 및 해석 단계에서 충성 고객군·신규 고객군·잠재 이탈군·비활성 고객군으로 분류됨. 전체 프로세스는 Airflow·Prefect로 고객 행동 변화를 감지하여 최신 고객 상태를 자동 반영하는 구조.](/images/docs/ax-planning/02-02-customer-segmentation.png)
+<img
+  src="/images/docs/ax-planning/02-02-customer-segmentation.png"
+  alt="Python과 pandas를 활용한 데이터 정규화, scikit-learn 기반 클러스터링(K-Means, DBSCAN)을 통해 고객군을 세분화하고 Airflow로 자동 업데이트하는 프로세스 흐름도"
+  class="img-small">
 
 * 전체 고객을 비슷한 성향이나 특성을 가진 그룹으로 나누는 작업
 * 모든 고객에게 같은 메시지를 보내는 대신 그룹별로 맞춤 전략을 설계할 수 있어 마케팅 효과가 크게 달라짐

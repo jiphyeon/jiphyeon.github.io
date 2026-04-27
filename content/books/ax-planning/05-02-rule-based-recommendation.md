@@ -9,7 +9,10 @@ thumbnail: "/images/docs/ax-planning/05-02-rule-based-recommendation.png"
 date: 2024-09-04
 ---
 
-![규칙 기반 추천 프로세스를 단계별로 나타낸 흐름도. 사용자 행동 데이터 수집(구매, 찜, 장바구니 추가, 클릭 등 행동 로그 수집), 상품 간 연관성 분석(PostgreSQL로 데이터 정리 및 조합 추출, Python mlxtend 라이브러리 활용), 연관 규칙 평가(Apriori 알고리즘 적용, 지지도/신뢰도/향상도 세 지표로 연관성 판단) 순으로 이어지며, 평가 기준을 통과한 조합을 추천 규칙으로 등록해 규칙 기반 추천을 제공하는 구조.](/images/docs/ax-planning/05-02-rule-based-recommendation.png)
+<img
+  src="/images/docs/ax-planning/05-02-rule-based-recommendation.png"
+  alt="규칙 기반 추천 프로세스를 단계별로 나타낸 흐름도. 사용자 행동 데이터 수집(구매, 찜, 장바구니 추가, 클릭 등 행동 로그 수집), 상품 간 연관성 분석(PostgreSQL로 데이터 정리 및 조합 추출, Python mlxtend 라이브러리 활용), 연관 규칙 평가(Apriori 알고리즘 적용, 지지도/신뢰도/향상도 세 지표로 연관성 판단) 순으로 이어지며, 평가 기준을 통과한 조합을 추천 규칙으로 등록해 규칙 기반 추천을 제공하는 구조."
+  class="img-small">
 
 * 사용자의 구매, 찜, 클릭 등 행동 패턴에서 상품 간 연관성을 추출하고, 이를 추천 규칙으로 적용하는 방식
 * 복잡한 모델 학습 없이 SQL과 Python만으로 구현 가능해 가장 실천하기 쉬운 추천 방식

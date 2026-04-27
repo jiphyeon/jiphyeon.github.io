@@ -9,8 +9,11 @@ thumbnail: "/images/docs/ax-planning/08-03-audio-narration.png"
 date: 2025-02-03
 ---
 
-![오디오 내레이션 프로세스를 나타낸 흐름도. 텍스트 콘텐츠(뉴스, 블로그, 오디오북 등 다양한 형태의 텍스트 입력)가 TTS 음성 합성 모델로 처리됨. 오픈소스 프레임워크(Mozilla TTS, ESPnet)와 상용 API(Microsoft Azure Neural TTS, Amazon Polly WaveNet, Google Cloud TTS) 두 경로로 구성되며, 각각 Tacotron2/FastSpeech2 등의 음성 합성 모델이 활용됨. 최종적으로 뉴스 앱/오디오북 등 오디오 콘텐츠로 출력되는 구조.](/images/docs/ax-planning/08-03-audio-narration.png)
-
+<img
+  src="/images/docs/ax-planning/08-03-audio-narration.png"
+  alt="오디오 내레이션 프로세스를 나타낸 흐름도. 텍스트 콘텐츠(뉴스, 블로그, 오디오북 등 다양한 형태의 텍스트 입력)가 TTS 음성 합성 모델로 처리됨. 오픈소스 프레임워크(Mozilla TTS, ESPnet)와 상용 API(Microsoft Azure Neural TTS, Amazon Polly WaveNet, Google Cloud TTS) 두 경로로 구성되며, 각각 Tacotron2/FastSpeech2 등의 음성 합성 모델이 활용됨. 최종적으로 뉴스 앱/오디오북 등 오디오 콘텐츠로 출력되는 구조."
+  class="img-small">
+  
 * 텍스트 콘텐츠를 자연스러운 음성으로 변환해 사용자에게 전달하는 기능
 * 뉴스 포털, 블로그, 오디오북 서비스 등에서 빠르게 확산 중. 이동 중이나 눈을 쓸 수 없는 상황에서 유용
 * 과거 기계음 수준에서 벗어나 감정이 담긴 자연스러운 목소리로 진화

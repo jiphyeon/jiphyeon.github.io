@@ -9,7 +9,10 @@ thumbnail: "/images/docs/ax-planning/03-05-document-similarity-analysis.png"
 date: 2023-08-18
 ---
 
-![문서 유사도 분석 프로세스를 나타낸 흐름도. 유사도 계산 방식은 전통적 방식(n-그램, TF-IDF, 단어 일치 중심)과 딥러닝 방식(문장 임베딩, 의미 중심, 문맥 이해) 두 갈래로 구성됨. 시스템 아키텍처는 텍스트 전처리(spaCy, NLTK, Stanza), 문장 임베딩(Sentence-transformers), 벡터 저장(FAISS, Annoy, Qdrant) 순으로 이어지며, 백엔드(FastAPI, Flask)와 벡터 검색 엔진(FAISS, Annoy, Qdrant), 문서 저장소(Elasticsearch, Weaviate)로 구성된 구조.](/images/docs/ax-planning/03-05-document-similarity-analysis.png)
+<img
+  src="/images/docs/ax-planning/03-05-document-similarity-analysis.png"
+  alt="문서 유사도 분석 프로세스를 나타낸 흐름도. 유사도 계산 방식은 전통적 방식(n-그램, TF-IDF, 단어 일치 중심)과 딥러닝 방식(문장 임베딩, 의미 중심, 문맥 이해) 두 갈래로 구성됨. 시스템 아키텍처는 텍스트 전처리(spaCy, NLTK, Stanza), 문장 임베딩(Sentence-transformers), 벡터 저장(FAISS, Annoy, Qdrant) 순으로 이어지며, 백엔드(FastAPI, Flask)와 벡터 검색 엔진(FAISS, Annoy, Qdrant), 문서 저장소(Elasticsearch, Weaviate)로 구성된 구조."
+  class="img-small">
 
 * 서로 다른 문서 간의 콘텐츠 중복 여부를 판단하는 기술
 * 단순한 문장 복사 여부만 확인하는 게 아니라 의미적 유사성까지 분석

@@ -9,7 +9,10 @@ thumbnail: "/images/docs/ax-planning/04-02-natural-language-search.png"
 date: 2024-08-07
 ---
 
-![자연어 검색 프로세스를 단계별로 나타낸 흐름도. 텍스트 임베딩(문장/문서를 SBERT 모델로 벡터 표현), 벡터 색인(임베딩된 벡터를 벡터 검색엔진에 저장, 색인된 벡터 DB로 빠른 유사도 검색), 질의 처리 및 유사도 검색(사용자 질의 입력, 동일 SBERT 모델로 질의 임베딩, 코사인 유사도/내적 방식으로 유사도 계산, Top-k 결과 반환) 순으로 이어지며, 벡터 검색엔진으로 FAISS/Elasticsearch가 활용되는 구조.](/images/docs/ax-planning/04-02-natural-language-search.png)
+<img
+  src="/images/docs/ax-planning/04-02-natural-language-search.png"
+  alt="자연어 검색 프로세스를 단계별로 나타낸 흐름도. 텍스트 임베딩(문장/문서를 SBERT 모델로 벡터 표현), 벡터 색인(임베딩된 벡터를 벡터 검색엔진에 저장, 색인된 벡터 DB로 빠른 유사도 검색), 질의 처리 및 유사도 검색(사용자 질의 입력, 동일 SBERT 모델로 질의 임베딩, 코사인 유사도/내적 방식으로 유사도 계산, Top-k 결과 반환) 순으로 이어지며, 벡터 검색엔진으로 FAISS/Elasticsearch가 활용되는 구조."
+  class="img-small">
 
 * 키워드 검색이 단어 일치를 찾는 방식이라면, 자연어 검색은 문장의 의미와 맥락을 이해하고 유사한 결과를 반환하는 방식
 * "가성비 좋은 랩탑 찾고 싶어"처럼 단어가 달라도 의미가 같으면 동일한 검색 결과를 제공

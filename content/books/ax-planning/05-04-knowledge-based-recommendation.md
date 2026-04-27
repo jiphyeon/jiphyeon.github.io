@@ -9,7 +9,10 @@ thumbnail: "/images/docs/ax-planning/05-04-knowledge-based-recommendation.png"
 date: 2024-09-10
 ---
 
-![지식 기반 추천 프로세스를 두 방식으로 나타낸 비교 흐름도. 메타데이터 필터링(상품 메타데이터 스타일/색상/브랜드/사이즈/가격대 → 사용자 선택 조건 → 직접 조건 메타데이터 필터링 → 제한적인 추천 결과 "oversized" 태그 상품만 추천)과 지식 기반 필터링(풍부한 상품 데이터 메타데이터/설명/리뷰/사용자 행동 → TF-IDF 분석 용어 중요도 → 의미 기반 매칭 유사 용어 및 클러스터 포함 검색 → 다양하고 정확한 추천 결과 "oversized", "flowy", "loose-fit" 등 포함)이 병렬로 구성되며, K-Means 자동 그룹화로 성능이 향상되는 구조.](/images/docs/ax-planning/05-04-knowledge-based-recommendation.png)
+<img
+  src="/images/docs/ax-planning/05-04-knowledge-based-recommendation.png"
+  alt="지식 기반 추천 프로세스를 두 방식으로 나타낸 비교 흐름도. 메타데이터 필터링(상품 메타데이터 스타일/색상/브랜드/사이즈/가격대 → 사용자 선택 조건 → 직접 조건 메타데이터 필터링 → 제한적인 추천 결과 'oversized' 태그 상품만 추천)과 지식 기반 필터링(풍부한 상품 데이터 메타데이터/설명/리뷰/사용자 행동 → TF-IDF 분석 용어 중요도 → 의미 기반 매칭 유사 용어 및 클러스터 포함 검색 → 다양하고 정확한 추천 결과 'oversized', 'flowy', 'loose-fit' 등 포함)이 병렬로 구성되며, K-Means 자동 그룹화로 성능이 향상되는 구조."
+  class="img-small">
 
 * 스타일, 색상, 브랜드, 사이즈, 가격대 같이 미리 정의된 조건을 사용자가 선택하면 해당 조건에 맞는 상품을 추천하는 방식
 * 사용자 행동 데이터 없이도 작동해서 콜드 스타트 문제의 영향을 덜 받음

@@ -9,7 +9,10 @@ thumbnail: "/images/docs/ax-planning/01-08-ai-avatar-generation.jpg"
 date: 2024-02-25
 ---
 
-![AI 아바타 생성 프로세스를 단계별로 나타낸 흐름도. 입력 이미지 전처리(이미지 리사이징, 얼굴 중심 정렬·크롭·패딩, 노이즈 제거 및 밝기 보정), 얼굴 특징점 추출(MediaPipe 468개 랜드마크, dlib 68개 랜드마크, 눈·코·입·얼굴 윤곽 식별), 스타일 기반 이미지 생성(DreamBooth, ControlNet, 텍스트 프롬프트 활용) 순으로 이어지며, 결과물 후처리 및 제공 단계에서 해상도 향상·배경 제거 등 이미지 품질 개선과 크기 조정·최적 포맷 변환을 거쳐 최종 아바타를 사용자에게 제공하는 구조.](/images/docs/ax-planning/01-08-ai-avatar-generation.png)
+<img
+  src="/images/docs/ax-planning/01-08-ai-avatar-generation.png"
+  alt="얼굴 특징점 추출(MediaPipe, dlib)과 스타일 기반 생성(DreamBooth, ControlNet)을 거쳐 품질 개선 및 최적화를 통해 최종 AI 아바타를 생성하는 프로세스 흐름도"
+  class="img-small">
 
 * 사용자 프로필 이미지를 캐릭터 형태로 자동 생성하는 기능
 * 단순 필터이나 보정이 아니라 얼굴 특징을 분석해 스타일을 반영한 새로운 이미지를 만들어냄

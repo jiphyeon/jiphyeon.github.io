@@ -9,7 +9,10 @@ thumbnail: "/images/docs/ax-planning/08-01-intelligent-call-center.png"
 date: 2025-01-30
 ---
 
-![지능형 콜센터 프로세스를 단계별로 나타낸 흐름도. 음성 인식 STT(Whisper 기반, 처리 속도 최적화 모델 크기/처리 방식/하드웨어), 의도 분석(의도 분류 수행, BERT 기반 모델 또는 텍스트 분류 모델 활용, 고객 요청의 의미 분류), 검색 및 추천(FAISS 벡터 검색, 유사 사례 매칭), 음성 합성 TTS(Tacotron2/FastSpeech2/Mozilla TTS 등의 엔진, 텍스트 응답을 자연스러운 음성으로 변환) 순으로 이어지며, 자동화된 보이스봇(AI가 직접 고객 응대, FAQ 기반 또는 검색 기반 응답 제공)과 상담사 보조 시스템(실제 상담사에게 실시간 정보 제공, 유사 사례 추천, 스크립트 및 응대 가이드 제공) 두 가지 방식으로 활용되는 구조. 실시간 모니터링은 OpenTelemetry와 메시지 큐 시스템으로 관리.](/images/docs/ax-planning/08-01-intelligent-call-center.png)
+<img
+  src="/images/docs/ax-planning/08-01-intelligent-call-center.png"
+  alt="지능형 콜센터 프로세스를 단계별로 나타낸 흐름도. 음성 인식 STT(Whisper 기반, 처리 속도 최적화 모델 크기/처리 방식/하드웨어), 의도 분석(의도 분류 수행, BERT 기반 모델 또는 텍스트 분류 모델 활용, 고객 요청의 의미 분류), 검색 및 추천(FAISS 벡터 검색, 유사 사례 매칭), 음성 합성 TTS(Tacotron2/FastSpeech2/Mozilla TTS 등의 엔진, 텍스트 응답을 자연스러운 음성으로 변환) 순으로 이어지며, 자동화된 보이스봇(AI가 직접 고객 응대, FAQ 기반 또는 검색 기반 응답 제공)과 상담사 보조 시스템(실제 상담사에게 실시간 정보 제공, 유사 사례 추천, 스크립트 및 응대 가이드 제공) 두 가지 방식으로 활용되는 구조. 실시간 모니터링은 OpenTelemetry와 메시지 큐 시스템으로 관리."
+  class="img-small">
 
 * STT, TTS, NLU, 추천 시스템 등 다양한 AI 기술을 결합해 고객 응대 품질과 운영 효율을 동시에 향상시키는 시스템
 * 기존 번호 입력 방식 대신 자연어로 말하면 시스템이 의미를 이해하고 음성으로 응답

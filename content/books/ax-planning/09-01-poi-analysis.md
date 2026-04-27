@@ -9,7 +9,10 @@ thumbnail: "/images/docs/ax-planning/09-01-poi-analysis.png"
 date: 2025-02-06
 ---
 
-![POI 분석 프로세스를 단계별로 나타낸 흐름도. POI 식별(데이터 수집 지도 벡터 데이터/사용자 방문 기록/체크인/리뷰/사진 업로드, 특징 공학 공간/시간/텍스트 특징, 머신러닝 모델 Random Forest/XGBoost, 클래스 불균형 처리 SMOTE), POI 분류(계층적 분류 대분류→세부 카테고리, 언어 모델 BERT/RoBERTa 장소 이름/설명/리뷰 분석, 준지도 학습 Label Propagation, 성능 평가 F1 점수/정밀도/재현율), 추가 정보 추출(NER 영업시간/전화번호/가격대 자동 추출, 관계 추출 장소-속성 관계 파악, 하이브리드 접근 정규표현식+기계학습, 지식 그래프 Neo4j 구축), 변화 감지 및 자동 업데이트(시계열 모델 ARIMA/Prophet/LSTM, 텍스트 변화 감지 자카드/코사인 유사도, 실시간 처리 Kafka/Kinesis) 순으로 이어지는 구조.](/images/docs/ax-planning/09-01-poi-analysis.png)
+<img
+  src="/images/docs/ax-planning/09-01-poi-analysis.png"
+  alt="POI 분석 프로세스를 단계별로 나타낸 흐름도. POI 식별(데이터 수집 지도 벡터 데이터/사용자 방문 기록/체크인/리뷰/사진 업로드, 특징 공학 공간/시간/텍스트 특징, 머신러닝 모델 Random Forest/XGBoost, 클래스 불균형 처리 SMOTE), POI 분류(계층적 분류 대분류→세부 카테고리, 언어 모델 BERT/RoBERTa 장소 이름/설명/리뷰 분석, 준지도 학습 Label Propagation, 성능 평가 F1 점수/정밀도/재현율), 추가 정보 추출(NER 영업시간/전화번호/가격대 자동 추출, 관계 추출 장소-속성 관계 파악, 하이브리드 접근 정규표현식+기계학습, 지식 그래프 Neo4j 구축), 변화 감지 및 자동 업데이트(시계열 모델 ARIMA/Prophet/LSTM, 텍스트 변화 감지 자카드/코사인 유사도, 실시간 처리 Kafka/Kinesis) 순으로 이어지는 구조."
+  class="img-small">
 
 * POI(Point of Interest)는 지도 위에 표시된 의미 있는 관심 지점으로, 카페/식당/교통시설 등 사람들이 실제로 방문하는 장소
 * 단순 분류를 넘어 공간을 디지털로 의미 있게 표현하는 작업. 검색, 추천, 마케팅 등 위치 기반 서비스의 기반

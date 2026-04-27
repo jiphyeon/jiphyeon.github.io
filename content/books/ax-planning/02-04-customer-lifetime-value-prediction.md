@@ -9,7 +9,10 @@ thumbnail: "/images/docs/ax-planning/02-04-customer-lifetime-value-prediction.pn
 date: 2024-06-07
 ---
 
-![고객 평생 가치 예측 프로세스를 나타낸 흐름도. 상단에 CLV(고객이 앞으로 창출할 총 가치 예측) 개념을 설명하고, 통계 기반 예측(RFM 모델, BG/NBD 모델, Gamma-Gamma 모델)과 머신러닝 기반 예측(고객 특성 엔지니어링, Random Forest/Gradient Boosting 앙상블 모델 학습)이 병렬로 구성됨. Python의 Lifetimes 라이브러리와 scikit-learn을 활용하며, 산출된 CLV는 고객 확보 비용 최적화, VIP 고객 선정, 맞춤형 혜택 설계에 활용되는 구조.](/images/docs/ax-planning/02-04-customer-lifetime-value-prediction.png)
+<img
+  src="/images/docs/ax-planning/02-04-customer-lifetime-value-prediction.png"
+  alt="고객 평생 가치 예측 프로세스를 나타낸 흐름도. 상단에 CLV(고객이 앞으로 창출할 총 가치 예측) 개념을 설명하고, 통계 기반 예측(RFM 모델, BG/NBD 모델, Gamma-Gamma 모델)과 머신러닝 기반 예측(고객 특성 엔지니어링, Random Forest/Gradient Boosting 앙상블 모델 학습)이 병렬로 구성됨. Python의 Lifetimes 라이브러리와 scikit-learn을 활용하며, 산출된 CLV는 고객 확보 비용 최적화, VIP 고객 선정, 맞춤형 혜택 설계에 활용되는 구조."
+  class="img-small">
 
 * 고객이 앞으로 창출할 총 가치를 예측하는 지표(CLV, Customer Lifetime Value)
 * 단기 매출이 아닌 장기적 관점에서 고객을 바라보는 방식. 고객 확보 비용 최적화, VIP 고객 선정, 맞춤형 혜택 설계에 직접 활용

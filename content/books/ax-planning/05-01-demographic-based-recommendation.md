@@ -9,7 +9,10 @@ thumbnail: "/images/docs/ax-planning/05-01-demographic-based-recommendation.png"
 date: 2024-09-04
 ---
 
-![인구 통계 기반 추천 프로세스를 단계별로 나타낸 흐름도. 데이터 수집(사용자 구매/찜/클릭 등 행동 로그, 나이/성별/지역 등 인구 통계 정보 수집), 데이터 분석 SQL 활용(상품별 특정 인구 집단 구매 비율 계산), 선호도 계산 Python 활용(선호 점수 = 아이템 구매자 중 특정 집단 비율 / 전체 사용자 중 해당 집단 비율) 순으로 이어지며, 최종적으로 인구 통계 기반 추천을 제공하는 구조.](/images/docs/ax-planning/05-01-demographic-based-recommendation.png)
+<img
+  src="/images/docs/ax-planning/05-01-demographic-based-recommendation.png"
+  alt="인구 통계 기반 추천 프로세스를 단계별로 나타낸 흐름도. 데이터 수집(사용자 구매/찜/클릭 등 행동 로그, 나이/성별/지역 등 인구 통계 정보 수집), 데이터 분석 SQL 활용(상품별 특정 인구 집단 구매 비율 계산), 선호도 계산 Python 활용(선호 점수 = 아이템 구매자 중 특정 집단 비율 / 전체 사용자 중 해당 집단 비율) 순으로 이어지며, 최종적으로 인구 통계 기반 추천을 제공하는 구조."
+  class="img-small">
 
 * 나이, 성별, 지역 같은 인구 통계 정보를 활용해 해당 집단이 선호하는 상품을 추천하는 방식
 * 복잡한 AI 모델 없이 SQL과 Python만으로 구현 가능해 도입 난이도가 낮음

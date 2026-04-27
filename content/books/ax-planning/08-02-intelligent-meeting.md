@@ -9,8 +9,10 @@ thumbnail: "/images/docs/ax-planning/08-02-intelligent-meeting.png"
 date: 2025-02-02
 ---
 
-![지능형 회의 프로세스를 단계별로 나타낸 흐름도. 데이터 수집(회의 초기 참석자 음성 샘플 수집, 실시간 음성 수집), 음성 처리(음성 인식 Whisper STT, 화자 분리 Speaker Diarization, 화자 식별 참석자 매핑) 순으로 이어지며, 실시간 회의 분석 단계에서 주제 모델링/클러스터링(SBERT/LDA/BERTopic, 주제 이탈 감지 및 알림), 발언 통계 분석(화자별 시간/빈도, 발언 불균형 감지 및 피드백), 관련 자료 검색(FAISS/RAG, 관련 문서/대시보드 제시)이 병렬로 수행됨. 회의 종료 후 결과물 생성 단계에서 회의록 자동 생성, 요약본 생성(Transformers), 액션 아이템 추출, 그룹웨어 연동(Slack/Notion/Jira)으로 이어지는 구조.](/images/docs/ax-planning/08-02-intelligent-meeting.png)
-
+<img
+  src="/images/docs/ax-planning/08-02-intelligent-meeting.png"
+  alt="지능형 회의 프로세스를 단계별로 나타낸 흐름도. 데이터 수집(회의 초기 참석자 음성 샘플 수집, 실시간 음성 수집), 음성 처리(음성 인식 Whisper STT, 화자 분리 Speaker Diarization, 화자 식별 참석자 매핑) 순으로 이어지며, 실시간 회의 분석 단계에서 주제 모델링/클러스터링(SBERT/LDA/BERTopic, 주제 이탈 감지 및 알림), 발언 통계 분석(화자별 시간/빈도, 발언 불균형 감지 및 피드백), 관련 자료 검색(FAISS/RAG, 관련 문서/대시보드 제시)이 병렬로 수행됨. 회의 종료 후 결과물 생성 단계에서 회의록 자동 생성, 요약본 생성(Transformers), 액션 아이템 추출, 그룹웨어 연동(Slack/Notion/Jira)으로 이어지는 구조."
+  class="img-small">
 * 회의 내용을 AI가 실시간으로 기록하고 요약/키워드 추출/액션 아이템 정리까지 자동화하는 시스템
 * 회의록 작성 인력과 리소스를 줄이고, 회의 자체의 질을 실시간으로 진단/개선
 * 프로세스는 음성 수집 → 음성 처리(STT/화자 분리/화자 식별) → 실시간 회의 분석 → 회의 종료 후 결과물 생성 순으로 이어짐

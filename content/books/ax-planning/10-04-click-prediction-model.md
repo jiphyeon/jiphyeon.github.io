@@ -9,7 +9,10 @@ thumbnail: "/images/docs/ax-planning/10-04-click-prediction-model.jpg"
 date: 2025-03-09
 ---
 
-![클릭 예측 모델 프로세스를 단계별로 나타낸 흐름도. 학습 데이터셋 구성(입력 피처 X 사용자 정보/광고 특성/사용자 행동 이력, 출력값 Y 클릭 여부 0 또는 1), 데이터 수집 및 전처리(사용자 행동 로그 수집 Apache Kafka 활용 실시간 이벤트 스트리밍, 데이터 전처리 PySpark 분산 처리 클래스 불균형 샘플링, 피처 엔지니어링 시간순 이벤트 정렬 사용자 행동 이력 병합), 모델 학습 및 최적화(딥러닝 모델 Wide & Deep/DeepFM, 프레임워크 PyTorch/TensorFlow, 모델 경량화 TorchScript/ONNX) 순으로 이어지며, 모델 평가 및 적용 단계에서 AUC/Log Loss/Calibration/CTR Lift/ROI 기여도 지표로 성능을 평가하는 구조.](/images/docs/ax-planning/10-04-click-prediction-model.png)
+<img
+  src="/images/docs/ax-planning/10-04-click-prediction-model.png"
+  alt="클릭 예측 모델 프로세스를 단계별로 나타낸 흐름도. 학습 데이터셋 구성(입력 피처 X 사용자 정보/광고 특성/사용자 행동 이력, 출력값 Y 클릭 여부 0 또는 1), 데이터 수집 및 전처리(사용자 행동 로그 수집 Apache Kafka 활용 실시간 이벤트 스트리밍, 데이터 전처리 PySpark 분산 처리 클래스 불균형 샘플링, 피처 엔지니어링 시간순 이벤트 정렬 사용자 행동 이력 병합), 모델 학습 및 최적화(딥러닝 모델 Wide & Deep/DeepFM, 프레임워크 PyTorch/TensorFlow, 모델 경량화 TorchScript/ONNX) 순으로 이어지며, 모델 평가 및 적용 단계에서 AUC/Log Loss/Calibration/CTR Lift/ROI 기여도 지표로 성능을 평가하는 구조."
+  class="img-small">
 
 * 사용자의 광고 클릭 가능성(CTR, Click-Through Rate)을 사전에 예측하는 모델
 * 광고 입찰, 예산 분배, 광고 순위 결정 등 광고 전략 자동화와 최적화의 핵심 기술
