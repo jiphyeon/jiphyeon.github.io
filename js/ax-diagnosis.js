@@ -1,10 +1,11 @@
 function fixCatCells() {
+  // 기존에 만든 라벨 제거
+  document.querySelectorAll(".ax-cat-label").forEach(function(el) { el.remove(); });
+
   var catCells = document.querySelectorAll("#axTable .ax-cat-cell.cat-first");
   catCells.forEach(function (cell) {
-    cell.style.height = "";
-    cell.style.paddingTop = "";
-    cell.style.position = "relative";
-    cell.style.verticalAlign = "top";
+    var text = cell.textContent.trim();
+    cell.textContent = "";
 
     var row = cell.closest("tr");
     if (!row) return;
@@ -16,68 +17,25 @@ function fixCatCells() {
       next = next.nextElementSibling;
     }
 
-    var top    = row.getBoundingClientRect().top;
-    var bottom = last.getBoundingClientRect().bottom;
-    var groupH = bottom - top;
-    var cellH  = cell.getBoundingClientRect().height;
+    var tableRect = document.querySelector("#axTable").getBoundingClientRect();
+    var top    = row.getBoundingClientRect().top    - tableRect.top;
+    var bottom = last.getBoundingClientRect().bottom - tableRect.top;
 
-    cell.style.paddingTop = Math.max(0, (groupH / 2) - (cellH / 2)) + "px";
+    var label = document.createElement("div");
+    label.className = "ax-cat-label";
+    label.textContent = text;
+    label.style.cssText =
+      "position:absolute;" +
+      "top:" + top + "px;" +
+      "height:" + (bottom - top) + "px;" +
+      "left:" + (cell.offsetLeft) + "px;" +
+      "width:" + cell.offsetWidth + "px;" +
+      "display:flex;align-items:center;justify-content:center;" +
+      "font-weight:700;font-size:12px;color:#444;" +
+      "pointer-events:none;";
+
+    var wrapper = document.querySelector("#axTable").parentElement;
+    wrapper.style.position = "relative";
+    wrapper.appendChild(label);
   });
 }
-
-window.addEventListener("resize", fixCatCells);
-
-document.addEventListener("click", function (event) {
-  if (event.target.id === "axCalcBtn") {
-    var table = document.querySelector("#axTable");
-    var resultBox = document.querySelector("#axResult");
-    var errorBox = document.querySelector("#axError");
-    if (!table || !resultBox || !errorBox) return;
-
-    var total = 0;
-    var unanswered = [];
-
-    for (var i = 1; i <= 30; i++) {
-      var checked = table.querySelector('input[name="q' + i + '"]:checked');
-      if (!checked) {
-        unanswered.push(i);
-        continue;
-      }
-      if (checked.value === "1") {
-        var row = checked.closest("tr");
-        var weightCell = row.querySelector("[data-w]");
-        if (weightCell) total += parseInt(weightCell.dataset.w, 10);
-      }
-    }
-
-    if (unanswered.length > 0) {
-      errorBox.innerHTML = "선택하지 않은 항목이 있습니다: " + unanswered.join(", ") + "번";
-      resultBox.innerHTML = "";
-      return;
-    }
-
-    errorBox.innerHTML = "";
-
-    var type, desc;
-    if      (total <= 39) { type = "탐색 학습형";  desc = "전환 개념이 내부에 형성되지 않은 초기 단계로 기술 도입보다 사고 전환이 우선되어야 한다."; }
-    else if (total <= 59) { type = "준비 기반형";  desc = "전환의 필요성은 인식하지만 실행을 위한 데이터, 시스템, 인력, 리더십 기반이 부족한 상태로 기반 정비가 우선이다."; }
-    else if (total <= 74) { type = "부서 파일럿형"; desc = "일부 부서 수준에서는 실험적인 전환이 가능한 상태로 작은 성공 사례를 빠르게 만들고 운영 전환을 검증하는 것이 중요하다."; }
-    else if (total <= 89) { type = "핵심 전환형";  desc = "핵심 기능이나 부서에서 전환을 본격적으로 추진할 수 있으며, 향후 전사적인 AI 전략을 재설계하는 단계다."; }
-    else                  { type = "전사 확장형";  desc = "모든 업무를 AI 중심으로 전환할 수 있는 상태로 전사적으로 AI 중심 체계를 확산시키는 것이 핵심이다."; }
-
-    resultBox.innerHTML =
-      "<b>총점:</b> " + total + "점<br>" +
-      "<b>AX 방향:</b> " + type + "<br>" +
-      desc;
-  }
-
-  if (event.target.id === "axResetBtn") {
-    document.querySelectorAll("#axTable input[type='radio']").forEach(function (input) {
-      input.checked = false;
-    });
-    var resultBox = document.querySelector("#axResult");
-    var errorBox  = document.querySelector("#axError");
-    if (resultBox) resultBox.innerHTML = "";
-    if (errorBox)  errorBox.innerHTML  = "";
-  }
-});
