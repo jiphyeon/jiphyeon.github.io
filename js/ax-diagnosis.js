@@ -25,14 +25,15 @@ function fixCatCells() {
     label.className = "ax-cat-label";
     label.textContent = text;
     label.style.cssText =
-      "position:absolute;" +
-      "top:" + top + "px;" +
-      "height:" + (bottom - top) + "px;" +
-      "left:" + (cell.offsetLeft) + "px;" +
-      "width:" + cell.offsetWidth + "px;" +
-      "display:flex;align-items:center;justify-content:center;" +
-      "font-weight:700;font-size:12px;color:#444;" +
-      "pointer-events:none;";
+  "position:absolute;" +
+  "top:" + top + "px;" +
+  "height:" + (bottom - top) + "px;" +
+  "left:" + cell.offsetLeft + "px;" +
+  "width:" + cell.offsetWidth + "px;" +
+  "display:flex;align-items:center;justify-content:center;" +
+  "font-weight:700;font-size:12px;color:#444;" +
+  "pointer-events:none;" +
+  "z-index:-1;";
 
     var wrapper = document.querySelector("#axTable").parentElement;
     wrapper.style.position = "relative";
