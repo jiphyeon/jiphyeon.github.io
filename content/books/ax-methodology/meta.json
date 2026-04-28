@@ -34,30 +34,6 @@
         {
           "title": "AX 진단",
           "slug": "01-01-ax-diagnosis",
-          "file": "02-01-data-preparation.md",
-          "status": "published"
-        },
-        {
-          "title": "AX 진단",
-          "slug": "01-01-ax-diagnosis",
-          "file": "02-02-data-flow.md",
-          "status": "published"
-        },
-        {
-          "title": "AX 진단",
-          "slug": "01-01-ax-diagnosis",
-          "file": "02-03-data-quality.md",
-          "status": "published"
-        },
-        {
-          "title": "AX 진단",
-          "slug": "01-01-ax-diagnosis",
-          "file": "02-04-data-standard.md",
-          "status": "published"
-        },
-        {
-          "title": "AX 진단",
-          "slug": "01-01-ax-diagnosis",
           "file": "02-05-data-lifecycle.md",
           "status": "published"
         },
@@ -173,6 +149,36 @@
           "title": "AX 방향",
           "slug": "01-02-ax-direction",
           "file": "01-02-ax-direction.md",
+          "status": "published"
+        }
+      ]
+    },
+    {
+      "type": "part",
+      "title": "데이터",
+      "items": [
+        {
+          "title": "데이터 준비",
+          "slug": "02-01-data-preparation",
+          "file": "02-01-data-preparation.md",
+          "status": "published"
+        },
+        {
+          "title": "데이터 흐름",
+          "slug": "02-02-data-flow",
+          "file": "02-02-data-flow.md",
+          "status": "published"
+        },
+        {
+          "title": "데이터 품질",
+          "slug": "02-03-data-quality",
+          "file": "02-03-data-quality.md",
+          "status": "published"
+        },
+        {
+          "title": "데이터 표준",
+          "slug": "02-04-data-standard",
+          "file": "02-04-data-standard.md",
           "status": "published"
         }
       ]
