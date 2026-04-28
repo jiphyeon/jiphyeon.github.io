@@ -1,4 +1,27 @@
-```javascript
+function fixCatCells() {
+  var catCells = document.querySelectorAll("#axTable .ax-cat-cell.cat-first");
+  catCells.forEach(function (cell) {
+    var row = cell.closest("tr");
+    if (!row) return;
+
+    var rows = [row];
+    var next = row.nextElementSibling;
+    while (next && !next.classList.contains("group-first")) {
+      rows.push(next);
+      next = next.nextElementSibling;
+    }
+
+    var top    = row.getBoundingClientRect().top;
+    var last   = rows[rows.length - 1];
+    var bottom = last.getBoundingClientRect().bottom;
+
+    cell.style.height        = (bottom - top) + "px";
+    cell.style.verticalAlign = "middle";
+  });
+}
+
+window.addEventListener("resize", fixCatCells);
+
 document.addEventListener("click", function (event) {
   if (event.target.id === "axCalcBtn") {
     var table = document.querySelector("#axTable");
@@ -53,33 +76,3 @@ document.addEventListener("click", function (event) {
     if (errorBox)  errorBox.innerHTML  = "";
   }
 });
-
-function fixCatCells() {
-  var catCells = document.querySelectorAll("#axTable .ax-cat-cell.cat-first");
-  catCells.forEach(function (cell) {
-    var row = cell.closest("tr");
-    if (!row) return;
-
-    var rows = [row];
-    var next = row.nextElementSibling;
-    while (next && !next.classList.contains("group-first")) {
-      rows.push(next);
-      next = next.nextElementSibling;
-    }
-
-    var top    = row.getBoundingClientRect().top;
-    var last   = rows[rows.length - 1];
-    var bottom = last.getBoundingClientRect().bottom;
-
-    cell.style.height        = (bottom - top) + "px";
-    cell.style.verticalAlign = "middle";
-  });
-}
-
-if (document.readyState === "loading") {
-  document.addEventListener("DOMContentLoaded", fixCatCells);
-} else {
-  setTimeout(fixCatCells, 100);
-}
-window.addEventListener("resize", fixCatCells);
-```
