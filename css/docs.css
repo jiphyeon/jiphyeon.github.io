@@ -660,17 +660,17 @@ body:hover::-webkit-scrollbar-thumb:hover,
   background: #fafafa;
   word-break: keep-all;
   user-select: none;
-  border-bottom: none;
+  border-bottom: none !important;
+  border-top: none !important;
 }
+
 .ax-cat-cell.cat-first {
- color: #444;
-  border-top: 2px solid #ccc;
-  border-bottom: none;
-  vertical-align: top;
-  padding-top: 14px;
+  border-top: 2px solid #ccc !important;
+  border-bottom: none !important;
 }
+
 .ax-cat-cell.cat-last {
-   border-bottom: 2px solid #ccc;
+  border-bottom: 2px solid #ccc !important;
 }
 tr.group-first td {
   border-top: 2px solid #ccc;
