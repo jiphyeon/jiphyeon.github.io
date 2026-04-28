@@ -170,8 +170,30 @@ AX 진단은 진단표로 진행된다. 진단 항목은 총 30개 문항이며,
 #axResult:empty {
   display: none;
 }
+
+.ax-table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.ax-table {
+  min-width: 720px;
+}
+
+@media (max-width: 768px) {
+  .ax-table {
+    min-width: 760px;
+    font-size: 13px;
+  }
+
+  .ax-description {
+    font-size: 13px;
+  }
+}
 </style>
 
+<div class="ax-table-wrap">
 <table class="ax-table" id="axTable">
 <thead>
 <tr>
@@ -220,6 +242,7 @@ AX 진단은 진단표로 진행된다. 진단 항목은 총 30개 문항이며,
 
 </tbody>
 </table>
+</div>
 
 <div class="ax-actions">
   <button type="button" class="ax-btn ax-btn-primary" id="axCalcBtn">결과 보기</button>
