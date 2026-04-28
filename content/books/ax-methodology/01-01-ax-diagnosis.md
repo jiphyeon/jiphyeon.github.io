@@ -46,9 +46,12 @@ AX 진단은 진단표로 진행된다. 진단 항목은 총 30개 문항이며,
   font-size: 14px;
 }
 
+/* 좌우 라인 제거 */
 .ax-table th,
 .ax-table td {
   border-bottom: 1px solid #ddd;
+  border-left: 0;
+  border-right: 0;
   padding: 10px 8px;
   vertical-align: middle;
   text-align: center;
@@ -82,25 +85,42 @@ AX 진단은 진단표로 진행된다. 진단 항목은 총 30개 문항이며,
   background: #fafafa;
 }
 
+/* 진단항목 강조 */
 .ax-question {
   font-weight: 800;
-  line-height: 1.45;
+  line-height: 1.35;
+  margin-bottom: 3px;
   text-align: left;
 }
 
+/* 설명 개선 */
 .ax-description {
-  margin-top: 6px;
-  font-size: 12.5px;
-  line-height: 1.55;
-  color: #666;
+  margin-top: 2px;
+  font-size: 13.5px;
+  line-height: 1.45;
+  color: #555;
   text-align: left;
+}
+
+/* 셀 전체 클릭 가능 */
+.ax-choice-cell {
+  cursor: pointer;
+}
+
+.ax-choice-cell label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  min-height: 44px;
+  cursor: pointer;
 }
 
 .ax-table input {
   transform: scale(1.15);
-  cursor: pointer;
 }
 
+/* 버튼 */
 .ax-actions {
   margin-top: 20px;
   display: flex;
@@ -125,12 +145,30 @@ AX 진단은 진단표로 진행된다. 진단 항목은 총 30개 문항이며,
   color: #111;
 }
 
+/* 에러 (빨간색 + 여백) */
+#axError {
+  margin-top: 16px;
+  padding: 12px 14px;
+  border-radius: 8px;
+  background: #fff0f0;
+  color: #b00020;
+  border: 1px solid #ffd0d0;
+  line-height: 1.6;
+}
+
+/* 결과 */
 #axResult {
-  margin-top: 20px;
+  margin-top: 16px;
   padding: 16px;
   border-radius: 10px;
   background: #f7f7f7;
   line-height: 1.7;
+}
+
+/* 비어있으면 숨김 → 회색 박스 제거 */
+#axError:empty,
+#axResult:empty {
+  display: none;
 }
 </style>
 
@@ -147,38 +185,38 @@ AX 진단은 진단표로 진행된다. 진단 항목은 총 30개 문항이며,
 </thead>
 <tbody>
 
-<tr><td>1</td><td rowspan="10" class="ax-category">필요성</td><td class="ax-item"><div class="ax-question">판단 기준이 사람 중심이다</div><div class="ax-description">판단 기준이 문서나 시스템이 아닌 개인 경험이나 직관에 의존해 의사결정이 이루어지고 있음</div></td><td data-w="4">4</td><td><input type="radio" name="q1" value="1"></td><td><input type="radio" name="q1" value="0"></td></tr>
-<tr><td>2</td><td class="ax-item"><div class="ax-question">반복 업무에 오류가 잦다</div><div class="ax-description">동일 작업에서 사람이 반복적으로 실수하거나 결과 품질이 일정하지 않음</div></td><td data-w="5">5</td><td><input type="radio" name="q2" value="1"></td><td><input type="radio" name="q2" value="0"></td></tr>
-<tr><td>3</td><td class="ax-item"><div class="ax-question">고객 응대 편차가 크다</div><div class="ax-description">담당자나 시간대에 따라 응답 속도나 응대 품질이 불균형하게 나타남</div></td><td data-w="3">3</td><td><input type="radio" name="q3" value="1"></td><td><input type="radio" name="q3" value="0"></td></tr>
-<tr><td>4</td><td class="ax-item"><div class="ax-question">데이터 해석이 수작업 중심이다</div><div class="ax-description">실무자가 직접 엑셀이나 문서를 열어 데이터를 해석하거나 비교 분석해야 함</div></td><td data-w="4">4</td><td><input type="radio" name="q4" value="1"></td><td><input type="radio" name="q4" value="0"></td></tr>
-<tr><td>5</td><td class="ax-item"><div class="ax-question">의사결정 속도가 느리다</div><div class="ax-description">정보 수집/분석에 오랜 시간이 걸려 빠른 의사결정이 어려운 상황</div></td><td data-w="3">3</td><td><input type="radio" name="q5" value="1"></td><td><input type="radio" name="q5" value="0"></td></tr>
-<tr><td>6</td><td class="ax-item"><div class="ax-question">시스템 연동 부족으로 오류 발생</div><div class="ax-description">업무 시스템 간 연결이 안 되어 수작업으로 전환하거나 이중 입력이 자주 발생</div></td><td data-w="3">3</td><td><input type="radio" name="q6" value="1"></td><td><input type="radio" name="q6" value="0"></td></tr>
-<tr><td>7</td><td class="ax-item"><div class="ax-question">실시간 업무 자동화가 어렵다</div><div class="ax-description">고객 반응, 긴급 요청, 예외 처리 등 실시간 대응이 필요한 업무를 시스템이 따라가지 못함</div></td><td data-w="4">4</td><td><input type="radio" name="q7" value="1"></td><td><input type="radio" name="q7" value="0"></td></tr>
-<tr><td>8</td><td class="ax-item"><div class="ax-question">인수인계 시 정보 손실이 있다</div><div class="ax-description">업무 교체 과정에서 매뉴얼, 히스토리, 의사결정 기준이 제대로 전달되지 않음</div></td><td data-w="1">1</td><td><input type="radio" name="q8" value="1"></td><td><input type="radio" name="q8" value="0"></td></tr>
-<tr><td>9</td><td class="ax-item"><div class="ax-question">예측 기반 대응이 부족하다</div><div class="ax-description">과거 패턴 분석을 통한 선제적인 대응보다 문제 발생 후 사후 대응에 의존</div></td><td data-w="3">3</td><td><input type="radio" name="q9" value="1"></td><td><input type="radio" name="q9" value="0"></td></tr>
-<tr><td>10</td><td class="ax-item"><div class="ax-question">고비용의 전문성 업무가 많다</div><div class="ax-description">높은 인건비나 전문성이 요구되는 업무가 많아 효율성 개선이 시급함</div></td><td data-w="3">3</td><td><input type="radio" name="q10" value="1"></td><td><input type="radio" name="q10" value="0"></td></tr>
+<tr><td>1</td><td rowspan="10" class="ax-category">필요성</td><td class="ax-item"><div class="ax-question">판단 기준이 사람 중심이다</div><div class="ax-description">판단 기준이 문서나 시스템이 아닌 개인 경험이나 직관에 의존해 의사결정이 이루어지고 있음</div></td><td data-w="4">4</td><td class="ax-choice-cell"><label><input type="radio" name="q1" value="1"></label></td><td class="ax-choice-cell"><label><input type="radio" name="q1" value="0"></label></td></tr>
+  <tr><td>2</td><td class="ax-item"><div class="ax-question">반복 업무에 오류가 잦다</div><div class="ax-description">동일 작업에서 사람이 반복적으로 실수하거나 결과 품질이 일정하지 않음</div></td><td data-w="5">5</td><td class="ax-choice-cell"><label><input type="radio" name="q2" value="1"></label></td><td class="ax-choice-cell"><label><input type="radio" name="q2" value="0"></label></td></tr>
+  <tr><td>3</td><td class="ax-item"><div class="ax-question">고객 응대 편차가 크다</div><div class="ax-description">담당자나 시간대에 따라 응답 속도나 응대 품질이 불균형하게 나타남</div></td><td data-w="3">3</td><td class="ax-choice-cell"><label><input type="radio" name="q3" value="1"></label></td><td class="ax-choice-cell"><label><input type="radio" name="q3" value="0"></label></td></tr>
+  <tr><td>4</td><td class="ax-item"><div class="ax-question">데이터 해석이 수작업 중심이다</div><div class="ax-description">실무자가 직접 엑셀이나 문서를 열어 데이터를 해석하거나 비교 분석해야 함</div></td><td data-w="4">4</td><td class="ax-choice-cell"><label><input type="radio" name="q4" value="1"></label></td><td class="ax-choice-cell"><label><input type="radio" name="q4" value="0"></label></td></tr>
+  <tr><td>5</td><td class="ax-item"><div class="ax-question">의사결정 속도가 느리다</div><div class="ax-description">정보 수집/분석에 오랜 시간이 걸려 빠른 의사결정이 어려운 상황</div></td><td data-w="3">3</td><td class="ax-choice-cell"><label><input type="radio" name="q5" value="1"></label></td><td class="ax-choice-cell"><label><input type="radio" name="q5" value="0"></label></td></tr>
+  <tr><td>6</td><td class="ax-item"><div class="ax-question">시스템 연동 부족으로 오류 발생</div><div class="ax-description">업무 시스템 간 연결이 안 되어 수작업으로 전환하거나 이중 입력이 자주 발생</div></td><td data-w="3">3</td><td class="ax-choice-cell"><label><input type="radio" name="q6" value="1"></label></td><td class="ax-choice-cell"><label><input type="radio" name="q6" value="0"></label></td></tr>
+  <tr><td>7</td><td class="ax-item"><div class="ax-question">실시간 업무 자동화가 어렵다</div><div class="ax-description">고객 반응, 긴급 요청, 예외 처리 등 실시간 대응이 필요한 업무를 시스템이 따라가지 못함</div></td><td data-w="4">4</td><td class="ax-choice-cell"><label><input type="radio" name="q7" value="1"></label></td><td class="ax-choice-cell"><label><input type="radio" name="q7" value="0"></label></td></tr>
+  <tr><td>8</td><td class="ax-item"><div class="ax-question">인수인계 시 정보 손실이 있다</div><div class="ax-description">업무 교체 과정에서 매뉴얼, 히스토리, 의사결정 기준이 제대로 전달되지 않음</div></td><td data-w="1">1</td><td class="ax-choice-cell"><label><input type="radio" name="q8" value="1"></label></td><td class="ax-choice-cell"><label><input type="radio" name="q8" value="0"></label></td></tr>
+  <tr><td>9</td><td class="ax-item"><div class="ax-question">예측 기반 대응이 부족하다</div><div class="ax-description">과거 패턴 분석을 통한 선제적인 대응보다 문제 발생 후 사후 대응에 의존</div></td><td data-w="3">3</td><td class="ax-choice-cell"><label><input type="radio" name="q9" value="1"></label></td><td class="ax-choice-cell"><label><input type="radio" name="q9" value="0"></label></td></tr>
+  <tr><td>10</td><td class="ax-item"><div class="ax-question">고비용의 전문성 업무가 많다</div><div class="ax-description">높은 인건비나 전문성이 요구되는 업무가 많아 효율성 개선이 시급함</div></td><td data-w="3">3</td><td class="ax-choice-cell"><label><input type="radio" name="q10" value="1"></label></td><td class="ax-choice-cell"><label><input type="radio" name="q10" value="0"></label></td></tr>
 
-<tr><td>11</td><td rowspan="10" class="ax-category">기회</td><td class="ax-item"><div class="ax-question">개인화 수요가 커지고 있다</div><div class="ax-description">고객이나 사용자가 본인에게 맞는 정보, 서비스, 인터페이스를 기대하는 경향이 뚜렷해짐</div></td><td data-w="5">5</td><td><input type="radio" name="q11" value="1"></td><td><input type="radio" name="q11" value="0"></td></tr>
-<tr><td>12</td><td class="ax-item"><div class="ax-question">AI 적용 가능 업무가 명확하다</div><div class="ax-description">예측, 분류, 요약, 생성 등 AI가 대체 가능하다고 판단되는 구체적인 업무가 존재함</div></td><td data-w="5">5</td><td><input type="radio" name="q12" value="1"></td><td><input type="radio" name="q12" value="0"></td></tr>
-<tr><td>13</td><td class="ax-item"><div class="ax-question">조건 판단 업무가 반복된다</div><div class="ax-description">다수의 기준, 조건, 룰을 기반으로 유사한 결정을 반복적으로 수행하는 업무가 있음</div></td><td data-w="5">5</td><td><input type="radio" name="q13" value="1"></td><td><input type="radio" name="q13" value="0"></td></tr>
-<tr><td>14</td><td class="ax-item"><div class="ax-question">지식 업무에 AI 보조가 필요하다</div><div class="ax-description">전략, 분석, 보고서 작성 등 고차원적 사고가 요구되는 업무에서 AI 지원 가능성이 큼</div></td><td data-w="4">4</td><td><input type="radio" name="q14" value="1"></td><td><input type="radio" name="q14" value="0"></td></tr>
-<tr><td>15</td><td class="ax-item"><div class="ax-question">대화형 서비스 요구가 크다</div><div class="ax-description">챗봇, 음성 인터페이스 등 사용자와 상호작용하는 자동화 채널 수요가 확대되고 있음</div></td><td data-w="4">4</td><td><input type="radio" name="q15" value="1"></td><td><input type="radio" name="q15" value="0"></td></tr>
-<tr><td>16</td><td class="ax-item"><div class="ax-question">정밀 판단이 중요하다</div><div class="ax-description">계약 해석, 감사 체크리스트, 규정 판단 등 오류 없이 판단해야 하는 작업이 많음</div></td><td data-w="3">3</td><td><input type="radio" name="q16" value="1"></td><td><input type="radio" name="q16" value="0"></td></tr>
-<tr><td>17</td><td class="ax-item"><div class="ax-question">대용량 데이터 분석 필요성이 크다</div><div class="ax-description">축적된 데이터에서 패턴 발견과 인사이트 도출이 비즈니스에 중요한 영향을 미침</div></td><td data-w="3">3</td><td><input type="radio" name="q17" value="1"></td><td><input type="radio" name="q17" value="0"></td></tr>
-<tr><td>18</td><td class="ax-item"><div class="ax-question">시장 선점 기회가 있다</div><div class="ax-description">업계에서 AI 기반 서비스 도입이 초기 단계로 경쟁 우위 확보 가능성 존재</div></td><td data-w="4">4</td><td><input type="radio" name="q18" value="1"></td><td><input type="radio" name="q18" value="0"></td></tr>
-<tr><td>19</td><td class="ax-item"><div class="ax-question">비용 절감 효과가 크다</div><div class="ax-description">AI 도입으로 인건비, 운영비 등 직접적 비용 절감 효과가 상당할 것으로 분석됨</div></td><td data-w="1">1</td><td><input type="radio" name="q19" value="1"></td><td><input type="radio" name="q19" value="0"></td></tr>
-<tr><td>20</td><td class="ax-item"><div class="ax-question">신규 수익 모델 창출이 가능하다</div><div class="ax-description">AI 기능을 활용한 새로운 제품이나 서비스 개발 기회가 구체적으로 존재함</div></td><td data-w="2">2</td><td><input type="radio" name="q20" value="1"></td><td><input type="radio" name="q20" value="0"></td></tr>
+  <tr><td>11</td><td rowspan="10" class="ax-category">기회</td><td class="ax-item"><div class="ax-question">개인화 수요가 커지고 있다</div><div class="ax-description">고객이나 사용자가 본인에게 맞는 정보, 서비스, 인터페이스를 기대하는 경향이 뚜렷해짐</div></td><td data-w="5">5</td><td class="ax-choice-cell"><label><input type="radio" name="q11" value="1"></label></td><td class="ax-choice-cell"><label><input type="radio" name="q11" value="0"></label></td></tr>
+  <tr><td>12</td><td class="ax-item"><div class="ax-question">AI 적용 가능 업무가 명확하다</div><div class="ax-description">예측, 분류, 요약, 생성 등 AI가 대체 가능하다고 판단되는 구체적인 업무가 존재함</div></td><td data-w="5">5</td><td class="ax-choice-cell"><label><input type="radio" name="q12" value="1"></label></td><td class="ax-choice-cell"><label><input type="radio" name="q12" value="0"></label></td></tr>
+  <tr><td>13</td><td class="ax-item"><div class="ax-question">조건 판단 업무가 반복된다</div><div class="ax-description">다수의 기준, 조건, 룰을 기반으로 유사한 결정을 반복적으로 수행하는 업무가 있음</div></td><td data-w="5">5</td><td class="ax-choice-cell"><label><input type="radio" name="q13" value="1"></label></td><td class="ax-choice-cell"><label><input type="radio" name="q13" value="0"></label></td></tr>
+  <tr><td>14</td><td class="ax-item"><div class="ax-question">지식 업무에 AI 보조가 필요하다</div><div class="ax-description">전략, 분석, 보고서 작성 등 고차원적 사고가 요구되는 업무에서 AI 지원 가능성이 큼</div></td><td data-w="4">4</td><td class="ax-choice-cell"><label><input type="radio" name="q14" value="1"></label></td><td class="ax-choice-cell"><label><input type="radio" name="q14" value="0"></label></td></tr>
+  <tr><td>15</td><td class="ax-item"><div class="ax-question">대화형 서비스 요구가 크다</div><div class="ax-description">챗봇, 음성 인터페이스 등 사용자와 상호작용하는 자동화 채널 수요가 확대되고 있음</div></td><td data-w="4">4</td><td class="ax-choice-cell"><label><input type="radio" name="q15" value="1"></label></td><td class="ax-choice-cell"><label><input type="radio" name="q15" value="0"></label></td></tr>
+  <tr><td>16</td><td class="ax-item"><div class="ax-question">정밀 판단이 중요하다</div><div class="ax-description">계약 해석, 감사 체크리스트, 규정 판단 등 오류 없이 판단해야 하는 작업이 많음</div></td><td data-w="3">3</td><td class="ax-choice-cell"><label><input type="radio" name="q16" value="1"></label></td><td class="ax-choice-cell"><label><input type="radio" name="q16" value="0"></label></td></tr>
+  <tr><td>17</td><td class="ax-item"><div class="ax-question">대용량 데이터 분석 필요성이 크다</div><div class="ax-description">축적된 데이터에서 패턴 발견과 인사이트 도출이 비즈니스에 중요한 영향을 미침</div></td><td data-w="3">3</td><td class="ax-choice-cell"><label><input type="radio" name="q17" value="1"></label></td><td class="ax-choice-cell"><label><input type="radio" name="q17" value="0"></label></td></tr>
+  <tr><td>18</td><td class="ax-item"><div class="ax-question">시장 선점 기회가 있다</div><div class="ax-description">업계에서 AI 기반 서비스 도입이 초기 단계로 경쟁 우위 확보 가능성 존재</div></td><td data-w="4">4</td><td class="ax-choice-cell"><label><input type="radio" name="q18" value="1"></label></td><td class="ax-choice-cell"><label><input type="radio" name="q18" value="0"></label></td></tr>
+  <tr><td>19</td><td class="ax-item"><div class="ax-question">비용 절감 효과가 크다</div><div class="ax-description">AI 도입으로 인건비, 운영비 등 직접적 비용 절감 효과가 상당할 것으로 분석됨</div></td><td data-w="1">1</td><td class="ax-choice-cell"><label><input type="radio" name="q19" value="1"></label></td><td class="ax-choice-cell"><label><input type="radio" name="q19" value="0"></label></td></tr>
+  <tr><td>20</td><td class="ax-item"><div class="ax-question">신규 수익 모델 창출이 가능하다</div><div class="ax-description">AI 기능을 활용한 새로운 제품이나 서비스 개발 기회가 구체적으로 존재함</div></td><td data-w="2">2</td><td class="ax-choice-cell"><label><input type="radio" name="q20" value="1"></label></td><td class="ax-choice-cell"><label><input type="radio" name="q20" value="0"></label></td></tr>
 
-<tr><td>21</td><td rowspan="10" class="ax-category">준비도</td><td class="ax-item"><div class="ax-question">데이터가 디지털화되어 있다</div><div class="ax-description">업무 핵심 데이터가 종이, 수기 메모가 아닌 시스템에 저장/관리되고 있음</div></td><td data-w="4">4</td><td><input type="radio" name="q21" value="1"></td><td><input type="radio" name="q21" value="0"></td></tr>
-<tr><td>22</td><td class="ax-item"><div class="ax-question">데이터 품질이 정제되어 있다</div><div class="ax-description">컬럼 명칭, 포맷, 범주 등이 정리되어 있어 분석 및 연동에 문제가 없음</div></td><td data-w="5">5</td><td><input type="radio" name="q22" value="1"></td><td><input type="radio" name="q22" value="0"></td></tr>
-<tr><td>23</td><td class="ax-item"><div class="ax-question">실시간 인프라가 있다</div><div class="ax-description">이벤트나 요청을 실시간으로 처리할 수 있는 데이터 시스템이 구성되어 있음</div></td><td data-w="3">3</td><td><input type="radio" name="q23" value="1"></td><td><input type="radio" name="q23" value="0"></td></tr>
-<tr><td>24</td><td class="ax-item"><div class="ax-question">API 또는 클라우드 기반이다</div><div class="ax-description">시스템이 유연하게 외부 연계되거나 확장이 가능한 구조로 운영되고 있음</div></td><td data-w="2">2</td><td><input type="radio" name="q24" value="1"></td><td><input type="radio" name="q24" value="0"></td></tr>
-<tr><td>25</td><td class="ax-item"><div class="ax-question">기술 인력이 내부에 있다</div><div class="ax-description">데이터 분석, AI 모델 이해, 시스템 운영 등 기술 인력을 일정 수준 보유하고 있음</div></td><td data-w="2">2</td><td><input type="radio" name="q25" value="1"></td><td><input type="radio" name="q25" value="0"></td></tr>
-<tr><td>26</td><td class="ax-item"><div class="ax-question">AI 성과 지표가 설정되어 있다</div><div class="ax-description">단순 도입이 아닌 어떤 효과를 기대하는지 명확히 정의된 KPI가 존재함</div></td><td data-w="3">3</td><td><input type="radio" name="q26" value="1"></td><td><input type="radio" name="q26" value="0"></td></tr>
-<tr><td>27</td><td class="ax-item"><div class="ax-question">리더십 지원이 확실하다</div><div class="ax-description">경영진이 AX의 필요성을 이해하고 예산과 조직 차원의 지원을 보장함</div></td><td data-w="3">3</td><td><input type="radio" name="q27" value="1"></td><td><input type="radio" name="q27" value="0"></td></tr>
-<tr><td>28</td><td class="ax-item"><div class="ax-question">변화 관리 체계가 있다</div><div class="ax-description">업무 프로세스 변화와 직원 적응을 위한 교육, 소통, 지원 체계가 구축되어 있음</div></td><td data-w="3">3</td><td><input type="radio" name="q28" value="1"></td><td><input type="radio" name="q28" value="0"></td></tr>
-<tr><td>29</td><td class="ax-item"><div class="ax-question">보안/윤리 체계가 갖춰져 있다</div><div class="ax-description">개인정보, 알고리즘 투명성, 규제 이슈에 대응할 수 있는 체계가 존재함</div></td><td data-w="3">3</td><td><input type="radio" name="q29" value="1"></td><td><input type="radio" name="q29" value="0"></td></tr>
-<tr><td>30</td><td class="ax-item"><div class="ax-question">투자 예산이 확보되어 있다</div><div class="ax-description">AI 도입과 운영에 필요한 초기 투자 및 지속 운영 예산이 배정되어 있음</div></td><td data-w="3">3</td><td><input type="radio" name="q30" value="1"></td><td><input type="radio" name="q30" value="0"></td></tr>
+  <tr><td>21</td><td rowspan="10" class="ax-category">준비도</td><td class="ax-item"><div class="ax-question">데이터가 디지털화되어 있다</div><div class="ax-description">업무 핵심 데이터가 종이, 수기 메모가 아닌 시스템에 저장/관리되고 있음</div></td><td data-w="4">4</td><td class="ax-choice-cell"><label><input type="radio" name="q21" value="1"></label></td><td class="ax-choice-cell"><label><input type="radio" name="q21" value="0"></label></td></tr>
+  <tr><td>22</td><td class="ax-item"><div class="ax-question">데이터 품질이 정제되어 있다</div><div class="ax-description">컬럼 명칭, 포맷, 범주 등이 정리되어 있어 분석 및 연동에 문제가 없음</div></td><td data-w="5">5</td><td class="ax-choice-cell"><label><input type="radio" name="q22" value="1"></label></td><td class="ax-choice-cell"><label><input type="radio" name="q22" value="0"></label></td></tr>
+  <tr><td>23</td><td class="ax-item"><div class="ax-question">실시간 인프라가 있다</div><div class="ax-description">이벤트나 요청을 실시간으로 처리할 수 있는 데이터 시스템이 구성되어 있음</div></td><td data-w="3">3</td><td class="ax-choice-cell"><label><input type="radio" name="q23" value="1"></label></td><td class="ax-choice-cell"><label><input type="radio" name="q23" value="0"></label></td></tr>
+  <tr><td>24</td><td class="ax-item"><div class="ax-question">API 또는 클라우드 기반이다</div><div class="ax-description">시스템이 유연하게 외부 연계되거나 확장이 가능한 구조로 운영되고 있음</div></td><td data-w="2">2</td><td class="ax-choice-cell"><label><input type="radio" name="q24" value="1"></label></td><td class="ax-choice-cell"><label><input type="radio" name="q24" value="0"></label></td></tr>
+  <tr><td>25</td><td class="ax-item"><div class="ax-question">기술 인력이 내부에 있다</div><div class="ax-description">데이터 분석, AI 모델 이해, 시스템 운영 등 기술 인력을 일정 수준 보유하고 있음</div></td><td data-w="2">2</td><td class="ax-choice-cell"><label><input type="radio" name="q25" value="1"></label></td><td class="ax-choice-cell"><label><input type="radio" name="q25" value="0"></label></td></tr>
+  <tr><td>26</td><td class="ax-item"><div class="ax-question">AI 성과 지표가 설정되어 있다</div><div class="ax-description">단순 도입이 아닌 어떤 효과를 기대하는지 명확히 정의된 KPI가 존재함</div></td><td data-w="3">3</td><td class="ax-choice-cell"><label><input type="radio" name="q26" value="1"></label></td><td class="ax-choice-cell"><label><input type="radio" name="q26" value="0"></label></td></tr>
+  <tr><td>27</td><td class="ax-item"><div class="ax-question">리더십 지원이 확실하다</div><div class="ax-description">경영진이 AX의 필요성을 이해하고 예산과 조직 차원의 지원을 보장함</div></td><td data-w="3">3</td><td class="ax-choice-cell"><label><input type="radio" name="q27" value="1"></label></td><td class="ax-choice-cell"><label><input type="radio" name="q27" value="0"></label></td></tr>
+  <tr><td>28</td><td class="ax-item"><div class="ax-question">변화 관리 체계가 있다</div><div class="ax-description">업무 프로세스 변화와 직원 적응을 위한 교육, 소통, 지원 체계가 구축되어 있음</div></td><td data-w="3">3</td><td class="ax-choice-cell"><label><input type="radio" name="q28" value="1"></label></td><td class="ax-choice-cell"><label><input type="radio" name="q28" value="0"></label></td></tr>
+  <tr><td>29</td><td class="ax-item"><div class="ax-question">보안/윤리 체계가 갖춰져 있다</div><div class="ax-description">개인정보, 알고리즘 투명성, 규제 이슈에 대응할 수 있는 체계가 존재함</div></td><td data-w="3">3</td><td class="ax-choice-cell"><label><input type="radio" name="q29" value="1"></label></td><td class="ax-choice-cell"><label><input type="radio" name="q29" value="0"></label></td></tr>
+  <tr><td>30</td><td class="ax-item"><div class="ax-question">투자 예산이 확보되어 있다</div><div class="ax-description">AI 도입과 운영에 필요한 초기 투자 및 지속 운영 예산이 배정되어 있음</div></td><td data-w="3">3</td><td class="ax-choice-cell"><label><input type="radio" name="q30" value="1"></label></td><td class="ax-choice-cell"><label><input type="radio" name="q30" value="0"></label></td></tr>
 
 </tbody>
 </table>
