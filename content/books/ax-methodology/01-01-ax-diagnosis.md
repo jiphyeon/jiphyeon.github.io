@@ -39,51 +39,69 @@ AX 진단은 진단표로 진행된다. 진단 항목은 총 30개 문항이며,
 진단 결과는 전사 확장형, 핵심 전환형, 부서 파일럿형, 준비 기반형, 탐색 학습형이라는 AX 방향으로 연결된다.
 
 <style>
-/* ── 스크롤 래퍼 ── */
-.ax-table-scroll {
+.ax-wrap {
   width: 100%;
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
 }
 
-/* ── 테이블 기본 ── */
 .ax-table {
   width: 100%;
-  min-width: 560px;
   border-collapse: collapse;
   table-layout: fixed;
   font-size: 14px;
 }
 
+/* 열 너비 */
+.ax-table .c-num  { width: 36px; }
+.ax-table .c-cat  { width: 54px; }
+.ax-table .c-item { width: auto; }
+.ax-table .c-w    { width: 44px; }
+.ax-table .c-yn   { width: 46px; }
+
 .ax-table th,
 .ax-table td {
-  border-bottom: 1px solid #ddd;
-  padding: 10px 6px;
+  border-bottom: 1px solid #e0e0e0;
+  padding: 9px 6px;
   vertical-align: middle;
   text-align: center;
 }
 
 .ax-table thead th {
-  border-top: 2px solid #333;
-  border-bottom: 1px solid #ccc;
+  border-top: 2px solid #222;
+  border-bottom: 1px solid #bbb;
   background: #f5f5f5;
   font-weight: 700;
+  font-size: 13px;
 }
 
-/* ── 열 너비 ── */
-.col-num  { width: 36px; }
-.col-cat  { width: 56px; }
-.col-item { width: auto; }
-.col-w    { width: 44px; }
-.col-yn   { width: 46px; }
-
-/* ── 구분 셀 ── */
-.ax-category {
+/* ── 구분 셀: rowspan 대신 CSS 병합 시뮬레이션 ── */
+.c-cat-cell {
   font-weight: 700;
-  font-size: 12.5px;
-  color: #555;
+  font-size: 12px;
+  color: #444;
   background: #fafafa;
   word-break: keep-all;
+  /* 기본: 텍스트 숨김 (중간 행) */
+  color: transparent;
+  user-select: none;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+/* 각 구분의 첫 행: 텍스트 표시 + 위 테두리 강조 */
+.c-cat-cell.cat-first {
+  color: #444;
+  border-top: 2px solid #ccc;
+}
+
+/* 각 구분의 마지막 행: 아래 테두리 강조 */
+.c-cat-cell.cat-last {
+  border-bottom: 2px solid #ccc;
+}
+
+/* 구분 첫 행의 윗 테두리도 강조 */
+tr.group-first td {
+  border-top: 2px solid #ccc;
 }
 
 /* ── 진단항목 셀 ── */
@@ -92,25 +110,25 @@ AX 진단은 진단표로 진행된다. 진단 항목은 총 30개 문항이며,
   word-break: keep-all;
   overflow-wrap: break-word;
   white-space: normal;
+  padding-left: 8px;
 }
 
-.ax-question {
+.ax-q {
   font-weight: 700;
   font-size: 13.5px;
   line-height: 1.4;
   margin-bottom: 2px;
 }
 
-.ax-description {
+.ax-d {
   font-size: 12.5px;
   line-height: 1.45;
   color: #666;
 }
 
-/* ── 라디오 셀 ── */
-.ax-choice-cell { cursor: pointer; }
-
-.ax-choice-cell label {
+/* ── 라디오 ── */
+.ax-yn { cursor: pointer; }
+.ax-yn label {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -118,19 +136,13 @@ AX 진단은 진단표로 진행된다. 진단 항목은 총 30개 문항이며,
   min-height: 40px;
   cursor: pointer;
 }
-
-.ax-table input[type="radio"] {
+.ax-table input[type=radio] {
   transform: scale(1.15);
   cursor: pointer;
 }
 
 /* ── 버튼 ── */
-.ax-actions {
-  margin-top: 20px;
-  display: flex;
-  gap: 10px;
-}
-
+.ax-actions { margin-top: 20px; display: flex; gap: 10px; }
 .ax-btn {
   padding: 10px 18px;
   border-radius: 8px;
@@ -139,53 +151,38 @@ AX 진단은 진단표로 진행된다. 진단 항목은 총 30개 문항이며,
   font-weight: 600;
   font-size: 14px;
 }
+.ax-btn-p { background: #111; color: #fff; }
+.ax-btn-s { background: #eee; color: #111; }
 
-.ax-btn-primary   { background: #111; color: #fff; }
-.ax-btn-secondary { background: #eee; color: #111; }
-
-/* ── 결과/에러 ── */
 #axError {
-  margin-top: 16px;
-  padding: 12px 14px;
-  border-radius: 8px;
-  background: #fff0f0;
-  color: #b00020;
-  border: 1px solid #ffd0d0;
+  margin-top: 16px; padding: 12px 14px;
+  border-radius: 8px; background: #fff0f0;
+  color: #b00020; border: 1px solid #ffd0d0;
   line-height: 1.6;
 }
-
 #axResult {
-  margin-top: 16px;
-  padding: 16px;
-  border-radius: 10px;
-  background: #f7f7f7;
+  margin-top: 16px; padding: 16px;
+  border-radius: 10px; background: #f7f7f7;
   line-height: 1.7;
 }
+#axError:empty, #axResult:empty { display: none; }
 
-#axError:empty,
-#axResult:empty { display: none; }
-
-/* ── 모바일 ── */
+/* ══ 모바일 ══ */
 @media (max-width: 600px) {
-  .ax-table {
-    min-width: 0;
-    font-size: 12.5px;
-  }
-  /* JS가 rowspan 해제 후 숨기는 셀 */
-  .ax-cat-mobile-hide {
-    display: none !important;
-  }
-  /* 구분 헤더 열 숨김 */
-  .ax-table th.col-cat {
-    display: none;
-  }
-  .col-num { width: 24px; font-size: 11px; }
-  .col-w   { width: 34px; font-size: 11px; }
-  .col-yn  { width: 38px; }
-  .ax-table th, .ax-table td { padding: 8px 3px; }
-  .ax-question    { font-size: 12.5px; }
-  .ax-description { font-size: 11.8px; }
-  .ax-choice-cell label { min-height: 36px; }
+  .ax-table { font-size: 12.5px; }
+
+  /* 구분 열 완전 숨김 — rowspan 없으므로 안전 */
+  .ax-table th.c-cat,
+  .ax-table td.c-cat-cell { display: none; }
+
+  .ax-table .c-num { width: 22px; font-size: 11px; }
+  .ax-table .c-w   { width: 30px; font-size: 11px; }
+  .ax-table .c-yn  { width: 36px; }
+
+  .ax-table th, .ax-table td { padding: 7px 3px; }
+  .ax-q { font-size: 12.5px; }
+  .ax-d { font-size: 11.8px; }
+  .ax-yn label { min-height: 34px; }
 }
 </style>
 
