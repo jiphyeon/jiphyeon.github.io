@@ -235,6 +235,38 @@ AX 진단은 진단표로 진행된다. 진단 항목은 총 30개 문항이며,
     transform: scale(1);
   }
 }
+@media (max-width: 768px) {
+
+  /* 구분 열 제거 */
+  .ax-table th:nth-child(2),
+  .ax-table td:nth-child(2) {
+    display: none;
+  }
+
+  /* 번호 축소 */
+  .ax-table th:nth-child(1),
+  .ax-table td:nth-child(1) {
+    width: 28px;
+    font-size: 12px;
+  }
+
+  /* 가중치/선택 최소화 */
+  .ax-table th:nth-child(4),
+  .ax-table td:nth-child(4),
+  .ax-table th:nth-child(5),
+  .ax-table td:nth-child(5),
+  .ax-table th:nth-child(6),
+  .ax-table td:nth-child(6) {
+    width: 40px;
+  }
+
+  /* 진단항목 최대 확보 */
+  .ax-item {
+    padding-left: 4px;
+    padding-right: 4px;
+  }
+
+}
 </style>
 
 <div class="ax-table-scroll">
