@@ -4,7 +4,7 @@ part: "AX 계획"
 partOrder: 1
 order: 2
 status: "published"
-slug: "01-01-ax-diagnosis"
+slug: "01-02-ax-direction"
 date: 2024-02-22
 ---
 
