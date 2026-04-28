@@ -42,16 +42,16 @@ AX 진단은 진단표로 진행된다. 진단 항목은 총 30개 문항이며,
 .ax-table {
   width: 100%;
   border-collapse: collapse;
+  table-layout: fixed;
   font-size: 14px;
 }
 
-/* 좌우 라인 제거 */
 .ax-table th,
 .ax-table td {
   border-bottom: 1px solid #ddd;
   border-left: 0;
   border-right: 0;
-  padding: 10px 8px;
+  padding: 10px 6px;
   vertical-align: middle;
   text-align: center;
 }
@@ -62,48 +62,67 @@ AX 진단은 진단표로 진행된다. 진단 항목은 총 30개 문항이며,
   font-weight: 700;
 }
 
-/* 번호, 구분, 가중치, 예, 아니요는 줄바꿈 방지 */
+/* 열 너비: 진단항목만 남는 공간을 유연하게 사용 */
 .ax-table th:nth-child(1),
-.ax-table td:nth-child(1),
+.ax-table td:nth-child(1) {
+  width: 8%;
+}
+
 .ax-table th:nth-child(2),
-.ax-table td:nth-child(2),
+.ax-table td:nth-child(2) {
+  width: 12%;
+}
+
+.ax-table th:nth-child(3),
+.ax-table td:nth-child(3) {
+  width: auto;
+}
+
 .ax-table th:nth-child(4),
-.ax-table td:nth-child(4),
+.ax-table td:nth-child(4) {
+  width: 10%;
+}
+
 .ax-table th:nth-child(5),
 .ax-table td:nth-child(5),
 .ax-table th:nth-child(6),
 .ax-table td:nth-child(6) {
-  white-space: nowrap;
+  width: 10%;
 }
 
-/* 진단항목 셀 */
+/* 진단항목 */
 .ax-item {
   text-align: left !important;
+  word-break: keep-all;
+  overflow-wrap: break-word;
 }
 
 .ax-category {
   font-weight: 700;
   background: #fafafa;
+  word-break: keep-all;
 }
 
-/* 진단항목 강조 */
 .ax-question {
   font-weight: 800;
   line-height: 1.35;
   margin-bottom: 3px;
   text-align: left;
+  word-break: keep-all;
+  overflow-wrap: break-word;
 }
 
-/* 설명 */
 .ax-description {
   margin-top: 2px;
   font-size: 13.5px;
   line-height: 1.45;
   color: #555;
   text-align: left;
+  word-break: keep-all;
+  overflow-wrap: break-word;
 }
 
-/* 셀 전체 클릭 가능 */
+/* 셀 전체 클릭 */
 .ax-choice-cell {
   cursor: pointer;
 }
@@ -118,7 +137,7 @@ AX 진단은 진단표로 진행된다. 진단 항목은 총 30개 문항이며,
 }
 
 .ax-table input {
-  transform: scale(1.15);
+  transform: scale(1.1);
 }
 
 /* 버튼 */
@@ -146,7 +165,6 @@ AX 진단은 진단표로 진행된다. 진단 항목은 총 30개 문항이며,
   color: #111;
 }
 
-/* 에러 */
 #axError {
   margin-top: 16px;
   padding: 12px 14px;
@@ -157,7 +175,6 @@ AX 진단은 진단표로 진행된다. 진단 항목은 총 30개 문항이며,
   line-height: 1.6;
 }
 
-/* 결과 */
 #axResult {
   margin-top: 16px;
   padding: 16px;
@@ -166,38 +183,61 @@ AX 진단은 진단표로 진행된다. 진단 항목은 총 30개 문항이며,
   line-height: 1.7;
 }
 
-/* 비어있으면 숨김 */
 #axError:empty,
 #axResult:empty {
   display: none;
 }
 
-/* 모바일 대응 */
+/* 모바일 */
 @media (max-width: 768px) {
   .ax-table {
-    font-size: 13px;
+    font-size: 12.5px;
   }
 
   .ax-table th,
   .ax-table td {
-    padding: 8px 6px;
+    padding: 8px 4px;
   }
 
-  .ax-description {
-    font-size: 13px;
-    line-height: 1.45;
+  .ax-table th:nth-child(1),
+  .ax-table td:nth-child(1) {
+    width: 7%;
+  }
+
+  .ax-table th:nth-child(2),
+  .ax-table td:nth-child(2) {
+    width: 11%;
+  }
+
+  .ax-table th:nth-child(4),
+  .ax-table td:nth-child(4) {
+    width: 9%;
+  }
+
+  .ax-table th:nth-child(5),
+  .ax-table td:nth-child(5),
+  .ax-table th:nth-child(6),
+  .ax-table td:nth-child(6) {
+    width: 10%;
   }
 
   .ax-question {
+    font-size: 12.8px;
     line-height: 1.35;
   }
 
-  .ax-btn {
-    padding: 9px 14px;
+  .ax-description {
+    font-size: 12.3px;
+    line-height: 1.4;
+  }
+
+  .ax-table input {
+    transform: scale(1);
   }
 }
 </style>
 
+<div class="ax-table-scroll">
 <table class="ax-table" id="axTable">
 <thead>
 <tr>
@@ -246,6 +286,7 @@ AX 진단은 진단표로 진행된다. 진단 항목은 총 30개 문항이며,
 
 </tbody>
 </table>
+</div>
 
 <div class="ax-actions">
   <button type="button" class="ax-btn ax-btn-primary" id="axCalcBtn">결과 보기</button>
