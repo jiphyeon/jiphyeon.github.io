@@ -749,4 +749,7 @@ tr.group-first td {
   position: relative;
   z-index: 0;
 }
+#axTable tbody tr:last-child .ax-cat-cell {
+  background: transparent;
+}
 </style>
