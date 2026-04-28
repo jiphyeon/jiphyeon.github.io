@@ -660,13 +660,15 @@ body:hover::-webkit-scrollbar-thumb:hover,
   background: #fafafa;
   word-break: keep-all;
   user-select: none;
+  border-bottom: none;
 }
 .ax-cat-cell.cat-first {
-  color: #444;
+   color: #444;
   border-top: 2px solid #ccc;
+  border-bottom: none;
 }
 .ax-cat-cell.cat-last {
-  border-bottom: 2px solid #ccc;
+   border-bottom: 2px solid #ccc;
 }
 tr.group-first td {
   border-top: 2px solid #ccc;
