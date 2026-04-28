@@ -52,3 +52,26 @@ document.addEventListener("click", function (event) {
     if (errorBox)  errorBox.innerHTML  = "";
   }
 });
+// 구분 셀 높이 동적 조정
+document.addEventListener("DOMContentLoaded", function () {
+  var groups = [
+    { first: 1, last: 10 },
+    { first: 11, last: 20 },
+    { first: 21, last: 30 }
+  ];
+
+  groups.forEach(function (g) {
+    var firstRow = document.querySelector("#axTable tr:nth-child(" + g.first + ")");
+    var lastRow  = document.querySelector("#axTable tr:nth-child(" + g.last  + ")");
+    var catCell  = firstRow && firstRow.querySelector(".ax-cat-cell.cat-first");
+
+    if (!firstRow || !lastRow || !catCell) return;
+
+    var top    = firstRow.getBoundingClientRect().top;
+    var bottom = lastRow.getBoundingClientRect().bottom;
+    var totalH = bottom - top;
+
+    catCell.style.height = totalH + "px";
+    catCell.style.verticalAlign = "middle";
+  });
+});

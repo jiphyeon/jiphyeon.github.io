@@ -663,9 +663,11 @@ body:hover::-webkit-scrollbar-thumb:hover,
   border-bottom: none;
 }
 .ax-cat-cell.cat-first {
-   color: #444;
+ color: #444;
   border-top: 2px solid #ccc;
   border-bottom: none;
+  vertical-align: top;
+  padding-top: 14px;
 }
 .ax-cat-cell.cat-last {
    border-bottom: 2px solid #ccc;
