@@ -1,22 +1,27 @@
 function fixCatCells() {
   var catCells = document.querySelectorAll("#axTable .ax-cat-cell.cat-first");
   catCells.forEach(function (cell) {
+    cell.style.height = "";
+    cell.style.paddingTop = "";
+    cell.style.position = "relative";
+    cell.style.verticalAlign = "top";
+
     var row = cell.closest("tr");
     if (!row) return;
 
-    var rows = [row];
+    var last = row;
     var next = row.nextElementSibling;
     while (next && !next.classList.contains("group-first")) {
-      rows.push(next);
+      last = next;
       next = next.nextElementSibling;
     }
 
     var top    = row.getBoundingClientRect().top;
-    var last   = rows[rows.length - 1];
     var bottom = last.getBoundingClientRect().bottom;
+    var groupH = bottom - top;
+    var cellH  = cell.getBoundingClientRect().height;
 
-    cell.style.height        = (bottom - top) + "px";
-    cell.style.verticalAlign = "middle";
+    cell.style.paddingTop = Math.max(0, (groupH / 2) - (cellH / 2)) + "px";
   });
 }
 
