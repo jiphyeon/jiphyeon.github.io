@@ -1,3 +1,4 @@
+```javascript
 document.addEventListener("click", function (event) {
   if (event.target.id === "axCalcBtn") {
     var table = document.querySelector("#axTable");
@@ -52,26 +53,33 @@ document.addEventListener("click", function (event) {
     if (errorBox)  errorBox.innerHTML  = "";
   }
 });
-// 구분 셀 높이 동적 조정
-document.addEventListener("DOMContentLoaded", function () {
-  var groups = [
-    { first: 1, last: 10 },
-    { first: 11, last: 20 },
-    { first: 21, last: 30 }
-  ];
 
-  groups.forEach(function (g) {
-    var firstRow = document.querySelector("#axTable tr:nth-child(" + g.first + ")");
-    var lastRow  = document.querySelector("#axTable tr:nth-child(" + g.last  + ")");
-    var catCell  = firstRow && firstRow.querySelector(".ax-cat-cell.cat-first");
+function fixCatCells() {
+  var catCells = document.querySelectorAll("#axTable .ax-cat-cell.cat-first");
+  catCells.forEach(function (cell) {
+    var row = cell.closest("tr");
+    if (!row) return;
 
-    if (!firstRow || !lastRow || !catCell) return;
+    var rows = [row];
+    var next = row.nextElementSibling;
+    while (next && !next.classList.contains("group-first")) {
+      rows.push(next);
+      next = next.nextElementSibling;
+    }
 
-    var top    = firstRow.getBoundingClientRect().top;
-    var bottom = lastRow.getBoundingClientRect().bottom;
-    var totalH = bottom - top;
+    var top    = row.getBoundingClientRect().top;
+    var last   = rows[rows.length - 1];
+    var bottom = last.getBoundingClientRect().bottom;
 
-    catCell.style.height = totalH + "px";
-    catCell.style.verticalAlign = "middle";
+    cell.style.height        = (bottom - top) + "px";
+    cell.style.verticalAlign = "middle";
   });
-});
+}
+
+if (document.readyState === "loading") {
+  document.addEventListener("DOMContentLoaded", fixCatCells);
+} else {
+  setTimeout(fixCatCells, 100);
+}
+window.addEventListener("resize", fixCatCells);
+```
