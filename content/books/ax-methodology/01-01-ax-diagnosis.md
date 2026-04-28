@@ -5,7 +5,7 @@ partOrder: 1
 order: 1
 status: "published"
 slug: "01-01-ax-diagnosis"
-date: 2024-03-09
+date: 2025-09-11
 ---
 
 현황에 대한 필요성, 기회, 준비도의 세 범주로 구성된다. 
