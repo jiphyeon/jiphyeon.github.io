@@ -16,13 +16,13 @@ function fixCatCells() {
 
   var rows = table.querySelectorAll("tbody tr");
 
-  groups.forEach(function(g) {
+groups.forEach(function(g) {
     for (var i = g.first; i <= g.last; i++) {
       var cell = rows[i] && rows[i].querySelector(".ax-cat-cell");
       if (!cell) continue;
       cell.textContent = (i === g.first) ? g.label : "";
       if (i === g.first) cell.style.borderTop    = "2px solid #ccc";
-      if (i === g.last)  cell.style.borderBottom = "2px solid #ccc";
+      if (i === g.last)  cell.style.borderBottom = (g.last === 29) ? "2px solid #222" : "2px solid #ccc";
     }
   });
 }

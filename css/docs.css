@@ -752,4 +752,11 @@ tr.group-first td {
 #axTable tbody tr:last-child .ax-cat-cell {
   background: transparent;
 }
+#axTable tbody tr:last-child td {
+  border-bottom: 2px solid #222;
+}
+
+#axTable tbody tr:last-child .ax-cat-cell {
+  border-bottom: 2px solid #222 !important;
+}
 </style>
