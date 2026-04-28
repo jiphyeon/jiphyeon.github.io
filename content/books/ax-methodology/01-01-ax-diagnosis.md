@@ -42,7 +42,6 @@ AX 진단은 진단표로 진행된다. 진단 항목은 총 30개 문항이며,
 .ax-table {
   width: 100%;
   border-collapse: collapse;
-  table-layout: fixed;
   font-size: 14px;
 }
 
@@ -63,19 +62,21 @@ AX 진단은 진단표로 진행된다. 진단 항목은 총 30개 문항이며,
   font-weight: 700;
 }
 
+/* 번호, 구분, 가중치, 예, 아니요는 줄바꿈 방지 */
 .ax-table th:nth-child(1),
-.ax-table td:nth-child(1) { width: 44px; }
-
+.ax-table td:nth-child(1),
 .ax-table th:nth-child(2),
-.ax-table td:nth-child(2) { width: 64px; }
-
+.ax-table td:nth-child(2),
 .ax-table th:nth-child(4),
 .ax-table td:nth-child(4),
 .ax-table th:nth-child(5),
 .ax-table td:nth-child(5),
 .ax-table th:nth-child(6),
-.ax-table td:nth-child(6) { width: 56px; }
+.ax-table td:nth-child(6) {
+  white-space: nowrap;
+}
 
+/* 진단항목 셀 */
 .ax-item {
   text-align: left !important;
 }
@@ -93,7 +94,7 @@ AX 진단은 진단표로 진행된다. 진단 항목은 총 30개 문항이며,
   text-align: left;
 }
 
-/* 설명 개선 */
+/* 설명 */
 .ax-description {
   margin-top: 2px;
   font-size: 13.5px;
@@ -145,7 +146,7 @@ AX 진단은 진단표로 진행된다. 진단 항목은 총 30개 문항이며,
   color: #111;
 }
 
-/* 에러 (빨간색 + 여백) */
+/* 에러 */
 #axError {
   margin-top: 16px;
   padding: 12px 14px;
@@ -165,35 +166,38 @@ AX 진단은 진단표로 진행된다. 진단 항목은 총 30개 문항이며,
   line-height: 1.7;
 }
 
-/* 비어있으면 숨김 → 회색 박스 제거 */
+/* 비어있으면 숨김 */
 #axError:empty,
 #axResult:empty {
   display: none;
 }
 
-.ax-table-wrap {
-  width: 100%;
-  overflow-x: auto;
-  -webkit-overflow-scrolling: touch;
-}
-
-.ax-table {
-  min-width: 720px;
-}
-
+/* 모바일 대응 */
 @media (max-width: 768px) {
   .ax-table {
-    min-width: 760px;
     font-size: 13px;
+  }
+
+  .ax-table th,
+  .ax-table td {
+    padding: 8px 6px;
   }
 
   .ax-description {
     font-size: 13px;
+    line-height: 1.45;
+  }
+
+  .ax-question {
+    line-height: 1.35;
+  }
+
+  .ax-btn {
+    padding: 9px 14px;
   }
 }
 </style>
 
-<div class="ax-table-wrap">
 <table class="ax-table" id="axTable">
 <thead>
 <tr>
@@ -242,7 +246,6 @@ AX 진단은 진단표로 진행된다. 진단 항목은 총 30개 문항이며,
 
 </tbody>
 </table>
-</div>
 
 <div class="ax-actions">
   <button type="button" class="ax-btn ax-btn-primary" id="axCalcBtn">결과 보기</button>
