@@ -269,8 +269,13 @@ async function initializeDocsPage() {
     metaEl.textContent = frontMatter.date || "";
     contentEl.innerHTML = md.render(cleanedMarkdown);
 
-    applyReferenceHeadingStyle(contentEl);
-    setupContentImageLightbox(contentEl);
+applyReferenceHeadingStyle(contentEl);
+setupContentImageLightbox(contentEl);
+
+// AX 진단표 구분 셀 높이 보정
+if (typeof fixCatCells === "function") {
+  setTimeout(fixCatCells, 50);
+}
 
     const navDocs = isPublishedDoc(current) ? publishedDocs : docs;
     setupNavigation(navDocs, current, book);
