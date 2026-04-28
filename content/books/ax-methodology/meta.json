@@ -34,12 +34,6 @@
         {
           "title": "AX 진단",
           "slug": "01-01-ax-diagnosis",
-          "file": "01-02-ax-direction.md",
-          "status": "published"
-        },
-        {
-          "title": "AX 진단",
-          "slug": "01-01-ax-diagnosis",
           "file": "02-01-data-preparation.md",
           "status": "published"
         },
@@ -173,6 +167,12 @@
           "title": "AX 진단",
           "slug": "01-01-ax-diagnosis",
           "file": "05-07-monitoring.md",
+          "status": "published"
+        },
+        {
+          "title": "AX 방향",
+          "slug": "01-01-ax-diagnosis",
+          "file": "01-02-ax-direction.md",
           "status": "published"
         }
       ]
