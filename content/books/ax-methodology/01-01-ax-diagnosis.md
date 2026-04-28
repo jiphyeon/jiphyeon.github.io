@@ -265,6 +265,71 @@ AX 진단은 진단표로 진행된다. 진단 항목은 총 30개 문항이며,
     padding-left: 4px;
     padding-right: 4px;
   }
+  /* AX 진단표 모바일 강제 보정 */
+@media (max-width: 768px) {
+  .ax-table {
+    width: 100% !important;
+    max-width: 100% !important;
+    min-width: 0 !important;
+    table-layout: fixed !important;
+    font-size: 12.5px !important;
+  }
+
+  .ax-table th,
+  .ax-table td {
+    box-sizing: border-box;
+    padding: 8px 4px !important;
+  }
+
+  /* 헤더의 구분 열만 숨김 */
+  .ax-table th:nth-child(2) {
+    display: none !important;
+  }
+
+  /* 실제 구분 셀만 숨김 */
+  .ax-category {
+    display: none !important;
+  }
+
+  /* 열 폭 강제 */
+  .ax-table th:nth-child(1),
+  .ax-table td:first-child {
+    width: 8% !important;
+  }
+
+  .ax-table th:nth-child(3) {
+    width: 56% !important;
+  }
+
+  .ax-table th:nth-child(4),
+  .ax-table td[data-w] {
+    width: 10% !important;
+  }
+
+  .ax-table th:nth-child(5),
+  .ax-table th:nth-child(6),
+  .ax-choice-cell {
+    width: 13% !important;
+  }
+
+  /* 진단항목 줄바꿈 강제 */
+  .ax-item,
+  .ax-question,
+  .ax-description {
+    white-space: normal !important;
+    word-break: keep-all !important;
+    overflow-wrap: anywhere !important;
+    max-width: 100% !important;
+  }
+
+  .ax-question {
+    font-size: 12.8px !important;
+  }
+
+  .ax-description {
+    font-size: 12.2px !important;
+  }
+}
 
 }
 </style>
