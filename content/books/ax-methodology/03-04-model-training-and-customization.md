@@ -58,12 +58,39 @@ date: 2024-10-18
 * <b>F1 점수</b>는 정밀도와 재현율의 균형을 측정하는 지표로 두 값이 균형 잡혀야 높게 나온다. 이 경우 66.7%로 계산된다.
 
 <b>이메일 스팸 필터링 성능 지표 예시</b>
-지표 | 의미 | 계산식 | 설명
----|---|---|---
-<nobr>정확도</nobr> | 전체 중 맞춘 비율 | (15 + 70) / 100 = 85% | 전체적으로 얼마나 잘 예측했는가
-<nobr>정밀도</nobr> | 스팸이라고 한 것 중 진짜 스팸 비율 | 15 / (15 + 10) = 60% | 내 예측 중에서 얼마나 정확했나
-<nobr>재현율</nobr> | 실제 스팸 중 내가 잡아낸 비율 | 15 / (15 + 5) = 75% | 놓치지 않고 얼마나 잘 잡았나
-<nobr>F1 점수</nobr> | 정밀도와 재현율의 균형 | 2 × (정밀도 × 재현율) / (정밀도 + 재현율) ≈ 66.7% | 두 지표가 모두 높을수록 좋아짐
+<div style="overflow-x: auto;">
+  <table style="width: 100%; border-collapse: collapse; min-width: 600px; font-size: 0.95rem;">
+    <thead>
+      <tr style="background-color: #f8f9fa; border-top: 2px solid #333; border-bottom: 1px solid #ddd;">
+        <th style="padding: 12px; border: 1px solid #ddd; text-align: center; width: 15%;">지표</th>
+        <th style="padding: 12px; border: 1px solid #ddd; text-align: left; width: 35%;">의미</th>
+        <th style="padding: 12px; border: 1px solid #ddd; text-align: left; width: 50%;">계산식</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="padding: 12px; border: 1px solid #ddd; text-align: center; font-weight: bold;">정확도</td>
+        <td style="padding: 12px; border: 1px solid #ddd;">전체 중 맞춘 비율</td>
+        <td style="padding: 12px; border: 1px solid #ddd;">(15 + 70) / 100 = <b>85%</b></td>
+      </tr>
+      <tr style="background-color: #fafafa;">
+        <td style="padding: 12px; border: 1px solid #ddd; text-align: center; font-weight: bold;">정밀도</td>
+        <td style="padding: 12px; border: 1px solid #ddd;">스팸이라고 한 것 중 진짜 스팸 비율</td>
+        <td style="padding: 12px; border: 1px solid #ddd;">15 / (15 + 10) = <b>60%</b></td>
+      </tr>
+      <tr>
+        <td style="padding: 12px; border: 1px solid #ddd; text-align: center; font-weight: bold;">재현율</td>
+        <td style="padding: 12px; border: 1px solid #ddd;">실제 스팸 중 내가 잡아낸 비율</td>
+        <td style="padding: 12px; border: 1px solid #ddd;">15 / (15 + 5) = <b>75%</b></td>
+      </tr>
+      <tr style="background-color: #fafafa;">
+        <td style="padding: 12px; border: 1px solid #ddd; text-align: center; font-weight: bold;">F1 점수</td>
+        <td style="padding: 12px; border: 1px solid #ddd;">정밀도와 재현율의 균형</td>
+        <td style="padding: 12px; border: 1px solid #ddd;">2 × (정밀도 × 재현율) / (정밀도 + 재현율) ≈ <b>66.7%</b></td>
+      </tr>
+    </tbody>
+  </table>
+</div>
 
 정확도는 전체 성능을 보는 데 유용하지만, 스팸 메일처럼 데이터 비율이 한쪽으로 쏠려 있는 경우에는 정밀도나 재현율이 더 중요하다. 예를 들어 스팸을 놓치지 않는 것이 중요한 경우에는 재현율이 중요하고, 정상 메일을 잘못 스팸으로 분류하지 않는 것이 중요하다면 정밀도를 우선 고려해야 한다. 그러나 대부분 이 두 기준이 동시에 중요하다. 이럴 때 사용하는 것이 F1 점수다. F1은 정밀도와 재현율이 균형 있게 높을 때만 높게 나오는 지표로 둘 중 하나라도 낮으면 점수가 급격히 떨어진다. 따라서 한쪽 성능만 부풀려 평가 결과가 왜곡되는 일을 막아주며, 실제 서비스 적용 전 모델의 균형 잡힌 품질을 판단하는 기준으로 주로 활용된다. 
 
