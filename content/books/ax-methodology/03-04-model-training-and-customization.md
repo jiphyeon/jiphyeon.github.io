@@ -58,13 +58,13 @@ date: 2024-10-18
 * <b>F1 점수</b>는 정밀도와 재현율의 균형을 측정하는 지표로 두 값이 균형 잡혀야 높게 나온다. 이 경우 66.7%로 계산된다.
 
 <b>이메일 스팸 필터링 성능 지표 예시</b>
-<div style="overflow-x: auto;">
-  <table style="width: 100%; border-collapse: collapse; min-width: 600px; font-size: 0.95rem;">
+<div style="overflow-x: auto; margin: 20px 0;">
+  <table style="width: 100%; border-collapse: collapse; font-family: sans-serif; font-size: 0.95rem; line-height: 1.5; border-top: 2px solid #333;">
     <thead>
-      <tr style="background-color: #f8f9fa; border-top: 2px solid #333; border-bottom: 1px solid #ddd;">
-        <th style="padding: 12px; border: 1px solid #ddd; text-align: center; width: 15%;">지표</th>
-        <th style="padding: 12px; border: 1px solid #ddd; text-align: left; width: 35%;">의미</th>
-        <th style="padding: 12px; border: 1px solid #ddd; text-align: left; width: 50%;">계산식</th>
+      <tr style="background-color: #f8f9fa; border-bottom: 1px solid #ddd;">
+        <th style="padding: 12px; border: 1px solid #ddd; text-align: center; width: 15%; font-weight: bold;">지표</th>
+        <th style="padding: 12px; border: 1px solid #ddd; text-align: left; width: 35%; font-weight: bold;">의미</th>
+        <th style="padding: 12px; border: 1px solid #ddd; text-align: left; width: 50%; font-weight: bold;">계산식</th>
       </tr>
     </thead>
     <tbody>
@@ -73,7 +73,7 @@ date: 2024-10-18
         <td style="padding: 12px; border: 1px solid #ddd;">전체 중 맞춘 비율</td>
         <td style="padding: 12px; border: 1px solid #ddd;">(15 + 70) / 100 = <b>85%</b></td>
       </tr>
-      <tr style="background-color: #fafafa;">
+      <tr>
         <td style="padding: 12px; border: 1px solid #ddd; text-align: center; font-weight: bold;">정밀도</td>
         <td style="padding: 12px; border: 1px solid #ddd;">스팸이라고 한 것 중 진짜 스팸 비율</td>
         <td style="padding: 12px; border: 1px solid #ddd;">15 / (15 + 10) = <b>60%</b></td>
@@ -83,7 +83,7 @@ date: 2024-10-18
         <td style="padding: 12px; border: 1px solid #ddd;">실제 스팸 중 내가 잡아낸 비율</td>
         <td style="padding: 12px; border: 1px solid #ddd;">15 / (15 + 5) = <b>75%</b></td>
       </tr>
-      <tr style="background-color: #fafafa;">
+      <tr>
         <td style="padding: 12px; border: 1px solid #ddd; text-align: center; font-weight: bold;">F1 점수</td>
         <td style="padding: 12px; border: 1px solid #ddd;">정밀도와 재현율의 균형</td>
         <td style="padding: 12px; border: 1px solid #ddd;">2 × (정밀도 × 재현율) / (정밀도 + 재현율) ≈ <b>66.7%</b></td>
