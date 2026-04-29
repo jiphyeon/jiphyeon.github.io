@@ -1,6 +1,6 @@
 ---
-title: "모델"
-part: "모델의 개념과 역할"
+title: "모델의 개념과 역할"
+part: "모델"
 partOrder: 3
 order: 1
 status: "published"

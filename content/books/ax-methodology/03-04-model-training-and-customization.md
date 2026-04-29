@@ -1,6 +1,6 @@
 ---
-title: "모델"
-part: "모델의 학습과 맞춤화"
+title: "모델의 학습과 맞춤화"
+part: "모델"
 partOrder: 3
 order: 4
 status: "published"

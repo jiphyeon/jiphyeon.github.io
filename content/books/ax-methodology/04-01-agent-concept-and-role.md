@@ -1,6 +1,6 @@
 ---
-title: "에이전트"
-part: "에이전트의 개념과 역할"
+title: "에이전트의 개념과 역할"
+part: "에이전트"
 partOrder: 4
 order: 1
 status: "published"

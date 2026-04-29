@@ -1,6 +1,6 @@
 ---
-title: "모델"
-part: "모델의 연결과 실행"
+title: "모델의 연결과 실행"
+part: "모델"
 partOrder: 3
 order: 5
 status: "published"

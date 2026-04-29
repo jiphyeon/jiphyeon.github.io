@@ -1,6 +1,6 @@
 ---
-title: "모델"
-part: "모델의 도입과 선택"
+title: "모델의 도입과 선택"
+part: "모델"
 partOrder: 3
 order: 3
 status: "published"

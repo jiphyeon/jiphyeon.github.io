@@ -89,46 +89,34 @@
     },
     {
       "type": "part",
-      "title": "모델의 개념과 역할",
+      "title": "모델",
       "items": [
         {
-          "title": "모델",
+          "title": "모델의 개념과 역할",
           "slug": "03-01-model-concept-and-role",
           "file": "03-01-model-concept-and-role.md",
           "status": "published"
-        }
-      ]
-    },
-    {
-      "type": "part",
-      "title": "모델의 도입과 선택",
-      "items": [
+        },
         {
-          "title": "모델",
-          "slug": "03-03-model-selection",
-          "file": "03-03-model-selection.md",
-          "status": "published"
-        }
-      ]
-    },
-    {
-      "type": "part",
-      "title": "모델의 분류와 유형",
-      "items": [
-        {
-          "title": "모델",
+          "title": "모델의 분류와 유형",
           "slug": "03-02-model-types-and-categories",
           "file": "03-02-model-types-and-categories.md",
           "status": "published"
-        }
-      ]
-    },
-    {
-      "type": "part",
-      "title": "모델의 연결과 실행",
-      "items": [
+        },
         {
-          "title": "모델",
+          "title": "모델의 도입과 선택",
+          "slug": "03-03-model-selection",
+          "file": "03-03-model-selection.md",
+          "status": "published"
+        },
+        {
+          "title": "모델의 학습과 맞춤화",
+          "slug": "03-04-model-training-and-customization",
+          "file": "03-04-model-training-and-customization.md",
+          "status": "published"
+        },
+        {
+          "title": "모델의 연결과 실행",
           "slug": "03-05-model-integration-and-execution",
           "file": "03-05-model-integration-and-execution.md",
           "status": "published"
@@ -137,20 +125,14 @@
     },
     {
       "type": "part",
-      "title": "모델의 학습과 맞춤화",
-      "items": [
-        {
-          "title": "모델",
-          "slug": "03-04-model-training-and-customization",
-          "file": "03-04-model-training-and-customization.md",
-          "status": "published"
-        }
-      ]
-    },
-    {
-      "type": "part",
       "title": "에이전트",
       "items": [
+        {
+          "title": "에이전트의 개념과 역할",
+          "slug": "04-01-agent-concept-and-role",
+          "file": "04-01-agent-concept-and-role.md",
+          "status": "published"
+        },
         {
           "title": "에이전트의 구성 요소 및 작동 원리",
           "slug": "04-02-agent-components-and-mechanism",
@@ -173,18 +155,6 @@
     },
     {
       "type": "part",
-      "title": "에이전트의 개념과 역할",
-      "items": [
-        {
-          "title": "에이전트",
-          "slug": "04-01-agent-concept-and-role",
-          "file": "04-01-agent-concept-and-role.md",
-          "status": "published"
-        }
-      ]
-    },
-    {
-      "type": "part",
       "title": "시스템",
       "items": [
         {
@@ -197,6 +167,12 @@
           "title": "아키텍처",
           "slug": "05-02-architecture",
           "file": "05-02-architecture.md",
+          "status": "published"
+        },
+        {
+          "title": "프레임워크 및 도구",
+          "slug": "05-03-frameworks-and-tools",
+          "file": "05-03-frameworks-and-tools.md",
           "status": "published"
         },
         {
@@ -221,18 +197,6 @@
           "title": "모니터링",
           "slug": "05-07-monitoring",
           "file": "05-07-monitoring.md",
-          "status": "published"
-        }
-      ]
-    },
-    {
-      "type": "part",
-      "title": "프레임워크 및 도구",
-      "items": [
-        {
-          "title": "시스템",
-          "slug": "05-03-frameworks-and-tools",
-          "file": "05-03-frameworks-and-tools.md",
           "status": "published"
         }
       ]

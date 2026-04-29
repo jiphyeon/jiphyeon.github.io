@@ -1,6 +1,6 @@
 ---
-title: "시스템"
-part: "프레임워크 및 도구"
+title: "프레임워크 및 도구"
+part: "시스템"
 partOrder: 5
 order: 3
 status: "published"

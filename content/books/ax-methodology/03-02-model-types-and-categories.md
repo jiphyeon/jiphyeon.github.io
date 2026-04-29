@@ -1,6 +1,6 @@
 ---
-title: "모델"
-part: "모델의 분류와 유형"
+title: "모델의 분류와 유형"
+part: "모델"
 partOrder: 3
 order: 2
 status: "published"
