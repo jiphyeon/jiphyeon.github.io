@@ -47,7 +47,7 @@ date: 2024-10-18
   이메일 스팸 필터링 결과 예시
 </div>
 
-<div style="overflow-x: auto; width: 100%; margin: 0 0 12px 0;">
+<div style="overflow-x: auto; width: 100%; margin: 0 0 18px 0;">
   <table style="width: 100%; border-collapse: collapse; font-family: sans-serif; font-size: 0.95rem; margin: 0;">
     <thead>
       <tr style="border-bottom: 1px solid #ddd; text-align: center;">
@@ -91,7 +91,7 @@ date: 2024-10-18
   이메일 스팸 필터링 결과 예시
 </div>
 
-<div style="overflow-x: auto; width: 100%; margin: 0 0 12px 0">
+<div style="overflow-x: auto; width: 100%; margin: 0 0 18px 0">
   <table style="width: 100%; border-collapse: collapse; font-family: sans-serif; font-size: 0.95rem; margin: 0;">
     <thead>
       <tr style="border-bottom: 1px solid #ddd; text-align: center;">
