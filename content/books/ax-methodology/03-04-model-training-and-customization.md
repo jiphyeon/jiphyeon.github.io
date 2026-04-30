@@ -58,13 +58,14 @@ date: 2024-10-18
 * <b>F1 점수</b>는 정밀도와 재현율의 균형을 측정하는 지표로 두 값이 균형 잡혀야 높게 나온다. 이 경우 66.7%로 계산된다.
 
 <b>이메일 스팸 필터링 성능 지표 예시</b>
-<div style="overflow-x: auto; margin: 20px 0;">
+<p style="margin-bottom: 5px; font-weight: bold;">이메일 스팸 필터링 성능 지표 예시</p>
+<div style="overflow-x: auto;">
   <table style="width: 100%; border-collapse: collapse; font-family: sans-serif; font-size: 0.95rem; line-height: 1.6;">
     <thead>
-      <tr style="border-bottom: 2px solid #333; text-align: left;">
-        <th style="padding: 12px 8px; font-weight: bold; width: 15%;">지표</th>
-        <th style="padding: 12px 8px; font-weight: bold; width: 35%;">의미</th>
-        <th style="padding: 12px 8px; font-weight: bold; width: 50%;">계산식</th>
+      <tr style="border-top: 2px solid #333; border-bottom: 1px solid #333; background-color: #f9f9f9;">
+        <th style="padding: 10px 8px; text-align: left; width: 15%; font-weight: bold;">지표</th>
+        <th style="padding: 10px 8px; text-align: left; width: 35%; font-weight: bold;">의미</th>
+        <th style="padding: 10px 8px; text-align: left; width: 50%; font-weight: bold;">계산식</th>
       </tr>
     </thead>
     <tbody>
