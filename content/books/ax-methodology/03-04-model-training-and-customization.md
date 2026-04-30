@@ -1,4 +1,4 @@
----
+--- 
 title: "모델의 학습과 맞춤화"
 part: "모델"
 partOrder: 3
@@ -57,36 +57,36 @@ date: 2024-10-18
 * <b>재현율</b>은 실제 스팸 메일 20건 중 AI가 찾아낸 15건의 비율로, 75%다.
 * <b>F1 점수</b>는 정밀도와 재현율의 균형을 측정하는 지표로 두 값이 균형 잡혀야 높게 나온다. 이 경우 66.7%로 계산된다.
 
-<p style="margin: 0 0 4px 0; font-weight: bold; font-size: 1.1rem; letter-spacing: -0.02em;">이메일 스팸 필터링 성능 지표 예시</p>
-<div style="overflow-x: auto; width: 100%;">
-  <table style="width: 100%; border-collapse: collapse; font-family: sans-serif; font-size: 0.95rem; border-top: 2px solid #222;">
+<p style="margin: 0 0 2px 0; font-weight: bold; font-size: 1.1rem; letter-spacing: -0.02em;">이메일 스팸 필터링 성능 지표 예시</p>
+<div style="overflow-x: auto; width: 100%; margin-top: 0;">
+  <table style="width: 100%; border-collapse: collapse; font-family: sans-serif; font-size: 0.95rem;">
     <thead>
-      <tr style="border-bottom: 1px solid #222; text-align: left; background-color: transparent;">
-        <th style="padding: 10px 8px; font-weight: bold; width: 15%;">지표</th>
-        <th style="padding: 10px 8px; font-weight: bold; width: 35%;">의미</th>
-        <th style="padding: 10px 8px; font-weight: bold; width: 50%;">계산식</th>
+      <tr style="border-bottom: 1px solid #ddd; text-align: center;">
+        <th style="padding: 8px; font-weight: bold;">지표</th>
+        <th style="padding: 8px; font-weight: bold;">의미</th>
+        <th style="padding: 8px; font-weight: bold;">계산식</th>
       </tr>
     </thead>
     <tbody>
-      <tr style="border-bottom: 1px solid #ececec;">
-        <td style="padding: 12px 8px; font-weight: bold;">정확도</td>
-        <td style="padding: 12px 8px; color: #333;">전체 중 맞춘 비율</td>
-        <td style="padding: 12px 8px; color: #333;">(15 + 70) / 100 = <b>85%</b></td>
+      <tr style="border-bottom: 1px solid #eee;">
+        <td style="padding: 8px; font-weight: bold; text-align: center;">정확도</td>
+        <td style="padding: 8px;">전체 중 맞춘 비율</td>
+        <td style="padding: 8px;">(15 + 70) / 100 = <b>85%</b></td>
       </tr>
-      <tr style="border-bottom: 1px solid #ececec;">
-        <td style="padding: 12px 8px; font-weight: bold;">정밀도</td>
-        <td style="padding: 12px 8px; color: #333;">스팸이라고 한 것 중 진짜 스팸 비율</td>
-        <td style="padding: 12px 8px; color: #333;">15 / (15 + 10) = <b>60%</b></td>
+      <tr style="border-bottom: 1px solid #eee;">
+        <td style="padding: 8px; font-weight: bold; text-align: center;">정밀도</td>
+        <td style="padding: 8px;">스팸이라고 한 것 중 진짜 스팸 비율</td>
+        <td style="padding: 8px;">15 / (15 + 10) = <b>60%</b></td>
       </tr>
-      <tr style="border-bottom: 1px solid #ececec;">
-        <td style="padding: 12px 8px; font-weight: bold;">재현율</td>
-        <td style="padding: 12px 8px; color: #333;">실제 스팸 중 내가 잡아낸 비율</td>
-        <td style="padding: 12px 8px; color: #333;">15 / (15 + 5) = <b>75%</b></td>
+      <tr style="border-bottom: 1px solid #eee;">
+        <td style="padding: 8px; font-weight: bold; text-align: center;">재현율</td>
+        <td style="padding: 8px;">실제 스팸 중 잡아낸 비율</td>
+        <td style="padding: 8px;">15 / (15 + 5) = <b>75%</b></td>
       </tr>
-      <tr style="border-bottom: 1px solid #ececec;">
-        <td style="padding: 12px 8px; font-weight: bold;">F1 점수</td>
-        <td style="padding: 12px 8px; color: #333;">정밀도와 재현율의 균형</td>
-        <td style="padding: 12px 8px; color: #333;">2 × (정밀도 × 재현율) / (정밀도 + 재현율) ≈ <b>66.7%</b></td>
+      <tr style="border-bottom: 1px solid #eee;">
+        <td style="padding: 8px; font-weight: bold; text-align: center;">F1 점수</td>
+        <td style="padding: 8px;">정밀도와 재현율의 균형</td>
+        <td style="padding: 8px;">2 × (정밀도 × 재현율) / (정밀도 + 재현율) ≈ <b>66.7%</b></td>
       </tr>
     </tbody>
   </table>
